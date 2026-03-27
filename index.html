@@ -493,77 +493,98 @@ L('self-improving','skill-as-job','evolves');
 const graphData = DATA;
 
 // ══════════════════════════════════════════════════
-//  CLUSTER ASSIGNMENT + POSITION PRE-SEEDING
-//  Place 3 week clusters at 120° apart, seed all nodes near their cluster
+//  DETERMINISTIC LAYOUT — fixed positions, no simulation jitter
+//  3 week hubs at 120° apart, nodes in concentric rings
 // ══════════════════════════════════════════════════
-const CR = 90; // cluster radius
-const CLUSTER_CENTERS = {
-  w1: { x: -CR,      y: 0,       z: 0 },
-  w2: { x: CR * 0.5, y: CR*0.87, z: 0 },
-  w3: { x: CR * 0.5, y:-CR*0.87, z: 0 },
-  shared: { x: 0,    y: 0,       z: 0 },
+const WR = 70; // week hub radius from center
+const weekCenters = {
+  w1: { x: -WR,        y: 0, z: 0 },
+  w2: { x: WR * 0.5,   y: 0, z: WR * 0.866 },
+  w3: { x: WR * 0.5,   y: 0, z: -WR * 0.866 },
 };
 
-// Determine which week-cluster each node belongs to
-function assignCluster(node) {
-  if (node.id === 'w1') return 'w1';
-  if (node.id === 'w2') return 'w2';
-  if (node.id === 'w3') return 'w3';
-  // Check links to weeks
-  const weekLinks = graphData.links.filter(l => {
-    const s = typeof l.source === 'string' ? l.source : l.source?.id;
-    const t = typeof l.target === 'string' ? l.target : l.target?.id;
-    return (s === node.id && (t === 'w1' || t === 'w2' || t === 'w3')) ||
-           (t === node.id && (s === 'w1' || s === 'w2' || s === 'w3'));
+// Find which week(s) each node connects to
+function nodeWeeks(nid) {
+  const weeks = [];
+  graphData.links.forEach(l => {
+    const s = l.source, t = l.target;
+    if (s === nid && ['w1','w2','w3'].includes(t)) weeks.push(t);
+    if (t === nid && ['w1','w2','w3'].includes(s)) weeks.push(s);
   });
-  if (weekLinks.length === 0) {
-    // Check indirect: linked to something that links to a week
-    const directLinks = graphData.links.filter(l => {
-      const s = typeof l.source === 'string' ? l.source : l.source?.id;
-      const t = typeof l.target === 'string' ? l.target : l.target?.id;
-      return s === node.id || t === node.id;
-    });
-    for (const dl of directLinks) {
-      const other = (typeof dl.source === 'string' ? dl.source : dl.source?.id) === node.id
-        ? (typeof dl.target === 'string' ? dl.target : dl.target?.id)
-        : (typeof dl.source === 'string' ? dl.source : dl.source?.id);
-      const otherWeekLinks = graphData.links.filter(l => {
-        const s = typeof l.source === 'string' ? l.source : l.source?.id;
-        const t = typeof l.target === 'string' ? l.target : l.target?.id;
-        return (s === other && ['w1','w2','w3'].includes(t)) || (t === other && ['w1','w2','w3'].includes(s));
-      });
-      if (otherWeekLinks.length > 0) {
-        const wk = otherWeekLinks[0];
-        const wid = ['w1','w2','w3'].find(w => (typeof wk.source === 'string' ? wk.source : wk.source?.id) === w || (typeof wk.target === 'string' ? wk.target : wk.target?.id) === w);
-        if (wid) return wid;
-      }
-    }
-    return 'shared';
-  }
-  if (weekLinks.length === 1) {
-    const wk = weekLinks[0];
-    return ['w1','w2','w3'].find(w => (typeof wk.source === 'string' ? wk.source : wk.source?.id) === w || (typeof wk.target === 'string' ? wk.target : wk.target?.id) === w) || 'w1';
-  }
-  // Multi-week: pick first
-  const wk = weekLinks[0];
-  return ['w1','w2','w3'].find(w => (typeof wk.source === 'string' ? wk.source : wk.source?.id) === w || (typeof wk.target === 'string' ? wk.target : wk.target?.id) === w) || 'shared';
+  return [...new Set(weeks)];
 }
 
-// Pre-seed positions
+// Find indirect week via neighbors
+function indirectWeek(nid) {
+  for (const l of graphData.links) {
+    const other = l.source === nid ? l.target : (l.target === nid ? l.source : null);
+    if (!other) continue;
+    const ws = nodeWeeks(other);
+    if (ws.length) return ws[0];
+  }
+  return null;
+}
+
+// Place nodes in ring around center point
+function ringPos(cx, cy, cz, radius, index, total) {
+  const angle = (index / total) * Math.PI * 2;
+  return { x: cx + Math.cos(angle) * radius, y: cy + (Math.random()-0.5)*4, z: cz + Math.sin(angle) * radius };
+}
+
+// Assign and position all nodes
+const weekNodes = { w1: { sessions:[], speakers:[], curators:[], topics:[], concepts:[], other:[] },
+                    w2: { sessions:[], speakers:[], curators:[], topics:[], concepts:[], other:[] },
+                    w3: { sessions:[], speakers:[], curators:[], topics:[], concepts:[] , other:[] } };
+const sharedNodes = [];
+
 graphData.nodes.forEach(n => {
-  const cluster = assignCluster(n);
-  n._cluster = cluster;
-  const center = CLUSTER_CENTERS[cluster] || CLUSTER_CENTERS.shared;
-  const isWeek = ['w1','w2','w3'].includes(n.id);
-  const spread = isWeek ? 0 : 30;
-  n.x = center.x + (Math.random() - 0.5) * spread;
-  n.y = center.y + (Math.random() - 0.5) * spread;
-  n.z = (Math.random() - 0.5) * 15; // slight Z variation for depth
+  if (['w1','w2','w3'].includes(n.id)) return; // weeks positioned directly
+  const ws = nodeWeeks(n.id);
+  const week = ws[0] || indirectWeek(n.id);
+  if (week && weekNodes[week]) {
+    const bucket = n.type === 'session' ? 'sessions' : n.type === 'speaker' ? 'speakers' :
+                   n.type === 'curator' ? 'curators' : n.type === 'topic' ? 'topics' :
+                   n.type === 'concept' ? 'concepts' : 'other';
+    weekNodes[week][bucket].push(n);
+  } else {
+    sharedNodes.push(n);
+  }
 });
 
-console.log('Clusters:', Object.entries(
-  graphData.nodes.reduce((a, n) => { a[n._cluster] = (a[n._cluster]||0)+1; return a; }, {})
-));
+// Position week hubs
+['w1','w2','w3'].forEach(wid => {
+  const n = graphData.nodes.find(x => x.id === wid);
+  const c = weekCenters[wid];
+  n.fx = c.x; n.fy = c.y; n.fz = c.z;
+});
+
+// Position nodes in rings around each week
+Object.entries(weekNodes).forEach(([wid, buckets]) => {
+  const c = weekCenters[wid];
+  // Ring 1: sessions (r=18)
+  buckets.sessions.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 18, i, buckets.sessions.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
+  // Ring 2: speakers (r=32)
+  buckets.speakers.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 32, i, buckets.speakers.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
+  // Ring 2b: curators (r=38, offset angle)
+  buckets.curators.forEach((n,i) => { const p = ringPos(c.x,c.y+3,c.z, 38, i+0.5, Math.max(buckets.curators.length,1)); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
+  // Ring 3: topics (r=48)
+  buckets.topics.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 48, i, buckets.topics.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
+  // Ring 4: concepts (r=58)
+  buckets.concepts.forEach((n,i) => { const p = ringPos(c.x,c.y-2,c.z, 58, i, buckets.concepts.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
+  // Other (r=42)
+  buckets.other.forEach((n,i) => { const p = ringPos(c.x,c.y+5,c.z, 42, i, Math.max(buckets.other.length,1)); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
+});
+
+// Shared nodes — center area
+sharedNodes.forEach((n,i) => {
+  const p = ringPos(0, 8, 0, 20, i, Math.max(sharedNodes.length,1));
+  n.fx = p.x; n.fy = p.y; n.fz = p.z;
+});
+
+console.log('Layout: w1=' + Object.values(weekNodes.w1).flat().length +
+  ' w2=' + Object.values(weekNodes.w2).flat().length +
+  ' w3=' + Object.values(weekNodes.w3).flat().length +
+  ' shared=' + sharedNodes.length);
 
 // ══════════════════════════════════════════════════
 //  PARTICLE SHADERS (ambient background)
@@ -721,36 +742,12 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
     return s ? TYPES[s.type]?.color||'#4dc9d4' : '#4dc9d4';
   })
-  .d3Force('charge', d3.forceManyBody().strength(-100))
-  .d3Force('link', d3.forceLink()
-    .distance(link => {
-      // Cross-cluster links are longer (push clusters apart)
-      const sCluster = (typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source))?._cluster;
-      const tCluster = (typeof link.target==='object'?link.target:graphData.nodes.find(n=>n.id===link.target))?._cluster;
-      return (sCluster && tCluster && sCluster !== tCluster) ? 80 : 25;
-    })
-    .strength(link => {
-      const sCluster = (typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source))?._cluster;
-      const tCluster = (typeof link.target==='object'?link.target:graphData.nodes.find(n=>n.id===link.target))?._cluster;
-      return (sCluster && tCluster && sCluster !== tCluster) ? 0.01 : 0.08;
-    })
-  )
-  .d3Force('center', d3.forceCenter().strength(0.003))
-  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||3)*2.2))
-  .d3Force('clusterX', d3.forceX(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).x).strength(0.25))
-  .d3Force('clusterY', d3.forceY(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).y).strength(0.25))
-  .d3AlphaDecay(0.025)
-  .d3VelocityDecay(0.4)
-  .warmupTicks(120)
-  .cooldownTicks(300)
+  // No simulation — all positions are fixed via fx/fy/fz
+  .warmupTicks(0)
+  .cooldownTicks(0)
   .onNodeHover(onHover)
   .onNodeClick(onClick)
-  .onBackgroundClick(onBgClick)
-  .onEngineStop(() => {
-    // Freeze all node positions after simulation settles — no more jitter
-    graphData.nodes.forEach(n => { n.fx = n.x; n.fy = n.y; n.fz = n.z; });
-    console.log('Engine settled — positions frozen');
-  });
+  .onBackgroundClick(onBgClick);
 
 // Glow texture
 const _gtc = {};
