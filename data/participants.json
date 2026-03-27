@@ -1,0 +1,1849 @@
+{
+  "participants": [
+    {
+      "name": "A",
+      "username": "whale1234",
+      "focus": "Я работаю финансовым директором (CFO) в IT service компании scandiweb и отвечаю за юридический и...",
+      "location": "Рига, Латвия",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "aaa",
+      "username": "aaa1234561",
+      "focus": "фокус сейчас на углублении знаний в области программирования, в частности: устройство нейросетей,...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Aigars",
+      "username": "",
+      "focus": "Ecommerce",
+      "location": "Riga, latvia",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Aleksandr Ivanov",
+      "username": "alex_ivanov3",
+      "focus": "Автоматизация компаний с помощью AI-агентов и платформенных решения корпоративного уровня.",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Aleksandr Kolesnikov",
+      "username": "algkolesnikov",
+      "focus": "миграции и автоматизации ИТ",
+      "location": "NL",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Aleksandr Novikov",
+      "username": "novikov_al",
+      "focus": "Я 24/7 Ai-консультант: занимаюсь ai adoption в организациях и несложными проектами внедрения в...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Aleksei",
+      "username": "agreypilgrim",
+      "focus": "- Готовлюсь к Лондонскому  марафону: бегаю по 200 км в неделю\n- Кайфую от ранней фазы отцовства:...",
+      "location": "Лондон, Великобритания.",
+      "isAdvanced": false,
+      "buddy": "@iliaastafev"
+    },
+    {
+      "name": "Aleksei Ulianin",
+      "username": "alexey_ulianin",
+      "focus": null,
+      "location": "Таганрог",
+      "isAdvanced": false,
+      "buddy": "@mnemonic09"
+    },
+    {
+      "name": "Aleksey Kozlov",
+      "username": "Alekseymonolitestate",
+      "focus": "Я предприниматель и фаундер proptech стартапа",
+      "location": "Нижний Новгород",
+      "isAdvanced": false,
+      "buddy": "@e_kuzmichev"
+    },
+    {
+      "name": "Alex",
+      "username": "fshkn",
+      "focus": "Основной фокус сейчас на развитии компании Admon.ai, выстраивании процессов и выход из операционной...",
+      "location": "Сейчас нахожусь в Москве.",
+      "isAdvanced": false,
+      "buddy": "@ivanovinvest"
+    },
+    {
+      "name": "Alex Kolokolov",
+      "username": "KolokolovAlex",
+      "focus": "Бизнес и финансы",
+      "location": "Da Nang",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alex P",
+      "username": "alex_named",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": "@dmitrishin"
+    },
+    {
+      "name": "Alex P {AI mindset}",
+      "username": "ai_mind_set_team",
+      "focus": "потестировать аккаунты AI mindset",
+      "location": "lisbon",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alex S.",
+      "username": "astropullus",
+      "focus": null,
+      "location": "Бишкек",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alex Smirnov",
+      "username": "soapshark",
+      "focus": "Основные фокусы, значит бизнес, это FMCG, косметика, две FMCG операционных компании, обе в России,...",
+      "location": "москва и алтай",
+      "isAdvanced": false,
+      "buddy": "@volchsv"
+    },
+    {
+      "name": "Alex Z",
+      "username": "zalexis",
+      "focus": "Свой бизнес, инвестиции, здоровье, дети",
+      "location": "Израиль",
+      "isAdvanced": false,
+      "buddy": "@maksimfrolov"
+    },
+    {
+      "name": "Alexander Bogdanov",
+      "username": "Bogdanovthatis",
+      "focus": "Работа! Компания AGIMA",
+      "location": "В сша сан-Франциско",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alexander Dolgov",
+      "username": "Alex4ndrDolgov",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alexander Fal",
+      "username": "faleksander",
+      "focus": "Рабочие проекты, карьера. Всё связано с работой с ИИ агентами и LLM. десь больше всего фокуса и...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alexander Ivanov",
+      "username": "Alex240690",
+      "focus": null,
+      "location": "Мск",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alexander S.",
+      "username": "AlexanderYS",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alexander Stashenko",
+      "username": "Alexander_Stashenko",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Alexander Vasiliev",
+      "username": "AlexFrmn",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": "@ginromdam"
+    },
+    {
+      "name": "Alisa Larionova",
+      "username": "alisalarionova",
+      "focus": "Основной фокус сейчас — это несколько проектов. Первый — это рабочий проект. Я из России, города...",
+      "location": "Прямо сейчас я в Таиланде, у меня отпуск, но, может, это и хорошо для программы. Ну, правда, минус только в том, что у меня разница 6 часов с тем временем, когда будут проходить основные видеолекции, общения. Вот. Вообще, я живу в России и Екатеринбург, но, наверное, в скором времени буду переезжать в Москву.",
+      "isAdvanced": false,
+      "buddy": "@flynn"
+    },
+    {
+      "name": "Alla",
+      "username": "alla_raud",
+      "focus": "Конкретно сейчас я собираюсь на пару неделек на морюшко, потому фокус будет на небольшом замедлении...",
+      "location": "Живу локально в Санкт-Петербурге, часто бываю в Москве, а ближайшие две недели буду в Таиланде.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Anastasia",
+      "username": "anastasia3223454",
+      "focus": "Операционная деятельность компании, финансы",
+      "location": "Berlin",
+      "isAdvanced": false,
+      "buddy": "@dan_named"
+    },
+    {
+      "name": "Anastasia Kataeva",
+      "username": "kataeva_anastas",
+      "focus": "Ой Фокус растить выручку в компании в роли CPO в небольшой и компактной команде",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@tommarat"
+    },
+    {
+      "name": "Andrei Mukhametov",
+      "username": "amyhametov",
+      "focus": "Главный фокус — AI-трансформация компании, буквально перестраиваю FunCorp в AI Powered Company....",
+      "location": "Лимассол, Кипр",
+      "isAdvanced": false,
+      "buddy": "@arkg1"
+    },
+    {
+      "name": "Andrew",
+      "username": "principal_andrew",
+      "focus": "1. Построение автономной разработки, управление знаниями в корпоративно-инвестиционном блоке...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@mgl4mgl"
+    },
+    {
+      "name": "Andrew 🇺🇦❤️🇺🇦",
+      "username": "tonkolytko",
+      "focus": "Я сейчас изучаю IGN Decoding, делаю 8 тестовых проектов параллельно. Один из них — это Business...",
+      "location": "Улучшаться в объединенных Арабских Эмиратах.",
+      "isAdvanced": false,
+      "buddy": "@artveretevo"
+    },
+    {
+      "name": "Andrey",
+      "username": "AndreyRevenko3",
+      "focus": "У меня два направления. У меня свой family office по работе с состоятельными клиентами. Вообще у...",
+      "location": "Дубай",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Andrey Chegodaev",
+      "username": "AndyChegod",
+      "focus": "Работа в traveltech компании. Там занимаюсь архитектурными вопросами",
+      "location": "Москва, район метро Нагатинская",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Andrey Chernodarov",
+      "username": "chernodarov",
+      "focus": "Я фокусируюсь на внутрикорпоративных проектах автоматизации, таких как управление производством,...",
+      "location": "В Москве",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Andrey Subbotin",
+      "username": "andreysubbotin1",
+      "focus": null,
+      "location": "Прага",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Anna Babak",
+      "username": "anna_babak8",
+      "focus": "Основной фокус - только работа. Отвечаю за операционку, где очень много мелких деталей,...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Anthony",
+      "username": "antowl",
+      "focus": "Я руководитель агентства, мы разрабатываем технологии для клиентов и занимаемся диджитал...",
+      "location": "Рига",
+      "isAdvanced": false,
+      "buddy": "@druoleg"
+    },
+    {
+      "name": "Anton",
+      "username": "antoncp",
+      "focus": "Работа, интергация различных систем вокруг HR и инфры, AI во всех сферах, Azure",
+      "location": "Амстердам",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Anton M.",
+      "username": "AntonyMuh",
+      "focus": null,
+      "location": "Дубай",
+      "isAdvanced": false,
+      "buddy": "@iv_volov"
+    },
+    {
+      "name": "Anton Rozenblum",
+      "username": "anton_portal",
+      "focus": "Занимаюсь созданием ИИ рекламы, фокус на всем что касается ИИ визуала и креатива. \n\nГлобально хочу...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@gurev"
+    },
+    {
+      "name": "Anton Voskobovich",
+      "username": "northcapen",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Arina Annun",
+      "username": "Arinaannun",
+      "focus": "Хочу оптимизировать повседневные повторяющие задачи на сколько это возможно, чтоб освободить время...",
+      "location": "Лондон",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Aron",
+      "username": "WarlonGluster",
+      "focus": "Моя компания в области ветеринарии",
+      "location": "Moscow",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "arseny",
+      "username": "arkg1",
+      "focus": "Инвестиции, венчурные проекты, блокчейн",
+      "location": "Во время спринта буду по неделе в НЙ, Канны, Лондон",
+      "isAdvanced": false,
+      "buddy": "@amyhametov"
+    },
+    {
+      "name": "Artem Duz",
+      "username": "Artemduz",
+      "focus": "Построение агентных систем",
+      "location": "Лимассол",
+      "isAdvanced": false,
+      "buddy": "@dshtulberg"
+    },
+    {
+      "name": "Artem Zarubenko",
+      "username": "zarubenko",
+      "focus": null,
+      "location": "Дубай",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Artur Leshukov",
+      "username": "A_Leshukov39",
+      "focus": null,
+      "location": "Калининград",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Arutyun",
+      "username": "Arutyun_A",
+      "focus": "ИИ, автоматизация, тревел",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "D S",
+      "username": "strtpndx",
+      "focus": "Я предприниматель и системный человек: люблю превращать хаос в понятные процессы, автоматизацию и...",
+      "location": "Я уже ответил выше на этот вопрос",
+      "isAdvanced": false,
+      "buddy": "@popovairina_com"
+    },
+    {
+      "name": "Daniel Mylnikov | P2P.org",
+      "username": "DanielMyl",
+      "focus": "Работа, хочу сделать так, чтобы моя команда была fully AI enabled, и мы смогли увеличить...",
+      "location": "испания, малага",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "daniel v",
+      "username": "dan_named",
+      "focus": "больше всего интереса и фокуса",
+      "location": "Mensk",
+      "isAdvanced": false,
+      "buddy": "@anastasia3223454"
+    },
+    {
+      "name": "Daniil Khripko",
+      "username": "orpheus_x",
+      "focus": "Мой фокус на работе моего \"Бюро Медицинского Маркетинга\" и развитии личного бренда.",
+      "location": "Санкт-Петербург",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Danil Yakovlev",
+      "username": "danilyakovlev",
+      "focus": "автоматизация операционки с помощью агентов + внедрение ai driven подхода в команде",
+      "location": "глубоко в России",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Denis",
+      "username": "dshtulberg",
+      "focus": "Операционная эффективность бизнеса, аналитика, баинг (запуск и управление рекламными кампаниями),...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@artemduz"
+    },
+    {
+      "name": "Denis Golubenko",
+      "username": "denisgolubenko",
+      "focus": null,
+      "location": "Калининград",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Denis Pyankov",
+      "username": "DenisPyankov",
+      "focus": null,
+      "location": "Кашкайш",
+      "isAdvanced": false,
+      "buddy": "@ceo_belsun"
+    },
+    {
+      "name": "Denis Smirnov",
+      "username": "densmirnov",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": "@kettarian_fox"
+    },
+    {
+      "name": "Denis Volkhonskiy",
+      "username": "den_vol",
+      "focus": "работа, делаем кодинговых агентов для ревью и тестирования",
+      "location": "UK, cambridge",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dima Bogod",
+      "username": "dbogod",
+      "focus": "ИИ трансформация организации",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@oleg_ovs"
+    },
+    {
+      "name": "Dima Khanarin",
+      "username": "khanarin",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dima Tverd",
+      "username": "dmitrysage",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dimitry Naumov",
+      "username": "naum1881",
+      "focus": "AI agents, Crypto, trading",
+      "location": "Munich",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitriy Demin",
+      "username": "rddemin",
+      "focus": "Искусственный интеллект, Аи агенты в сфере строительства и управление\nОрганизацией",
+      "location": "Ростов-на-Дону",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitriy Strygin",
+      "username": "d_strygin",
+      "focus": "EdTech проекты, с фокусом для России. От детских садов до вузов",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitry",
+      "username": "dmezhov",
+      "focus": "Основной фокус сейчас на работе, у нас оптовая компания, мы продаем товары для праздника оптам по...",
+      "location": "Бали",
+      "isAdvanced": false,
+      "buddy": "@skrukhmalev"
+    },
+    {
+      "name": "Dmitry",
+      "username": "di_koin",
+      "focus": "не совсем понял, можеш переформулировать вопрос",
+      "location": "США",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitry",
+      "username": "dmi812",
+      "focus": "Бизнес в сфере построения b2c продуктов с подписочной монетизацией",
+      "location": "Амстердам",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitry Chichikalyuk",
+      "username": "DmitryChX",
+      "focus": "изменение модели управления организациями под влиянием ИИ",
+      "location": "Эстония",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitry Khrapov",
+      "username": "dkhrapov",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitry Kostin",
+      "username": "mmmmlk24",
+      "focus": "да разные",
+      "location": "москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dmitry Petrovskiy",
+      "username": "dimography",
+      "focus": "ai-first person, ai-first company, saas b2b b2c",
+      "location": "Тиват",
+      "isAdvanced": false,
+      "buddy": "@voronik1801"
+    },
+    {
+      "name": "Dmitry Zakharov",
+      "username": "cryptodiam",
+      "focus": "Мой стартап",
+      "location": "Кипр",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Dreamer",
+      "username": "wowdreamer",
+      "focus": "IT, автоматизация, разработка пз, торговые боты, эксплуатация внутриигровых экономик",
+      "location": "Украина",
+      "isAdvanced": false,
+      "buddy": "@avdyakov"
+    },
+    {
+      "name": "Eduard Gorbachev",
+      "username": "EduardGorbachev",
+      "focus": "Прямо сейчас моя компания занимается развитием технологий для улучшения диагностики патоморфологии...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@ox22122"
+    },
+    {
+      "name": "Egor Kulikov",
+      "username": "ekulikovv",
+      "focus": "Занимаюсь бизнесом, развиваю группу компаний.",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@stannats1"
+    },
+    {
+      "name": "Ekaterina Kireeva",
+      "username": "ekateric",
+      "focus": "На работе и внедрении AI технологий в компанию. На личной жизни и отдыхе тоже.",
+      "location": "Кипр",
+      "isAdvanced": false,
+      "buddy": "@vitaly_d"
+    },
+    {
+      "name": "Ekaterina Zueva",
+      "username": "zuzu_eeka",
+      "focus": "Мой фокус сейчас в основном на работе, я относительно недавно начала возглавлять Operations Unit....",
+      "location": "Россия, Ростов-на-Дону",
+      "isAdvanced": false,
+      "buddy": "@olly_ai"
+    },
+    {
+      "name": "Eugene",
+      "username": "PavlovEo",
+      "focus": "Интересный текущий момент в области создания и использования инструментов в части юридической...",
+      "location": "На данный момент я нахожусь в Москве, но в определенной периодичности могу бывать в Бишкеке. Есть определенные планы на работу и вообще в целом взаимодействие по треку США, потому что там есть сильный нетворкинг и так далее, нахожусь в процессе получения визы. Но на данный момент в базовой перспективе нескольких месяцев это все уже Россия и Москва.",
+      "isAdvanced": false,
+      "buddy": "@vadikpye"
+    },
+    {
+      "name": "Eugene",
+      "username": "mnemonic09",
+      "focus": "Здоровье, учеба, спорт. \nРазвитие компании, повышение благосостояния",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@alexey_ulianin"
+    },
+    {
+      "name": "Eugene Levitin",
+      "username": "levitin",
+      "focus": null,
+      "location": "Калифорния, рядом с Сан-Франциско",
+      "isAdvanced": false,
+      "buddy": "@smithjan21"
+    },
+    {
+      "name": "Evgenii Bondarev",
+      "username": "flynn",
+      "focus": "Фокусируюсь как на маркетинге в сфере стартапов (высокая динамика, рост на десятки процентов,...",
+      "location": "В Сербии, Нови сад",
+      "isAdvanced": false,
+      "buddy": "@alisalarionova"
+    },
+    {
+      "name": "Evgenii Konovalov",
+      "username": "konovalov23",
+      "focus": "AI трансформация компании, личный wellbeing (спорт, правильное питание, сон, медитации)",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Evgeny Kuzmichev",
+      "username": "e_kuzmichev",
+      "focus": "Фокус на интернет рекламе, я управляющий партнёр в одном и самых крупных рекламных агентств,...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@alekseymonolitestate"
+    },
+    {
+      "name": "Gard",
+      "username": "alfa075",
+      "focus": null,
+      "location": "Англия",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Gene ∞",
+      "username": "endlesstraffic",
+      "focus": "Кратко:\n• медиабаинг, аффилейт-маркетинг\n• мобильная разработка - webview, подписки, web2app\n•...",
+      "location": "в Дубае",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "George",
+      "username": "georgesuch",
+      "focus": "Работа, спорт вызывают больше интереса\nФокус на работе. Строю дата команды в геймдеве",
+      "location": "Барселона Испания",
+      "isAdvanced": false,
+      "buddy": "@ilyafilim"
+    },
+    {
+      "name": "Gerkon Workeron.ai",
+      "username": "Geramozg",
+      "focus": "Ai agents",
+      "location": "Бангкок",
+      "isAdvanced": false,
+      "buddy": "@larkinmd1"
+    },
+    {
+      "name": "Gleb Sidora",
+      "username": "arodiss",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Glebs Vrevsky",
+      "username": "luchwe",
+      "focus": "В принципе, мой сейчас фокус, главное, да, понять, как мы можем преобразовать нашу бизнес-модель...",
+      "location": "До мая я нахожусь в Сан-Франциско, в США. После мая, в принципе, я базируюсь в Риге и в Латвии. Это, блин, Headhunterz.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Grigory K",
+      "username": "zardevgame",
+      "focus": "Эффективность работы с трафиком, анализ, монетизация.",
+      "location": "Лиссабон",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "IB 🌒",
+      "username": "attezzil",
+      "focus": "В настоящий момент я работаю менеджером проектов в компании, которая занимается платежными...",
+      "location": "Мексика",
+      "isAdvanced": false,
+      "buddy": "@photoreal3d"
+    },
+    {
+      "name": "Ilia Astafev",
+      "username": "IliaAstafev",
+      "focus": "Я CTO / Тех лид и разработчик, поэтому любые проекты. Ответил?",
+      "location": "Берлин",
+      "isAdvanced": false,
+      "buddy": "@agreypilgrim"
+    },
+    {
+      "name": "Ill Liu",
+      "username": "tmn232",
+      "focus": "Финансы",
+      "location": "Лимассол",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ilya",
+      "username": "iSchirov",
+      "focus": "Внедрение ai в крупном энтерпрайзе",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@neog72"
+    },
+    {
+      "name": "Ilya Gindin",
+      "username": "igindin",
+      "focus": null,
+      "location": "Будапешт",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ilya Golubev",
+      "username": "oxigen717",
+      "focus": null,
+      "location": "Россия, Нижний Новгород",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ilya S",
+      "username": "OxIlya",
+      "focus": "Оптимизация рабочего процесса\nХочу уменьшить количество времени и сил, которые уходят на работу,...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Irina N.",
+      "username": "Irhen_N",
+      "focus": "тест",
+      "location": "Армения",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Iskander",
+      "username": "shafigulla",
+      "focus": null,
+      "location": "-",
+      "isAdvanced": false,
+      "buddy": "@polina_kolykhalova"
+    },
+    {
+      "name": "Ivan",
+      "username": "ivanmoz19",
+      "focus": "Commodity trading, поднятие раунда для моей компании, торговля карбон кредитами, отношения с женой,...",
+      "location": "Абу-Даби, ОАЭ",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ivan",
+      "username": "iv_volov",
+      "focus": "Рост как фаундер",
+      "location": "UK",
+      "isAdvanced": false,
+      "buddy": "@antonymuh"
+    },
+    {
+      "name": "Ivan Borisov",
+      "username": "ivan_intouch",
+      "focus": "Финтех, эдтех",
+      "location": "Lisbon",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ivan Mikheev",
+      "username": "ivanmikheev",
+      "focus": "Формирование AI команд\nПерсональная эффективность через AI\nПерекладывание рутинных задач в IT на...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ivan Samokhin",
+      "username": "ivanvsamokhin",
+      "focus": "работа, профессиональное развитие",
+      "location": "пока примерно такой список",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ivan Volynkin",
+      "username": "jonasasx",
+      "focus": "Работа, семья, спорт, обучение\nГлавным образом интерес в автоматизации процессов и задач при помощи...",
+      "location": "Санкт-Петербург",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Jin Kolesnikov 🎏",
+      "username": "He11ya",
+      "focus": null,
+      "location": "Россия, Санкт-Петербург",
+      "isAdvanced": false,
+      "buddy": "@maxmad24"
+    },
+    {
+      "name": "Karina Vantlsav",
+      "username": "vaantslav",
+      "focus": "1. Работа и проекты, в которых я потенциально могу поучаствовать. Мне интересно не просто делать...",
+      "location": "Краков, Польша",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Katia Parshukova",
+      "username": "e_parshukova",
+      "focus": null,
+      "location": "Париж",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Katty",
+      "username": "katutella",
+      "focus": "…",
+      "location": "минск",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Kolya Pye",
+      "username": "Kolyapye",
+      "focus": "фокус на организации работы в моей компании, у нас фреймворк ролевой модели, но кажется не все...",
+      "location": "Санкт-Петербург",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Konstantin Kuznetsov",
+      "username": "Koc123",
+      "focus": "бизнес, здоровье, образование ребенка, инвестиции",
+      "location": "Сейчас Маврикий, через пару недель Дубай, потом Россия.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Konstantin Urvantcev",
+      "username": "altbar",
+      "focus": "Я закончил школу физико-математического профиля, физмат-школу при Новосибирском государственном...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@komratov"
+    },
+    {
+      "name": "Kostas Zhukov",
+      "username": "kostaszhukov",
+      "focus": "Business, my startup - ai video generation platform for ecommerce fashion brands on Shopify",
+      "location": "Vilnius, Lithuania",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Kostya Gorsky",
+      "username": "gorskiy",
+      "focus": "Построение AI native компаний + agentic AI продукт мы сами строим и продаём",
+      "location": "Ирландия",
+      "isAdvanced": false,
+      "buddy": "@tochka2603"
+    },
+    {
+      "name": "Lesha",
+      "username": "reklliooool",
+      "focus": null,
+      "location": "Территориально нахожусь в Польше.",
+      "isAdvanced": false,
+      "buddy": "@funfneunneun"
+    },
+    {
+      "name": "Levin",
+      "username": "yuriylevin",
+      "focus": "Применение ai в различных отраслях, больше интересует трансформация организаций",
+      "location": "Не интересно",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Lika Goglidze",
+      "username": "LikaGoglidze",
+      "focus": "HR",
+      "location": "Белград",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Maks Frolov",
+      "username": "maksimfrolov",
+      "focus": "Работа, личная эффективность, здоровье",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@zalexis"
+    },
+    {
+      "name": "Maria Borodina",
+      "username": "mariija_borodina",
+      "focus": "Смотри, я являюсь руководителем департамента Family Care. Мы заботимся о семье фаундера компании....",
+      "location": "Кипр",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Max Kalyuzhnyi",
+      "username": "max_kalyuzhnyi",
+      "focus": "Фокус в основном на работе. Я руковожу финансами и операционкой криптокомпании, и мне интересно и...",
+      "location": "Лиссабон",
+      "isAdvanced": false,
+      "buddy": "@plekhova"
+    },
+    {
+      "name": "Maximus Kochurin",
+      "username": "maxkochurin",
+      "focus": "you",
+      "location": "Португалия, Лиссабон",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Meka",
+      "username": "Mekme",
+      "focus": "Основной фокус, конечно же, на работе. Очень вдохновляет развитие искусственного интеллекта, и...",
+      "location": "Ну, я территориально нахожусь в России, в городе Казани.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Mikhail Gurevich",
+      "username": "gurev",
+      "focus": "1) Моя работа — всё, что связано с менеджментом, аналитикой, рисерчем и проектированием новых...",
+      "location": "Испания",
+      "isAdvanced": false,
+      "buddy": "@anton_portal"
+    },
+    {
+      "name": "Mikhail Shraibman",
+      "username": "shraibmanm",
+      "focus": "Привет! Я владелец интегратора по внедрению ИИ решений. Мы работаем с интерпрайз-компаниями, такими...",
+      "location": "москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Mikhail Sklyarenko",
+      "username": "mikhail_skl",
+      "focus": "Управление эффективностью команды(людей), усилить и ускорить команды с помощью ии",
+      "location": "А я сейчас живу в Геленджике. Вернее, в Девноморской, рядом с Геленджиком.",
+      "isAdvanced": false,
+      "buddy": "@sergeyryumkin"
+    },
+    {
+      "name": "Muslim",
+      "username": "mslmrs",
+      "focus": "Я занимаюсь образовательными проектами, и сейчас мой фокус — на создании образовательной компании,...",
+      "location": "Я нахожусь в России",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Nadia Kolb",
+      "username": "NadiaKolb",
+      "focus": "Я работаю COO криптобиржи tothemoon.com мне интересно как мы можем поменять нашу компанию внедрив AI",
+      "location": "кипр",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Nick",
+      "username": "mgl4mgl",
+      "focus": "Сейчас мой фокус находится на нескольких взаимосвязанных направлениях.\n\nВо-первых, это создание...",
+      "location": "Buenos Aires",
+      "isAdvanced": false,
+      "buddy": "@principal_andrew"
+    },
+    {
+      "name": "Nicolas Bobroff",
+      "username": "Nicolas_Bobroff",
+      "focus": "Приоритеты 1) Здоровье 2) Семья 3)Бизнес",
+      "location": "Кашкаиш, Португалия",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Nikita Panin",
+      "username": "nikitizer",
+      "focus": "организация операционных процессов наиболее эффективным образом",
+      "location": "-",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Nikolay Karlov",
+      "username": "karlov_accum",
+      "focus": "финтех, управление командами, пресейл, продажи, разработка ПО, стартапы, СТО",
+      "location": "Лондон",
+      "isAdvanced": false,
+      "buddy": "@popovairina_com"
+    },
+    {
+      "name": "Oksana",
+      "username": "Ox22122",
+      "focus": "проекты личного и экспертного развития в части систематизации и повышения эффективности",
+      "location": "Домодедово МО РФ",
+      "isAdvanced": false,
+      "buddy": "@eduardgorbachev"
+    },
+    {
+      "name": "Oleg",
+      "username": "oleg_ovs",
+      "focus": "Предпринимательство, инвестиции",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@dbogod"
+    },
+    {
+      "name": "Oleg",
+      "username": "kopitsyn",
+      "focus": "Работа",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Oleg Ivanov | SecondLane",
+      "username": "IvanovInvest",
+      "focus": "Развиваю проект\n\n Fluenta.space - Bloomberg Terminal for startup ideas + DraftKings for...",
+      "location": "Brazil",
+      "isAdvanced": false,
+      "buddy": "@fshkn"
+    },
+    {
+      "name": "Oleg Potemkin",
+      "username": "olegpotem",
+      "focus": "нейронки, создание проектов, спорт",
+      "location": "Магнитогорск, Челябинская область",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Oleksii Pavlenko",
+      "username": "oleksiipavlenko",
+      "focus": "Mostly AI projects with different prospective, integration AI into product itself, building AI and...",
+      "location": "Ukraine",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Olga",
+      "username": "Olly_AI",
+      "focus": null,
+      "location": "Испания",
+      "isAdvanced": false,
+      "buddy": "@zuzu_eeka"
+    },
+    {
+      "name": "Olga Bortnikova",
+      "username": "olaborola",
+      "focus": "Упрощение процесса принятия решений и управления ресурсами в компании",
+      "location": "Мексика",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Olga Plekhova",
+      "username": "Plekhova",
+      "focus": "Я хочу все строить на своих рабочих процессах. Маркетплейс по предоставлению голосовых консультаций...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@max_kalyuzhnyi"
+    },
+    {
+      "name": "Olga Zueva",
+      "username": "ZuevaOlga",
+      "focus": "Оптимизация расходов в компании",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Olya",
+      "username": "trolyaa",
+      "focus": null,
+      "location": "Минск",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Pavel Rasputin",
+      "username": "Pavelrasputin",
+      "focus": "работа и бизнес, хочу научиться системно строить ai-native организации с минимально необходимым...",
+      "location": "Пхукет",
+      "isAdvanced": false,
+      "buddy": "@ruslanromanchenko"
+    },
+    {
+      "name": "Philipp",
+      "username": "dmitrishin",
+      "focus": "Работа , здоровье хочу наладить и систематизировать",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@alex_named"
+    },
+    {
+      "name": "Polina",
+      "username": "shunkina",
+      "focus": "автоматизация сервисных отделов внутри компании, хочу, чтобы было меньше людей без потери...",
+      "location": "нижний новгород, россия",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "R K",
+      "username": "rodionk100",
+      "focus": "AI\nЗдоровье\nМаксимизация прибыли",
+      "location": "Бали",
+      "isAdvanced": false,
+      "buddy": "@robertlengdon"
+    },
+    {
+      "name": "Rina",
+      "username": "demrina",
+      "focus": "работа и автоматизация текущих процессов",
+      "location": "Кипр",
+      "isAdvanced": false,
+      "buddy": "@oppalena"
+    },
+    {
+      "name": "Roman",
+      "username": "rkrnks",
+      "focus": "работа",
+      "location": "Кипр",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Roman",
+      "username": "RomaJa",
+      "focus": null,
+      "location": "Ижевск",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Roman Bunin",
+      "username": "rbunin",
+      "focus": "AI Adoption",
+      "location": "Амстердам",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Roman Gin",
+      "username": "GinRomDam",
+      "focus": null,
+      "location": "рф",
+      "isAdvanced": false,
+      "buddy": "@alexfrmn"
+    },
+    {
+      "name": "Roman Kalinkin",
+      "username": "rkalinkin",
+      "focus": "Внедрение Ии в бизнес",
+      "location": "Мне не нужны единомышленники",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Ruslan T.",
+      "username": "rus_tym",
+      "focus": null,
+      "location": "лондон",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sasha Radoslavov",
+      "username": "radoslavov",
+      "focus": null,
+      "location": "Бали",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Serg Ignatov",
+      "username": "iserg",
+      "focus": "it, разработка, управление командой, антифрод",
+      "location": "Новосибирск",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergei",
+      "username": "banshchikov77",
+      "focus": "it, marketing, finance",
+      "location": "Сербия",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergei Kozhemiakin",
+      "username": "Kozhemyakins",
+      "focus": "Управление компанией Агима. Личная эффективность. Воспитание дочки. Спорт.",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergei Nevstruev",
+      "username": "nevstruha",
+      "focus": "Сфера государственного управления! Я гос служащий, проекты связаны с взаимодействием государства и...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergey",
+      "username": "Serg28",
+      "focus": null,
+      "location": "Новосибирск",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergey",
+      "username": "volchsv",
+      "focus": "Управление капиталом\nУправление проектами \nУправление командами, бизнесом \nАвтоматизация процессов...",
+      "location": "Лондон",
+      "isAdvanced": false,
+      "buddy": "@soapshark"
+    },
+    {
+      "name": "Sergey",
+      "username": "Sergey_InC",
+      "focus": "На работе, делаю бизнес в сфере предикшн маркетов",
+      "location": "Лиссабон",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergey Alexeev",
+      "username": "ssalex8",
+      "focus": null,
+      "location": "Китай",
+      "isAdvanced": false,
+      "buddy": "@anton_4503"
+    },
+    {
+      "name": "Sergey Avdyakov",
+      "username": "avdyakov",
+      "focus": "Основной фокус сейчас это мой продукт, который я развиваю как технический кофаундер, и это то, что...",
+      "location": "Тбилиси",
+      "isAdvanced": false,
+      "buddy": "@wowdreamer"
+    },
+    {
+      "name": "Sergey Kazlouski",
+      "username": "stock1978",
+      "focus": null,
+      "location": "Франкфурт",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergey Kolesnikov",
+      "username": "kolsolv",
+      "focus": "Практическое применение AI для автоматизации процессов, безопасность AI агентов, архитектуры памяти...",
+      "location": "Тбилиси",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Sergey Lebedev",
+      "username": "s_a_lebedev",
+      "focus": "Руководство 25 командами по 5-7 человек с суммарной численностью 140 человек. Команды делают...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@ksen_khu"
+    },
+    {
+      "name": "Sergey Ryumkin",
+      "username": "sergeyryumkin",
+      "focus": null,
+      "location": "Казахстан",
+      "isAdvanced": false,
+      "buddy": "@mikhail_skl"
+    },
+    {
+      "name": "Stan",
+      "username": "sansgeno",
+      "focus": "Закупка рекламы, разрабокта мобильных приложений и монетизация, автоматизация рутинных процессов",
+      "location": "амстердам",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Stan Prihkodko",
+      "username": "stannats1",
+      "focus": null,
+      "location": "тбилиси",
+      "isAdvanced": false,
+      "buddy": "@ekulikovv"
+    },
+    {
+      "name": "Stanislav Glazov",
+      "username": "prcdrl",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Stanislav Krukhmalev",
+      "username": "skrukhmalev",
+      "focus": null,
+      "location": "Сейчас в Алматы, Казахстан. В ближайшем будущем (летом или раньше) полечу в Калифорнию",
+      "isAdvanced": false,
+      "buddy": "@dmezhov"
+    },
+    {
+      "name": "Stanislav Satsuk",
+      "username": "ssatsuk",
+      "focus": "Управление компание",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "stepan",
+      "username": "sgershuni",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "StreetArt_Common",
+      "username": "StreetArt_Common",
+      "focus": null,
+      "location": "Екатеринбург, Россия",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Svetlana",
+      "username": "svetlana_login",
+      "focus": null,
+      "location": "москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Taras Chumachenko",
+      "username": "t_chum",
+      "focus": "Ключевой фокус на развитии компании Axial Capital, больше всего интереса как сейчас внедрять AI в...",
+      "location": "Аргентина",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Tom",
+      "username": "tommarat",
+      "focus": "Сейчас мой главный фокус — развитие направления центра управления благосостоянием FRAM GROUP и...",
+      "location": "Временно Панама",
+      "isAdvanced": false,
+      "buddy": "@kataeva_anastas"
+    },
+    {
+      "name": "Vadik Pye",
+      "username": "vadikpye",
+      "focus": "если в контексте программы, то изучаю все актуальные инструменты в сфере ии, тестирую, пробую...",
+      "location": "Санкт-Петербург",
+      "isAdvanced": false,
+      "buddy": "@pavloveo"
+    },
+    {
+      "name": "Vadim",
+      "username": "robertlengdon",
+      "focus": "Мой фокус сейчас на таких сферах жизни как карьера и здоровье.\nЕсли говорить про проекты, то тут...",
+      "location": "Питер",
+      "isAdvanced": false,
+      "buddy": "@rodionk100"
+    },
+    {
+      "name": "Valentin",
+      "username": "xbhsy289",
+      "focus": null,
+      "location": "Аргентина. А сейчас лечу в Испанию, буду переезжать туда позже.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Varvara Maeots",
+      "username": "SelfC0nfident",
+      "focus": null,
+      "location": "Я в Москве.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "vasili",
+      "username": "reshire",
+      "focus": null,
+      "location": "Мальта",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vasiliy",
+      "username": "vshvsh",
+      "focus": "крипто, ии агенты",
+      "location": "предпочту не говорит",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vasiliy Kirienkov",
+      "username": "v_kirienkov",
+      "focus": "Работа (компания - дистрибутор FMCG, офис/склад, автоматизация процессов) и воспитание детей. Ну и...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vasily Bykov",
+      "username": "bykovvasily",
+      "focus": "- Бизнес. Работа в небольшом стартапе\n- Повышение эффективности как собственной, так и всей команды",
+      "location": "Москва.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vasyl Ivanov",
+      "username": "vasyl_keepsolid",
+      "focus": "IT-компания, создает собственные продукты. Интересует ИИ в применении к сферам: разработка,...",
+      "location": "St. Petersburg, Florida",
+      "isAdvanced": false,
+      "buddy": "@yashablack"
+    },
+    {
+      "name": "Vitaly",
+      "username": "VitalyVazh",
+      "focus": "Интересно создание автономных бизнесов БЕЗ людей, которые масштабируются и дают качественно новый...",
+      "location": "Москва/ Лиссабон",
+      "isAdvanced": false,
+      "buddy": "@lyudmilatyum"
+    },
+    {
+      "name": "Vitaly Doshchenko",
+      "username": "vitaly_d",
+      "focus": "Я люблю вайбкодить, я люблю строить процессы, я люблю Kanban метод, я люблю дизайн agile...",
+      "location": "Барселона",
+      "isAdvanced": false,
+      "buddy": "@ekateric"
+    },
+    {
+      "name": "Vitaly Kleban",
+      "username": "vkleban",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vlad",
+      "username": "ceo_belsun",
+      "focus": "Работа. Повышение личной эффективности через освоение новых для себя технологий, методов и...",
+      "location": "Минск",
+      "isAdvanced": false,
+      "buddy": "@denispyankov"
+    },
+    {
+      "name": "Vlad Solovev",
+      "username": "solovvs",
+      "focus": "Инвестиции, частные компании, ai llm",
+      "location": "Белград",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vladimir Okulov",
+      "username": "okulovvs",
+      "focus": null,
+      "location": "Питер",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vladimir Shatskii",
+      "username": "vldsht",
+      "focus": "автоматизации рутинных задач\n\nВоспитание детей, детское образование, авматизация бизнес процессов в...",
+      "location": "Санкт-Петербург",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Vladislav Volkhonskii",
+      "username": "vvolkhonskii",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Y | G",
+      "username": "funfneunneun",
+      "focus": "ЛОКАЛЬНО. прямо сейчас выстраиваю ai-native сеть ресторанов (так получилось. делаю это тк у меня...",
+      "location": "Португалия.",
+      "isAdvanced": false,
+      "buddy": "@reklliooool"
+    },
+    {
+      "name": "yasha",
+      "username": "yashablack",
+      "focus": null,
+      "location": "Будва, Черногория",
+      "isAdvanced": false,
+      "buddy": "@vasyl_keepsolid"
+    },
+    {
+      "name": "Yuliya Lutsenko (BB HQ)",
+      "username": "yuliyaltsnk",
+      "focus": "Автоматизация HR процессов и фин. аналитики",
+      "location": "не важно",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Yury Korneo",
+      "username": "photoreal3d",
+      "focus": "Сейчас фокус на работе, мы занимаемся 3д визуализацией объектов недвижимости",
+      "location": "В Мадриде в Испании",
+      "isAdvanced": false,
+      "buddy": "@attezzil"
+    },
+    {
+      "name": "Zagir Gatin",
+      "username": "zagir17",
+      "focus": "я в роли PO занимаюсь трансформацией продукта MarTech на базе AI",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Александр Корепанов",
+      "username": "AleksandrKorepanov",
+      "focus": "пересборка ИТ продуктовой компании с учетом новых технологии и ИИ разработки",
+      "location": "Москва, Ижевск, Крым",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Антон Граборов",
+      "username": "anton_4503",
+      "focus": "В целом меня интересует, я уже более двух лет плотно занимаюсь внедрением AI-сервисов различных в...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@ssalex8"
+    },
+    {
+      "name": "Ваня Тихомиров",
+      "username": "tiho_mirnov",
+      "focus": "я баинг директор в рекламном агентстве мобильного маркетинга. я руковожу отделом закупки рекламы -...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@rybakov_sa"
+    },
+    {
+      "name": "Виктор",
+      "username": "Monetizator93",
+      "focus": "фокус на бизнесе в сфере мобильных приложений",
+      "location": "Прага",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Виктор Медведев",
+      "username": "neog72",
+      "focus": "Работа над собственным дашбордом (командный центр), выступления, корпоративное обучение",
+      "location": "Тюмень",
+      "isAdvanced": false,
+      "buddy": "@ischirov"
+    },
+    {
+      "name": "даник A",
+      "username": "accside",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Дарья",
+      "username": "voronik1801",
+      "focus": "• Основной фокус на работе и на личных операционных задачах. Мне интересно автоматизировать и...",
+      "location": "В процессе обучения я сменю 3 города: Дананг, Алматы, Мармарис",
+      "isAdvanced": false,
+      "buddy": "@dimography"
+    },
+    {
+      "name": "Дмитрий Комратов",
+      "username": "komratov",
+      "focus": "Личная эффективность, масштабирование бизнеса, запуск нового проекта.",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@altbar"
+    },
+    {
+      "name": "Дмитрий Хрупов",
+      "username": "d_khrupov",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Евгений",
+      "username": "mrgavrila",
+      "focus": "Сейчас мой фокус — сделать так, чтобы AI реально помогал каждый день, а не был набором разрозненных...",
+      "location": "Россия, Калининград",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Евгений Власов",
+      "username": "VlasovEA",
+      "focus": null,
+      "location": "Старая Русса, новгородская область.",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Екатерина",
+      "username": "catpan",
+      "focus": "Организация работы команд. Ускорение команд. Минимизация человеческого ресурса в...",
+      "location": "Санкт-Петербург",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Екатерина Тараман",
+      "username": "daughtermoby",
+      "focus": "Сейчас мой главный фокус на том, чтобы двигать компанию в сторону AI First. Больше всего меня...",
+      "location": "Батуми",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Елена Борисенко",
+      "username": "tochka2603",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@gorskiy"
+    },
+    {
+      "name": "Зайтун",
+      "username": "smithjan21",
+      "focus": "1) Работа и развитие продукта+команды. Я руководитель отдела разработки ботов, работающих на...",
+      "location": "Паттайя, Таиланд",
+      "isAdvanced": false,
+      "buddy": "@levitin"
+    },
+    {
+      "name": "Илья Филимоненков",
+      "username": "IlyaFilim",
+      "focus": "Разработка B2B продуктов, создание AI-агентов для цифровизации операционных задач, оптимизации...",
+      "location": "Краснодар",
+      "isAdvanced": false,
+      "buddy": "@georgesuch"
+    },
+    {
+      "name": "Ирина Попова",
+      "username": "PopovaIrina_com",
+      "focus": "1. Повышение эффективности процессов моей компании \n\n2. Методы повышения эффективности процессов...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@karlov_accum"
+    },
+    {
+      "name": "Ксения Худякова",
+      "username": "ksen_khu",
+      "focus": "работа. я развиваю 2 европейских бренда (консалтинг и ретритный дом) и коммерческий директор в 4...",
+      "location": "Белград (но оч часто перемещаюсь, в основном, по европе)",
+      "isAdvanced": false,
+      "buddy": "@s_a_lebedev"
+    },
+    {
+      "name": "Лена Никитина",
+      "username": "oppalena",
+      "focus": "ИИ-трансформации рекламного агентства. Pivot рекламной платформы DSP",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@demrina"
+    },
+    {
+      "name": "Людмила",
+      "username": "LyudmilaTyum",
+      "focus": "фин анализ, бухгалтерия, продажи, управление персоналом",
+      "location": "казань",
+      "isAdvanced": false,
+      "buddy": "@vitalyvazh"
+    },
+    {
+      "name": "Максим Драница",
+      "username": "maxmad24",
+      "focus": "строю компанию по обучению и внедрению ИИ в бизнес процессы уже 3 года. Это основной фокус",
+      "location": "Я в Москве, бываю в Европе, хочу в Америку)",
+      "isAdvanced": false,
+      "buddy": "@he11ya"
+    },
+    {
+      "name": "Мария",
+      "username": "maria_karinska",
+      "focus": "Добрый день! Спасибо большое за возможность присоединиться к лабе. Кажется, что вы делаете, ну, на...",
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Михаил Иванов",
+      "username": "larkinmd1",
+      "focus": "ИИ в корп сегменте",
+      "location": "россия",
+      "isAdvanced": false,
+      "buddy": "@geramozg"
+    },
+    {
+      "name": "Никита Астапов",
+      "username": "artveretevo",
+      "focus": "Управление и развитие загородного отеля",
+      "location": "Московская область. Дубна",
+      "isAdvanced": false,
+      "buddy": "@tonkolytko"
+    },
+    {
+      "name": "Олег Тараканов",
+      "username": "druoleg",
+      "focus": "Автоматизация разработки и поддержки систем",
+      "location": "Самара",
+      "isAdvanced": false,
+      "buddy": "@antowl"
+    },
+    {
+      "name": "Полина Колыхалова",
+      "username": "polina_kolykhalova",
+      "focus": "Профессиональные интересы: разработка мультимедиа и учебного контента, курсов для взрослых людей....",
+      "location": "Россия, Москва",
+      "isAdvanced": false,
+      "buddy": "@shafigulla"
+    },
+    {
+      "name": "Руслан Романченко",
+      "username": "ruslanromanchenko",
+      "focus": "Да, в первую очередь на своем бизнесе у меня строительная компания в сфере капитального ремонта,...",
+      "location": "Ростов, Ростовская область, очень нужны единомышленники.",
+      "isAdvanced": false,
+      "buddy": "@pavelrasputin"
+    },
+    {
+      "name": "Сергей",
+      "username": "sergey_v16",
+      "focus": "Строительство и эксплуатация жилых и промышленных объектов",
+      "location": "Ростов-на-Дону",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Сергей Рыбаков",
+      "username": "rybakov_sa",
+      "focus": null,
+      "location": "Москва",
+      "isAdvanced": false,
+      "buddy": "@tiho_mirnov"
+    },
+    {
+      "name": "Сергей Сухов",
+      "username": "sergeysukhov",
+      "focus": null,
+      "location": "В России",
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Сережа Рис",
+      "username": "serejaris",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": null
+    },
+    {
+      "name": "Станислав Федосеев",
+      "username": "kettarian_fox",
+      "focus": null,
+      "location": null,
+      "isAdvanced": false,
+      "buddy": "@densmirnov"
+    }
+  ],
+  "meta": {
+    "total": 230,
+    "advanced": 0,
+    "withBuddy": 101
+  }
+}
