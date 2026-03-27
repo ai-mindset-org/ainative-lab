@@ -259,7 +259,7 @@ function weekOf(nid){
 const buckets={w1:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w2:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w3:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]}};
 const shared=[];
 gd.nodes.forEach(n=>{
-  if(['w1','w2','w3'].includes(n.id)){n.fx=wc[n.id].x;n.fy=wc[n.id].y;return;}
+  if(['w1','w2','w3'].includes(n.id)){n.x=n.fx=wc[n.id].x;n.y=n.fy=wc[n.id].y;return;}
   const w=weekOf(n.id);
   if(w&&buckets[w]){
     const b=['speaker','team'].includes(n.type)?'sp':n.type==='curator'?'cur':n.type==='session'?'ses':['topic','concept'].includes(n.type)?'top':n.type==='resource'?'res':'oth';
@@ -269,14 +269,14 @@ gd.nodes.forEach(n=>{
 
 Object.entries(buckets).forEach(([w,b])=>{
   const c=wc[w];
-  b.ses.forEach((n,i)=>{const p=ring(c.x,c.y,50,i,Math.max(b.ses.length,1));n.fx=p.x;n.fy=p.y;});
-  b.sp.forEach((n,i)=>{const p=ring(c.x,c.y,80,i,b.sp.length);n.fx=p.x;n.fy=p.y;});
-  b.cur.forEach((n,i)=>{const p=ring(c.x,c.y,110,i+0.3,Math.max(b.cur.length,1));n.fx=p.x;n.fy=p.y;});
-  b.top.forEach((n,i)=>{const p=ring(c.x,c.y,140,i,b.top.length);n.fx=p.x;n.fy=p.y;});
-  b.res.forEach((n,i)=>{const p=ring(c.x,c.y,170,i,Math.max(b.res.length,1));n.fx=p.x;n.fy=p.y;});
-  b.oth.forEach((n,i)=>{const p=ring(c.x,c.y,120,i+0.5,Math.max(b.oth.length,1));n.fx=p.x;n.fy=p.y;});
+  b.ses.forEach((n,i)=>{const p=ring(c.x,c.y,50,i,Math.max(b.ses.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.sp.forEach((n,i)=>{const p=ring(c.x,c.y,80,i,b.sp.length);n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.cur.forEach((n,i)=>{const p=ring(c.x,c.y,110,i+0.3,Math.max(b.cur.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.top.forEach((n,i)=>{const p=ring(c.x,c.y,140,i,b.top.length);n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.res.forEach((n,i)=>{const p=ring(c.x,c.y,170,i,Math.max(b.res.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.oth.forEach((n,i)=>{const p=ring(c.x,c.y,120,i+0.5,Math.max(b.oth.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
 });
-shared.forEach((n,i)=>{const p=ring(0,0,50,i,Math.max(shared.length,1));n.fx=p.x;n.fy=p.y;});
+shared.forEach((n,i)=>{const p=ring(0,0,50,i,Math.max(shared.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
 
 // ════════ PRELOAD AVATARS ════════
 const avatarCache={};
@@ -300,8 +300,11 @@ const graph = ForceGraph()(document.getElementById('graph'))
     const r=tp.s;
     const img=avatarCache[node.id];
 
-    const t = Date.now() * 0.001; // time for animations
+    const t = Date.now() * 0.001;
     const isHovered = node === hoveredNode;
+
+    // Safety: skip render if position is NaN
+    if (!isFinite(node.x) || !isFinite(node.y)) return;
 
     // Draw node
     if(img){
