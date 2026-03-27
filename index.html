@@ -353,13 +353,28 @@ N('d-auto','Automated Process','deliver','End-to-end business function.');
 N('d-plan','90-Day Plan','deliver','Quick wins → scale → roles.');
 N('d-demo','Demo Day','deliver','5 min + live demo + ROI.');
 
-// Concepts
-N('c-aifirst','AI-First','concept','Design assuming AI exists.');
-N('c-token','Token Stream','concept','Org = info processor.');
-N('c-mirror','Mirror Agents','concept','MCP + internal loops.');
-N('c-bitter','Bitter Lesson','concept','Scale > engineered knowledge.');
-N('c-lms','LMS Platform','concept','Learning management. Unique session links. 12-month video access.');
-N('c-buddy','Buddy System','concept','1-on-1 participant pairing. Rotation each week.');
+// Concepts (25 extracted from sprint lectures)
+N('six-layer-architecture','6-Layer Architecture','concept','Infra > Context > Orchestration > Skills > People > Governance');
+N('bitter-lesson','Bitter Lesson','concept','Scale + compute beats hand-engineered knowledge (Sutton 2019)');
+N('token-stream','Token Stream','concept','Every org is info processor: inputs tokenized, processed, output');
+N('harness-engineering','Harness Engineering','concept','Agent = Model + Harness. 80% value from harness, 20% from model');
+N('strangler-fig','Strangler Fig Pattern','concept','Gradually wrap old process with agent replacement, not big-bang');
+N('four-orch','4 Orchestration Topologies','concept','Sequential, Concurrent, Handoff, Judge Loop + Adaptive Routing');
+N('ai-champion-model','AI Champion Model','concept','Dedicated role per department: finds processes, writes skills, measures ROI');
+N('process-audit-formula','Process Audit Formula','concept','Priority = Frequency x Time x Error Rate x Scalability (each 1-5)');
+N('mirror-agents','Mirror Agents','concept','Personal agent per employee. Mirrors coordinate without interrupting humans');
+N('geo','GEO','concept','Generative Engine Optimization. llms.txt, JSON-LD, agent-readable data');
+N('vsm','Viable System Model','concept','Stafford Beer cybernetic org model applied to agent teams');
+N('context-engineering','Context Engineering','concept','Not prompt engineering. Ontology, Graph RAG, telescoping docs');
+N('skill-as-job','Skill = Coded Job','concept','Not prompts but full job specs: workflow, constraints, examples, eval');
+N('five-constraints','5 Breaking Constraints','concept','Cost 10-100x, Speed ms, Bandwidth 50+ agents, Scale 0 marginal, Parallel 30x');
+N('autonomy-levels','5 Autonomy Levels','concept','Traditional ML > LLM Chat > Workflow > Agent > Skill (fully autonomous)');
+N('graph-rag','Graph RAG','concept','Knowledge graph + retrieval augmented generation for company context');
+N('vibe-coding','Vibe-Coding','concept','You = CEO, AI agents = employees. Build business factory via prompts');
+N('self-improving','Self-Improving Agents','concept','Static prompts > feedback loops > quality signals > autonomous improvement');
+N('90-day-plan','90-Day Transformation','concept','Quick wins (W1-4) > Scaling (W5-8) > New roles (W9-12)');
+N('c-lms','LMS Platform','concept','Learning management. Unique session links. 12-month video access');
+N('c-buddy','Buddy System','concept','1-on-1 participant pairing. Rotation each week');
 
 // ── LINKS ──
 // Team → Weeks
@@ -427,9 +442,21 @@ L('w1','d-asst','produces'); L('w1','d-top10','produces');
 L('w2','d-ontology','produces'); L('w2','d-skillfile','produces');
 L('w3','d-auto','produces'); L('w3','d-plan','produces'); L('w3','d-demo','produces');
 
-// Concepts → Topics
-L('c-aifirst','t-pos','shapes'); L('c-aifirst','t-6layer','shapes');
-L('c-token','t-process','shapes'); L('c-mirror','t-orch','shapes'); L('c-bitter','t-scaling','shapes');
+// Concepts → Weeks (when taught)
+L('bitter-lesson','w1','taught'); L('token-stream','w1','taught'); L('harness-engineering','w1','taught');
+L('five-constraints','w1','taught'); L('autonomy-levels','w1','taught'); L('vibe-coding','w1','taught');
+L('six-layer-architecture','w2','taught'); L('four-orch','w2','taught'); L('context-engineering','w2','taught');
+L('skill-as-job','w2','taught'); L('graph-rag','w2','taught'); L('vsm','w2','taught');
+L('self-improving','w2','taught'); L('mirror-agents','w2','taught');
+L('strangler-fig','w3','taught'); L('ai-champion-model','w3','taught'); L('process-audit-formula','w3','taught');
+L('geo','w3','taught'); L('90-day-plan','w3','taught');
+
+// Concept inter-connections
+L('six-layer-architecture','context-engineering','includes'); L('six-layer-architecture','four-orch','includes');
+L('six-layer-architecture','skill-as-job','includes'); L('harness-engineering','skill-as-job','related');
+L('context-engineering','graph-rag','uses'); L('mirror-agents','four-orch','uses');
+L('process-audit-formula','ai-champion-model','feeds'); L('vibe-coding','autonomy-levels','related');
+L('self-improving','skill-as-job','evolves');
 
 // LMS & Buddy → Weeks
 L('c-lms','w1','supports'); L('c-lms','w2','supports'); L('c-lms','w3','supports');
@@ -669,8 +696,13 @@ const tip = document.getElementById('tip');
 function onHover(node) {
   container.style.cursor = node?'pointer':'default';
   if (hovered && hovered.__halo) hovered.__halo.material.opacity=0.18;
+  if (hovered && hovered.__label && hovered.type === 'participant' && !showLabels) hovered.__label.visible = false;
   hovered=node;
-  if (node) { if(node.__halo)node.__halo.material.opacity=0.4; tip.textContent=`${TYPES[node.type]?.icon||''} ${node.name}`; tip.classList.add('on'); }
+  if (node) {
+    if(node.__halo)node.__halo.material.opacity=0.4;
+    if (node.__label && node.type === 'participant') node.__label.visible = true;
+    tip.textContent=`${TYPES[node.type]?.icon||''} ${node.name}`; tip.classList.add('on');
+  }
   else tip.classList.remove('on');
 }
 document.addEventListener('pointermove', e => { tip.style.left=(e.clientX+10)+'px'; tip.style.top=(e.clientY-6)+'px'; });
@@ -734,10 +766,17 @@ function showInfo(node) {
     if(s===node.id){const n2=graphData.nodes.find(n=>n.id===tt);if(n2)conns.push({node:n2,rel:l.type,dir:'→'});}
     if(tt===node.id){const n2=graphData.nodes.find(n=>n.id===s);if(n2)conns.push({node:n2,rel:l.type,dir:'←'});}
   });
+  // Telegram link for person nodes
+  const isPerson = ['participant','speaker','curator','team'].includes(node.type);
+  const tgMatch = isPerson ? node.description?.match(/@(\w+)/) : null;
+  const tgLink = tgMatch ? `<a class="vault-link" href="https://t.me/${tgMatch[1]}" target="_blank" style="margin-right:8px">@${tgMatch[1]} in Telegram</a>` : '';
+  // Obsidian link for nodes with path property
+  const obsLink = node.path ? `<a class="vault-link" href="obsidian://open?vault=notes&file=${encodeURIComponent(node.path)}" target="_blank">Open in Obsidian</a>` : '';
   infoBody.innerHTML=`
     <span class="badge" style="background:${color}18;color:${color};border:1px solid ${color}30">${t.icon||''} ${t.label||node.type}</span>
     <h2>${node.name}</h2>
     <div class="desc">${node.description||''}</div>
+    ${(tgLink||obsLink)?`<div style="margin-top:10px">${tgLink}${obsLink}</div>`:''}
     ${conns.length?`<div class="conn-title">Connections (${conns.length})</div>
     ${conns.map(c=>`<div class="conn-item" data-id="${c.node.id}"><span class="conn-dot" style="background:${TYPES[c.node.type]?.color||'#64748b'}"></span>${c.dir} ${c.node.name}<span class="conn-rel">${c.rel}</span></div>`).join('')}`:''}
   `;
