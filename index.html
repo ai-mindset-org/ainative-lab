@@ -493,6 +493,79 @@ L('self-improving','skill-as-job','evolves');
 const graphData = DATA;
 
 // ══════════════════════════════════════════════════
+//  CLUSTER ASSIGNMENT + POSITION PRE-SEEDING
+//  Place 3 week clusters at 120° apart, seed all nodes near their cluster
+// ══════════════════════════════════════════════════
+const CR = 90; // cluster radius
+const CLUSTER_CENTERS = {
+  w1: { x: -CR,      y: 0,       z: 0 },
+  w2: { x: CR * 0.5, y: CR*0.87, z: 0 },
+  w3: { x: CR * 0.5, y:-CR*0.87, z: 0 },
+  shared: { x: 0,    y: 0,       z: 0 },
+};
+
+// Determine which week-cluster each node belongs to
+function assignCluster(node) {
+  if (node.id === 'w1') return 'w1';
+  if (node.id === 'w2') return 'w2';
+  if (node.id === 'w3') return 'w3';
+  // Check links to weeks
+  const weekLinks = graphData.links.filter(l => {
+    const s = typeof l.source === 'string' ? l.source : l.source?.id;
+    const t = typeof l.target === 'string' ? l.target : l.target?.id;
+    return (s === node.id && (t === 'w1' || t === 'w2' || t === 'w3')) ||
+           (t === node.id && (s === 'w1' || s === 'w2' || s === 'w3'));
+  });
+  if (weekLinks.length === 0) {
+    // Check indirect: linked to something that links to a week
+    const directLinks = graphData.links.filter(l => {
+      const s = typeof l.source === 'string' ? l.source : l.source?.id;
+      const t = typeof l.target === 'string' ? l.target : l.target?.id;
+      return s === node.id || t === node.id;
+    });
+    for (const dl of directLinks) {
+      const other = (typeof dl.source === 'string' ? dl.source : dl.source?.id) === node.id
+        ? (typeof dl.target === 'string' ? dl.target : dl.target?.id)
+        : (typeof dl.source === 'string' ? dl.source : dl.source?.id);
+      const otherWeekLinks = graphData.links.filter(l => {
+        const s = typeof l.source === 'string' ? l.source : l.source?.id;
+        const t = typeof l.target === 'string' ? l.target : l.target?.id;
+        return (s === other && ['w1','w2','w3'].includes(t)) || (t === other && ['w1','w2','w3'].includes(s));
+      });
+      if (otherWeekLinks.length > 0) {
+        const wk = otherWeekLinks[0];
+        const wid = ['w1','w2','w3'].find(w => (typeof wk.source === 'string' ? wk.source : wk.source?.id) === w || (typeof wk.target === 'string' ? wk.target : wk.target?.id) === w);
+        if (wid) return wid;
+      }
+    }
+    return 'shared';
+  }
+  if (weekLinks.length === 1) {
+    const wk = weekLinks[0];
+    return ['w1','w2','w3'].find(w => (typeof wk.source === 'string' ? wk.source : wk.source?.id) === w || (typeof wk.target === 'string' ? wk.target : wk.target?.id) === w) || 'w1';
+  }
+  // Multi-week: pick first
+  const wk = weekLinks[0];
+  return ['w1','w2','w3'].find(w => (typeof wk.source === 'string' ? wk.source : wk.source?.id) === w || (typeof wk.target === 'string' ? wk.target : wk.target?.id) === w) || 'shared';
+}
+
+// Pre-seed positions
+graphData.nodes.forEach(n => {
+  const cluster = assignCluster(n);
+  n._cluster = cluster;
+  const center = CLUSTER_CENTERS[cluster] || CLUSTER_CENTERS.shared;
+  const isWeek = ['w1','w2','w3'].includes(n.id);
+  const spread = isWeek ? 0 : 30;
+  n.x = center.x + (Math.random() - 0.5) * spread;
+  n.y = center.y + (Math.random() - 0.5) * spread;
+  n.z = (Math.random() - 0.5) * 15; // slight Z variation for depth
+});
+
+console.log('Clusters:', Object.entries(
+  graphData.nodes.reduce((a, n) => { a[n._cluster] = (a[n._cluster]||0)+1; return a; }, {})
+));
+
+// ══════════════════════════════════════════════════
 //  PARTICLE SHADERS (ambient background)
 // ══════════════════════════════════════════════════
 const PARTICLE_VS = `
@@ -648,11 +721,14 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
     return s ? TYPES[s.type]?.color||'#4dc9d4' : '#4dc9d4';
   })
-  .d3Force('charge', d3.forceManyBody().strength(-200))
-  .d3Force('link', d3.forceLink().distance(40).strength(0.08))
-  .d3Force('center', d3.forceCenter().strength(0.03))
-  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||3)*2.5))
-  .d3AlphaDecay(0.03)
+  .d3Force('charge', d3.forceManyBody().strength(-120))
+  .d3Force('link', d3.forceLink().distance(30).strength(0.06))
+  .d3Force('center', d3.forceCenter().strength(0.005))
+  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||3)*2.0))
+  // Clustering forces — pull nodes toward their week cluster center (XY plane)
+  .d3Force('clusterX', d3.forceX(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).x).strength(0.2))
+  .d3Force('clusterY', d3.forceY(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).y).strength(0.2))
+  .d3AlphaDecay(0.02)
   .onNodeHover(onHover)
   .onNodeClick(onClick)
   .onBackgroundClick(onBgClick);
@@ -889,7 +965,7 @@ Object.entries(TYPES).forEach(([type,cfg])=>{
 });
 
 // Controls
-function resetCam(){Graph.cameraPosition({x:0,y:30,z:180},{x:0,y:0,z:0},800);resetHL();closeInfo();selected=null;navHistory.length=0;updateBack();}
+function resetCam(){Graph.cameraPosition({x:0,y:80,z:280},{x:0,y:0,z:0},1000);resetHL();closeInfo();selected=null;navHistory.length=0;updateBack();}
 function toggleLabels(){showLabels=!showLabels;document.getElementById('btn-labels').classList.toggle('on',showLabels);graphData.nodes.forEach(n=>{if(n.__label)n.__label.visible=showLabels;});}
 document.getElementById('btn-reset').onclick=resetCam;
 document.getElementById('btn-labels').onclick=toggleLabels;
@@ -903,7 +979,7 @@ function updateStats(nodes,links){
 }
 updateStats();
 
-Graph.cameraPosition({x:0,y:30,z:180});
+Graph.cameraPosition({x:0,y:80,z:280});
 setTimeout(()=>{document.getElementById('loading').classList.add('done');setTimeout(()=>document.getElementById('loading').remove(),500);},1200);
 new ResizeObserver(()=>{Graph.width(window.innerWidth);Graph.height(window.innerHeight);}).observe(document.body);
 
