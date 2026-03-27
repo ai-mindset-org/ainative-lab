@@ -96,6 +96,7 @@ const T = {
   tool:    {c:'#ff6b6b',l:'Tools',    s:5},
   deliver: {c:'#06b6d4',l:'Delivers', s:5},
   concept: {c:'#10b981',l:'Concepts', s:5},
+  resource:{c:'#fbbf24',l:'Resources',s:4},
 };
 
 // ════════ DATA ════════
@@ -159,6 +160,29 @@ N('c-harness','Harness\nEngineering','concept','80% value from harness, 20% mode
 N('c-token','Token\nStream','concept','Org = info processor.');
 N('c-bitter','Bitter\nLesson','concept','Scale > engineered knowledge.');
 N('c-mirror','Mirror\nAgents','concept','MCP + internal control loops.');
+N('c-strangler','Strangler\nFig','concept','Gradually wrap old process with AI.');
+N('c-geo','GEO','concept','llms.txt, JSON-LD — agent-readable data.');
+N('c-5levels','5 Autonomy\nLevels','concept','ML → Chat → Workflow → Agent → Skill.');
+N('c-90day','90-Day\nPlan','concept','Quick wins → Scaling → New roles.');
+
+// Sessions (from LMS — with video links)
+N('s-lecture1','Lecture 1:\nWhy AI Transform','session','172 min · Shopify/Spotify/Block cases. Harness Engineering. POS → Team OS → Company OS.');
+N('s-setup','POS Setup\nWorkshop','session','161 min · Naming convention, Claude Code, Obsidian, skills, dashboards.');
+N('s-team','Personal →\nTeam Workshop','session','150 min · Process audit, 10 automations, AI Champion. Curator demos.');
+N('s-lecture2','Lecture 2:\nSystem Above Model','session','85 min · 6 layers. Context engineering. 4 orchestration topologies.');
+N('s-lecture3','Lecture 3:\nStrategy to Plan','session','90 min · Business models, 90-day plan, AI Champion + AI COO roles.');
+N('s-demo','Demo Day','session','Final presentations. 5 min + live demo + ROI. April 13.');
+
+// Key Resources (from LMS speakerMaterials)
+N('r-playbook','AI-Native\nPlaybook Slides','resource','Gershuni lecture slides PDF.');
+N('r-plugin','AI-Native\nPlugin','resource','github.com/Gerstep/ai-native-plugin — Claude Code / Codex.');
+N('r-quiz','AI-Nativeness\nQuiz (L0–L3)','resource','codos.ai/quiz — assess your AI maturity.');
+N('r-harness','Harness\nEngineering','resource','cybos.ai/harness — interactive research.');
+N('r-pos-deck','POS Setup\nSlides','resource','Interactive deck: pos-setup-v2.html');
+N('r-stack','POS Stack\nExplorer','resource','Interactive tool configurator.');
+N('r-keyboard','Keyboard\nEfficiency','resource','keyboard.aimindset.org');
+N('r-team-deck','Team Workshop\nSlides','resource','Team building deck.');
+N('r-aicorp','AI Corp\n(Sereja Ris)','resource','sereja.tech/aicorp — AI corporation framework.');
 
 // ════════ LINKS ════════
 // Team → weeks
@@ -192,6 +216,20 @@ L('t-6layer','tool-mcp','uses');
 // Concepts → topics
 L('c-harness','t-skills','shapes');L('c-token','t-process','shapes');
 L('c-bitter','t-6layer','shapes');L('c-mirror','t-orch','shapes');
+L('c-strangler','t-bizmodel','shapes');L('c-geo','t-bizmodel','shapes');
+L('c-5levels','t-skills','shapes');L('c-90day','t-champion','shapes');
+// Sessions → weeks + speakers
+L('s-lecture1','w1','in');L('s-setup','w1','in');L('s-team','w1','in');
+L('s-lecture2','w2','in');L('s-lecture3','w3','in');L('s-demo','w3','in');
+L('s-lecture1','stepan','led_by');L('s-setup','alex','led_by');L('s-team','alex','led_by');
+L('s-lecture2','stepan','led_by');L('s-lecture3','stepan','led_by');
+// Resources → sessions + speakers
+L('r-playbook','s-lecture1','material');L('r-plugin','s-lecture1','material');
+L('r-quiz','s-lecture1','material');L('r-harness','s-lecture1','material');
+L('r-pos-deck','s-setup','material');L('r-stack','s-setup','material');
+L('r-keyboard','s-setup','material');
+L('r-team-deck','s-team','material');L('r-aicorp','s-team','material');
+L('r-aicorp','sereja','created');
 
 const gd = D;
 
@@ -208,23 +246,25 @@ function weekOf(nid){
   return null;
 }
 
-const buckets={w1:{sp:[],cur:[],top:[],oth:[]},w2:{sp:[],cur:[],top:[],oth:[]},w3:{sp:[],cur:[],top:[],oth:[]}};
+const buckets={w1:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w2:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w3:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]}};
 const shared=[];
 gd.nodes.forEach(n=>{
   if(['w1','w2','w3'].includes(n.id)){n.fx=wc[n.id].x;n.fy=wc[n.id].y;return;}
   const w=weekOf(n.id);
   if(w&&buckets[w]){
-    const b=['speaker','team'].includes(n.type)?'sp':n.type==='curator'?'cur':['topic','concept'].includes(n.type)?'top':'oth';
+    const b=['speaker','team'].includes(n.type)?'sp':n.type==='curator'?'cur':n.type==='session'?'ses':['topic','concept'].includes(n.type)?'top':n.type==='resource'?'res':'oth';
     buckets[w][b].push(n);
   } else shared.push(n);
 });
 
 Object.entries(buckets).forEach(([w,b])=>{
   const c=wc[w];
-  b.sp.forEach((n,i)=>{const p=ring(c.x,c.y,70,i,b.sp.length);n.fx=p.x;n.fy=p.y;});
-  b.cur.forEach((n,i)=>{const p=ring(c.x,c.y,100,i+0.3,Math.max(b.cur.length,1));n.fx=p.x;n.fy=p.y;});
-  b.top.forEach((n,i)=>{const p=ring(c.x,c.y,130,i,b.top.length);n.fx=p.x;n.fy=p.y;});
-  b.oth.forEach((n,i)=>{const p=ring(c.x,c.y,110,i+0.5,Math.max(b.oth.length,1));n.fx=p.x;n.fy=p.y;});
+  b.ses.forEach((n,i)=>{const p=ring(c.x,c.y,50,i,Math.max(b.ses.length,1));n.fx=p.x;n.fy=p.y;});
+  b.sp.forEach((n,i)=>{const p=ring(c.x,c.y,80,i,b.sp.length);n.fx=p.x;n.fy=p.y;});
+  b.cur.forEach((n,i)=>{const p=ring(c.x,c.y,110,i+0.3,Math.max(b.cur.length,1));n.fx=p.x;n.fy=p.y;});
+  b.top.forEach((n,i)=>{const p=ring(c.x,c.y,140,i,b.top.length);n.fx=p.x;n.fy=p.y;});
+  b.res.forEach((n,i)=>{const p=ring(c.x,c.y,170,i,Math.max(b.res.length,1));n.fx=p.x;n.fy=p.y;});
+  b.oth.forEach((n,i)=>{const p=ring(c.x,c.y,120,i+0.5,Math.max(b.oth.length,1));n.fx=p.x;n.fy=p.y;});
 });
 shared.forEach((n,i)=>{const p=ring(0,0,50,i,Math.max(shared.length,1));n.fx=p.x;n.fy=p.y;});
 
@@ -266,6 +306,32 @@ const graph = ForceGraph()(document.getElementById('graph'))
       grad.addColorStop(0,tp.c);grad.addColorStop(1,tp.c+'60');
       ctx.fillStyle=grad;ctx.fill();
       ctx.strokeStyle=tp.c;ctx.lineWidth=2;ctx.stroke();
+    } else if(node.type==='resource'){
+      // Resource: small rounded rect
+      const w=r*1.6,h=r*1.2;
+      ctx.beginPath();
+      ctx.roundRect(node.x-w/2,node.y-h/2,w,h,3);
+      ctx.fillStyle=tp.c+'40';ctx.fill();
+      ctx.strokeStyle=tp.c+'80';ctx.lineWidth=0.8;ctx.stroke();
+      // Link icon
+      ctx.fillStyle=tp.c;ctx.font=`${r*0.7}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('🔗',node.x,node.y);
+    } else if(node.type==='concept'){
+      // Concept: diamond shape
+      ctx.beginPath();
+      ctx.moveTo(node.x,node.y-r);ctx.lineTo(node.x+r*0.8,node.y);ctx.lineTo(node.x,node.y+r);ctx.lineTo(node.x-r*0.8,node.y);
+      ctx.closePath();
+      ctx.fillStyle=tp.c+'99';ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();
+    } else if(node.type==='session'){
+      // Session: play button triangle inside circle
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
+      ctx.fillStyle=tp.c+'60';ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();
+      // Play triangle
+      ctx.beginPath();
+      ctx.moveTo(node.x-r*0.3,node.y-r*0.4);ctx.lineTo(node.x+r*0.5,node.y);ctx.lineTo(node.x-r*0.3,node.y+r*0.4);ctx.closePath();
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.fill();
     } else {
       // Default circle
       ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
