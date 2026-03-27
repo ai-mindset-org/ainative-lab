@@ -1,33 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Native Lab — AI Mindset × CybOS</title>
-  <meta property="og:title" content="AI-Native Organizations Sprint">
-  <meta property="og:description" content="3-week sprint for founders and leaders. AI not as a tool, but as a way to organize work.">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;background:#12121c;color:rgba(255,255,255,.75);font-family:'SF Mono','IBM Plex Mono',monospace;font-size:14px}
-    body{display:flex;align-items:center;justify-content:center}
-    .hub{max-width:400px;text-align:center;padding:40px 20px}
-    h1{font-family:system-ui,sans-serif;font-size:22px;color:#4dc9d4;margin-bottom:8px}
-    .sub{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:32px}
-    .links{display:flex;flex-direction:column;gap:10px}
-    a{display:block;padding:14px 20px;background:rgba(77,201,212,.06);border:1px solid rgba(77,201,212,.15);border-radius:8px;color:#4dc9d4;text-decoration:none;font-size:13px;transition:all .2s}
-    a:hover{background:rgba(77,201,212,.12);border-color:rgba(77,201,212,.3)}
-    a .label{font-size:11px;color:rgba(255,255,255,.35);display:block;margin-top:3px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native Lab — Hub</title>
+<meta property="og:title" content="AI Native Lab — All Interactive Tools">
+<meta property="og:description" content="Hub for AI-Native Organizations Sprint: knowledge graph, builders, explorers, slides, workshops">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12121c;--s:#1a1a2e;--b:rgba(77,201,212,.12);--b2:rgba(77,201,212,.25);--t:rgba(255,255,255,.85);--t2:rgba(255,255,255,.5);--t3:rgba(255,255,255,.25);--teal:#4dc9d4;--tbg:rgba(77,201,212,.06);--blue:#58a6ff;--purple:#a371f7;--green:#3fb950;--orange:#e5a54b;--pink:#f778ba;--mono:'IBM Plex Mono','SF Mono',monospace;--sans:'Space Grotesk',-apple-system,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--t);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh}
+a{color:var(--teal);text-decoration:none}
+
+.hdr{padding:40px 32px 28px;text-align:center;border-bottom:1px solid var(--b)}
+.hdr h1{font-family:var(--sans);font-size:28px;font-weight:700;letter-spacing:-.5px;color:var(--teal);margin-bottom:6px}
+.hdr p{font-size:12px;color:var(--t2);max-width:520px;margin:0 auto;line-height:1.6}
+.hdr .badge{display:inline-block;font-size:10px;padding:3px 10px;border-radius:12px;border:1px solid var(--b);color:var(--t2);margin-top:10px}
+
+.main{max-width:960px;margin:0 auto;padding:28px 24px 40px}
+.section{margin-bottom:28px}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px}
+.sh::after{content:'';flex:1;height:1px;background:var(--b)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+
+a.c{display:block;background:var(--s);border:1px solid var(--b);border-radius:10px;padding:18px 20px;transition:all .25s;position:relative;overflow:hidden;color:inherit}
+a.c:hover{border-color:var(--b2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.c .ac{position:absolute;top:0;left:0;right:0;height:2px;opacity:.6}
+.c .ic{font-size:20px;margin-bottom:10px;display:block}
+.c h3{font-family:var(--sans);font-size:15px;font-weight:600;margin-bottom:4px;color:var(--t)}
+.c p{font-size:11px;color:var(--t2);line-height:1.5}
+.c .tg{display:inline-block;font-size:9px;padding:2px 7px;border-radius:3px;margin-top:8px;border:1px solid var(--b);color:var(--t3)}
+
+a.feat{grid-column:span 2;display:flex;gap:20px;align-items:center;padding:24px}
+a.feat .ic{font-size:32px;margin:0;flex-shrink:0}
+a.feat h3{font-size:18px}
+@media(max-width:700px){a.feat{grid-column:span 1;flex-direction:column;text-align:center}}
+
+.ft{text-align:center;padding:20px;font-size:10px;color:var(--t3);border-top:1px solid var(--b)}
+.ft a{color:var(--teal)}
+
+a.c{animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.main{padding:20px 16px}.grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <div class="hub">
-    <h1>AI-Native Organizations</h1>
-    <div class="sub">AI Mindset × CybOS — Sprint Lab</div>
-    <div class="links">
-      <a href="graph/">Knowledge Graph <span class="label">Interactive map of the sprint ecosystem</span></a>
-      <a href="https://learn.aimindset.org">LMS Platform <span class="label">learn.aimindset.org — sessions, materials, progress</span></a>
-      <a href="https://ai-native.aimindset.org">Sprint Landing <span class="label">Program overview and registration</span></a>
-    </div>
-  </div>
+
+<div class="hdr">
+<h1>AI Native Lab</h1>
+<p>Все интерактивные инструменты AI-Native Organizations Sprint. Builders, explorers, slides, workshops — в одном месте.</p>
+<span class="badge">Sprint s2 &middot; March 2026 &middot; 211 participants</span>
+</div>
+
+<div class="main">
+
+<!-- START HERE -->
+<div class="section">
+<div class="sh">start here</div>
+<div class="grid">
+<a class="c feat" href="https://ai-mindset-org.github.io/pos-assessment/directory.html">
+<span class="ic">&#9670;</span>
+<div><div class="ac" style="background:var(--teal)"></div>
+<h3>Week 1 Dashboard</h3>
+<p>Все материалы первой недели: лекция Гершуни, воркшоп Поваляева, homework, все ссылки и ресерч</p>
+<span class="tg">lecture + workshop + homework</span></div>
+</a>
+<a class="c" href="knowledge-graph.html">
+<div class="ac" style="background:var(--purple)"></div>
+<span class="ic">&#9673;</span>
+<h3>Knowledge Graph</h3>
+<p>Граф спринта: спикеры, сессии, концепции, ресурсы — всё связано. Canvas + поиск</p>
+<span class="tg">interactive canvas</span>
+</a>
+</div></div>
+
+<!-- BUILDERS -->
+<div class="section">
+<div class="sh">builders &mdash; собери своё</div>
+<div class="grid">
+<a class="c" href="naming.html">
+<div class="ac" style="background:var(--orange)"></div>
+<span class="ic">&#9634;</span>
+<h3>Naming Convention Builder</h3>
+<p>Генератор конвенций: проект + тип &rarr; color-coded превью. Каталог типов, примеры</p>
+<span class="tg">workshop 18:00</span>
+</a>
+<a class="c" href="dashboard-workshop.html">
+<div class="ac" style="background:var(--green)"></div>
+<span class="ic">&#9638;</span>
+<h3>Dashboard Workshop</h3>
+<p>Собери дашборд за 30 мин: среда &rarr; данные &rarr; стиль &rarr; промпт. 3 темы</p>
+<span class="tg">workshop 58:34</span>
+</a>
+<a class="c" href="https://ai-mindset-org.github.io/pos-assessment/">
+<div class="ac" style="background:var(--teal)"></div>
+<span class="ic">&#9635;</span>
+<h3>POS Stack Assessment</h3>
+<p>Self-assessment: 6 layers, 24 blocks. Оцени свой стек, получи prompts</p>
+<span class="tg">playbook</span>
+</a>
+</div></div>
+
+<!-- EXPLORERS -->
+<div class="section">
+<div class="sh">explorers &mdash; production POS изнутри</div>
+<div class="grid">
+<a class="c" href="https://ai-mindset-org.github.io/pos-stack-explorer/">
+<div class="ac" style="background:var(--blue)"></div>
+<span class="ic">&#9672;</span>
+<h3>POS Stack Explorer</h3>
+<p>Реальная POS: 6 слоёв, 50+ скиллов, 7 MCP-серверов, граф связей</p>
+<span class="tg">workshop 2:09:28</span>
+</a>
+<a class="c" href="rules.html">
+<div class="ac" style="background:var(--green)"></div>
+<span class="ic">&#9671;</span>
+<h3>Rules & Skills</h3>
+<p>19 правил и 10 core skills — как naming, eval system, context protocol сложились</p>
+<span class="tg">rules + skills</span>
+</a>
+<a class="c" href="https://ai-mindset-org.github.io/team-stack-explorer/">
+<div class="ac" style="background:var(--purple)"></div>
+<span class="ic">&#9670;</span>
+<h3>Team Stack Explorer</h3>
+<p>Команда AI Mindset: 40+ skills, 2 бота, 8 MCP серверов</p>
+<span class="tg">team infrastructure</span>
+</a>
+</div></div>
+
+<!-- SLIDES & TOOLS -->
+<div class="section">
+<div class="sh">slides &amp; tools</div>
+<div class="grid">
+<a class="c" href="https://ai-mindset-org.github.io/ainative-deck/pos-setup-v2.html">
+<div class="ac" style="background:var(--teal)"></div>
+<span class="ic">&#9656;</span>
+<h3>Slides: Personal OS Setup v2</h3>
+<p>35+ слайдов воркшопа. Архитектура POS от keyboard до governance</p>
+<span class="tg">presentation</span>
+</a>
+<a class="c" href="https://keyboard.aimindset.org/">
+<div class="ac" style="background:var(--pink)"></div>
+<span class="ic">&#9000;</span>
+<h3>Keyboard Efficiency</h3>
+<p>Heatmap стоимости шорткатов, эргономика, Karabiner + Raycast</p>
+<span class="tg">workshop 7:12</span>
+</a>
+<a class="c" href="https://ai-mindset-org.github.io/ainative-deck/">
+<div class="ac" style="background:var(--pink)"></div>
+<span class="ic">&#9655;</span>
+<h3>Deck Builder</h3>
+<p>Presentation builder: drag-and-drop, AI generation, GitHub persistence</p>
+<span class="tg">tool</span>
+</a>
+</div></div>
+
+<!-- GERSHUNI -->
+<div class="section">
+<div class="sh">gershuni &mdash; ai-native framework</div>
+<div class="grid">
+<a class="c" href="https://github.com/Gerstep/ai-native-plugin">
+<div class="ac" style="background:var(--orange)"></div>
+<span class="ic">&#10070;</span>
+<h3>AI-Native Plugin</h3>
+<p>Плагин Claude Code / Codex. Скилл для описания контекста компании</p>
+<span class="tg">github</span>
+</a>
+<a class="c" href="https://www.codos.ai/quiz">
+<div class="ac" style="background:var(--purple)"></div>
+<span class="ic">&#10063;</span>
+<h3>AI-Nativeness Quiz</h3>
+<p>Оценка уровня L0 &rarr; L3. AI-зрелость команды</p>
+<span class="tg">assessment</span>
+</a>
+<a class="c" href="https://cybos.ai/harness">
+<div class="ac" style="background:var(--teal)"></div>
+<span class="ic">&#10038;</span>
+<h3>Harness Engineering</h3>
+<p>LLM + обвязка, что модели не могут, конкурентное преимущество</p>
+<span class="tg">research</span>
+</a>
+</div></div>
+
+<!-- LMS -->
+<div class="section">
+<div class="sh">LMS &mdash; полные записи</div>
+<div class="grid">
+<a class="c" href="https://learn.aimindset.org/s2/workshops/s2-w1-lecture">
+<div class="ac" style="background:var(--orange)"></div>
+<span class="ic">&#9654;</span>
+<h3>W1 Лекция — Гершуни</h3>
+<p>Почему AI-трансформация — самое важное. 172 мин, chapters, takeaways</p>
+<span class="tg">23 мар</span>
+</a>
+<a class="c" href="https://learn.aimindset.org/s2/workshops/s2-w1-setup">
+<div class="ac" style="background:var(--teal)"></div>
+<span class="ic">&#9654;</span>
+<h3>W1 Воркшоп — Поваляев</h3>
+<p>Personal OS Setup. 161 мин, 30 chapters, setup guide</p>
+<span class="tg">24 мар</span>
+</a>
+<a class="c" href="https://learn.aimindset.org/s2/qa/s2-w1-setup">
+<div class="ac" style="background:var(--t3)"></div>
+<span class="ic">&#10067;</span>
+<h3>Q&A — Week 1</h3>
+<p>11 вопросов: Obsidian, безопасность, автономность, с чего начать</p>
+<span class="tg">Q&amp;A</span>
+</a>
+</div></div>
+
+</div>
+
+<div class="ft">
+AI-Native Organizations Sprint s2 &middot; <a href="https://ai-mindset.org">AI Mindset</a> &middot; <a href="https://learn.aimindset.org">LMS</a> &middot; <a href="https://github.com/ai-mindset-org">GitHub</a>
+</div>
+
 </body>
 </html>
