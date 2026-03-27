@@ -3,31 +3,529 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Native Lab — AI Mindset × CybOS</title>
-  <meta property="og:title" content="AI-Native Organizations Sprint">
-  <meta property="og:description" content="3-week sprint for founders and leaders. AI not as a tool, but as a way to organize work.">
+  <title>AI Native Lab — Knowledge Graph</title>
+  <meta property="og:title" content="AI-Native Organizations — Knowledge Graph">
+  <meta property="og:description" content="Interactive map of the AI-Native Organizations Sprint: speakers, sessions, concepts, tools. AI Mindset × CybOS.">
+  <meta property="og:image" content="https://ai-mindset-org.github.io/ainative-lab/graph/speakers/stepan-gershuni.jpg">
+  <meta property="og:url" content="https://ai-mindset-org.github.io/ainative-lab/graph/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="https://unpkg.com/force-graph"></script>
+  <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root { --bg:#12121c; --surface:#1a1a2e; --accent:#4dc9d4; --text:rgba(255,255,255,.75); --dim:rgba(255,255,255,.4); --border:rgba(77,201,212,.12); }
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;background:#12121c;color:rgba(255,255,255,.75);font-family:'SF Mono','IBM Plex Mono',monospace;font-size:14px}
-    body{display:flex;align-items:center;justify-content:center}
-    .hub{max-width:400px;text-align:center;padding:40px 20px}
-    h1{font-family:system-ui,sans-serif;font-size:22px;color:#4dc9d4;margin-bottom:8px}
-    .sub{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:32px}
-    .links{display:flex;flex-direction:column;gap:10px}
-    a{display:block;padding:14px 20px;background:rgba(77,201,212,.06);border:1px solid rgba(77,201,212,.15);border-radius:8px;color:#4dc9d4;text-decoration:none;font-size:13px;transition:all .2s}
-    a:hover{background:rgba(77,201,212,.12);border-color:rgba(77,201,212,.3)}
-    a .label{font-size:11px;color:rgba(255,255,255,.35);display:block;margin-top:3px}
+    html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px}
+    #graph{position:fixed;inset:0}
+    #ui{position:fixed;inset:0;pointer-events:none;z-index:10}
+    #ui>*{pointer-events:auto}
+    #hdr{position:absolute;top:14px;left:18px}
+    #hdr h1{font-family:'Space Grotesk',sans-serif;font-size:15px;color:var(--accent);font-weight:600}
+    #hdr .sub{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+    #hdr .st{font-size:11px;color:var(--dim);margin-top:3px}
+    #hdr .st span{color:var(--accent)}
+    #search{position:absolute;top:14px;right:18px;width:240px}
+    #search input{width:100%;padding:7px 10px 7px 28px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px 'IBM Plex Mono',monospace;outline:none}
+    #search input:focus{border-color:var(--accent)}
+    #search input::placeholder{color:var(--dim)}
+    .si{position:absolute;top:8px;left:8px;color:var(--dim);pointer-events:none}
+    #res{margin-top:3px;background:var(--surface);border:1px solid var(--border);border-radius:6px;max-height:250px;overflow-y:auto;display:none}
+    #res.on{display:block}
+    .ri{padding:5px 10px;cursor:pointer;border-bottom:1px solid var(--border);font-size:11px;display:flex;align-items:center;gap:6px}
+    .ri:hover{background:rgba(77,201,212,.06)}
+    .ri:last-child{border:none}
+    .rd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    #pills{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+    .pl{padding:3px 9px;background:var(--surface);border:1px solid var(--border);border-radius:14px;font-size:10px;color:var(--dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none}
+    .pl.on{border-color:var(--accent);color:var(--text);background:rgba(77,201,212,.05)}
+    .pl .d{width:6px;height:6px;border-radius:50%}
+    #info{position:absolute;top:0;right:0;width:320px;height:100%;background:rgba(26,26,46,.96);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);padding:18px;overflow-y:auto;backdrop-filter:blur(12px)}
+    #info.open{transform:translateX(0)}
+    #info .x{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:15px}
+    #info .x:hover{color:var(--accent)}
+    #info .badge{display:inline-block;padding:2px 7px;border-radius:8px;font-size:9px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+    #info h2{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.3}
+    #info .desc{font-size:11px;color:var(--dim);line-height:1.6;margin-bottom:14px}
+    #info .ct{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:5px}
+    .ci{padding:4px 7px;margin-bottom:2px;border-radius:4px;cursor:pointer;font-size:10px;display:flex;align-items:center;gap:5px;background:rgba(77,201,212,.03)}
+    .ci:hover{background:rgba(77,201,212,.08)}
+    .cd{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+    .cr{opacity:.3;font-size:8px;margin-left:auto}
+    .tgl{display:inline-block;margin-top:10px;padding:4px 9px;background:rgba(77,201,212,.08);border:1px solid var(--border);border-radius:6px;color:var(--accent);font-size:10px;text-decoration:none}
+    .tgl:hover{background:rgba(77,201,212,.15)}
+    #leg{position:absolute;bottom:44px;right:18px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px}
+    #leg h3{font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:4px}
+    .li{display:flex;align-items:center;gap:5px;padding:1px 0;font-size:9px;color:var(--dim)}
+    .ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    #ctrls{position:absolute;top:65px;left:18px;display:flex;flex-direction:column;gap:5px}
+    .cb{width:28px;height:28px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px}
+    .cb:hover{border-color:var(--accent);color:var(--accent)}
   </style>
 </head>
 <body>
-  <div class="hub">
+<div id="graph"></div>
+<div id="ui">
+  <div id="hdr">
     <h1>AI-Native Organizations</h1>
-    <div class="sub">AI Mindset × CybOS — Sprint Lab</div>
-    <div class="links">
-      <a href="graph/">Knowledge Graph <span class="label">Interactive map of the sprint ecosystem</span></a>
-      <a href="https://learn.aimindset.org">LMS Platform <span class="label">learn.aimindset.org — sessions, materials, progress</span></a>
-      <a href="https://ai-native.aimindset.org">Sprint Landing <span class="label">Program overview and registration</span></a>
-    </div>
+    <div class="sub">AI Mindset × CybOS — Sprint Knowledge Graph</div>
+    <div class="st"><span id="sn">0</span> nodes · <span id="sl">0</span> links</div>
   </div>
+  <div id="search">
+    <div style="position:relative">
+      <span class="si"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+      <input id="si" type="text" placeholder="Search... (Cmd+K)">
+    </div>
+    <div id="res"></div>
+  </div>
+  <div id="ctrls">
+    <button class="cb" onclick="graph.zoomToFit(400,40)" title="Fit All">⊞</button>
+    <button class="cb" onclick="graph.centerAt(0,0,400);graph.zoom(3,400)" title="Reset">↺</button>
+  </div>
+  <div id="pills"></div>
+  <div id="leg"><h3>Node types</h3><div id="lis"></div></div>
+  <div id="info"><button class="x" id="ix">&times;</button><div id="ib"></div></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// Error boundary
+window.onerror = (msg,src,line) => {
+  document.getElementById('graph').innerHTML = `<div style="color:#ff6b6b;padding:40px;font-family:monospace">Error: ${msg}<br>Line: ${line}<br>Source: ${src}</div>`;
+};
+
+if (typeof ForceGraph === 'undefined') {
+  document.getElementById('graph').innerHTML = '<div style="color:#ff6b6b;padding:40px;font-family:monospace">ForceGraph library failed to load. Check CDN.</div>';
+  return;
+}
+
+// ════════ TYPES ════════
+const T = {
+  team:    {c:'#f59e0b',l:'Team',     s:10},
+  speaker: {c:'#a78bfa',l:'Speakers', s:9},
+  curator: {c:'#38d9a9',l:'Curators', s:7},
+  session: {c:'#60a5fa',l:'Sessions', s:5},
+  week:    {c:'#3b82f6',l:'Weeks',    s:16},
+  topic:   {c:'#8b5cf6',l:'Topics',   s:6},
+  tool:    {c:'#ff6b6b',l:'Tools',    s:5},
+  deliver: {c:'#06b6d4',l:'Delivers', s:5},
+  concept: {c:'#10b981',l:'Concepts', s:5},
+  resource:{c:'#fbbf24',l:'Resources',s:4},
+};
+
+// ════════ DATA ════════
+const D={nodes:[],links:[]};
+const N=(id,nm,tp,desc,av,url)=>D.nodes.push({id,name:nm,type:tp,desc:desc||'',avatar:av||null,url:url||null});
+const L=(s,t,r)=>D.links.push({source:s,target:t,rel:r||''});
+
+// Weeks — link to LMS
+N('w1','Week 1:\nPersonal AI + Team','week','March 23–28. Personal OS, process audit, AI Champion.',null,'https://learn.aimindset.org/s2');
+N('w2','Week 2:\nSystem Above Model','week','March 30 – April 4. 6-layer architecture, MCP, orchestration.',null,'https://learn.aimindset.org/s2');
+N('w3','Week 3:\nCompany Functions','week','April 6–13. Business automation, 90-day plan, Demo Day.',null,'https://learn.aimindset.org/s2');
+
+// Team
+N('stepan','Stepan\nGershuni','team','@gershuni · CybOS AI. All Monday lectures.','speakers/stepan-gershuni.jpg','https://learn.aimindset.org/speakers/gershuni');
+N('alex','Alexander\nPovaliaev','team','@alex_named · AI Mindset Founder.','speakers/alexander-povaliaev.jpg','https://learn.aimindset.org/speakers/povalyaev');
+N('ira','Irina\nNazarova','team','Operations.',null);
+N('ilya','Ilya\nGindin','team','@igindin · Focus practice.','speakers/ilya-gindin.png','https://learn.aimindset.org/speakers/gindin');
+
+// Speakers W1
+N('lisovsky','Evgeny\nLisovsky','speaker','Vibe-coding factory. Thu 26.03.','speakers/eugene-lisovskiy.jpg','https://learn.aimindset.org/speakers/lisovskiy');
+N('khanarin','Dima\nKhanarin','speaker','@khanarin · AI transformation. Fri 27.03.','speakers/dima-khanarin.jpg','https://learn.aimindset.org/speakers/khanarin');
+// Speakers W2
+N('ametov','Alexey\nAmetov','speaker','AI content. Wed 01.04.','speakers/alex-amyotov.jpg','https://learn.aimindset.org/speakers/ametov');
+N('kleban','Vitaly\nKleban','speaker','Self-improving agents. Wed 01.04.','speakers/vitaly-kleban.jpg','https://learn.aimindset.org/speakers/kleban');
+N('sidora','Gleb\nSidora','speaker','Technical coworking. Thu 02.04.','speakers/gleb-sidora.png','https://learn.aimindset.org/speakers/sidora');
+N('kovalsky','Valery\nKovalsky','speaker','AI-driven dev. Thu 02.04.','speakers/valerii-kovalskii.jpg','https://learn.aimindset.org/speakers/kovalsky');
+N('strakhov','George\nStrakhov','speaker','Agent teams. Fri 03.04.','speakers/george-strakhov.png','https://learn.aimindset.org/speakers/strakhov');
+N('kravtsov','Daniil\nKravtsov','speaker','Data pipelines. Fri 03.04.','speakers/daniel-kravtsov.jpeg','https://learn.aimindset.org/speakers/kravtsov');
+// Speakers W3
+N('reid','Evgeny\nReid','speaker','AI × Investments. Tue 07.04.','speakers/eugene-rid.jpg','https://learn.aimindset.org/speakers/reid');
+N('annaov','Bayram\nAnnaov','speaker','Sales automation. Wed 08.04.','speakers/bayram-annakov.jpg','https://learn.aimindset.org/speakers/annakov');
+N('buzko','Roma\nBuzko','speaker','Legal tech. Thu 09.04.','speakers/roma-buzko.jpg','https://learn.aimindset.org/speakers/buzko');
+N('ustinov','Seva\nUstinov','speaker','Product-agent. Fri 10.04.','speakers/seva-ustinov.jpg','https://learn.aimindset.org/speakers/ustinov');
+
+// Curators (top 6)
+N('fedoseev','Stanislav\nFedoseev','curator','@Kettarian_Fox · LLM, agents.','speakers/stanislav-fedoseev.jpg');
+N('yury','Yury','curator','@doonto · AI assistant, skills.','speakers/yury-doonto.jpg');
+N('anton-v','Anton\nVoskobovich','curator','@northcapen · Obsidian, CC.','speakers/anton-voskobovich.jpg');
+N('sereja','Sergey\nRis','curator','@serejaris · Claude Code, GitHub.','speakers/sereja-ris.jpg');
+N('glazov','Stanislav\nGlazov','curator','@prcdrl · MCP, hooks, Python.','speakers/stanislav-glazov.jpg');
+N('borodich','Alexander\nBorodich','curator','@borodich · AI-native business.','speakers/alexander-povaliaev.jpg');
+
+// Topics
+N('t-pos','Personal OS','topic','AI assistant + 10 categories.');
+N('t-process','Process Audit','topic','Freq × Time × Error × Scale.');
+N('t-6layer','6-Layer Architecture','topic','Infra → Context → Orchestration → Skills → People → Mgmt.');
+N('t-orch','Orchestration','topic','Sequential, Parallel, Conditional, Recursive.');
+N('t-skills','Skills = Jobs','topic','Full specs with constraints + eval.');
+N('t-bizmodel','AI Business Models','topic','Moats, Strangler Fig, GEO.');
+N('t-90day','90-Day Plan','topic','Quick wins → Scaling → New roles.');
+N('t-champion','AI Champion','topic','First AI hire per department.');
+
+// Tools
+N('tool-claude','Claude Code','tool','AI assistant. Skills, MCP.');
+N('tool-obsidian','Obsidian','tool','Knowledge vault.');
+N('tool-cursor','Cursor','tool','AI editor.');
+N('tool-mcp','MCP Servers','tool','Firecrawl, Exa, GitHub.');
+
+// Concepts
+N('c-harness','Harness\nEngineering','concept','80% value from harness, 20% model.');
+N('c-token','Token\nStream','concept','Org = info processor.');
+N('c-bitter','Bitter\nLesson','concept','Scale > engineered knowledge.');
+N('c-mirror','Mirror\nAgents','concept','MCP + internal control loops.');
+N('c-strangler','Strangler\nFig','concept','Gradually wrap old process with AI.');
+N('c-geo','GEO','concept','llms.txt, JSON-LD — agent-readable data.');
+N('c-5levels','5 Autonomy\nLevels','concept','ML → Chat → Workflow → Agent → Skill.');
+N('c-90day','90-Day\nPlan','concept','Quick wins → Scaling → New roles.');
+
+// Sessions (from LMS — with video links)
+N('s-lecture1','Lecture 1:\nWhy AI Transform','session','172 min · Shopify/Spotify/Block cases. Harness Engineering. POS → Team OS → Company OS.',null,'https://learn.aimindset.org/s2/s2-w1-lecture');
+N('s-setup','POS Setup\nWorkshop','session','161 min · Naming convention, Claude Code, Obsidian, skills, dashboards.',null,'https://learn.aimindset.org/s2/s2-w1-setup');
+N('s-team','Personal →\nTeam Workshop','session','150 min · Process audit, 10 automations, AI Champion. Curator demos.',null,'https://learn.aimindset.org/s2/s2-w1-workshop');
+N('s-lecture2','Lecture 2:\nSystem Above Model','session','85 min · 6 layers. Context engineering. 4 orchestration topologies.',null,'https://learn.aimindset.org/s2/s2-w2-lecture');
+N('s-lecture3','Lecture 3:\nStrategy to Plan','session','90 min · Business models, 90-day plan, AI Champion + AI COO roles.',null,'https://learn.aimindset.org/s2/s2-w3-lecture');
+N('s-demo','Demo Day','session','Final presentations. 5 min + live demo + ROI. April 13.',null,'https://learn.aimindset.org/s2/s2-demo-day');
+
+// Key Resources (from LMS speakerMaterials — with URLs)
+N('r-playbook','AI-Native\nPlaybook Slides','resource','Gershuni lecture slides PDF.',null,'https://learn.aimindset.org/downloads/s2/s2-w1-lecture-slides.pdf');
+N('r-plugin','AI-Native\nPlugin','resource','Claude Code / Codex plugin by Gershuni.',null,'https://github.com/Gerstep/ai-native-plugin');
+N('r-quiz','AI-Nativeness\nQuiz (L0–L3)','resource','Assess your AI maturity level.',null,'https://www.codos.ai/quiz');
+N('r-harness','Harness\nEngineering','resource','Interactive research by CybOS.',null,'https://cybos.ai/harness');
+N('r-pos-deck','POS Setup\nSlides','resource','Interactive setup deck.',null,'https://ai-mindset-org.github.io/ainative-deck/pos-setup-v2.html');
+N('r-stack','POS Stack\nExplorer','resource','Interactive tool configurator.',null,'https://ai-mindset-org.github.io/pos-stack-explorer/');
+N('r-keyboard','Keyboard\nEfficiency','resource','Keyboard shortcuts for productivity.',null,'https://keyboard.aimindset.org/');
+N('r-team-deck','Team Workshop\nSlides','resource','Team building deck.',null,'https://ai-mindset-org.github.io/ainative-deck/team-workshop.html');
+N('r-aicorp','AI Corp\n(Sereja Ris)','resource','AI corporation framework.',null,'https://sereja.tech/aicorp/');
+
+// ════════ LINKS ════════
+// Team → weeks
+L('stepan','w1','lectures');L('stepan','w2','lectures');L('stepan','w3','lectures');
+L('alex','w1','leads');L('alex','w2','leads');L('alex','w3','leads');
+L('ira','w1','ops');L('ira','w2','ops');L('ira','w3','ops');
+L('ilya','w1','focus');L('ilya','w2','focus');
+// Speakers → weeks
+L('lisovsky','w1','speaks');L('khanarin','w1','speaks');
+L('ametov','w2','speaks');L('kleban','w2','speaks');L('sidora','w2','speaks');
+L('kovalsky','w2','speaks');L('strakhov','w2','speaks');L('kravtsov','w2','speaks');
+L('reid','w3','speaks');L('annaov','w3','speaks');L('buzko','w3','speaks');L('ustinov','w3','speaks');
+// Curators → weeks
+L('fedoseev','w1','curates');L('fedoseev','w2','curates');
+L('yury','w1','curates');L('yury','w3','curates');
+L('anton-v','w1','curates');L('sereja','w1','curates');
+L('glazov','w2','curates');L('borodich','w3','curates');
+// Weeks → topics
+L('w1','t-pos','covers');L('w1','t-process','covers');
+L('w2','t-6layer','covers');L('w2','t-orch','covers');L('w2','t-skills','covers');
+L('w3','t-bizmodel','covers');L('w3','t-90day','covers');L('w3','t-champion','covers');
+// Speaker → topics
+L('stepan','t-6layer','teaches');L('stepan','t-bizmodel','teaches');
+L('alex','t-pos','teaches');L('alex','t-process','teaches');
+L('khanarin','t-process','teaches');L('ametov','t-skills','teaches');
+L('kleban','t-skills','teaches');L('strakhov','t-orch','teaches');
+L('annaov','t-bizmodel','teaches');L('buzko','t-bizmodel','teaches');
+// Topics → tools
+L('t-pos','tool-claude','uses');L('t-pos','tool-obsidian','uses');L('t-pos','tool-cursor','uses');
+L('t-6layer','tool-mcp','uses');
+// Concepts → topics
+L('c-harness','t-skills','shapes');L('c-token','t-process','shapes');
+L('c-bitter','t-6layer','shapes');L('c-mirror','t-orch','shapes');
+L('c-strangler','t-bizmodel','shapes');L('c-geo','t-bizmodel','shapes');
+L('c-5levels','t-skills','shapes');L('c-90day','t-champion','shapes');
+// Sessions → weeks + speakers
+L('s-lecture1','w1','in');L('s-setup','w1','in');L('s-team','w1','in');
+L('s-lecture2','w2','in');L('s-lecture3','w3','in');L('s-demo','w3','in');
+L('s-lecture1','stepan','led_by');L('s-setup','alex','led_by');L('s-team','alex','led_by');
+L('s-lecture2','stepan','led_by');L('s-lecture3','stepan','led_by');
+// Resources → sessions + speakers
+L('r-playbook','s-lecture1','material');L('r-plugin','s-lecture1','material');
+L('r-quiz','s-lecture1','material');L('r-harness','s-lecture1','material');
+L('r-pos-deck','s-setup','material');L('r-stack','s-setup','material');
+L('r-keyboard','s-setup','material');
+L('r-team-deck','s-team','material');L('r-aicorp','s-team','material');
+L('r-aicorp','sereja','created');
+
+const gd = D;
+
+// ════════ DETERMINISTIC LAYOUT ════════
+const WR=200;
+const wc={w1:{x:-WR,y:0},w2:{x:WR*0.5,y:-WR*0.87},w3:{x:WR*0.5,y:WR*0.87}};
+
+function ring(cx,cy,r,i,n){const a=(i/Math.max(n,1))*Math.PI*2-Math.PI/2;return{x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r};}
+
+// Assign to weeks
+function weekOf(nid){
+  for(const l of gd.links){if(l.source===nid&&['w1','w2','w3'].includes(l.target))return l.target;if(l.target===nid&&['w1','w2','w3'].includes(l.source))return l.source;}
+  for(const l of gd.links){const o=l.source===nid?l.target:(l.target===nid?l.source:null);if(!o)continue;for(const l2 of gd.links){if(l2.source===o&&['w1','w2','w3'].includes(l2.target))return l2.target;if(l2.target===o&&['w1','w2','w3'].includes(l2.source))return l2.source;}}
+  return null;
+}
+
+const buckets={w1:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w2:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w3:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]}};
+const shared=[];
+gd.nodes.forEach(n=>{
+  if(['w1','w2','w3'].includes(n.id)){n.x=n.fx=wc[n.id].x;n.y=n.fy=wc[n.id].y;return;}
+  const w=weekOf(n.id);
+  if(w&&buckets[w]){
+    const b=['speaker','team'].includes(n.type)?'sp':n.type==='curator'?'cur':n.type==='session'?'ses':['topic','concept'].includes(n.type)?'top':n.type==='resource'?'res':'oth';
+    buckets[w][b].push(n);
+  } else shared.push(n);
+});
+
+Object.entries(buckets).forEach(([w,b])=>{
+  const c=wc[w];
+  b.ses.forEach((n,i)=>{const p=ring(c.x,c.y,50,i,Math.max(b.ses.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.sp.forEach((n,i)=>{const p=ring(c.x,c.y,80,i,b.sp.length);n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.cur.forEach((n,i)=>{const p=ring(c.x,c.y,110,i+0.3,Math.max(b.cur.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.top.forEach((n,i)=>{const p=ring(c.x,c.y,140,i,b.top.length);n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.res.forEach((n,i)=>{const p=ring(c.x,c.y,170,i,Math.max(b.res.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+  b.oth.forEach((n,i)=>{const p=ring(c.x,c.y,120,i+0.5,Math.max(b.oth.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+});
+shared.forEach((n,i)=>{const p=ring(0,0,50,i,Math.max(shared.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
+
+// ════════ PRELOAD AVATARS ════════
+const avatarCache={};
+gd.nodes.forEach(n=>{
+  if(!n.avatar)return;
+  const img=new Image();
+  img.crossOrigin='anonymous';
+  img.onload=()=>{avatarCache[n.id]=img;};
+  img.src=n.avatar;
+});
+
+// ════════ 2D GRAPH ════════
+let hoveredNode = null;
+const graph = ForceGraph()(document.getElementById('graph'))
+  .graphData(gd)
+  .backgroundColor('#12121c')
+  .warmupTicks(0)
+  .cooldownTicks(0)
+  .nodeCanvasObject((node,ctx,globalScale)=>{
+    const tp=T[node.type]||{c:'#64748b',s:5};
+    const r=tp.s;
+    const img=avatarCache[node.id];
+
+    const t = Date.now() * 0.001;
+    const isHovered = node === hoveredNode;
+
+    // Safety: skip render if position is NaN
+    if (!isFinite(node.x) || !isFinite(node.y)) return;
+
+    // Draw node
+    if(img){
+      // Glow ring on hover
+      if(isHovered){
+        ctx.beginPath();ctx.arc(node.x,node.y,r+4,0,Math.PI*2);
+        ctx.strokeStyle=tp.c+'60';ctx.lineWidth=3;ctx.stroke();
+      }
+      // Circular avatar
+      ctx.save();
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.closePath();ctx.clip();
+      ctx.drawImage(img,node.x-r,node.y-r,r*2,r*2);
+      ctx.restore();
+      // Ring border
+      ctx.beginPath();ctx.arc(node.x,node.y,r+1,0,Math.PI*2);
+      ctx.strokeStyle=tp.c;ctx.lineWidth=isHovered?3:2;ctx.stroke();
+    } else if(node.type==='week'){
+      // Week: pulsing glow ring
+      const pulse = 0.7 + Math.sin(t * 1.5 + node.x * 0.01) * 0.3;
+      ctx.beginPath();ctx.arc(node.x,node.y,r+6,0,Math.PI*2);
+      ctx.strokeStyle=tp.c + Math.round(pulse*40).toString(16).padStart(2,'0');
+      ctx.lineWidth=2;ctx.stroke();
+      // Main circle with gradient
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
+      const grad=ctx.createRadialGradient(node.x,node.y,r*0.2,node.x,node.y,r);
+      grad.addColorStop(0,tp.c);grad.addColorStop(1,tp.c+'50');
+      ctx.fillStyle=grad;ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=2;ctx.stroke();
+    } else if(node.type==='resource'){
+      // Resource: small rect with border
+      const w=r*1.4,h=r*1.0;
+      ctx.fillStyle=tp.c+'40';ctx.fillRect(node.x-w/2,node.y-h/2,w,h);
+      ctx.strokeStyle=tp.c+'80';ctx.lineWidth=0.8;ctx.strokeRect(node.x-w/2,node.y-h/2,w,h);
+      // Dot marker
+      ctx.beginPath();ctx.arc(node.x,node.y,r*0.25,0,Math.PI*2);ctx.fillStyle=tp.c;ctx.fill();
+    } else if(node.type==='concept'){
+      // Concept: diamond shape
+      ctx.beginPath();
+      ctx.moveTo(node.x,node.y-r);ctx.lineTo(node.x+r*0.8,node.y);ctx.lineTo(node.x,node.y+r);ctx.lineTo(node.x-r*0.8,node.y);
+      ctx.closePath();
+      ctx.fillStyle=tp.c+'99';ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();
+    } else if(node.type==='session'){
+      // Session: play button triangle inside circle
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
+      ctx.fillStyle=tp.c+'60';ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();
+      // Play triangle
+      ctx.beginPath();
+      ctx.moveTo(node.x-r*0.3,node.y-r*0.4);ctx.lineTo(node.x+r*0.5,node.y);ctx.lineTo(node.x-r*0.3,node.y+r*0.4);ctx.closePath();
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.fill();
+    } else {
+      // Default circle
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
+      ctx.fillStyle=tp.c+'cc';ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();
+    }
+
+    // Label
+    const fontSize=node.type==='week'?12/globalScale:Math.min(9/globalScale,11);
+    if(globalScale>0.5||node.type==='week'||['team','speaker'].includes(node.type)){
+      ctx.font=`${node.type==='week'?'600':'400'} ${fontSize}px ${node.type==='week'?'Space Grotesk':'IBM Plex Mono'}`;
+      ctx.textAlign='center';ctx.textBaseline='top';
+      ctx.fillStyle=node.type==='week'?'rgba(255,255,255,.9)':'rgba(255,255,255,.6)';
+      const lines=node.name.split('\n');
+      const ly=node.y+r+3/globalScale;
+      lines.forEach((line,i)=>ctx.fillText(line,node.x,ly+i*fontSize*1.2));
+    }
+  })
+  .nodePointerAreaPaint((node,c,ctx)=>{
+    const r=(T[node.type]||{s:5}).s+4;
+    ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.fill();
+  })
+  .linkColor(l=>{
+    // Highlight links to hovered node
+    if(hoveredNode){
+      const s=typeof l.source==='object'?l.source.id:l.source;
+      const t=typeof l.target==='object'?l.target.id:l.target;
+      if(s===hoveredNode.id||t===hoveredNode.id) return 'rgba(77,201,212,.35)';
+    }
+    return 'rgba(77,201,212,.08)';
+  })
+  .linkWidth(l=>{
+    if(hoveredNode){
+      const s=typeof l.source==='object'?l.source.id:l.source;
+      const t=typeof l.target==='object'?l.target.id:l.target;
+      if(s===hoveredNode.id||t===hoveredNode.id) return 2;
+    }
+    return l.rel==='lectures'||l.rel==='leads'?1.5:0.5;
+  })
+  .linkDirectionalParticles(l=>['lectures','speaks','teaches'].includes(l.rel)?2:0)
+  .linkDirectionalParticleWidth(2)
+  .linkDirectionalParticleSpeed(0.004)
+  .linkDirectionalParticleColor(()=>'rgba(77,201,212,.4)')
+  .linkCurvature(0.1)
+  .onNodeClick(onClick)
+  .onNodeHover((n)=>{
+    hoveredNode=n;
+    document.getElementById('graph').style.cursor=n?'pointer':'default';
+  });
+
+// Fit to view after render — multiple attempts for reliability
+setTimeout(()=>{graph.zoomToFit(400,80);},200);
+setTimeout(()=>{graph.zoomToFit(400,80);},1000);
+
+// Make graph accessible globally for controls
+window.graph=graph;
+
+// ════════ SEARCH ════════
+const si=document.getElementById('si'),res=document.getElementById('res');
+si.addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase();
+  if(!q){res.classList.remove('on');res.innerHTML='';return;}
+  const hits=gd.nodes.filter(n=>n.name.toLowerCase().includes(q)||n.desc.toLowerCase().includes(q)).slice(0,8);
+  if(!hits.length){res.classList.remove('on');return;}
+  res.classList.add('on');
+  res.innerHTML=hits.map(n=>`<div class="ri" data-id="${n.id}"><span class="rd" style="background:${(T[n.type]||{}).c||'#64748b'}"></span>${n.name.replace(/\n/g,' ')}</div>`).join('');
+  res.querySelectorAll('.ri').forEach(el=>el.onclick=()=>{const nd=gd.nodes.find(n=>n.id===el.dataset.id);if(nd){onClick(nd);si.value='';res.classList.remove('on');}});
+});
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();si.focus();}
+  if(e.key==='Escape'){si.blur();si.value='';res.classList.remove('on');closeInfo();}
+});
+
+// ════════ CLICK / INFO ════════
+let selected=null;
+function onClick(node){
+  selected=node;
+  graph.centerAt(node.x,node.y,600);
+  graph.zoom(5,600);
+  showInfo(node);
+}
+
+const infoEl=document.getElementById('info'),ib=document.getElementById('ib');
+// LMS session data cache
+let lmsData = null;
+fetch('lms-data.json').then(r=>r.ok?r.json():null).then(d=>{lmsData=d;console.log('LMS data loaded:',d?.sessions?.length,'sessions')}).catch(()=>{});
+
+function showInfo(n){
+  const tp=T[n.type]||{};
+  const conns=[];
+  gd.links.forEach(l=>{
+    const sid=typeof l.source==='object'?l.source.id:l.source;
+    const tid=typeof l.target==='object'?l.target.id:l.target;
+    if(sid===n.id){const n2=gd.nodes.find(x=>x.id===tid);if(n2)conns.push({n:n2,r:l.rel,d:'→'});}
+    if(tid===n.id){const n2=gd.nodes.find(x=>x.id===sid);if(n2)conns.push({n:n2,r:l.rel,d:'←'});}
+  });
+  const tgm=n.desc?.match(/@(\w+)/);
+
+  // Find matching LMS session — match by ID overlap or name keywords
+  const nName = n.name.replace(/\n/g,' ').toLowerCase();
+  const lmsSession = lmsData?.sessions?.find(s => {
+    if (n.id.startsWith('s-') && s.id.includes(n.id.replace('s-',''))) return true;
+    const sTitle = s.title.toLowerCase();
+    return nName.split(' ').filter(w=>w.length>3).some(w=>sTitle.includes(w));
+  });
+  const videoEmbed = lmsSession?.video ? `<div style="margin:10px 0;border-radius:6px;overflow:hidden"><iframe width="100%" height="160" src="https://www.youtube.com/embed/${lmsSession.video}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="border-radius:6px"></iframe></div>` : '';
+  const matList = lmsSession?.materials ? `<div class="ct" style="margin-top:8px">Materials</div>${lmsSession.materials.map(m=>`<div class="ci" style="cursor:default"><span class="cd" style="background:#fbbf24"></span>${m}</div>`).join('')}` : '';
+  const sessionMeta = lmsSession ? `<div style="font-size:10px;color:var(--dim);margin:6px 0">${lmsSession.date||''} · ${lmsSession.duration||''} · ${lmsSession.speaker||''} · <span style="color:${lmsSession.status==='completed'?'#38d9a9':'#f59e0b'}">${lmsSession.status}</span></div>` : '';
+
+  ib.innerHTML=`
+    <span class="badge" style="background:${tp.c||'#64748b'}18;color:${tp.c||'#64748b'};border:1px solid ${tp.c||'#64748b'}30">${tp.l||n.type}</span>
+    <h2>${n.name.replace(/\n/g,' ')}</h2>
+    ${n.avatar?`<img src="${n.avatar}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid ${tp.c};margin-bottom:10px">`:''}
+    ${sessionMeta}
+    ${videoEmbed}
+    <div class="desc">${n.desc}</div>
+    <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+    ${tgm?`<a class="tgl" href="https://t.me/${tgm[1]}" target="_blank">@${tgm[1]}</a>`:''}
+    ${n.url?`<a class="tgl" href="${n.url}" target="_blank">Open in LMS ↗</a>`:''}
+    ${lmsSession?.video?`<a class="tgl" href="https://youtube.com/watch?v=${lmsSession.video}" target="_blank">Watch ▶</a>`:''}
+    </div>
+    ${matList}
+    ${conns.length?`<div class="ct" style="margin-top:12px">Connections (${conns.length})</div>
+    ${conns.map(c=>`<div class="ci" data-id="${c.n.id}"><span class="cd" style="background:${(T[c.n.type]||{}).c||'#64748b'}"></span>${c.d} ${c.n.name.replace(/\n/g,' ')}<span class="cr">${c.r}</span></div>`).join('')}`:''}
+  `;
+  ib.querySelectorAll('.ci').forEach(el=>el.onclick=()=>{const nd=gd.nodes.find(x=>x.id===el.dataset.id);if(nd)onClick(nd);});
+  infoEl.classList.add('open');
+}
+function closeInfo(){infoEl.classList.remove('open');selected=null;}
+document.getElementById('ix').onclick=closeInfo;
+
+// ════════ FILTERS ════════
+const pillsEl=document.getElementById('pills');
+const active=new Set(Object.keys(T));
+Object.entries(T).forEach(([k,v])=>{
+  const cnt=gd.nodes.filter(n=>n.type===k).length;if(!cnt)return;
+  const p=document.createElement('div');p.className='pl on';p.dataset.t=k;
+  p.innerHTML=`<span class="d" style="background:${v.c}"></span>${v.l} (${cnt})`;
+  p.onclick=()=>{if(active.has(k)){active.delete(k);p.classList.remove('on');}else{active.add(k);p.classList.add('on');}applyF();};
+  pillsEl.appendChild(p);
+});
+function applyF(){
+  const ns=gd.nodes.filter(n=>active.has(n.type));
+  const ids=new Set(ns.map(n=>n.id));
+  const ls=gd.links.filter(l=>ids.has(typeof l.source==='object'?l.source.id:l.source)&&ids.has(typeof l.target==='object'?l.target.id:l.target));
+  graph.graphData({nodes:ns,links:ls});
+  setTimeout(()=>graph.zoomToFit(300,60),50);
+  upS(ns,ls);
+}
+
+// ════════ LEGEND ════════
+const lis=document.getElementById('lis');
+Object.entries(T).forEach(([k,v])=>{
+  const cnt=gd.nodes.filter(n=>n.type===k).length;if(!cnt)return;
+  const d=document.createElement('div');d.className='li';
+  d.innerHTML=`<span class="ld" style="background:${v.c}"></span>${v.l}`;
+  lis.appendChild(d);
+});
+
+// Stats
+function upS(ns,ls){document.getElementById('sn').textContent=(ns||gd.nodes).length;document.getElementById('sl').textContent=(ls||gd.links).length;}
+upS();
+
+})();
+</script>
 </body>
 </html>
