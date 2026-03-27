@@ -4,1711 +4,698 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Native Lab — Knowledge Graph</title>
-  <meta name="description" content="Interactive 3D Knowledge Graph for AI Native Organizations Sprint">
+  <meta name="description" content="AI-Native Organizations Sprint — Interactive Knowledge Graph">
 
-  <!-- STACK: 1.Three.js  2.3d-force-graph  3.SpriteText  4.D3.js  5.Fuse.js  6.marked.js -->
   <script src="//unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="//unpkg.com/three-spritetext@1.8.2"></script>
   <script src="//unpkg.com/3d-force-graph@1.73.4"></script>
   <script src="//unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
   <script src="//unpkg.com/fuse.js@7.0.0/dist/fuse.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
 
-  <!-- Google Fonts: IBM Plex Mono + Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ═══════════════════════════════════════════════════════════
-       STACK 7: CSS Custom Properties — Teal Grid Design System
-       ═══════════════════════════════════════════════════════════ */
     :root {
-      --bg:        #161620;
-      --surface:   #1e1e2e;
+      --bg: #161620;
+      --surface: #1e1e2e;
       --surface-2: #252538;
-      --accent:    #4dc9d4;
-      --accent-dim: rgba(77, 201, 212, 0.25);
+      --accent: #4dc9d4;
+      --accent-dim: rgba(77,201,212,0.12);
       --secondary: #3b82f6;
-      --tertiary:  #8b5cf6;
-      --amber:     #f59e0b;
-      --emerald:   #10b981;
-      --rose:      #f43f5e;
-      --pink:      #ec4899;
-      --text:      #e2e8f0;
-      --text-dim:  rgba(226, 232, 240, 0.6);
-      --text-muted: rgba(226, 232, 240, 0.35);
-      --border:    rgba(77, 201, 212, 0.12);
-      --glow:      rgba(77, 201, 212, 0.4);
-      --font-mono: 'IBM Plex Mono', 'SF Mono', 'Fira Code', monospace;
-      --font-head: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-      --grid-size: 60px;
-      --radius:    8px;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --workshop: #38d9a9;
+      --amber: #c89200;
+      --rose: #ff6b6b;
+      --text: rgba(255,255,255,0.75);
+      --text-bright: #fff;
+      --text-dim: rgba(255,255,255,0.5);
+      --text-muted: rgba(255,255,255,0.3);
+      --border: rgba(77,201,212,0.12);
+      --glow: rgba(77,201,212,0.25);
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-head: 'Space Grotesk', sans-serif;
+      --radius: 8px;
+      --tr: 0.25s ease;
     }
-
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html, body {
-      width: 100%; height: 100%;
-      overflow: hidden;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.5;
+      width:100%; height:100%; overflow:hidden;
+      background: var(--bg); color: var(--text);
+      font-family: var(--font-mono); font-size:13px;
       -webkit-font-smoothing: antialiased;
     }
-
-    /* ── Background Grid + Noise ── */
     body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
+      content:''; position:fixed; inset:0; z-index:0;
       background-image:
-        linear-gradient(rgba(77,201,212,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(77,201,212,0.03) 1px, transparent 1px);
-      background-size: var(--grid-size) var(--grid-size);
-      pointer-events: none;
-    }
-    body::after {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      opacity: 0.5;
+        linear-gradient(rgba(77,201,212,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77,201,212,0.02) 1px, transparent 1px);
+      background-size: 60px 60px; pointer-events:none;
     }
 
-    /* ── Vignette ── */
-    #vignette {
-      position: fixed; inset: 0; z-index: 1;
-      background: radial-gradient(ellipse at center, transparent 40%, rgba(10,10,20,0.6) 100%);
-      pointer-events: none;
-    }
+    #graph-container { position:fixed; inset:0; z-index:2; }
+    #ui { position:fixed; inset:0; z-index:10; pointer-events:none; }
+    #ui > * { pointer-events:auto; }
 
-    /* ── Graph Container ── */
-    #graph-container {
-      position: fixed; inset: 0; z-index: 2;
-    }
+    #header { position:absolute; top:16px; left:20px; display:flex; flex-direction:column; gap:2px; }
+    #header h1 { font-family:var(--font-head); font-size:16px; font-weight:600; color:var(--accent); letter-spacing:-0.02em; }
+    #header .sub { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
+    #header .stats { font-size:11px; color:var(--text-dim); margin-top:4px; }
+    #header .stats span { color:var(--accent); }
 
-    /* ═══════════════════════════════════════════════════
-       UI OVERLAY — all panels float over the 3D graph
-       ═══════════════════════════════════════════════════ */
-    #ui { position: fixed; inset: 0; z-index: 10; pointer-events: none; }
-    #ui > * { pointer-events: auto; }
-
-    /* ── Header ── */
-    #header {
-      position: absolute; top: 20px; left: 24px;
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    #header h1 {
-      font-family: var(--font-head);
-      font-size: 18px; font-weight: 600;
-      color: var(--accent);
-      letter-spacing: -0.02em;
-      text-shadow: 0 0 20px var(--glow);
-    }
-    #header .subtitle {
-      font-size: 11px; color: var(--text-muted);
-      letter-spacing: 0.05em; text-transform: uppercase;
-    }
-    #header .stats-line {
-      font-size: 11px; color: var(--text-dim);
-      margin-top: 4px;
-    }
-    #header .stats-line span { color: var(--accent); font-weight: 500; }
-
-    /* ── Search Panel (STACK 11: Fuse.js) ── */
-    #search-panel {
-      position: absolute; top: 20px; right: 24px;
-      width: 280px;
-    }
+    #search-box { position:absolute; top:16px; right:20px; width:260px; }
     #search-input {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 14px 10px 36px;
-      color: var(--text);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition);
+      width:100%; padding:8px 12px 8px 32px;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:var(--radius); color:var(--text);
+      font-family:var(--font-mono); font-size:12px; outline:none;
+      transition: border-color var(--tr);
     }
-    #search-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
-    #search-input::placeholder { color: var(--text-muted); }
-    #search-icon {
-      position: absolute; top: 11px; right: calc(100% - 280px + 250px);
-      /* position via right edge */
-      left: auto; right: 250px;
-      color: var(--text-muted); font-size: 14px;
-      pointer-events: none;
-    }
-    .search-icon-wrap {
-      position: absolute; top: 10px; left: 12px;
-      color: var(--text-muted); pointer-events: none;
-    }
+    #search-input:focus { border-color:var(--accent); }
+    #search-input::placeholder { color:var(--text-muted); }
+    .search-icon { position:absolute; top:9px; left:10px; color:var(--text-muted); pointer-events:none; }
     #search-results {
-      margin-top: 4px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      max-height: 300px; overflow-y: auto;
-      display: none;
+      margin-top:4px; background:var(--surface); border:1px solid var(--border);
+      border-radius:var(--radius); max-height:280px; overflow-y:auto; display:none;
     }
-    #search-results.active { display: block; }
-    .search-result {
-      padding: 8px 14px;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border);
-      transition: background var(--transition);
+    #search-results.open { display:block; }
+    .sr-item {
+      padding:6px 12px; cursor:pointer; border-bottom:1px solid var(--border);
+      font-size:12px; display:flex; align-items:center; gap:8px; transition: background var(--tr);
     }
-    .search-result:hover { background: var(--surface-2); }
-    .search-result:last-child { border-bottom: none; }
-    .search-result .name { font-size: 12px; color: var(--text); }
-    .search-result .type {
-      font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.08em; margin-left: 8px;
-      opacity: 0.5;
-    }
+    .sr-item:hover { background:var(--surface-2); }
+    .sr-item:last-child { border-bottom:none; }
+    .sr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .sr-type { font-size:9px; opacity:0.4; text-transform:uppercase; margin-left:auto; }
 
-    /* ── Filter Pills ── */
     #filters {
-      position: absolute; bottom: 24px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; gap: 6px; flex-wrap: wrap;
-      justify-content: center;
+      position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
+      display:flex; gap:5px; flex-wrap:wrap; justify-content:center;
     }
-    .filter-pill {
-      padding: 5px 12px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all var(--transition);
-      user-select: none;
-      display: flex; align-items: center; gap: 6px;
+    .pill {
+      padding:4px 10px; background:var(--surface);
+      border:1px solid var(--border); border-radius:16px;
+      font-size:10px; color:var(--text-dim); cursor:pointer;
+      display:flex; align-items:center; gap:5px;
+      transition: all var(--tr); user-select:none;
     }
-    .filter-pill .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .filter-pill.active {
-      border-color: var(--accent);
-      color: var(--text);
-      background: rgba(77, 201, 212, 0.08);
-    }
-    .filter-pill:hover { border-color: rgba(77, 201, 212, 0.4); }
+    .pill.on { border-color:var(--accent); color:var(--text); background:rgba(77,201,212,0.06); }
+    .pill:hover { border-color:rgba(77,201,212,0.3); }
+    .pill .dot { width:7px; height:7px; border-radius:50%; }
 
-    /* ── Info Panel (slides in from right) ── */
-    #info-panel {
-      position: absolute; top: 0; right: 0;
-      width: 360px; height: 100%;
-      background: linear-gradient(135deg, var(--surface) 0%, rgba(30,30,46,0.95) 100%);
-      border-left: 1px solid var(--border);
-      transform: translateX(100%);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 24px;
-      overflow-y: auto;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+    #info {
+      position:absolute; top:0; right:0; width:340px; height:100%;
+      background:rgba(30,30,46,0.96); border-left:1px solid var(--border);
+      transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      padding:20px; overflow-y:auto;
+      backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
     }
-    #info-panel.open { transform: translateX(0); }
-    #info-panel .close-btn {
-      position: absolute; top: 16px; right: 16px;
-      background: none; border: none;
-      color: var(--text-muted); cursor: pointer;
-      font-size: 18px; line-height: 1;
-      transition: color var(--transition);
+    #info.open { transform:translateX(0); }
+    #info .close { position:absolute; top:12px; right:12px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:16px; }
+    #info .close:hover { color:var(--accent); }
+    #info .badge {
+      display:inline-block; padding:2px 8px; border-radius:10px;
+      font-size:9px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;
     }
-    #info-panel .close-btn:hover { color: var(--accent); }
-    #info-panel .node-type-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 500;
-      margin-bottom: 12px;
+    #info h2 { font-family:var(--font-head); font-size:18px; font-weight:600; color:var(--text-bright); margin-bottom:12px; line-height:1.3; }
+    #info .desc { font-size:12px; color:var(--text-dim); line-height:1.6; margin-bottom:16px; }
+    #info .conn-title { font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:6px; }
+    .conn-item {
+      padding:5px 8px; margin-bottom:3px; border-radius:5px; cursor:pointer;
+      font-size:11px; display:flex; align-items:center; gap:6px;
+      background:rgba(77,201,212,0.03); transition:background var(--tr);
     }
-    #info-panel h2 {
-      font-family: var(--font-head);
-      font-size: 22px; font-weight: 600;
-      color: var(--text);
-      margin-bottom: 16px;
-      line-height: 1.3;
+    .conn-item:hover { background:rgba(77,201,212,0.08); }
+    .conn-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+    .conn-rel { opacity:0.3; font-size:9px; margin-left:auto; }
+    .vault-link {
+      display:inline-block; margin-top:12px; padding:5px 10px;
+      background:rgba(77,201,212,0.08); border:1px solid var(--border);
+      border-radius:var(--radius); color:var(--accent); font-size:11px;
+      text-decoration:none; transition:all var(--tr);
     }
-    #info-panel .description {
-      font-size: 13px; color: var(--text-dim);
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-    #info-panel .connections-title {
-      font-size: 11px; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    .connection-item {
-      padding: 6px 10px;
-      margin-bottom: 4px;
-      background: rgba(77, 201, 212, 0.04);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background var(--transition);
-      font-size: 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .connection-item:hover { background: rgba(77, 201, 212, 0.1); }
-    .connection-item .conn-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .vault-link:hover { background:rgba(77,201,212,0.15); }
 
-    /* ── Minimap (STACK 8: Canvas 2D) ── */
-    #minimap-container {
-      position: absolute; bottom: 70px; left: 24px;
-      width: 180px; height: 140px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      opacity: 0.8;
-      transition: opacity var(--transition);
+    #controls { position:absolute; top:70px; left:20px; display:flex; flex-direction:column; gap:6px; }
+    .cbtn {
+      width:32px; height:32px; background:var(--surface);
+      border:1px solid var(--border); border-radius:var(--radius);
+      color:var(--text-dim); cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      font-size:14px; transition:all var(--tr);
     }
-    #minimap-container:hover { opacity: 1; }
-    #minimap-label {
-      position: absolute; top: 4px; left: 8px;
-      font-size: 9px; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--text-muted);
-    }
-    #minimap { width: 100%; height: 100%; }
+    .cbtn:hover { border-color:var(--accent); color:var(--accent); }
+    .cbtn.on { background:rgba(77,201,212,0.08); border-color:var(--accent); color:var(--accent); }
 
-    /* ── Controls ── */
-    #controls {
-      position: absolute; top: 80px; left: 24px;
-      display: flex; flex-direction: column; gap: 8px;
+    #nav-back {
+      position:absolute; top:16px; left:50%; transform:translateX(-50%);
+      padding:5px 14px; background:var(--surface); border:1px solid var(--border);
+      border-radius:var(--radius); color:var(--text-dim); cursor:pointer;
+      font-family:var(--font-mono); font-size:11px;
+      display:none; align-items:center; gap:6px; transition:all var(--tr);
     }
-    .ctrl-btn {
-      width: 36px; height: 36px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-dim);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-      transition: all var(--transition);
-    }
-    .ctrl-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      box-shadow: 0 0 12px var(--accent-dim);
-    }
-    .ctrl-btn.active {
-      background: rgba(77, 201, 212, 0.1);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    #nav-back.show { display:flex; }
+    #nav-back:hover { border-color:var(--accent); color:var(--accent); }
 
-    /* ── Legend ── */
+    #tip {
+      position:fixed; padding:4px 10px; background:var(--surface);
+      border:1px solid var(--accent); border-radius:5px;
+      font-size:10px; color:var(--accent); pointer-events:none;
+      opacity:0; transition:opacity 0.12s; z-index:100; white-space:nowrap;
+    }
+    #tip.on { opacity:1; }
+
     #legend {
-      position: absolute; bottom: 70px; right: 24px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 16px;
+      position:absolute; bottom:50px; right:20px;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:var(--radius); padding:10px 14px;
     }
-    #legend h3 {
-      font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    .legend-item {
-      display: flex; align-items: center; gap: 8px;
-      padding: 2px 0;
-      font-size: 11px; color: var(--text-dim);
-    }
-    .legend-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      box-shadow: 0 0 6px currentColor;
-    }
+    #legend h3 { font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:6px; }
+    .leg-item { display:flex; align-items:center; gap:6px; padding:1px 0; font-size:10px; color:var(--text-dim); }
+    .leg-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
 
-    /* ── FPS Counter (STACK 19: Performance API) ── */
-    #fps {
-      position: absolute; top: 20px; left: 50%;
-      transform: translateX(-50%);
-      font-size: 10px; color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-
-    /* ── Tooltip ── */
-    #tooltip {
-      position: fixed;
-      padding: 6px 12px;
-      background: var(--surface);
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      font-size: 11px;
-      color: var(--accent);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.15s;
-      z-index: 100;
-      white-space: nowrap;
-      box-shadow: 0 0 20px var(--accent-dim);
-    }
-    #tooltip.visible { opacity: 1; }
-
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    /* ── Loading ── */
     #loading {
-      position: fixed; inset: 0; z-index: 999;
-      background: var(--bg);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 16px;
-      transition: opacity 0.6s;
+      position:fixed; inset:0; z-index:999; background:var(--bg);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
+      transition:opacity 0.5s;
     }
-    #loading.fade { opacity: 0; pointer-events: none; }
-    #loading h2 {
-      font-family: var(--font-head);
-      font-size: 20px; color: var(--accent);
-    }
-    .loader {
-      width: 40px; height: 40px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading.done { opacity:0; pointer-events:none; }
+    #loading h2 { font-family:var(--font-head); font-size:16px; color:var(--accent); }
+    .spin { width:32px; height:32px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:sp 0.7s linear infinite; }
+    @keyframes sp { to { transform:rotate(360deg); } }
 
-    /* ── Pulse animation for active node ── */
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 8px var(--accent-dim); }
-      50% { box-shadow: 0 0 20px var(--glow); }
-    }
+    ::-webkit-scrollbar { width:3px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
 
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      #info-panel { width: 100%; }
-      #minimap-container { display: none; }
-      #legend { display: none; }
-      #search-panel { width: 200px; }
+    @media (max-width:768px) {
+      #info { width:100%; }
+      #legend { display:none; }
+      #search-box { width:180px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Loading screen -->
-  <div id="loading">
-    <div class="loader"></div>
-    <h2>Initializing Knowledge Graph</h2>
-    <div style="font-size:11px;color:var(--text-muted)">Loading 3D engine + force simulation...</div>
+<div id="loading"><div class="spin"></div><h2>Loading Lab Graph</h2></div>
+<div id="graph-container"></div>
+
+<div id="ui">
+  <div id="header">
+    <h1>AI-Native Organizations</h1>
+    <div class="sub">AI Mindset × CybOS — Sprint Knowledge Graph</div>
+    <div class="stats"><span id="s-nodes">0</span> nodes · <span id="s-links">0</span> links · <span id="s-types">0</span> types</div>
   </div>
 
-  <!-- Vignette overlay -->
-  <div id="vignette"></div>
-
-  <!-- 3D Graph -->
-  <div id="graph-container"></div>
-
-  <!-- UI Overlay -->
-  <div id="ui">
-
-    <!-- Header -->
-    <div id="header">
-      <h1>AI Native Lab</h1>
-      <div class="subtitle">Knowledge Graph — Interactive 3D Explorer</div>
-      <div class="stats-line">
-        <span id="node-count">0</span> nodes ·
-        <span id="link-count">0</span> links ·
-        <span id="cluster-count">0</span> clusters
-      </div>
+  <div id="search-box">
+    <div style="position:relative">
+      <span class="search-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+      <input id="search-input" type="text" placeholder="Search... (Cmd+K)">
     </div>
-
-    <!-- Search -->
-    <div id="search-panel">
-      <div style="position:relative">
-        <span class="search-icon-wrap">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </span>
-        <input id="search-input" type="text" placeholder="Search nodes... (⌘K)" autocomplete="off">
-      </div>
-      <div id="search-results"></div>
-    </div>
-
-    <!-- Controls -->
-    <div id="controls">
-      <button class="ctrl-btn" id="btn-audio" title="Toggle Audio">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-      </button>
-      <button class="ctrl-btn" id="btn-fullscreen" title="Fullscreen (F)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-      </button>
-      <button class="ctrl-btn" id="btn-reset" title="Reset View (R)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-      </button>
-      <button class="ctrl-btn" id="btn-particles" title="Toggle Particles">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-      </button>
-      <button class="ctrl-btn" id="btn-labels" title="Toggle Labels (L)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
-      </button>
-    </div>
-
-    <!-- Minimap -->
-    <div id="minimap-container">
-      <div id="minimap-label">minimap</div>
-      <canvas id="minimap" width="360" height="280"></canvas>
-    </div>
-
-    <!-- Legend -->
-    <div id="legend">
-      <h3>Node Types</h3>
-      <div id="legend-items"></div>
-    </div>
-
-    <!-- Info Panel -->
-    <div id="info-panel">
-      <button class="close-btn" id="info-close">&times;</button>
-      <div id="info-content"></div>
-    </div>
-
-    <!-- Filter Pills -->
-    <div id="filters" role="group" aria-label="Node type filters"></div>
-
-    <!-- Tooltip -->
-    <div id="tooltip"></div>
-
-    <!-- FPS -->
-    <div id="fps"></div>
+    <div id="search-results"></div>
   </div>
 
-  <script>
-  /* ═══════════════════════════════════════════════════════════════════
-     AI NATIVE LAB — KNOWLEDGE GRAPH
-     ═══════════════════════════════════════════════════════════════════
-     20-Stack Architecture:
-      1. Three.js          — 3D rendering engine
-      2. 3d-force-graph    — force-directed graph layout
-      3. D3.js             — scales, color, data processing
-      4. GLSL Shaders      — custom particle system (ShaderMaterial)
-      5. Web Audio API      — sonification engine
-      6. Canvas 2D          — minimap rendering
-      7. SVG               — UI icons and overlays
-      8. CSS Custom Props   — dynamic theming system
-      9. Fuse.js           — fuzzy search
-     10. marked.js         — markdown in info panel
-     11. Web Workers        — (via Blob URL) off-thread computation
-     12. PointerEvents API  — unified mouse/touch input
-     13. Fullscreen API     — immersive mode
-     14. ResizeObserver     — responsive 3D canvas
-     15. Web Animations API — smooth UI transitions
-     16. LocalStorage       — persist view state, filters, camera
-     17. Fetch API          — async graph data loading
-     18. Blob URLs          — inline Web Worker creation
-     19. Performance API    — FPS metering
-     20. IntersectionObs.   — viewport-aware panel rendering
-     ═══════════════════════════════════════════════════════════════════ */
+  <button id="nav-back"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>
 
-  (function() {
-    'use strict';
+  <div id="controls">
+    <button class="cbtn on" id="btn-labels" title="Labels (L)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></button>
+    <button class="cbtn" id="btn-fullscreen" title="Fullscreen (F)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/></svg></button>
+    <button class="cbtn" id="btn-reset" title="Reset (R)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+  </div>
 
-    // ══════════════════════════════════════════════════
-    //  CONFIG
-    // ══════════════════════════════════════════════════
-    const CONFIG = {
-      colors: {
-        phase:    '#4dc9d4',  // teal
-        topic:    '#3b82f6',  // blue
-        protocol: '#8b5cf6',  // purple
-        tool:     '#f43f5e',  // rose
-        artifact: '#ec4899',  // pink
-        persona:  '#f59e0b',  // amber
-        concept:  '#10b981',  // emerald
-        zone:     '#6366f1',  // indigo
-      },
-      nodeSize: {
-        phase: 8, topic: 6, protocol: 5, tool: 4,
-        artifact: 4, persona: 7, concept: 5, zone: 7
-      },
-      force: {
-        charge: -180,
-        link: 0.15,
-        center: 0.05,
-        collision: 1.2
-      },
-      audio: {
-        enabled: false,
-        masterGain: 0.15,
-        hoverFreqBase: 220,
-        clickFreqBase: 110
-      },
-      particles: {
-        count: 2000,
-        size: 2.0,
-        speed: 0.0003,
-        spread: 500,
-        enabled: true
-      },
-      labels: true,
-      bloom: { strength: 0.6, radius: 0.4, threshold: 0.2 }
-    };
+  <div id="filters"></div>
 
-    // ══════════════════════════════════════════════════
-    //  GRAPH DATA — Dual Mode: Fetch or Inline Fallback
-    // ══════════════════════════════════════════════════
-    let graphData = null;
+  <div id="legend"><h3>Node types</h3><div id="leg-items"></div></div>
 
-    async function loadGraphData() {
-      // STACK 17: Fetch API — try loading extracted vault data
-      try {
-        const resp = await fetch('data/graph.json');
-        if (resp.ok) {
-          const data = await resp.json();
-          console.log(`Loaded vault data: ${data.nodes.length} nodes, ${data.links.length} links`);
-          // Remap colors based on extracted types
-          return data;
-        }
-      } catch (e) {
-        console.log('No vault data found, using inline demo data');
-      }
-      // Fallback: inline demo data
-      return getFallbackData();
+  <div id="info">
+    <button class="close" id="info-close">&times;</button>
+    <div id="info-body"></div>
+  </div>
+
+  <div id="tip"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// ══════════════════════════════════════════════════
+//  TYPES — Lab-focused categories
+// ══════════════════════════════════════════════════
+const TYPES = {
+  team:     { color:'#f59e0b', label:'Team',        icon:'●',  size:6 },
+  speaker:  { color:'#a78bfa', label:'Speakers',   icon:'🎤', size:6 },
+  curator:  { color:'#38d9a9', label:'Curators',   icon:'✦',  size:5 },
+  week:     { color:'#3b82f6', label:'Weeks',       icon:'◆',  size:9 },
+  topic:    { color:'#8b5cf6', label:'Topics',      icon:'◉',  size:5 },
+  tool:     { color:'#ff6b6b', label:'Tools',       icon:'⬡',  size:4 },
+  deliver:  { color:'#06b6d4', label:'Deliverables',icon:'◎',  size:4 },
+  concept:  { color:'#10b981', label:'Concepts',    icon:'✦',  size:4 },
+};
+
+// ══════════════════════════════════════════════════
+//  DATA — AI Native Organizations Sprint (curated)
+// ══════════════════════════════════════════════════
+const DATA = { nodes: [], links: [] };
+const N = (id,name,type,desc) => DATA.nodes.push({id,name,type,description:desc||''});
+const L = (s,t,rel) => DATA.links.push({source:s,target:t,type:rel||'connects'});
+
+// Weeks
+N('w1','Week 1: Personal AI + Team','week','Build personal AI assistant. Process audit. AI Champion model. March 23–28, 2026.');
+N('w2','Week 2: System Above Model','week','6-layer architecture. MCP, context engineering, orchestration, skills. March 30 – April 4.');
+N('w3','Week 3: Company Functions','week','End-to-end automation. 90-day plan. Demo Day. April 6–13.');
+
+// Team
+N('stepan','Stepan Gershuni','team','Co-founder Cyber.Fund & CybOS AI. 200+ portfolio. All Monday lectures.');
+N('alex','Alexander Povaliaev','team','AI Mindset Founder. Product & Coordination. Focus sessions + workshops.');
+N('ira','Irina Nazarova','team','Operations. Speaker logistics, participant support.');
+N('ilya','Ilya Gindin','team','Focus practice facilitator. Tuesday sessions.');
+N('ksenia','Ksenia','team','Focus practice co-facilitator. Tuesday sessions.');
+
+// Curators (all 13)
+N('fedoseev','Stanislav Fedoseev','curator','LLM, context management, agent systems, Claude Code. 30min calls.');
+N('yury','Yury','curator','Personal AI assistant, skills, workflows, company ontology.');
+N('jin','Jin Kolesnikov','curator','Strategic thinking, futurism, Obsidian, exocortex.');
+N('glazov','Stanislav Glazov','curator','Claude Code advanced: skills, MCP, hooks, Python.');
+N('vasiliev-c','Alexander Vasiliev','curator','Multi-agent systems, AI infrastructure.');
+N('sereja','Sergey Ris','curator','Claude Code, GitHub, cmux, skills. AI as unfair advantage.');
+N('gindin','Ilya Gindin','curator','AI products, design, PMR, SEO/AEO. Focus sessions.');
+N('anton-v','Anton Voskobovich','curator','Knowledge bases, Obsidian, Claude Code, Cursor.');
+N('stashenko','Alexander Stashenko','curator','Leadership efficiency, products, marketing, HR, ontology.');
+N('tkacheva','Ksenia Tkacheva','curator','Sprint goals, Obsidian/Cursor/CC, skills, KMS.');
+N('smirnov','Denis Smirnov','curator','Technical: system setup to agent harness.');
+N('golubev','Ilya Golubev','curator','AI-stack, agent pipelines, n8n, team standardization.');
+N('borodich','Alexander Borodich','curator','AI-native products, business models, founder lifecycle.');
+
+// Week 1 Speakers
+N('lisovsky','Evgeny Lisovsky','speaker','Business factory via vibe-coding. Thu 26.03.');
+N('khanarin','Dima Khanarin','speaker','AI transformation framework + timeline + pitfalls. Fri 27.03.');
+
+// Week 2 Speakers
+N('ametov','Alexey Ametov','speaker','AI content for business. Non-slop quality. Wed 01.04.');
+N('kleban','Vitaly Kleban','speaker','Self-improving agents. Feedback loops. Wed 01.04.');
+N('sidora','Gleb Sidora','speaker','Technical coworking. MCP debugging. Thu 02.04.');
+N('kovalsky','Valery Kovalsky','speaker','AI-driven dev. Live build: task → app in 1h. Thu 02.04.');
+N('strakhov','George Strakhov','speaker','Agent team architecture. Oxford insights. Fri 03.04.');
+N('kravtsov','Daniil Kravtsov','speaker','Enterprise data pipelines. 99 agents. Knowledge graphs. Fri 03.04.');
+
+// Week 3 Speakers
+N('reid','Evgeny Reid','speaker','AI × Investments and strategy. Tue 07.04.');
+N('annaov','Bayram Annaov','speaker','Sales automation. L1–L5 autonomy. onsa.ai. Wed 08.04.');
+N('buzko','Roma Buzko','speaker','Legal tech. Contract review. AI regulation. Thu 09.04.');
+N('ustinov','Seva Ustinov','speaker','Product-agent transformation. 30 people → workspace. Fri 10.04.');
+
+// Topics
+N('t-pos','Personal OS','topic','Personal AI assistant. 10 categories. CLAUDE.md constitution.');
+N('t-process','Process Audit','topic','Map 15–20 processes. Freq × Time × Error × Scale.');
+N('t-6layer','6-Layer Architecture','topic','Infra → Context → Orchestration → Skills → People → Mgmt.');
+N('t-context','Context Engineering','topic','Ontology, Graph RAG, telescoping docs.');
+N('t-orch','4 Topologies','topic','Sequential, Parallel, Conditional, Recursive.');
+N('t-skills','Skills as Jobs','topic','Not prompts — specs with constraints + examples + eval.');
+N('t-bizmodel','AI Business Models','topic','Data/trust/distribution moats. Strangler Fig. GEO.');
+N('t-90day','90-Day Plan','topic','Quick wins → Scaling → New roles.');
+N('t-champion','AI Champion','topic','First AI hire. Bridge tech ↔ business.');
+N('t-vibecoding','Vibe-Coding','topic','You = CEO, AI agents = employees.');
+N('t-selfimprove','Self-Improving Agents','topic','Static → feedback loops → autonomous improvement.');
+N('t-legal','AI Legal','topic','Contract automation. Compliance. Regulation.');
+N('t-sales','Sales Automation','topic','L1–L5 autonomy. Inbound + outbound.');
+N('t-content','AI Content','topic','Pipeline: idea → gen → verify → publish.');
+N('t-scaling','Scaling Laws','topic','Pre-training, RLVR, autonomous work.');
+
+// Tools
+N('tool-claude','Claude Code','tool','AI assistant & coder. Skills, MCP, agents.');
+N('tool-cursor','Cursor','tool','AI-native editor.');
+N('tool-openclaw','OpenClaw','tool','Telegram bot PM. 7 layers.');
+N('tool-obsidian','Obsidian','tool','Knowledge vault. Wiki-links.');
+N('tool-linear','Linear','tool','Sprint tracking.');
+N('tool-n8n','n8n / Make','tool','Workflow automation.');
+N('tool-mcp','MCP Servers','tool','Firecrawl, Exa, GitHub, Custom.');
+N('tool-tg','Telegram','tool','Sprint chat. Async updates.');
+
+// Deliverables
+N('d-asst','AI Assistant','deliver','Working assistant + 3 skills + CLAUDE.md.');
+N('d-top10','Top-10 Processes','deliver','Prioritized automation candidates.');
+N('d-ontology','Data Ontology','deliver','5–10 key entities mapped.');
+N('d-skillfile','Skill-File','deliver','Complete process spec.');
+N('d-auto','Automated Process','deliver','End-to-end business function.');
+N('d-plan','90-Day Plan','deliver','Quick wins → scale → roles.');
+N('d-demo','Demo Day','deliver','5 min + live demo + ROI.');
+
+// Concepts
+N('c-aifirst','AI-First','concept','Design assuming AI exists.');
+N('c-token','Token Stream','concept','Org = info processor.');
+N('c-mirror','Mirror Agents','concept','MCP + internal loops.');
+N('c-bitter','Bitter Lesson','concept','Scale > engineered knowledge.');
+
+// ── LINKS ──
+// Team → Weeks
+L('stepan','w1','lectures'); L('stepan','w2','lectures'); L('stepan','w3','lectures');
+L('alex','w1','facilitates'); L('alex','w2','facilitates'); L('alex','w3','facilitates');
+L('ira','w1','operations'); L('ira','w2','operations'); L('ira','w3','operations');
+L('ilya','w1','focus'); L('ilya','w2','focus'); L('ilya','w3','focus');
+
+// Speakers → Weeks
+L('lisovsky','w1','speaks'); L('khanarin','w1','speaks');
+L('ametov','w2','speaks'); L('kleban','w2','speaks');
+L('sidora','w2','speaks'); L('kovalsky','w2','speaks');
+L('strakhov','w2','speaks'); L('kravtsov','w2','speaks');
+L('reid','w3','speaks'); L('annaov','w3','speaks');
+L('buzko','w3','speaks'); L('ustinov','w3','speaks');
+
+// Curators → Weeks (all 13)
+L('fedoseev','w1','curates'); L('fedoseev','w2','curates');
+L('yury','w1','curates'); L('yury','w2','curates'); L('yury','w3','curates');
+L('jin','w1','curates'); L('jin','w2','curates');
+L('glazov','w2','curates'); L('glazov','w3','curates');
+L('vasiliev-c','w2','curates'); L('vasiliev-c','w3','curates');
+L('sereja','w1','curates'); L('sereja','w2','curates');
+L('gindin','w1','curates'); L('gindin','w2','curates'); L('gindin','w3','curates');
+L('anton-v','w1','curates'); L('anton-v','w2','curates');
+L('stashenko','w2','curates'); L('stashenko','w3','curates');
+L('tkacheva','w1','curates'); L('tkacheva','w2','curates'); L('tkacheva','w3','curates');
+L('smirnov','w2','curates'); L('smirnov','w3','curates');
+L('golubev','w2','curates'); L('golubev','w3','curates');
+L('borodich','w3','curates');
+
+// Curator → Topic expertise
+L('fedoseev','t-skills','expertise'); L('fedoseev','t-context','expertise');
+L('glazov','t-pos','expertise'); L('vasiliev-c','t-orch','expertise');
+L('sereja','t-pos','expertise'); L('gindin','t-content','expertise');
+L('anton-v','t-pos','expertise'); L('smirnov','t-6layer','expertise');
+L('golubev','t-orch','expertise'); L('stashenko','t-champion','expertise');
+L('tkacheva','t-pos','expertise'); L('borodich','t-bizmodel','expertise');
+L('jin','t-pos','expertise');
+
+// Weeks → Topics
+L('w1','t-pos','covers'); L('w1','t-process','covers'); L('w1','t-scaling','covers'); L('w1','t-vibecoding','covers');
+L('w2','t-6layer','covers'); L('w2','t-context','covers'); L('w2','t-orch','covers'); L('w2','t-skills','covers'); L('w2','t-selfimprove','covers'); L('w2','t-content','covers');
+L('w3','t-bizmodel','covers'); L('w3','t-90day','covers'); L('w3','t-champion','covers'); L('w3','t-sales','covers'); L('w3','t-legal','covers');
+
+// Speakers → Topics
+L('lisovsky','t-vibecoding','teaches'); L('khanarin','t-process','teaches');
+L('ametov','t-content','teaches'); L('kleban','t-selfimprove','teaches');
+L('kovalsky','t-vibecoding','teaches'); L('strakhov','t-orch','teaches');
+L('kravtsov','t-context','teaches'); L('reid','t-bizmodel','teaches');
+L('annaov','t-sales','teaches'); L('buzko','t-legal','teaches');
+L('ustinov','t-champion','teaches');
+L('fedoseev','t-skills','teaches');
+L('stepan','t-6layer','teaches'); L('stepan','t-scaling','teaches'); L('stepan','t-bizmodel','teaches'); L('stepan','t-90day','teaches');
+L('alex','t-pos','teaches'); L('alex','t-process','teaches'); L('alex','t-champion','teaches');
+
+// Topics → Tools
+L('t-pos','tool-claude','uses'); L('t-pos','tool-cursor','uses'); L('t-pos','tool-openclaw','uses'); L('t-pos','tool-obsidian','uses');
+L('t-6layer','tool-mcp','uses'); L('t-process','tool-linear','uses');
+L('t-skills','tool-claude','uses'); L('t-orch','tool-n8n','uses');
+L('t-content','tool-tg','uses'); L('t-sales','tool-mcp','uses');
+
+// Weeks → Deliverables
+L('w1','d-asst','produces'); L('w1','d-top10','produces');
+L('w2','d-ontology','produces'); L('w2','d-skillfile','produces');
+L('w3','d-auto','produces'); L('w3','d-plan','produces'); L('w3','d-demo','produces');
+
+// Concepts → Topics
+L('c-aifirst','t-pos','shapes'); L('c-aifirst','t-6layer','shapes');
+L('c-token','t-process','shapes'); L('c-mirror','t-orch','shapes'); L('c-bitter','t-scaling','shapes');
+
+const graphData = DATA;
+
+// ══════════════════════════════════════════════════
+//  3D GRAPH
+// ══════════════════════════════════════════════════
+const container = document.getElementById('graph-container');
+let showLabels = true;
+const navHistory = [];
+
+const Graph = ForceGraph3D({ controlType:'orbit' })(container)
+  .backgroundColor('#00000000')
+  .showNavInfo(false)
+  .warmupTicks(60)
+  .cooldownTicks(150)
+  .graphData(graphData)
+  .nodeVal(n => TYPES[n.type]?.size || 4)
+  .nodeColor(n => TYPES[n.type]?.color || '#64748b')
+  .nodeOpacity(0.92)
+  .nodeResolution(12)
+  .nodeThreeObject(n => {
+    const t = TYPES[n.type] || {};
+    const color = t.color || '#64748b';
+    const sz = t.size || 4;
+    const isPerson = ['speaker','curator','team'].includes(n.type);
+    const group = new THREE.Group();
+
+    if (isPerson) {
+      // Card node for people
+      const geo = new THREE.BoxGeometry(sz*1.3, sz*1.3, sz*0.4, 2, 2, 2);
+      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3, shininess:40, transparent:true, opacity:0.85 });
+      group.add(new THREE.Mesh(geo, mat));
+      const icon = new SpriteText(t.icon || '●');
+      icon.textHeight = sz * 0.8;
+      icon.position.z = sz * 0.25;
+      group.add(icon);
+    } else {
+      const geo = new THREE.SphereGeometry(sz*0.5, 12, 12);
+      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.25, shininess:60, transparent:true, opacity:0.85 });
+      group.add(new THREE.Mesh(geo, mat));
     }
 
-    function getFallbackData() {
-      return {
-      nodes: [
-        // ── Phases (Sprint Timeline) ──
-        { id: 'w1', name: 'Week 1: AI Landscape', type: 'phase', group: 0,
-          description: 'Audit the current AI landscape within the organization. Map existing tools, processes, and gaps. Establish baseline AI maturity score.' },
-        { id: 'w2', name: 'Week 2: Process Mapping', type: 'phase', group: 0,
-          description: 'Deep dive into organizational processes. Identify automation candidates. Map information flows and decision points.' },
-        { id: 'w3', name: 'Week 3: Tool Selection', type: 'phase', group: 0,
-          description: 'Evaluate AI tools against process needs. Build selection framework. Prototype key integrations.' },
-        { id: 'w4', name: 'Week 4: Pilot Design', type: 'phase', group: 0,
-          description: 'Design pilot projects with clear success metrics. Define scope, timeline, and resources. Risk assessment.' },
-        { id: 'w5', name: 'Week 5: Implementation', type: 'phase', group: 0,
-          description: 'Execute pilot projects. Daily standups. Iterate based on feedback. Track metrics.' },
-        { id: 'w6', name: 'Week 6: Review & Scale', type: 'phase', group: 0,
-          description: 'Demo Day. Analyze pilot results. Build scaling playbook. Define next steps for org-wide adoption.' },
+    // Subtle halo
+    const spMat = new THREE.SpriteMaterial({ map:glowTex(color), transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, opacity:0.18 });
+    const sp = new THREE.Sprite(spMat);
+    sp.scale.set(sz*2.2, sz*2.2, 1);
+    group.add(sp);
 
-        // ── Semantic Zones ──
-        { id: 'z-strategy', name: 'AI Strategy & Vision', type: 'zone', group: 1,
-          description: 'Strategic frameworks for AI adoption. Vision alignment. Competitive positioning through AI capabilities.' },
-        { id: 'z-automation', name: 'Process Automation', type: 'zone', group: 1,
-          description: 'Workflow automation patterns. RPA vs AI agents. Human-in-the-loop design. Efficiency metrics.' },
-        { id: 'z-knowledge', name: 'Knowledge Management', type: 'zone', group: 1,
-          description: 'Organizational knowledge capture and retrieval. RAG systems. Semantic search. Institutional memory.' },
-        { id: 'z-augment', name: 'Team Augmentation', type: 'zone', group: 1,
-          description: 'AI as team member. Pair programming with AI. AI-assisted decision making. Skill amplification.' },
-        { id: 'z-decision', name: 'Decision Intelligence', type: 'zone', group: 1,
-          description: 'Data-driven decisions. AI-powered analytics. Scenario modeling. Risk assessment frameworks.' },
-        { id: 'z-ethics', name: 'Ethics & Governance', type: 'zone', group: 1,
-          description: 'Responsible AI use. Data privacy. Bias detection. Governance frameworks. Compliance.' },
-        { id: 'z-culture', name: 'Culture & Change', type: 'zone', group: 1,
-          description: 'Organizational change management for AI adoption. Building AI-native culture. Overcoming resistance.' },
-        { id: 'z-infra', name: 'Data Infrastructure', type: 'zone', group: 1,
-          description: 'Data pipelines. Vector databases. API architectures. Cloud vs local. Security.' },
-
-        // ── Topics (Content Modules) ──
-        { id: 't-thinking', name: 'AI-Native Thinking', type: 'topic', group: 2,
-          description: 'Paradigm shift from AI-assisted to AI-native. Designing processes that assume AI as a core capability.' },
-        { id: 't-prompt', name: 'Prompt Engineering', type: 'topic', group: 2,
-          description: 'Systematic prompt design. Chain-of-thought. Few-shot learning. Prompt libraries and version control.' },
-        { id: 't-agents', name: 'Agent Workflows', type: 'topic', group: 2,
-          description: 'Multi-agent systems. Autonomous task execution. Agent orchestration. Error handling and fallbacks.' },
-        { id: 't-rag', name: 'RAG & Retrieval', type: 'topic', group: 2,
-          description: 'Retrieval-augmented generation. Vector embeddings. Chunking strategies. Hybrid search.' },
-        { id: 't-orgdesign', name: 'Org Design for AI', type: 'topic', group: 2,
-          description: 'Restructuring teams around AI capabilities. New roles: AI Lead, Prompt Engineer, AI Ethics Officer.' },
-        { id: 't-metrics', name: 'AI ROI Metrics', type: 'topic', group: 2,
-          description: 'Measuring AI impact. Time saved, quality improved, decisions accelerated. Attribution models.' },
-        { id: 't-security', name: 'AI Security', type: 'topic', group: 2,
-          description: 'Prompt injection. Data leakage. Model access control. Audit trails. Compliance frameworks.' },
-        { id: 't-personal', name: 'Personal OS', type: 'topic', group: 2,
-          description: 'Personal operating system with AI. Productivity frameworks. Knowledge management. Daily workflows.' },
-
-        // ── Protocols ──
-        { id: 'p-checkin', name: 'Sprint Check-in', type: 'protocol', group: 3,
-          description: 'Weekly async check-in: 3 wins, 1 blocker, 1 insight. Shared in cohort channel. Peer feedback required.' },
-        { id: 'p-review', name: 'Peer Review', type: 'protocol', group: 3,
-          description: 'Structured feedback on pilot projects. Review template with criteria. Constructive, specific, actionable.' },
-        { id: 'p-demo', name: 'Demo Day', type: 'protocol', group: 3,
-          description: 'Final presentations. 10 min per team. Live demo preferred. Q&A from mentors and peers. Recorded.' },
-        { id: 'p-coaching', name: '1:1 Coaching', type: 'protocol', group: 3,
-          description: 'Bi-weekly 30-min sessions with assigned mentor. Focus on specific challenges. Action items tracked.' },
-        { id: 'p-async', name: 'Async Collaboration', type: 'protocol', group: 3,
-          description: 'Loom videos for updates. Document-first communication. Decision logs. Timezone-friendly.' },
-        { id: 'p-retro', name: 'Sprint Retrospective', type: 'protocol', group: 3,
-          description: 'End-of-sprint reflection. What worked, what didn\'t, what to try next. Psychological safety first.' },
-
-        // ── Tools ──
-        { id: 'tool-claude', name: 'Claude / Claude Code', type: 'tool', group: 4,
-          description: 'AI assistant and coding companion. Used for brainstorming, code generation, analysis, and pair programming.' },
-        { id: 'tool-linear', name: 'Linear', type: 'tool', group: 4,
-          description: 'Project management. Sprint tracking. Issue management. Team coordination.' },
-        { id: 'tool-obsidian', name: 'Obsidian', type: 'tool', group: 4,
-          description: 'Knowledge management. Personal and team vaults. Wiki-linked notes. Plugins ecosystem.' },
-        { id: 'tool-notion', name: 'Notion', type: 'tool', group: 4,
-          description: 'Shared workspace. Documentation. Databases. Templates. Team wiki.' },
-        { id: 'tool-miro', name: 'Miro', type: 'tool', group: 4,
-          description: 'Visual collaboration. Process mapping. Workshop facilitation. Whiteboarding.' },
-        { id: 'tool-loom', name: 'Loom', type: 'tool', group: 4,
-          description: 'Async video updates. Screen recording. Sprint check-ins. Tutorial creation.' },
-        { id: 'tool-cursor', name: 'Cursor', type: 'tool', group: 4,
-          description: 'AI-native code editor. Agent-powered development. Code understanding and generation.' },
-        { id: 'tool-v0', name: 'v0 / Vercel', type: 'tool', group: 4,
-          description: 'AI-powered UI generation. Rapid prototyping. Deploy previews. Frontend scaffolding.' },
-
-        // ── Artifacts (Outputs) ──
-        { id: 'a-audit', name: 'AI Maturity Assessment', type: 'artifact', group: 5,
-          description: 'Comprehensive audit of organization\'s AI readiness across 8 dimensions. Baseline + target scores.' },
-        { id: 'a-processmap', name: 'Process Map', type: 'artifact', group: 5,
-          description: 'Visual map of key organizational processes with AI opportunity annotations. Priority matrix.' },
-        { id: 'a-toolstack', name: 'AI Tool Stack', type: 'artifact', group: 5,
-          description: 'Recommended tool stack with integration architecture. Build vs buy analysis. Cost projections.' },
-        { id: 'a-pilot', name: 'Pilot Project Plan', type: 'artifact', group: 5,
-          description: 'Detailed plan for 2-3 pilot projects. Success criteria. Timeline. Resource allocation. Risk mitigation.' },
-        { id: 'a-playbook', name: 'Scaling Playbook', type: 'artifact', group: 5,
-          description: 'Step-by-step guide for scaling successful pilots. Change management plan. Training program. KPIs.' },
-        { id: 'a-roi', name: 'ROI Framework', type: 'artifact', group: 5,
-          description: 'Custom ROI calculation framework. Before/after metrics. TCO analysis. Business case template.' },
-
-        // ── Personas ──
-        { id: 'per-lead', name: 'Sprint Lead', type: 'persona', group: 6,
-          description: 'Facilitates the sprint. Sets the pace. Curates content. Manages cohort dynamics. Ensures outcomes.' },
-        { id: 'per-mentor', name: 'Mentor', type: 'persona', group: 6,
-          description: 'Domain expert providing 1:1 guidance. Reviews artifacts. Shares industry experience. Challenges assumptions.' },
-        { id: 'per-participant', name: 'Participant', type: 'persona', group: 6,
-          description: 'Organization leader or team lead going through the sprint. Brings real challenges. Builds real solutions.' },
-        { id: 'per-curator', name: 'Curator', type: 'persona', group: 6,
-          description: 'Content curator and community builder. Surfaces relevant resources. Connects participants with similar challenges.' },
-        { id: 'per-founder', name: 'Founder', type: 'persona', group: 6,
-          description: 'AI Mindset founder. Provides strategic vision. Guest sessions. Final review and feedback.' },
-
-        // ── Concepts ──
-        { id: 'c-aifirst', name: 'AI-First Principle', type: 'concept', group: 7,
-          description: 'Design every process assuming AI exists. Not "how to add AI" but "how would this work if AI was a given?"' },
-        { id: 'c-hitl', name: 'Human-in-the-Loop', type: 'concept', group: 7,
-          description: 'Critical decision points where human judgment is essential. Designing the handoff between AI and human.' },
-        { id: 'c-compounding', name: 'Compounding Returns', type: 'concept', group: 7,
-          description: 'AI implementations that get better over time. Feedback loops. Learning systems. Network effects.' },
-        { id: 'c-sovereignty', name: 'Data Sovereignty', type: 'concept', group: 7,
-          description: 'Owning your data and AI stack. Local-first vs cloud. Vendor lock-in avoidance. Data portability.' },
-        { id: 'c-ambient', name: 'Ambient Intelligence', type: 'concept', group: 7,
-          description: 'AI that works in the background. Proactive suggestions. Context-aware automation. Zero-friction UX.' },
-      ],
-
-      links: [
-        // ── Phase → Zone connections ──
-        { source: 'w1', target: 'z-strategy', type: 'explores' },
-        { source: 'w1', target: 'z-infra', type: 'explores' },
-        { source: 'w2', target: 'z-automation', type: 'explores' },
-        { source: 'w2', target: 'z-knowledge', type: 'explores' },
-        { source: 'w3', target: 'z-augment', type: 'explores' },
-        { source: 'w3', target: 'z-infra', type: 'explores' },
-        { source: 'w4', target: 'z-decision', type: 'explores' },
-        { source: 'w4', target: 'z-ethics', type: 'explores' },
-        { source: 'w5', target: 'z-automation', type: 'explores' },
-        { source: 'w5', target: 'z-culture', type: 'explores' },
-        { source: 'w6', target: 'z-strategy', type: 'explores' },
-        { source: 'w6', target: 'z-culture', type: 'explores' },
-
-        // ── Phase → Topic connections ──
-        { source: 'w1', target: 't-thinking', type: 'covers' },
-        { source: 'w1', target: 't-metrics', type: 'covers' },
-        { source: 'w2', target: 't-prompt', type: 'covers' },
-        { source: 'w2', target: 't-orgdesign', type: 'covers' },
-        { source: 'w3', target: 't-agents', type: 'covers' },
-        { source: 'w3', target: 't-rag', type: 'covers' },
-        { source: 'w4', target: 't-security', type: 'covers' },
-        { source: 'w4', target: 't-metrics', type: 'covers' },
-        { source: 'w5', target: 't-agents', type: 'covers' },
-        { source: 'w5', target: 't-personal', type: 'covers' },
-        { source: 'w6', target: 't-orgdesign', type: 'covers' },
-        { source: 'w6', target: 't-metrics', type: 'covers' },
-
-        // ── Phase → Protocol connections ──
-        { source: 'w1', target: 'p-checkin', type: 'uses' },
-        { source: 'w2', target: 'p-checkin', type: 'uses' },
-        { source: 'w3', target: 'p-checkin', type: 'uses' },
-        { source: 'w3', target: 'p-review', type: 'uses' },
-        { source: 'w4', target: 'p-coaching', type: 'uses' },
-        { source: 'w5', target: 'p-async', type: 'uses' },
-        { source: 'w5', target: 'p-coaching', type: 'uses' },
-        { source: 'w6', target: 'p-demo', type: 'uses' },
-        { source: 'w6', target: 'p-retro', type: 'uses' },
-
-        // ── Phase → Artifact connections ──
-        { source: 'w1', target: 'a-audit', type: 'produces' },
-        { source: 'w2', target: 'a-processmap', type: 'produces' },
-        { source: 'w3', target: 'a-toolstack', type: 'produces' },
-        { source: 'w4', target: 'a-pilot', type: 'produces' },
-        { source: 'w5', target: 'a-roi', type: 'produces' },
-        { source: 'w6', target: 'a-playbook', type: 'produces' },
-
-        // ── Topic → Zone connections ──
-        { source: 't-thinking', target: 'z-strategy', type: 'belongs' },
-        { source: 't-prompt', target: 'z-augment', type: 'belongs' },
-        { source: 't-agents', target: 'z-automation', type: 'belongs' },
-        { source: 't-rag', target: 'z-knowledge', type: 'belongs' },
-        { source: 't-orgdesign', target: 'z-culture', type: 'belongs' },
-        { source: 't-metrics', target: 'z-decision', type: 'belongs' },
-        { source: 't-security', target: 'z-ethics', type: 'belongs' },
-        { source: 't-personal', target: 'z-augment', type: 'belongs' },
-
-        // ── Topic → Tool connections ──
-        { source: 't-prompt', target: 'tool-claude', type: 'uses' },
-        { source: 't-agents', target: 'tool-claude', type: 'uses' },
-        { source: 't-agents', target: 'tool-cursor', type: 'uses' },
-        { source: 't-rag', target: 'tool-obsidian', type: 'uses' },
-        { source: 't-orgdesign', target: 'tool-miro', type: 'uses' },
-        { source: 't-personal', target: 'tool-obsidian', type: 'uses' },
-        { source: 't-personal', target: 'tool-claude', type: 'uses' },
-        { source: 't-metrics', target: 'tool-linear', type: 'uses' },
-
-        // ── Protocol → Tool connections ──
-        { source: 'p-checkin', target: 'tool-loom', type: 'via' },
-        { source: 'p-review', target: 'tool-notion', type: 'via' },
-        { source: 'p-async', target: 'tool-loom', type: 'via' },
-        { source: 'p-coaching', target: 'tool-linear', type: 'via' },
-        { source: 'p-demo', target: 'tool-v0', type: 'via' },
-
-        // ── Persona → Phase connections ──
-        { source: 'per-lead', target: 'w1', type: 'facilitates' },
-        { source: 'per-lead', target: 'w6', type: 'facilitates' },
-        { source: 'per-mentor', target: 'p-coaching', type: 'runs' },
-        { source: 'per-mentor', target: 'p-review', type: 'runs' },
-        { source: 'per-participant', target: 'w1', type: 'attends' },
-        { source: 'per-participant', target: 'w2', type: 'attends' },
-        { source: 'per-participant', target: 'w3', type: 'attends' },
-        { source: 'per-participant', target: 'w4', type: 'attends' },
-        { source: 'per-participant', target: 'w5', type: 'attends' },
-        { source: 'per-participant', target: 'w6', type: 'attends' },
-        { source: 'per-curator', target: 'z-knowledge', type: 'manages' },
-        { source: 'per-founder', target: 'z-strategy', type: 'guides' },
-        { source: 'per-founder', target: 'p-demo', type: 'judges' },
-
-        // ── Concept connections ──
-        { source: 'c-aifirst', target: 't-thinking', type: 'defines' },
-        { source: 'c-aifirst', target: 'z-strategy', type: 'shapes' },
-        { source: 'c-hitl', target: 'z-ethics', type: 'shapes' },
-        { source: 'c-hitl', target: 't-agents', type: 'constrains' },
-        { source: 'c-compounding', target: 'z-automation', type: 'enables' },
-        { source: 'c-compounding', target: 't-metrics', type: 'measures' },
-        { source: 'c-sovereignty', target: 'z-infra', type: 'shapes' },
-        { source: 'c-sovereignty', target: 't-security', type: 'requires' },
-        { source: 'c-ambient', target: 't-personal', type: 'enables' },
-        { source: 'c-ambient', target: 'z-augment', type: 'enables' },
-
-        // ── Cross-zone connections ──
-        { source: 'z-strategy', target: 'z-culture', type: 'requires' },
-        { source: 'z-automation', target: 'z-infra', type: 'requires' },
-        { source: 'z-knowledge', target: 'z-infra', type: 'requires' },
-        { source: 'z-augment', target: 'z-culture', type: 'requires' },
-        { source: 'z-decision', target: 'z-ethics', type: 'requires' },
-
-        // ── Artifact → Tool connections ──
-        { source: 'a-processmap', target: 'tool-miro', type: 'built_with' },
-        { source: 'a-toolstack', target: 'tool-notion', type: 'built_with' },
-        { source: 'a-pilot', target: 'tool-linear', type: 'built_with' },
-        { source: 'a-playbook', target: 'tool-obsidian', type: 'built_with' },
-      ]
-    };
-    } // end getFallbackData()
-
-    // ══════════════════════════════════════════════════
-    //  STACK 4: GLSL — Particle Shaders
-    // ══════════════════════════════════════════════════
-    const PARTICLE_VS = `
-      uniform float uTime;
-      uniform float uSize;
-      attribute float aRandom;
-      varying float vAlpha;
-      void main() {
-        vec3 pos = position;
-        float t = uTime * 0.5;
-        pos.x += sin(t + aRandom * 6.28) * 2.0;
-        pos.y += cos(t * 0.7 + aRandom * 3.14) * 2.0;
-        pos.z += sin(t * 0.3 + aRandom * 9.42) * 1.5;
-        vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
-        gl_Position = projectionMatrix * mvPos;
-        float dist = -mvPos.z;
-        gl_PointSize = uSize * (300.0 / dist);
-        vAlpha = smoothstep(800.0, 100.0, dist) * (0.3 + 0.7 * aRandom);
-      }
-    `;
-    const PARTICLE_FS = `
-      uniform vec3 uColor;
-      varying float vAlpha;
-      void main() {
-        float d = length(gl_PointCoord - 0.5);
-        if (d > 0.5) discard;
-        float alpha = smoothstep(0.5, 0.0, d) * vAlpha * 0.4;
-        gl_FragColor = vec4(uColor, alpha);
-      }
-    `;
-
-    // ══════════════════════════════════════════════════
-    //  TYPE METADATA
-    // ══════════════════════════════════════════════════
-    const TYPE_META = {
-      phase:    { label: 'Sprint Phase', icon: '◆' },
-      zone:     { label: 'Semantic Zone', icon: '◈' },
-      topic:    { label: 'Topic', icon: '◉' },
-      protocol: { label: 'Protocol', icon: '◎' },
-      tool:     { label: 'Tool', icon: '⬡' },
-      artifact: { label: 'Artifact', icon: '◇' },
-      persona:  { label: 'Persona', icon: '●' },
-      concept:  { label: 'Concept', icon: '✦' },
-    };
-
-    // ══════════════════════════════════════════════════
-    //  STACK 5: Web Audio — Sonification Engine
-    // ══════════════════════════════════════════════════
-    let audioCtx = null;
-    let masterGain = null;
-
-    function initAudio() {
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      masterGain = audioCtx.createGain();
-      masterGain.gain.value = CONFIG.audio.masterGain;
-      masterGain.connect(audioCtx.destination);
-
-      // Ambient drone
-      const drone = audioCtx.createOscillator();
-      drone.type = 'sine';
-      drone.frequency.value = 55; // A1
-      const droneGain = audioCtx.createGain();
-      droneGain.gain.value = 0.03;
-      drone.connect(droneGain);
-      droneGain.connect(masterGain);
-      drone.start();
-
-      // LFO modulation on drone
-      const lfo = audioCtx.createOscillator();
-      lfo.type = 'sine';
-      lfo.frequency.value = 0.1;
-      const lfoGain = audioCtx.createGain();
-      lfoGain.gain.value = 5;
-      lfo.connect(lfoGain);
-      lfoGain.connect(drone.frequency);
-      lfo.start();
+    // Label
+    if (showLabels) {
+      const lbl = new SpriteText(n.name);
+      lbl.color = 'rgba(255,255,255,0.55)';
+      lbl.textHeight = isPerson ? 2.6 : 2.0;
+      lbl.fontFace = 'IBM Plex Mono';
+      lbl.padding = 0.6;
+      lbl.borderRadius = 2;
+      lbl.backgroundColor = 'rgba(22,22,32,0.45)';
+      lbl.position.y = sz * 0.7 + 3;
+      group.add(lbl);
+      n.__label = lbl;
     }
 
-    function playHoverSound(nodeType) {
-      if (!audioCtx || !CONFIG.audio.enabled) return;
-      const typeIndex = Object.keys(CONFIG.colors).indexOf(nodeType);
-      const freq = CONFIG.audio.hoverFreqBase * Math.pow(2, typeIndex / 12);
-
-      const osc = audioCtx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-
-      const gain = audioCtx.createGain();
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-
-      osc.connect(gain);
-      gain.connect(masterGain);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.3);
-    }
-
-    function playClickSound(nodeType) {
-      if (!audioCtx || !CONFIG.audio.enabled) return;
-      const typeIndex = Object.keys(CONFIG.colors).indexOf(nodeType);
-      const freq = CONFIG.audio.clickFreqBase * Math.pow(2, typeIndex / 8);
-
-      const osc = audioCtx.createOscillator();
-      osc.type = 'triangle';
-      osc.frequency.value = freq;
-      osc.frequency.exponentialRampToValueAtTime(freq * 0.5, audioCtx.currentTime + 0.5);
-
-      const gain = audioCtx.createGain();
-      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-
-      osc.connect(gain);
-      gain.connect(masterGain);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.5);
-    }
-
-    // ══════════════════════════════════════════════════
-    //  ASYNC BOOT — Load data then initialize
-    // ══════════════════════════════════════════════════
-    (async function boot() {
-    graphData = await loadGraphData();
-
-    // Performance: disable labels for large graphs
-    if (graphData.nodes.length > 200) {
-      CONFIG.labels = false;
-      CONFIG.force.charge = -80; // weaker repulsion for dense graphs
-      CONFIG.particles.count = 800; // fewer particles
-    }
-
-    // Ensure color mapping for vault-extracted types
-    graphData.nodes.forEach(n => {
-      if (!CONFIG.colors[n.type]) {
-        // Auto-assign color from palette based on type hash
-        const hash = n.type.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-        const palette = Object.values(CONFIG.colors);
-        CONFIG.colors[n.type] = palette[hash % palette.length];
-      }
-      if (!CONFIG.nodeSize[n.type]) {
-        CONFIG.nodeSize[n.type] = n.type === 'zone' ? 7 : (n.linkCount > 20 ? 7 : n.linkCount > 5 ? 5 : 3);
-      }
-    });
-
-    // ══════════════════════════════════════════════════
-    //  STACK 9: Fuse.js — Search Engine
-    // ══════════════════════════════════════════════════
-    const fuse = new Fuse(graphData.nodes, {
-      keys: ['name', 'description', 'type'],
-      threshold: 0.35,
-      includeScore: true
-    });
-
-    // ══════════════════════════════════════════════════
-    //  INITIALIZE 3D GRAPH (STACKS 1, 2, 3)
-    // ══════════════════════════════════════════════════
-    const container = document.getElementById('graph-container');
-    const Graph = ForceGraph3D({ controlType: 'orbit' })(container)
-      .backgroundColor('#00000000')
-      .showNavInfo(false)
-      .warmupTicks(80)
-      .cooldownTicks(200)
-      .graphData(graphData)
-      // Node rendering
-      .nodeVal(node => CONFIG.nodeSize[node.type] || 5)
-      .nodeColor(node => CONFIG.colors[node.type] || '#ffffff')
-      .nodeOpacity(0.95)
-      .nodeResolution(16)
-      .nodeThreeObject(node => {
-        const color = CONFIG.colors[node.type] || '#ffffff';
-        const size = CONFIG.nodeSize[node.type] || 5;
-        const group = new THREE.Group();
-
-        // Core sphere
-        const geo = new THREE.SphereGeometry(size * 0.6, 16, 16);
-        const mat = new THREE.MeshPhongMaterial({
-          color: color,
-          emissive: color,
-          emissiveIntensity: 0.5,
-          shininess: 80,
-          transparent: true,
-          opacity: 0.9
-        });
-        const sphere = new THREE.Mesh(geo, mat);
-        group.add(sphere);
-
-        // Glow halo (sprite)
-        const spriteMat = new THREE.SpriteMaterial({
-          map: createGlowTexture(color),
-          transparent: true,
-          blending: THREE.AdditiveBlending,
-          depthWrite: false,
-          opacity: 0.35
-        });
-        const sprite = new THREE.Sprite(spriteMat);
-        sprite.scale.set(size * 3.5, size * 3.5, 1);
-        group.add(sprite);
-
-        // Label (STACK 3: SpriteText)
-        if (CONFIG.labels) {
-          const label = new SpriteText(node.name);
-          label.color = 'rgba(226, 232, 240, 0.7)';
-          label.textHeight = 2.5;
-          label.fontFace = 'IBM Plex Mono';
-          label.fontWeight = '400';
-          label.padding = 1;
-          label.borderRadius = 2;
-          label.backgroundColor = 'rgba(22, 22, 32, 0.6)';
-          label.position.y = size * 0.8 + 4;
-          group.add(label);
-        }
-
-        // Store refs for animation
-        node.__sphere = sphere;
-        node.__halo = sprite;
-        node.__group = group;
-
-        return group;
-      })
-      .nodeThreeObjectExtend(false)
-      // Link rendering
-      .linkWidth(link => 0.3)
-      .linkColor(link => {
-        const sourceNode = typeof link.source === 'object' ? link.source : graphData.nodes.find(n => n.id === link.source);
-        return sourceNode ? CONFIG.colors[sourceNode.type] + '40' : 'rgba(77,201,212,0.15)';
-      })
-      .linkOpacity(0.25)
-      .linkDirectionalParticles(2)
-      .linkDirectionalParticleWidth(1.2)
-      .linkDirectionalParticleSpeed(0.004)
-      .linkDirectionalParticleColor(link => {
-        const sourceNode = typeof link.source === 'object' ? link.source : graphData.nodes.find(n => n.id === link.source);
-        return sourceNode ? CONFIG.colors[sourceNode.type] : '#4dc9d4';
-      })
-      // Forces (STACK 4: D3 force)
-      .d3Force('charge', d3.forceManyBody().strength(CONFIG.force.charge))
-      .d3Force('link', d3.forceLink().strength(CONFIG.force.link))
-      .d3Force('center', d3.forceCenter().strength(CONFIG.force.center))
-      .d3Force('collision', d3.forceCollide(node => (CONFIG.nodeSize[node.type] || 5) * CONFIG.force.collision))
-      // Events (STACK 12: PointerEvents)
-      .onNodeHover(handleNodeHover)
-      .onNodeClick(handleNodeClick)
-      .onBackgroundClick(handleBackgroundClick);
-
-    // ══════════════════════════════════════════════════
-    //  GLOW TEXTURE GENERATOR
-    // ══════════════════════════════════════════════════
-    const glowTextureCache = {};
-    function createGlowTexture(colorHex) {
-      if (glowTextureCache[colorHex]) return glowTextureCache[colorHex];
-      const size = 128;
-      const canvas = document.createElement('canvas');
-      canvas.width = size; canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      const gradient = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
-      gradient.addColorStop(0, colorHex + 'ff');
-      gradient.addColorStop(0.2, colorHex + '80');
-      gradient.addColorStop(0.5, colorHex + '20');
-      gradient.addColorStop(1, colorHex + '00');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, size, size);
-      const tex = new THREE.CanvasTexture(canvas);
-      glowTextureCache[colorHex] = tex;
-      return tex;
-    }
-
-    // ══════════════════════════════════════════════════
-    //  AMBIENT PARTICLE SYSTEM (STACK 4: GLSL)
-    // ══════════════════════════════════════════════════
-    let particleSystem = null;
-    let particleUniforms = null;
-
-    function createParticles() {
-      const count = CONFIG.particles.count;
-      const spread = CONFIG.particles.spread;
-      const positions = new Float32Array(count * 3);
-      const randoms = new Float32Array(count);
-
-      for (let i = 0; i < count; i++) {
-        positions[i * 3]     = (Math.random() - 0.5) * spread;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * spread;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * spread;
-        randoms[i] = Math.random();
-      }
-
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
-
-      particleUniforms = {
-        uTime: { value: 0 },
-        uSize: { value: CONFIG.particles.size },
-        uColor: { value: new THREE.Color('#4dc9d4') }
-      };
-
-      const mat = new THREE.ShaderMaterial({
-        uniforms: particleUniforms,
-        vertexShader: PARTICLE_VS,
-        fragmentShader: PARTICLE_FS,
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-      });
-
-      particleSystem = new THREE.Points(geo, mat);
-      Graph.scene().add(particleSystem);
-    }
-
-    // ══════════════════════════════════════════════════
-    //  SCENE SETUP — Lights, Background
-    // ══════════════════════════════════════════════════
-    function setupScene() {
-      const scene = Graph.scene();
-
-      // Ambient light
-      scene.add(new THREE.AmbientLight(0x404060, 0.6));
-
-      // Directional lights
-      const dir1 = new THREE.DirectionalLight(0x4dc9d4, 0.4);
-      dir1.position.set(100, 200, 100);
-      scene.add(dir1);
-
-      const dir2 = new THREE.DirectionalLight(0x3b82f6, 0.3);
-      dir2.position.set(-100, -100, 200);
-      scene.add(dir2);
-
-      // Point lights at graph center
-      const point = new THREE.PointLight(0x8b5cf6, 0.2, 300);
-      scene.add(point);
-
-      // Background — dark gradient
-      scene.background = new THREE.Color('#0a0a14');
-      scene.fog = new THREE.FogExp2('#0a0a14', 0.0008);
-
-      // Create particles
-      createParticles();
-    }
-
-    // ══════════════════════════════════════════════════
-    //  INTERACTION HANDLERS
-    // ══════════════════════════════════════════════════
-    let hoveredNode = null;
-    let selectedNode = null;
-    const tooltip = document.getElementById('tooltip');
-
-    function handleNodeHover(node) {
-      container.style.cursor = node ? 'pointer' : 'default';
-
-      // Reset previous hover
-      if (hoveredNode && hoveredNode.__sphere) {
-        hoveredNode.__sphere.material.emissiveIntensity = 0.5;
-        if (hoveredNode.__halo) hoveredNode.__halo.material.opacity = 0.35;
-      }
-
-      hoveredNode = node;
-
-      if (node) {
-        // Highlight
-        if (node.__sphere) node.__sphere.material.emissiveIntensity = 1.0;
-        if (node.__halo) node.__halo.material.opacity = 0.6;
-
-        // Tooltip
-        tooltip.textContent = `${TYPE_META[node.type]?.icon || ''} ${node.name}`;
-        tooltip.classList.add('visible');
-
-        // Audio
-        playHoverSound(node.type);
-      } else {
-        tooltip.classList.remove('visible');
-      }
-    }
-
-    // STACK 12: PointerEvents — track mouse for tooltip
-    document.addEventListener('pointermove', (e) => {
-      tooltip.style.left = (e.clientX + 12) + 'px';
-      tooltip.style.top = (e.clientY - 8) + 'px';
-    });
-
-    function handleNodeClick(node) {
-      selectedNode = node;
-      playClickSound(node.type);
-      showInfoPanel(node);
-
-      // Fly camera to node
-      const dist = 80;
-      Graph.cameraPosition(
-        { x: node.x + dist, y: node.y + dist * 0.5, z: node.z + dist },
-        { x: node.x, y: node.y, z: node.z },
-        1200
-      );
-
-      // Highlight connected
-      highlightConnections(node);
-    }
-
-    function handleBackgroundClick() {
-      selectedNode = null;
-      closeInfoPanel();
-      resetHighlights();
-    }
-
-    function highlightConnections(node) {
-      // Dim all nodes
-      graphData.nodes.forEach(n => {
-        if (n.__sphere) {
-          n.__sphere.material.opacity = 0.15;
-          n.__sphere.material.emissiveIntensity = 0.1;
-        }
-        if (n.__halo) n.__halo.material.opacity = 0.05;
-      });
-
-      // Find connected node IDs
-      const connectedIds = new Set([node.id]);
-      graphData.links.forEach(l => {
-        const sId = typeof l.source === 'object' ? l.source.id : l.source;
-        const tId = typeof l.target === 'object' ? l.target.id : l.target;
-        if (sId === node.id) connectedIds.add(tId);
-        if (tId === node.id) connectedIds.add(sId);
-      });
-
-      // Brighten connected
-      graphData.nodes.forEach(n => {
-        if (connectedIds.has(n.id)) {
-          if (n.__sphere) {
-            n.__sphere.material.opacity = 0.95;
-            n.__sphere.material.emissiveIntensity = n.id === node.id ? 1.2 : 0.7;
-          }
-          if (n.__halo) n.__halo.material.opacity = n.id === node.id ? 0.7 : 0.4;
-        }
-      });
-    }
-
-    function resetHighlights() {
-      graphData.nodes.forEach(n => {
-        if (n.__sphere) {
-          n.__sphere.material.opacity = 0.9;
-          n.__sphere.material.emissiveIntensity = 0.5;
-        }
-        if (n.__halo) n.__halo.material.opacity = 0.35;
-      });
-    }
-
-    // ══════════════════════════════════════════════════
-    //  INFO PANEL (STACK 10: marked.js)
-    // ══════════════════════════════════════════════════
-    const infoPanel = document.getElementById('info-panel');
-    const infoContent = document.getElementById('info-content');
-
-    function showInfoPanel(node) {
-      const color = CONFIG.colors[node.type];
-      const meta = TYPE_META[node.type] || {};
-
-      // Find connections
-      const connections = [];
-      graphData.links.forEach(l => {
-        const sId = typeof l.source === 'object' ? l.source.id : l.source;
-        const tId = typeof l.target === 'object' ? l.target.id : l.target;
-        if (sId === node.id) {
-          const target = graphData.nodes.find(n => n.id === tId);
-          if (target) connections.push({ node: target, rel: l.type, dir: 'out' });
-        }
-        if (tId === node.id) {
-          const source = graphData.nodes.find(n => n.id === sId);
-          if (source) connections.push({ node: source, rel: l.type, dir: 'in' });
-        }
-      });
-
-      infoContent.innerHTML = `
-        <span class="node-type-badge" style="background:${color}20;color:${color};border:1px solid ${color}40">
-          ${meta.icon || ''} ${meta.label || node.type}
-        </span>
-        <h2>${node.name}</h2>
-        <div class="description">${marked.parse(node.description || '')}</div>
-        ${connections.length ? `
-          <div class="connections-title">Connections (${connections.length})</div>
-          ${connections.map(c => `
-            <div class="connection-item" data-node-id="${c.node.id}">
-              <span class="conn-dot" style="background:${CONFIG.colors[c.node.type]}"></span>
-              <span style="opacity:0.4;font-size:10px">${c.dir === 'out' ? '→' : '←'}</span>
-              ${c.node.name}
-              <span style="opacity:0.3;font-size:10px;margin-left:auto">${c.rel}</span>
-            </div>
-          `).join('')}
-        ` : ''}
-      `;
-
-      // Connection item click handlers
-      infoContent.querySelectorAll('.connection-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const nodeId = el.dataset.nodeId;
-          const targetNode = graphData.nodes.find(n => n.id === nodeId);
-          if (targetNode) handleNodeClick(targetNode);
-        });
-      });
-
-      // STACK 15: Web Animations API — slide in
-      infoPanel.classList.add('open');
-    }
-
-    function closeInfoPanel() {
-      infoPanel.classList.remove('open');
-    }
-
-    document.getElementById('info-close').addEventListener('click', () => {
-      closeInfoPanel();
-      resetHighlights();
-      selectedNode = null;
-    });
-
-    // ══════════════════════════════════════════════════
-    //  SEARCH (STACK 9: Fuse.js)
-    // ══════════════════════════════════════════════════
-    const searchInput = document.getElementById('search-input');
-    const searchResults = document.getElementById('search-results');
-
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.trim();
-      if (!query) {
-        searchResults.classList.remove('active');
-        searchResults.innerHTML = '';
-        resetHighlights();
-        return;
-      }
-
-      const results = fuse.search(query).slice(0, 8);
-      if (results.length === 0) {
-        searchResults.classList.remove('active');
-        return;
-      }
-
-      searchResults.classList.add('active');
-      searchResults.innerHTML = results.map(r => `
-        <div class="search-result" data-node-id="${r.item.id}">
-          <span class="name" style="color:${CONFIG.colors[r.item.type]}">${TYPE_META[r.item.type]?.icon || ''} ${r.item.name}</span>
-          <span class="type">${r.item.type}</span>
-        </div>
-      `).join('');
-
-      searchResults.querySelectorAll('.search-result').forEach(el => {
-        el.addEventListener('click', () => {
-          const node = graphData.nodes.find(n => n.id === el.dataset.nodeId);
-          if (node) {
-            handleNodeClick(node);
-            searchInput.value = '';
-            searchResults.classList.remove('active');
-          }
-        });
-      });
-    });
-
-    // Keyboard shortcut: Cmd+K
-    document.addEventListener('keydown', (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        searchInput.focus();
-      }
-      if (e.key === 'Escape') {
-        searchInput.blur();
-        searchInput.value = '';
-        searchResults.classList.remove('active');
-        closeInfoPanel();
-        resetHighlights();
-        selectedNode = null;
-      }
-      // STACK 13: Fullscreen
-      if (e.key === 'f' || e.key === 'F') {
-        if (document.activeElement !== searchInput) toggleFullscreen();
-      }
-      // Reset
-      if (e.key === 'r' || e.key === 'R') {
-        if (document.activeElement !== searchInput) resetCamera();
-      }
-      // Labels
-      if (e.key === 'l' || e.key === 'L') {
-        if (document.activeElement !== searchInput) toggleLabels();
-      }
-    });
-
-    // ══════════════════════════════════════════════════
-    //  FILTER PILLS
-    // ══════════════════════════════════════════════════
-    const filtersEl = document.getElementById('filters');
-    const activeFilters = new Set(Object.keys(CONFIG.colors));
-
-    function buildFilters() {
-      Object.entries(CONFIG.colors).forEach(([type, color]) => {
-        const count = graphData.nodes.filter(n => n.type === type).length;
-        const pill = document.createElement('div');
-        pill.className = 'filter-pill active';
-        pill.dataset.type = type;
-        pill.innerHTML = `<span class="dot" style="background:${color}"></span>${TYPE_META[type]?.label || type} (${count})`;
-        pill.addEventListener('click', () => toggleFilter(type, pill));
-        filtersEl.appendChild(pill);
-      });
-    }
-
-    function toggleFilter(type, pill) {
-      if (activeFilters.has(type)) {
-        activeFilters.delete(type);
-        pill.classList.remove('active');
-      } else {
-        activeFilters.add(type);
-        pill.classList.add('active');
-      }
-      applyFilters();
-    }
-
-    function applyFilters() {
-      const filteredNodes = graphData.nodes.filter(n => activeFilters.has(n.type));
-      const filteredIds = new Set(filteredNodes.map(n => n.id));
-      const filteredLinks = graphData.links.filter(l => {
-        const sId = typeof l.source === 'object' ? l.source.id : l.source;
-        const tId = typeof l.target === 'object' ? l.target.id : l.target;
-        return filteredIds.has(sId) && filteredIds.has(tId);
-      });
-
-      Graph.graphData({ nodes: filteredNodes, links: filteredLinks });
-      updateStats(filteredNodes, filteredLinks);
-      // STACK 16: LocalStorage — save filter state
-      localStorage.setItem('ainative-kg-filters', JSON.stringify([...activeFilters]));
-    }
-
-    // ══════════════════════════════════════════════════
-    //  MINIMAP (STACK 6: Canvas 2D)
-    // ══════════════════════════════════════════════════
-    const minimapCanvas = document.getElementById('minimap');
-    const mmCtx = minimapCanvas.getContext('2d');
-
-    function renderMinimap() {
-      const w = minimapCanvas.width;
-      const h = minimapCanvas.height;
-      mmCtx.clearRect(0, 0, w, h);
-
-      // Background
-      mmCtx.fillStyle = 'rgba(22, 22, 32, 0.9)';
-      mmCtx.fillRect(0, 0, w, h);
-
-      // Find bounds
-      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-      graphData.nodes.forEach(n => {
-        if (n.x !== undefined) {
-          minX = Math.min(minX, n.x);
-          maxX = Math.max(maxX, n.x);
-          minY = Math.min(minY, n.y);
-          maxY = Math.max(maxY, n.y);
-        }
-      });
-
-      if (!isFinite(minX)) return;
-
-      const pad = 20;
-      const scaleX = (w - pad * 2) / (maxX - minX || 1);
-      const scaleY = (h - pad * 2) / (maxY - minY || 1);
-      const scale = Math.min(scaleX, scaleY);
-
-      const offX = (w - (maxX - minX) * scale) / 2;
-      const offY = (h - (maxY - minY) * scale) / 2;
-
-      // Draw links
-      mmCtx.strokeStyle = 'rgba(77, 201, 212, 0.08)';
-      mmCtx.lineWidth = 0.5;
-      graphData.links.forEach(l => {
-        const s = typeof l.source === 'object' ? l.source : graphData.nodes.find(n => n.id === l.source);
-        const t = typeof l.target === 'object' ? l.target : graphData.nodes.find(n => n.id === l.target);
-        if (s?.x !== undefined && t?.x !== undefined) {
-          mmCtx.beginPath();
-          mmCtx.moveTo((s.x - minX) * scale + offX, (s.y - minY) * scale + offY);
-          mmCtx.lineTo((t.x - minX) * scale + offX, (t.y - minY) * scale + offY);
-          mmCtx.stroke();
-        }
-      });
-
-      // Draw nodes
-      graphData.nodes.forEach(n => {
-        if (n.x === undefined) return;
-        const x = (n.x - minX) * scale + offX;
-        const y = (n.y - minY) * scale + offY;
-        const r = Math.max(1.5, (CONFIG.nodeSize[n.type] || 3) * 0.3);
-
-        mmCtx.beginPath();
-        mmCtx.arc(x, y, r, 0, Math.PI * 2);
-        mmCtx.fillStyle = CONFIG.colors[n.type] || '#4dc9d4';
-        mmCtx.fill();
-      });
-
-      // Camera indicator
-      const cam = Graph.camera();
-      if (cam) {
-        const cx = (cam.position.x - minX) * scale + offX;
-        const cy = (cam.position.y - minY) * scale + offY;
-        mmCtx.strokeStyle = 'rgba(226, 232, 240, 0.5)';
-        mmCtx.lineWidth = 1;
-        mmCtx.strokeRect(cx - 15, cy - 12, 30, 24);
-      }
-    }
-
-    // ══════════════════════════════════════════════════
-    //  LEGEND
-    // ══════════════════════════════════════════════════
-    function buildLegend() {
-      const legendItems = document.getElementById('legend-items');
-      Object.entries(CONFIG.colors).forEach(([type, color]) => {
-        const meta = TYPE_META[type] || {};
-        const item = document.createElement('div');
-        item.className = 'legend-item';
-        item.innerHTML = `<span class="legend-dot" style="background:${color};color:${color}"></span>${meta.icon || ''} ${meta.label || type}`;
-        legendItems.appendChild(item);
-      });
-    }
-
-    // ══════════════════════════════════════════════════
-    //  STATS
-    // ══════════════════════════════════════════════════
-    function updateStats(nodes, links) {
-      document.getElementById('node-count').textContent = (nodes || graphData.nodes).length;
-      document.getElementById('link-count').textContent = (links || graphData.links).length;
-      // Count unique groups
-      const groups = new Set((nodes || graphData.nodes).map(n => n.type));
-      document.getElementById('cluster-count').textContent = groups.size;
-    }
-
-    // ══════════════════════════════════════════════════
-    //  CONTROLS
-    // ══════════════════════════════════════════════════
-    // Audio toggle
-    document.getElementById('btn-audio').addEventListener('click', function() {
-      CONFIG.audio.enabled = !CONFIG.audio.enabled;
-      this.classList.toggle('active', CONFIG.audio.enabled);
-      if (CONFIG.audio.enabled) initAudio();
-    });
-
-    // STACK 13: Fullscreen API
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      } else {
-        document.exitFullscreen();
-      }
-    }
-    document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
-
-    // Reset camera
-    function resetCamera() {
-      Graph.cameraPosition({ x: 0, y: 0, z: 300 }, { x: 0, y: 0, z: 0 }, 1000);
-      resetHighlights();
-      closeInfoPanel();
-      selectedNode = null;
-    }
-    document.getElementById('btn-reset').addEventListener('click', resetCamera);
-
-    // Particles toggle
-    document.getElementById('btn-particles').addEventListener('click', function() {
-      CONFIG.particles.enabled = !CONFIG.particles.enabled;
-      this.classList.toggle('active', CONFIG.particles.enabled);
-      if (particleSystem) particleSystem.visible = CONFIG.particles.enabled;
-    });
-    document.getElementById('btn-particles').classList.add('active'); // default on
-
-    // Labels toggle
-    function toggleLabels() {
-      CONFIG.labels = !CONFIG.labels;
-      document.getElementById('btn-labels').classList.toggle('active', CONFIG.labels);
-      // Rebuild graph to update labels
-      graphData.nodes.forEach(n => {
-        if (n.__group) {
-          const label = n.__group.children.find(c => c.isSpriteText || c instanceof SpriteText);
-          if (label) label.visible = CONFIG.labels;
-        }
-      });
-    }
-    document.getElementById('btn-labels').classList.add('active');
-    document.getElementById('btn-labels').addEventListener('click', toggleLabels);
-
-    // ══════════════════════════════════════════════════
-    //  STACK 14: ResizeObserver — Responsive
-    // ══════════════════════════════════════════════════
-    const resizeObs = new ResizeObserver(() => {
-      Graph.width(window.innerWidth);
-      Graph.height(window.innerHeight);
-    });
-    resizeObs.observe(document.body);
-
-    // ══════════════════════════════════════════════════
-    //  STACK 16: LocalStorage — State Persistence
-    // ══════════════════════════════════════════════════
-    function restoreState() {
-      const saved = localStorage.getItem('ainative-kg-filters');
-      if (saved) {
-        try {
-          const filters = JSON.parse(saved);
-          activeFilters.clear();
-          filters.forEach(f => activeFilters.add(f));
-          document.querySelectorAll('.filter-pill').forEach(pill => {
-            pill.classList.toggle('active', activeFilters.has(pill.dataset.type));
-          });
-        } catch(e) {}
-      }
-    }
-
-    // ══════════════════════════════════════════════════
-    //  STACK 19: Performance API — FPS Counter
-    // ══════════════════════════════════════════════════
-    const fpsEl = document.getElementById('fps');
-    let frameCount = 0;
-    let lastFpsTime = performance.now();
-
-    function updateFPS() {
-      frameCount++;
-      const now = performance.now();
-      if (now - lastFpsTime >= 1000) {
-        fpsEl.textContent = `${frameCount} FPS`;
-        frameCount = 0;
-        lastFpsTime = now;
-      }
-    }
-
-    // ══════════════════════════════════════════════════
-    //  ANIMATION LOOP
-    // ══════════════════════════════════════════════════
-    let animTime = 0;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      animTime += CONFIG.particles.speed;
-
-      // Update particles
-      if (particleUniforms && CONFIG.particles.enabled) {
-        particleUniforms.uTime.value = animTime * 1000;
-      }
-
-      // Pulse selected node
-      if (selectedNode && selectedNode.__halo) {
-        const pulse = 0.5 + Math.sin(animTime * 3000) * 0.2;
-        selectedNode.__halo.material.opacity = pulse;
-      }
-
-      // Minimap (every 10 frames)
-      if (frameCount % 10 === 0) renderMinimap();
-
-      // FPS
-      updateFPS();
-    }
-
-    // ══════════════════════════════════════════════════
-    //  INIT
-    // ══════════════════════════════════════════════════
-    function init() {
-      setupScene();
-      buildFilters();
-      buildLegend();
-      updateStats();
-      restoreState();
-      animate();
-
-      // Set initial camera
-      Graph.cameraPosition({ x: 0, y: 50, z: 300 });
-
-      // Hide loading screen after warmup
-      setTimeout(() => {
-        document.getElementById('loading').classList.add('fade');
-        setTimeout(() => document.getElementById('loading').remove(), 600);
-      }, 2000);
-    }
-
-    // Wait for graph engine
-    Graph.onEngineStop(() => {
-      // Engine has settled — good time for initial render
-    });
-
-    init();
-
-  })(); // end async boot
-  })();
-  </script>
-
+    n.__group = group;
+    n.__halo = sp;
+    return group;
+  })
+  .nodeThreeObjectExtend(false)
+  .linkWidth(0.2)
+  .linkColor(() => 'rgba(77,201,212,0.08)')
+  .linkOpacity(0.18)
+  .linkDirectionalParticles(0)
+  .d3Force('charge', d3.forceManyBody().strength(-100))
+  .d3Force('link', d3.forceLink().strength(0.1))
+  .d3Force('center', d3.forceCenter().strength(0.03))
+  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||4)*1.0))
+  .d3AlphaDecay(0.04)
+  .onNodeHover(onHover)
+  .onNodeClick(onClick)
+  .onBackgroundClick(onBgClick);
+
+// Glow texture
+const _gtc = {};
+function glowTex(hex) {
+  if (_gtc[hex]) return _gtc[hex];
+  const c = document.createElement('canvas'); c.width=128; c.height=128;
+  const x = c.getContext('2d');
+  const g = x.createRadialGradient(64,64,0,64,64,64);
+  g.addColorStop(0,hex+'cc'); g.addColorStop(0.3,hex+'40'); g.addColorStop(0.7,hex+'10'); g.addColorStop(1,hex+'00');
+  x.fillStyle=g; x.fillRect(0,0,128,128);
+  return (_gtc[hex] = new THREE.CanvasTexture(c));
+}
+
+// Scene
+const scene = Graph.scene();
+scene.add(new THREE.AmbientLight(0x404060, 0.7));
+const dl1 = new THREE.DirectionalLight(0x4dc9d4, 0.3); dl1.position.set(80,150,80); scene.add(dl1);
+const dl2 = new THREE.DirectionalLight(0x3b82f6, 0.2); dl2.position.set(-80,-80,150); scene.add(dl2);
+scene.background = new THREE.Color('#0d0d18');
+scene.fog = new THREE.FogExp2('#0d0d18', 0.0012);
+
+// ══════════════════════════════════════════════════
+//  SEARCH
+// ══════════════════════════════════════════════════
+const fuse = new Fuse(graphData.nodes, { keys:['name','description','type'], threshold:0.35, includeScore:true });
+const searchIn = document.getElementById('search-input');
+const searchRes = document.getElementById('search-results');
+
+searchIn.addEventListener('input', e => {
+  const q = e.target.value.trim();
+  if (!q) { searchRes.classList.remove('open'); searchRes.innerHTML=''; resetHL(); return; }
+  const res = fuse.search(q).slice(0,8);
+  if (!res.length) { searchRes.classList.remove('open'); return; }
+  searchRes.classList.add('open');
+  searchRes.innerHTML = res.map(r => {
+    const c = TYPES[r.item.type]?.color||'#64748b';
+    return `<div class="sr-item" data-id="${r.item.id}"><span class="sr-dot" style="background:${c}"></span>${r.item.name}<span class="sr-type">${r.item.type}</span></div>`;
+  }).join('');
+  searchRes.querySelectorAll('.sr-item').forEach(el => {
+    el.onclick = () => { const nd=graphData.nodes.find(n=>n.id===el.dataset.id); if(nd){onClick(nd);searchIn.value='';searchRes.classList.remove('open');} };
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.metaKey||e.ctrlKey) && e.key==='k') { e.preventDefault(); searchIn.focus(); }
+  if (e.key==='Escape') { searchIn.blur(); searchIn.value=''; searchRes.classList.remove('open'); closeInfo(); resetHL(); }
+  if (document.activeElement===searchIn) return;
+  if (e.key==='f'||e.key==='F') { if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
+  if (e.key==='r'||e.key==='R') resetCam();
+  if (e.key==='l'||e.key==='L') toggleLabels();
+  if (e.key==='Backspace') goBack();
+});
+
+// ══════════════════════════════════════════════════
+//  INTERACTION
+// ══════════════════════════════════════════════════
+let hovered=null, selected=null;
+const tip = document.getElementById('tip');
+
+function onHover(node) {
+  container.style.cursor = node?'pointer':'default';
+  if (hovered && hovered.__halo) hovered.__halo.material.opacity=0.18;
+  hovered=node;
+  if (node) { if(node.__halo)node.__halo.material.opacity=0.4; tip.textContent=`${TYPES[node.type]?.icon||''} ${node.name}`; tip.classList.add('on'); }
+  else tip.classList.remove('on');
+}
+document.addEventListener('pointermove', e => { tip.style.left=(e.clientX+10)+'px'; tip.style.top=(e.clientY-6)+'px'; });
+
+function onClick(node) {
+  if (selected) navHistory.push(selected);
+  selected=node;
+  updateBack();
+  showInfo(node);
+  highlightConnected(node);
+  Graph.cameraPosition({x:node.x+50,y:node.y+20,z:node.z+50},{x:node.x,y:node.y,z:node.z},800);
+}
+
+function onBgClick() { selected=null; closeInfo(); resetHL(); navHistory.length=0; updateBack(); }
+
+function goBack() {
+  if (!navHistory.length) return;
+  const prev=navHistory.pop(); selected=prev; updateBack();
+  showInfo(prev); highlightConnected(prev);
+  Graph.cameraPosition({x:prev.x+50,y:prev.y+20,z:prev.z+50},{x:prev.x,y:prev.y,z:prev.z},600);
+}
+function updateBack() { document.getElementById('nav-back').classList.toggle('show',navHistory.length>0); }
+document.getElementById('nav-back').onclick = goBack;
+
+function highlightConnected(node) {
+  const conn=new Set([node.id]);
+  graphData.links.forEach(l => {
+    const s=typeof l.source==='object'?l.source.id:l.source;
+    const t=typeof l.target==='object'?l.target.id:l.target;
+    if(s===node.id)conn.add(t); if(t===node.id)conn.add(s);
+  });
+  graphData.nodes.forEach(n => {
+    const yes=conn.has(n.id);
+    if(n.__group) n.__group.children.forEach(c=>{if(c.material&&c.material.opacity!==undefined)c.material.opacity=yes?0.9:0.06;});
+    if(n.__halo) n.__halo.material.opacity=yes?(n.id===node.id?0.45:0.25):0.01;
+    if(n.__label) n.__label.visible=yes;
+  });
+}
+
+function resetHL() {
+  graphData.nodes.forEach(n => {
+    if(n.__group)n.__group.children.forEach(c=>{if(c.material&&c.material.opacity!==undefined)c.material.opacity=0.85;});
+    if(n.__halo)n.__halo.material.opacity=0.18;
+    if(n.__label)n.__label.visible=showLabels;
+  });
+}
+
+// ══════════════════════════════════════════════════
+//  INFO PANEL
+// ══════════════════════════════════════════════════
+const infoEl=document.getElementById('info');
+const infoBody=document.getElementById('info-body');
+
+function showInfo(node) {
+  const t=TYPES[node.type]||{};
+  const color=t.color||'#64748b';
+  const conns=[];
+  graphData.links.forEach(l=>{
+    const s=typeof l.source==='object'?l.source.id:l.source;
+    const tt=typeof l.target==='object'?l.target.id:l.target;
+    if(s===node.id){const n2=graphData.nodes.find(n=>n.id===tt);if(n2)conns.push({node:n2,rel:l.type,dir:'→'});}
+    if(tt===node.id){const n2=graphData.nodes.find(n=>n.id===s);if(n2)conns.push({node:n2,rel:l.type,dir:'←'});}
+  });
+  infoBody.innerHTML=`
+    <span class="badge" style="background:${color}18;color:${color};border:1px solid ${color}30">${t.icon||''} ${t.label||node.type}</span>
+    <h2>${node.name}</h2>
+    <div class="desc">${node.description||''}</div>
+    ${conns.length?`<div class="conn-title">Connections (${conns.length})</div>
+    ${conns.map(c=>`<div class="conn-item" data-id="${c.node.id}"><span class="conn-dot" style="background:${TYPES[c.node.type]?.color||'#64748b'}"></span>${c.dir} ${c.node.name}<span class="conn-rel">${c.rel}</span></div>`).join('')}`:''}
+  `;
+  infoBody.querySelectorAll('.conn-item').forEach(el=>{el.onclick=()=>{const nd=graphData.nodes.find(n=>n.id===el.dataset.id);if(nd)onClick(nd);};});
+  infoEl.classList.add('open');
+}
+function closeInfo(){infoEl.classList.remove('open');}
+document.getElementById('info-close').onclick=()=>{closeInfo();resetHL();selected=null;};
+
+// ══════════════════════════════════════════════════
+//  FILTERS
+// ══════════════════════════════════════════════════
+const filtersEl=document.getElementById('filters');
+const activeTypes=new Set(Object.keys(TYPES));
+
+Object.entries(TYPES).forEach(([type,cfg])=>{
+  const count=graphData.nodes.filter(n=>n.type===type).length;
+  if(!count)return;
+  const p=document.createElement('div');
+  p.className='pill on'; p.dataset.type=type;
+  p.innerHTML=`<span class="dot" style="background:${cfg.color}"></span>${cfg.label} (${count})`;
+  p.onclick=()=>{
+    if(activeTypes.has(type)){activeTypes.delete(type);p.classList.remove('on');}
+    else{activeTypes.add(type);p.classList.add('on');}
+    applyFilters();
+  };
+  filtersEl.appendChild(p);
+});
+
+function applyFilters(){
+  const nodes=graphData.nodes.filter(n=>activeTypes.has(n.type));
+  const ids=new Set(nodes.map(n=>n.id));
+  const links=graphData.links.filter(l=>{
+    const s=typeof l.source==='object'?l.source.id:l.source;
+    const t=typeof l.target==='object'?l.target.id:l.target;
+    return ids.has(s)&&ids.has(t);
+  });
+  Graph.graphData({nodes,links});
+  updateStats(nodes,links);
+}
+
+// Legend
+const legItems=document.getElementById('leg-items');
+Object.entries(TYPES).forEach(([type,cfg])=>{
+  const count=graphData.nodes.filter(n=>n.type===type).length;
+  if(!count)return;
+  const d=document.createElement('div'); d.className='leg-item';
+  d.innerHTML=`<span class="leg-dot" style="background:${cfg.color}"></span>${cfg.icon} ${cfg.label}`;
+  legItems.appendChild(d);
+});
+
+// Controls
+function resetCam(){Graph.cameraPosition({x:0,y:30,z:180},{x:0,y:0,z:0},800);resetHL();closeInfo();selected=null;navHistory.length=0;updateBack();}
+function toggleLabels(){showLabels=!showLabels;document.getElementById('btn-labels').classList.toggle('on',showLabels);graphData.nodes.forEach(n=>{if(n.__label)n.__label.visible=showLabels;});}
+document.getElementById('btn-reset').onclick=resetCam;
+document.getElementById('btn-labels').onclick=toggleLabels;
+document.getElementById('btn-fullscreen').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen();};
+
+// Stats
+function updateStats(nodes,links){
+  document.getElementById('s-nodes').textContent=(nodes||graphData.nodes).length;
+  document.getElementById('s-links').textContent=(links||graphData.links).length;
+  document.getElementById('s-types').textContent=new Set((nodes||graphData.nodes).map(n=>n.type)).size;
+}
+updateStats();
+
+Graph.cameraPosition({x:0,y:30,z:180});
+setTimeout(()=>{document.getElementById('loading').classList.add('done');setTimeout(()=>document.getElementById('loading').remove(),500);},1200);
+new ResizeObserver(()=>{Graph.width(window.innerWidth);Graph.height(window.innerHeight);}).observe(document.body);
+
+})();
+</script>
 </body>
 </html>
