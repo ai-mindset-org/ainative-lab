@@ -4,1009 +4,386 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Native Lab — Knowledge Graph</title>
-  <meta name="description" content="AI-Native Organizations Sprint — Interactive Knowledge Graph">
-
-  <script src="//unpkg.com/three@0.160.0/build/three.min.js"></script>
-  <script src="//unpkg.com/three-spritetext@1.8.2"></script>
-  <script src="//unpkg.com/3d-force-graph@1.73.4"></script>
+  <script src="//unpkg.com/force-graph"></script>
   <script src="//unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
-  <script src="//unpkg.com/fuse.js@7.0.0/dist/fuse.min.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --bg: #161620;
-      --surface: #1e1e2e;
-      --surface-2: #252538;
-      --accent: #4dc9d4;
-      --accent-dim: rgba(77,201,212,0.12);
-      --secondary: #3b82f6;
-      --workshop: #38d9a9;
-      --amber: #c89200;
-      --rose: #ff6b6b;
-      --text: rgba(255,255,255,0.75);
-      --text-bright: #fff;
-      --text-dim: rgba(255,255,255,0.5);
-      --text-muted: rgba(255,255,255,0.3);
-      --border: rgba(77,201,212,0.12);
-      --glow: rgba(77,201,212,0.25);
-      --font-mono: 'IBM Plex Mono', monospace;
-      --font-head: 'Space Grotesk', sans-serif;
-      --radius: 8px;
-      --tr: 0.25s ease;
-    }
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html, body {
-      width:100%; height:100%; overflow:hidden;
-      background: var(--bg); color: var(--text);
-      font-family: var(--font-mono); font-size:13px;
-      -webkit-font-smoothing: antialiased;
-    }
-    body::before {
-      content:''; position:fixed; inset:0; z-index:0;
-      background-image:
-        linear-gradient(rgba(77,201,212,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(77,201,212,0.02) 1px, transparent 1px);
-      background-size: 60px 60px; pointer-events:none;
-    }
-
-    #graph-container { position:fixed; inset:0; z-index:2; }
-    #graph-container::after {
-      content:''; position:fixed; inset:0; z-index:1;
-      background: radial-gradient(ellipse at center, transparent 50%, rgba(10,10,20,0.5) 100%);
-      pointer-events:none;
-    }
-    #ui { position:fixed; inset:0; z-index:10; pointer-events:none; }
-    #ui > * { pointer-events:auto; }
-
-    #header { position:absolute; top:16px; left:20px; display:flex; flex-direction:column; gap:2px; }
-    #header h1 { font-family:var(--font-head); font-size:16px; font-weight:600; color:var(--accent); letter-spacing:-0.02em; }
-    #header .sub { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
-    #header .stats { font-size:11px; color:var(--text-dim); margin-top:4px; }
-    #header .stats span { color:var(--accent); }
-
-    #search-box { position:absolute; top:16px; right:20px; width:260px; }
-    #search-input {
-      width:100%; padding:8px 12px 8px 32px;
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--radius); color:var(--text);
-      font-family:var(--font-mono); font-size:12px; outline:none;
-      transition: border-color var(--tr);
-    }
-    #search-input:focus { border-color:var(--accent); }
-    #search-input::placeholder { color:var(--text-muted); }
-    .search-icon { position:absolute; top:9px; left:10px; color:var(--text-muted); pointer-events:none; }
-    #search-results {
-      margin-top:4px; background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--radius); max-height:280px; overflow-y:auto; display:none;
-    }
-    #search-results.open { display:block; }
-    .sr-item {
-      padding:6px 12px; cursor:pointer; border-bottom:1px solid var(--border);
-      font-size:12px; display:flex; align-items:center; gap:8px; transition: background var(--tr);
-    }
-    .sr-item:hover { background:var(--surface-2); }
-    .sr-item:last-child { border-bottom:none; }
-    .sr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-    .sr-type { font-size:9px; opacity:0.4; text-transform:uppercase; margin-left:auto; }
-
-    #filters {
-      position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
-      display:flex; gap:5px; flex-wrap:wrap; justify-content:center;
-    }
-    #filters::before {
-      content:''; position:absolute; bottom:100%; left:0; right:0; height:40px;
-      background: linear-gradient(to top, var(--bg), transparent);
-      pointer-events:none;
-    }
-    .pill {
-      padding:4px 10px; background:var(--surface);
-      border:1px solid var(--border); border-radius:16px;
-      font-size:10px; color:var(--text-dim); cursor:pointer;
-      display:flex; align-items:center; gap:5px;
-      transition: all var(--tr); user-select:none;
-    }
-    .pill.on { border-color:var(--accent); color:var(--text); background:rgba(77,201,212,0.06); }
-    .pill:hover { border-color:rgba(77,201,212,0.3); }
-    .pill .dot { width:7px; height:7px; border-radius:50%; }
-
-    #info {
-      position:absolute; top:0; right:0; width:340px; height:100%;
-      background:rgba(30,30,46,0.96); border-left:1px solid var(--border);
-      transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);
-      padding:20px; overflow-y:auto;
-      backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-    }
-    #info.open { transform:translateX(0); }
-    #info .close { position:absolute; top:12px; right:12px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:16px; }
-    #info .close:hover { color:var(--accent); }
-    #info .badge {
-      display:inline-block; padding:2px 8px; border-radius:10px;
-      font-size:9px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;
-    }
-    #info h2 { font-family:var(--font-head); font-size:18px; font-weight:600; color:var(--text-bright); margin-bottom:12px; line-height:1.3; }
-    #info .desc { font-size:12px; color:var(--text-dim); line-height:1.6; margin-bottom:16px; }
-    #info .conn-title { font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:6px; }
-    .conn-item {
-      padding:5px 8px; margin-bottom:3px; border-radius:5px; cursor:pointer;
-      font-size:11px; display:flex; align-items:center; gap:6px;
-      background:rgba(77,201,212,0.03); transition:background var(--tr);
-    }
-    .conn-item:hover { background:rgba(77,201,212,0.08); }
-    .conn-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
-    .conn-rel { opacity:0.3; font-size:9px; margin-left:auto; }
-    .vault-link {
-      display:inline-block; margin-top:12px; padding:5px 10px;
-      background:rgba(77,201,212,0.08); border:1px solid var(--border);
-      border-radius:var(--radius); color:var(--accent); font-size:11px;
-      text-decoration:none; transition:all var(--tr);
-    }
-    .vault-link:hover { background:rgba(77,201,212,0.15); }
-
-    #controls { position:absolute; top:70px; left:20px; display:flex; flex-direction:column; gap:6px; }
-    .cbtn {
-      width:32px; height:32px; background:var(--surface);
-      border:1px solid var(--border); border-radius:var(--radius);
-      color:var(--text-dim); cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      font-size:14px; transition:all var(--tr);
-    }
-    .cbtn:hover { border-color:var(--accent); color:var(--accent); }
-    .cbtn.on { background:rgba(77,201,212,0.08); border-color:var(--accent); color:var(--accent); }
-
-    #nav-back {
-      position:absolute; top:16px; left:50%; transform:translateX(-50%);
-      padding:5px 14px; background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--radius); color:var(--text-dim); cursor:pointer;
-      font-family:var(--font-mono); font-size:11px;
-      display:none; align-items:center; gap:6px; transition:all var(--tr);
-    }
-    #nav-back.show { display:flex; }
-    #nav-back:hover { border-color:var(--accent); color:var(--accent); }
-
-    #tip {
-      position:fixed; padding:4px 10px; background:var(--surface);
-      border:1px solid var(--accent); border-radius:5px;
-      font-size:10px; color:var(--accent); pointer-events:none;
-      opacity:0; transition:opacity 0.12s; z-index:100; white-space:nowrap;
-    }
-    #tip.on { opacity:1; }
-
-    #legend {
-      position:absolute; bottom:50px; right:20px;
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--radius); padding:10px 14px;
-    }
-    #legend h3 { font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:6px; }
-    .leg-item { display:flex; align-items:center; gap:6px; padding:1px 0; font-size:10px; color:var(--text-dim); }
-    .leg-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-
-    #loading {
-      position:fixed; inset:0; z-index:999; background:var(--bg);
-      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
-      transition:opacity 0.5s;
-    }
-    #loading.done { opacity:0; pointer-events:none; }
-    #loading h2 { font-family:var(--font-head); font-size:16px; color:var(--accent); }
-    .spin { width:32px; height:32px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:sp 0.7s linear infinite; }
-    @keyframes sp { to { transform:rotate(360deg); } }
-
-    ::-webkit-scrollbar { width:3px; }
-    ::-webkit-scrollbar-track { background:transparent; }
-    ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
-
-    @media (max-width:768px) {
-      #info { width:100%; }
-      #legend { display:none; }
-      #search-box { width:180px; }
-    }
+    :root { --bg:#12121c; --surface:#1a1a2e; --accent:#4dc9d4; --text:rgba(255,255,255,.75); --dim:rgba(255,255,255,.4); --border:rgba(77,201,212,.12); }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px}
+    #graph{position:fixed;inset:0}
+    #ui{position:fixed;inset:0;pointer-events:none;z-index:10}
+    #ui>*{pointer-events:auto}
+    #hdr{position:absolute;top:14px;left:18px}
+    #hdr h1{font-family:'Space Grotesk',sans-serif;font-size:15px;color:var(--accent);font-weight:600}
+    #hdr .sub{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+    #hdr .st{font-size:11px;color:var(--dim);margin-top:3px}
+    #hdr .st span{color:var(--accent)}
+    #search{position:absolute;top:14px;right:18px;width:240px}
+    #search input{width:100%;padding:7px 10px 7px 28px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px 'IBM Plex Mono',monospace;outline:none}
+    #search input:focus{border-color:var(--accent)}
+    #search input::placeholder{color:var(--dim)}
+    .si{position:absolute;top:8px;left:8px;color:var(--dim);pointer-events:none}
+    #res{margin-top:3px;background:var(--surface);border:1px solid var(--border);border-radius:6px;max-height:250px;overflow-y:auto;display:none}
+    #res.on{display:block}
+    .ri{padding:5px 10px;cursor:pointer;border-bottom:1px solid var(--border);font-size:11px;display:flex;align-items:center;gap:6px}
+    .ri:hover{background:rgba(77,201,212,.06)}
+    .ri:last-child{border:none}
+    .rd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    #pills{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+    .pl{padding:3px 9px;background:var(--surface);border:1px solid var(--border);border-radius:14px;font-size:10px;color:var(--dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none}
+    .pl.on{border-color:var(--accent);color:var(--text);background:rgba(77,201,212,.05)}
+    .pl .d{width:6px;height:6px;border-radius:50%}
+    #info{position:absolute;top:0;right:0;width:320px;height:100%;background:rgba(26,26,46,.96);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);padding:18px;overflow-y:auto;backdrop-filter:blur(12px)}
+    #info.open{transform:translateX(0)}
+    #info .x{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:15px}
+    #info .x:hover{color:var(--accent)}
+    #info .badge{display:inline-block;padding:2px 7px;border-radius:8px;font-size:9px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+    #info h2{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.3}
+    #info .desc{font-size:11px;color:var(--dim);line-height:1.6;margin-bottom:14px}
+    #info .ct{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:5px}
+    .ci{padding:4px 7px;margin-bottom:2px;border-radius:4px;cursor:pointer;font-size:10px;display:flex;align-items:center;gap:5px;background:rgba(77,201,212,.03)}
+    .ci:hover{background:rgba(77,201,212,.08)}
+    .cd{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+    .cr{opacity:.3;font-size:8px;margin-left:auto}
+    .tgl{display:inline-block;margin-top:10px;padding:4px 9px;background:rgba(77,201,212,.08);border:1px solid var(--border);border-radius:6px;color:var(--accent);font-size:10px;text-decoration:none}
+    .tgl:hover{background:rgba(77,201,212,.15)}
+    #leg{position:absolute;bottom:44px;right:18px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px}
+    #leg h3{font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:4px}
+    .li{display:flex;align-items:center;gap:5px;padding:1px 0;font-size:9px;color:var(--dim)}
+    .ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    #ctrls{position:absolute;top:65px;left:18px;display:flex;flex-direction:column;gap:5px}
+    .cb{width:28px;height:28px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px}
+    .cb:hover{border-color:var(--accent);color:var(--accent)}
   </style>
 </head>
 <body>
-
-<div id="loading"><div class="spin"></div><h2>Loading Lab Graph</h2></div>
-<div id="graph-container"></div>
-
+<div id="graph"></div>
 <div id="ui">
-  <div id="header">
+  <div id="hdr">
     <h1>AI-Native Organizations</h1>
     <div class="sub">AI Mindset × CybOS — Sprint Knowledge Graph</div>
-    <div class="stats"><span id="s-nodes">0</span> nodes · <span id="s-links">0</span> links · <span id="s-types">0</span> types</div>
-    <div class="meta" style="font-size:10px;color:var(--text-muted);margin-top:3px;">211 participants · 13 curators · 12 speakers</div>
-    <div class="meta" style="font-size:10px;color:var(--text-muted);margin-top:1px;">March 23 – April 13, 2026</div>
+    <div class="st"><span id="sn">0</span> nodes · <span id="sl">0</span> links</div>
   </div>
-
-  <div id="search-box">
+  <div id="search">
     <div style="position:relative">
-      <span class="search-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
-      <input id="search-input" type="text" placeholder="Search... (Cmd+K)">
+      <span class="si"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+      <input id="si" type="text" placeholder="Search... (Cmd+K)">
     </div>
-    <div id="search-results"></div>
+    <div id="res"></div>
   </div>
-
-  <button id="nav-back"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>
-
-  <div id="controls">
-    <button class="cbtn on" id="btn-labels" title="Labels (L)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></button>
-    <button class="cbtn" id="btn-fullscreen" title="Fullscreen (F)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/></svg></button>
-    <button class="cbtn" id="btn-reset" title="Reset (R)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+  <div id="ctrls">
+    <button class="cb" onclick="graph.zoomToFit(400,40)" title="Fit All">⊞</button>
+    <button class="cb" onclick="graph.centerAt(0,0,400);graph.zoom(3,400)" title="Reset">↺</button>
   </div>
-
-  <div id="filters"></div>
-
-  <div id="legend"><h3>Node types</h3><div id="leg-items"></div></div>
-
-  <div id="info">
-    <button class="close" id="info-close">&times;</button>
-    <div id="info-body"></div>
-  </div>
-
-  <div id="tip"></div>
+  <div id="pills"></div>
+  <div id="leg"><h3>Node types</h3><div id="lis"></div></div>
+  <div id="info"><button class="x" id="ix">&times;</button><div id="ib"></div></div>
 </div>
 
 <script>
 (function(){
 'use strict';
 
-// ══════════════════════════════════════════════════
-//  TYPES — Lab-focused categories
-// ══════════════════════════════════════════════════
-const TYPES = {
-  team:     { color:'#f59e0b', label:'Team',         icon:'●',  size:5 },
-  speaker:  { color:'#a78bfa', label:'Speakers',     icon:'🎤', size:4.5 },
-  curator:  { color:'#38d9a9', label:'Curators',     icon:'✦',  size:3.5 },
-  session:  { color:'#60a5fa', label:'Sessions',      icon:'▶',  size:3 },
-  week:     { color:'#3b82f6', label:'Weeks',         icon:'◆',  size:6 },
-  topic:    { color:'#8b5cf6', label:'Topics',        icon:'◉',  size:3.5 },
-  tool:     { color:'#ff6b6b', label:'Tools',         icon:'⬡',  size:3 },
-  deliver:  { color:'#06b6d4', label:'Deliverables',  icon:'◎',  size:3 },
-  concept:  { color:'#10b981', label:'Concepts',      icon:'✦',  size:3 },
+// ════════ TYPES ════════
+const T = {
+  team:    {c:'#f59e0b',l:'Team',     s:10},
+  speaker: {c:'#a78bfa',l:'Speakers', s:9},
+  curator: {c:'#38d9a9',l:'Curators', s:7},
+  session: {c:'#60a5fa',l:'Sessions', s:5},
+  week:    {c:'#3b82f6',l:'Weeks',    s:16},
+  topic:   {c:'#8b5cf6',l:'Topics',   s:6},
+  tool:    {c:'#ff6b6b',l:'Tools',    s:5},
+  deliver: {c:'#06b6d4',l:'Delivers', s:5},
+  concept: {c:'#10b981',l:'Concepts', s:5},
 };
 
-// ══════════════════════════════════════════════════
-//  DATA — AI Native Organizations Sprint (curated)
-// ══════════════════════════════════════════════════
-const DATA = { nodes: [], links: [] };
-const N = (id,name,type,desc,avatar) => DATA.nodes.push({id,name,type,description:desc||'',avatar:avatar||null});
-const L = (s,t,rel) => DATA.links.push({source:s,target:t,type:rel||'connects'});
+// ════════ DATA ════════
+const D={nodes:[],links:[]};
+const N=(id,nm,tp,desc,av)=>D.nodes.push({id,name:nm,type:tp,desc:desc||'',avatar:av||null});
+const L=(s,t,r)=>D.links.push({source:s,target:t,rel:r||''});
 
 // Weeks
-N('w1','Week 1: Personal AI + Team','week','Build personal AI assistant. Process audit. AI Champion model. March 23–28, 2026.');
-N('w2','Week 2: System Above Model','week','6-layer architecture. MCP, context engineering, orchestration, skills. March 30 – April 4.');
-N('w3','Week 3: Company Functions','week','End-to-end automation. 90-day plan. Demo Day. April 6–13.');
-
-// Sessions (from LMS labs.ts)
-N('s-w1-lecture','Lecture: Why AI Transformation','session','Mon 23.03 · 172 min · Stepan Gershuni. Scaling laws, harness engineering, POS → Team OS → Company OS.');
-N('s-w1-setup','POS Setup Workshop','session','Tue 24.03 · 161 min · Alexander Povaliaev. Naming convention, Claude Code, Obsidian, skills, dashboards.');
-N('s-w1-workshop','Personal → Team','session','Wed 25.03 · 150 min · Process audit, 10 automations, AI Champion model. Curator presentations.');
-N('s-w1-lisovskiy','Business Factory','session','Thu 26.03 · 120 min · Evgeny Lisovsky. Live product launch + vibe-coding framework.');
-N('s-w1-khanarin','AI Transformation Framework','session','Fri 27.03 · 120 min · Dima Khanarin. McKinsey Influence Model for AI.');
-N('s-w2-lecture','Lecture: System Above Model','session','Mon 30.03 · 85 min · Stepan Gershuni. 6-layer architecture.');
-N('s-w2-ametov','AI Content for Business','session','Wed 01.04 · 120 min · Alexey Ametov. Content pipeline, non-slop strategies.');
-N('s-w2-kleban','Self-Improving Agents','session','Wed 01.04 · 60 min · Vitaly Kleban. Live demo of agent feedback loops.');
-N('s-w2-sidora','Technical Coworking','session','Thu 02.04 · 120 min · Gleb Sidora. Hands-on MCP debugging.');
-N('s-w2-kovalsky','AI-Driven Dev: Live Build','session','Thu 02.04 · 120 min · Valery Kovalsky. Business task → working app in 1h.');
-N('s-w2-strakhov','Building Agent Teams','session','Fri 03.04 · Strakhov. Agent alignment, Oxford insights.');
-N('s-w2-kravtsov','Enterprise Data Pipelines','session','Fri 03.04 · Daniil Kravtsov. 99 agents, knowledge graphs.');
-N('s-w3-lecture','Lecture: Strategy to Plan','session','Mon 06.04 · Stepan Gershuni. Business models, 90-day transformation.');
-N('s-w3-reid','AI × Investments','session','Tue 07.04 · Evgeny Reid. AI for strategic investing.');
-N('s-w3-annaov','Sales Automation','session','Wed 08.04 · Bayram Annaov. L1–L5 autonomy levels.');
-N('s-w3-buzko','AI in Legal','session','Thu 09.04 · Roma Buzko. Contract review, compliance automation.');
-N('s-w3-ustinov','Product-Agent Transformation','session','Fri 10.04 · Seva Ustinov. 30 people → shared workspace.');
-N('s-demo','Demo Day','session','Mon 13.04 · Final presentations. 5 min + live demo + ROI metrics.');
+N('w1','Week 1:\nPersonal AI + Team','week','March 23–28. Personal OS, process audit, AI Champion.');
+N('w2','Week 2:\nSystem Above Model','week','March 30 – April 4. 6-layer architecture, MCP, orchestration.');
+N('w3','Week 3:\nCompany Functions','week','April 6–13. Business automation, 90-day plan, Demo Day.');
 
 // Team
-N('stepan','Stepan Gershuni','team','@gershuni · Co-founder Cyber.Fund & CybOS AI. 200+ portfolio. All Monday lectures.','speakers/stepan-gershuni.jpg');
-N('alex','Alexander Povaliaev','team','@alex_named · AI Mindset Founder. Product & Coordination. Focus sessions + workshops.','speakers/alexander-povaliaev.jpg');
-N('ira','Irina Nazarova','team','Operations. Speaker logistics, participant support.');
-N('ilya','Ilya Gindin','team','@igindin · Focus practice, AI products, design, PMR.','speakers/ilya-gindin.png');
-N('ksenia','Ksenia Tkacheva','team','@ks_andr_a · Focus practice co-facilitator.','speakers/kseniya-tkacheva.jpg');
+N('stepan','Stepan\nGershuni','team','@gershuni · CybOS AI. All Monday lectures.','speakers/stepan-gershuni.jpg');
+N('alex','Alexander\nPovaliaev','team','@alex_named · AI Mindset Founder.','speakers/alexander-povaliaev.jpg');
+N('ira','Irina\nNazarova','team','Operations.','speakers/alexander-povaliaev.jpg');
+N('ilya','Ilya\nGindin','team','@igindin · Focus practice.','speakers/ilya-gindin.png');
 
-// Curators (all 13) — with LMS avatars
-N('fedoseev','Stanislav Fedoseev','curator','@Kettarian_Fox · LLM, context management, agent systems, Claude Code.','speakers/stanislav-fedoseev.jpg');
-N('yury','Yury','curator','@doonto · Personal AI assistant, skills, workflows, company ontology.','speakers/yury-doonto.jpg');
-N('jin','Jin Kolesnikov','curator','@He11ya · Strategic thinking, futurism, Obsidian, exocortex.','speakers/jin-kolesnikov.jpg');
-N('glazov','Stanislav Glazov','curator','@prcdrl · Claude Code advanced: skills, MCP, hooks, Python.','speakers/stanislav-glazov.jpg');
-N('vasiliev-c','Alexander Vasiliev','curator','@AlexFrmn · Multi-agent systems, AI infrastructure.','speakers/alexander-vasiliev.jpg');
-N('sereja','Sergey Ris','curator','@serejaris · Claude Code, GitHub, cmux, skills. AI as unfair advantage.','speakers/sereja-ris.jpg');
-N('anton-v','Anton Voskobovich','curator','@northcapen · Knowledge bases, Obsidian, Claude Code, Cursor.','speakers/anton-voskobovich.jpg');
-N('stashenko','Alexander Stashenko','curator','@Alexander_Stashenko · Leadership, products, marketing, HR, ontology.','speakers/alexander-stashenko.jpg');
-N('smirnov','Denis Smirnov','curator','@densmirnov · Technical: system setup to agent harness.','speakers/denis-smirnov.jpg');
-N('golubev','Ilya Golubev','curator','@oxigen717 · AI-stack, agent pipelines, n8n, team standardization.');
-N('borodich','Alexander Borodich','curator','@borodich · AI-native products, business models, founder lifecycle.');
+// Speakers W1
+N('lisovsky','Evgeny\nLisovsky','speaker','Vibe-coding factory. Thu 26.03.','speakers/eugene-lisovskiy.jpg');
+N('khanarin','Dima\nKhanarin','speaker','@khanarin · AI transformation. Fri 27.03.','speakers/dima-khanarin.jpg');
+// Speakers W2
+N('ametov','Alexey\nAmetov','speaker','AI content. Wed 01.04.','speakers/alex-amyotov.jpg');
+N('kleban','Vitaly\nKleban','speaker','Self-improving agents. Wed 01.04.','speakers/vitaly-kleban.jpg');
+N('sidora','Gleb\nSidora','speaker','Technical coworking. Thu 02.04.','speakers/gleb-sidora.png');
+N('kovalsky','Valery\nKovalsky','speaker','AI-driven dev. Thu 02.04.','speakers/valerii-kovalskii.jpg');
+N('strakhov','George\nStrakhov','speaker','Agent teams. Fri 03.04.','speakers/george-strakhov.png');
+N('kravtsov','Daniil\nKravtsov','speaker','Data pipelines. Fri 03.04.','speakers/daniel-kravtsov.jpeg');
+// Speakers W3
+N('reid','Evgeny\nReid','speaker','AI × Investments. Tue 07.04.','speakers/eugene-rid.jpg');
+N('annaov','Bayram\nAnnaov','speaker','Sales automation. Wed 08.04.','speakers/bayram-annakov.jpg');
+N('buzko','Roma\nBuzko','speaker','Legal tech. Thu 09.04.','speakers/roma-buzko.jpg');
+N('ustinov','Seva\nUstinov','speaker','Product-agent. Fri 10.04.','speakers/seva-ustinov.jpg');
 
-// Week 1 Speakers — with LMS avatars
-N('lisovsky','Evgeny Lisovsky','speaker','Business factory via vibe-coding. Thu 26.03.','speakers/eugene-lisovskiy.jpg');
-N('khanarin','Dima Khanarin','speaker','@khanarin · AI transformation framework + timeline. Fri 27.03.','speakers/dima-khanarin.jpg');
-
-// Week 2 Speakers
-N('ametov','Alexey Ametov','speaker','@maxrepost · AI content for business. Non-slop. Wed 01.04.','speakers/alex-amyotov.jpg');
-N('kleban','Vitaly Kleban','speaker','@vkleban · Self-improving agents. Feedback loops. Wed 01.04.','speakers/vitaly-kleban.jpg');
-N('sidora','Gleb Sidora','speaker','@arodiss · Technical coworking. MCP debugging. Thu 02.04.','speakers/gleb-sidora.png');
-N('kovalsky','Valery Kovalsky','speaker','AI-driven dev. Live build: task → app in 1h. Thu 02.04.','speakers/valerii-kovalskii.jpg');
-N('strakhov','George Strakhov','speaker','Agent team architecture. Oxford insights. Fri 03.04.','speakers/george-strakhov.png');
-N('kravtsov','Daniil Kravtsov','speaker','Enterprise data pipelines. 99 agents. Knowledge graphs. Fri 03.04.','speakers/daniel-kravtsov.jpeg');
-
-// Week 3 Speakers
-N('reid','Evgeny Reid','speaker','@eugene_rid · AI × Investments and strategy. Tue 07.04.','speakers/eugene-rid.jpg');
-N('annaov','Bayram Annaov','speaker','Sales automation. L1–L5 autonomy. onsa.ai. Wed 08.04.','speakers/bayram-annakov.jpg');
-N('buzko','Roma Buzko','speaker','Legal tech. Contract review. AI regulation. Thu 09.04.','speakers/roma-buzko.jpg');
-N('ustinov','Seva Ustinov','speaker','Product-agent transformation. 30 people → workspace. Fri 10.04.','speakers/seva-ustinov.jpg');
+// Curators (top 6)
+N('fedoseev','Stanislav\nFedoseev','curator','@Kettarian_Fox · LLM, agents.','speakers/stanislav-fedoseev.jpg');
+N('yury','Yury','curator','@doonto · AI assistant, skills.','speakers/yury-doonto.jpg');
+N('anton-v','Anton\nVoskobovich','curator','@northcapen · Obsidian, CC.','speakers/anton-voskobovich.jpg');
+N('sereja','Sergey\nRis','curator','@serejaris · Claude Code, GitHub.','speakers/sereja-ris.jpg');
+N('glazov','Stanislav\nGlazov','curator','@prcdrl · MCP, hooks, Python.','speakers/stanislav-glazov.jpg');
+N('borodich','Alexander\nBorodich','curator','@borodich · AI-native business.','speakers/alexander-povaliaev.jpg');
 
 // Topics
-N('t-pos','Personal OS','topic','Personal AI assistant. 10 categories. CLAUDE.md constitution.');
-N('t-process','Process Audit','topic','Map 15–20 processes. Freq × Time × Error × Scale.');
+N('t-pos','Personal OS','topic','AI assistant + 10 categories.');
+N('t-process','Process Audit','topic','Freq × Time × Error × Scale.');
 N('t-6layer','6-Layer Architecture','topic','Infra → Context → Orchestration → Skills → People → Mgmt.');
-N('t-context','Context Engineering','topic','Ontology, Graph RAG, telescoping docs.');
-N('t-orch','4 Topologies','topic','Sequential, Parallel, Conditional, Recursive.');
-N('t-skills','Skills as Jobs','topic','Not prompts — specs with constraints + examples + eval.');
-N('t-bizmodel','AI Business Models','topic','Data/trust/distribution moats. Strangler Fig. GEO.');
+N('t-orch','Orchestration','topic','Sequential, Parallel, Conditional, Recursive.');
+N('t-skills','Skills = Jobs','topic','Full specs with constraints + eval.');
+N('t-bizmodel','AI Business Models','topic','Moats, Strangler Fig, GEO.');
 N('t-90day','90-Day Plan','topic','Quick wins → Scaling → New roles.');
-N('t-champion','AI Champion','topic','First AI hire. Bridge tech ↔ business.');
-N('t-vibecoding','Vibe-Coding','topic','You = CEO, AI agents = employees.');
-N('t-selfimprove','Self-Improving Agents','topic','Static → feedback loops → autonomous improvement.');
-N('t-legal','AI Legal','topic','Contract automation. Compliance. Regulation.');
-N('t-sales','Sales Automation','topic','L1–L5 autonomy. Inbound + outbound.');
-N('t-content','AI Content','topic','Pipeline: idea → gen → verify → publish.');
-N('t-scaling','Scaling Laws','topic','Pre-training, RLVR, autonomous work.');
+N('t-champion','AI Champion','topic','First AI hire per department.');
 
 // Tools
-N('tool-claude','Claude Code','tool','AI assistant & coder. Skills, MCP, agents.');
-N('tool-cursor','Cursor','tool','AI-native editor.');
-N('tool-openclaw','OpenClaw','tool','Telegram bot PM. 7 layers.');
-N('tool-obsidian','Obsidian','tool','Knowledge vault. Wiki-links.');
-N('tool-linear','Linear','tool','Sprint tracking.');
-N('tool-n8n','n8n / Make','tool','Workflow automation.');
-N('tool-mcp','MCP Servers','tool','Firecrawl, Exa, GitHub, Custom.');
-N('tool-tg','Telegram','tool','Sprint chat. Async updates.');
+N('tool-claude','Claude Code','tool','AI assistant. Skills, MCP.');
+N('tool-obsidian','Obsidian','tool','Knowledge vault.');
+N('tool-cursor','Cursor','tool','AI editor.');
+N('tool-mcp','MCP Servers','tool','Firecrawl, Exa, GitHub.');
 
-// Deliverables
-N('d-asst','AI Assistant','deliver','Working assistant + 3 skills + CLAUDE.md.');
-N('d-top10','Top-10 Processes','deliver','Prioritized automation candidates.');
-N('d-ontology','Data Ontology','deliver','5–10 key entities mapped.');
-N('d-skillfile','Skill-File','deliver','Complete process spec.');
-N('d-auto','Automated Process','deliver','End-to-end business function.');
-N('d-plan','90-Day Plan','deliver','Quick wins → scale → roles.');
-N('d-demo','Demo Day','deliver','5 min + live demo + ROI.');
+// Concepts
+N('c-harness','Harness\nEngineering','concept','80% value from harness, 20% model.');
+N('c-token','Token\nStream','concept','Org = info processor.');
+N('c-bitter','Bitter\nLesson','concept','Scale > engineered knowledge.');
+N('c-mirror','Mirror\nAgents','concept','MCP + internal control loops.');
 
-// Concepts (25 extracted from sprint lectures)
-N('six-layer-architecture','6-Layer Architecture','concept','Infra > Context > Orchestration > Skills > People > Governance');
-N('bitter-lesson','Bitter Lesson','concept','Scale + compute beats hand-engineered knowledge (Sutton 2019)');
-N('token-stream','Token Stream','concept','Every org is info processor: inputs tokenized, processed, output');
-N('harness-engineering','Harness Engineering','concept','Agent = Model + Harness. 80% value from harness, 20% from model');
-N('strangler-fig','Strangler Fig Pattern','concept','Gradually wrap old process with agent replacement, not big-bang');
-N('four-orch','4 Orchestration Topologies','concept','Sequential, Concurrent, Handoff, Judge Loop + Adaptive Routing');
-N('ai-champion-model','AI Champion Model','concept','Dedicated role per department: finds processes, writes skills, measures ROI');
-N('process-audit-formula','Process Audit Formula','concept','Priority = Frequency x Time x Error Rate x Scalability (each 1-5)');
-N('mirror-agents','Mirror Agents','concept','Personal agent per employee. Mirrors coordinate without interrupting humans');
-N('geo','GEO','concept','Generative Engine Optimization. llms.txt, JSON-LD, agent-readable data');
-N('vsm','Viable System Model','concept','Stafford Beer cybernetic org model applied to agent teams');
-N('context-engineering','Context Engineering','concept','Not prompt engineering. Ontology, Graph RAG, telescoping docs');
-N('skill-as-job','Skill = Coded Job','concept','Not prompts but full job specs: workflow, constraints, examples, eval');
-N('autonomy-levels','5 Autonomy Levels','concept','ML > LLM Chat > Workflow > Agent > Skill');
-N('graph-rag','Graph RAG','concept','Knowledge graph + retrieval for company context');
-N('self-improving','Self-Improving Agents','concept','Feedback loops > quality signals > autonomous improvement');
-N('90-day-plan','90-Day Transformation','concept','Quick wins (W1-4) > Scaling (W5-8) > New roles (W9-12)');
+// ════════ LINKS ════════
+// Team → weeks
+L('stepan','w1','lectures');L('stepan','w2','lectures');L('stepan','w3','lectures');
+L('alex','w1','leads');L('alex','w2','leads');L('alex','w3','leads');
+L('ira','w1','ops');L('ira','w2','ops');L('ira','w3','ops');
+L('ilya','w1','focus');L('ilya','w2','focus');
+// Speakers → weeks
+L('lisovsky','w1','speaks');L('khanarin','w1','speaks');
+L('ametov','w2','speaks');L('kleban','w2','speaks');L('sidora','w2','speaks');
+L('kovalsky','w2','speaks');L('strakhov','w2','speaks');L('kravtsov','w2','speaks');
+L('reid','w3','speaks');L('annaov','w3','speaks');L('buzko','w3','speaks');L('ustinov','w3','speaks');
+// Curators → weeks
+L('fedoseev','w1','curates');L('fedoseev','w2','curates');
+L('yury','w1','curates');L('yury','w3','curates');
+L('anton-v','w1','curates');L('sereja','w1','curates');
+L('glazov','w2','curates');L('borodich','w3','curates');
+// Weeks → topics
+L('w1','t-pos','covers');L('w1','t-process','covers');
+L('w2','t-6layer','covers');L('w2','t-orch','covers');L('w2','t-skills','covers');
+L('w3','t-bizmodel','covers');L('w3','t-90day','covers');L('w3','t-champion','covers');
+// Speaker → topics
+L('stepan','t-6layer','teaches');L('stepan','t-bizmodel','teaches');
+L('alex','t-pos','teaches');L('alex','t-process','teaches');
+L('khanarin','t-process','teaches');L('ametov','t-skills','teaches');
+L('kleban','t-skills','teaches');L('strakhov','t-orch','teaches');
+L('annaov','t-bizmodel','teaches');L('buzko','t-bizmodel','teaches');
+// Topics → tools
+L('t-pos','tool-claude','uses');L('t-pos','tool-obsidian','uses');L('t-pos','tool-cursor','uses');
+L('t-6layer','tool-mcp','uses');
+// Concepts → topics
+L('c-harness','t-skills','shapes');L('c-token','t-process','shapes');
+L('c-bitter','t-6layer','shapes');L('c-mirror','t-orch','shapes');
 
-// ── LINKS ──
-// Sessions → Weeks
-L('s-w1-lecture','w1','in'); L('s-w1-setup','w1','in'); L('s-w1-workshop','w1','in');
-L('s-w1-lisovskiy','w1','in'); L('s-w1-khanarin','w1','in');
-L('s-w2-lecture','w2','in'); L('s-w2-ametov','w2','in'); L('s-w2-kleban','w2','in');
-L('s-w2-sidora','w2','in'); L('s-w2-kovalsky','w2','in');
-L('s-w2-strakhov','w2','in'); L('s-w2-kravtsov','w2','in');
-L('s-w3-lecture','w3','in'); L('s-w3-reid','w3','in'); L('s-w3-annaov','w3','in');
-L('s-w3-buzko','w3','in'); L('s-w3-ustinov','w3','in'); L('s-demo','w3','in');
+const gd = D;
 
-// Sessions → Speakers
-L('s-w1-lecture','stepan','led_by'); L('s-w1-setup','alex','led_by'); L('s-w1-workshop','alex','led_by');
-L('s-w1-lisovskiy','lisovsky','led_by'); L('s-w1-khanarin','khanarin','led_by');
-L('s-w2-lecture','stepan','led_by'); L('s-w2-ametov','ametov','led_by'); L('s-w2-kleban','kleban','led_by');
-L('s-w2-sidora','sidora','led_by'); L('s-w2-kovalsky','kovalsky','led_by');
-L('s-w2-strakhov','strakhov','led_by'); L('s-w2-kravtsov','kravtsov','led_by');
-L('s-w3-lecture','stepan','led_by'); L('s-w3-reid','reid','led_by'); L('s-w3-annaov','annaov','led_by');
-L('s-w3-buzko','buzko','led_by'); L('s-w3-ustinov','ustinov','led_by');
+// ════════ DETERMINISTIC LAYOUT ════════
+const WR=200;
+const wc={w1:{x:-WR,y:0},w2:{x:WR*0.5,y:-WR*0.87},w3:{x:WR*0.5,y:WR*0.87}};
 
-// Team → Weeks
-L('stepan','w1','lectures'); L('stepan','w2','lectures'); L('stepan','w3','lectures');
-L('alex','w1','facilitates'); L('alex','w2','facilitates'); L('alex','w3','facilitates');
-L('ira','w1','operations'); L('ira','w2','operations'); L('ira','w3','operations');
-L('ilya','w1','focus'); L('ilya','w2','focus'); L('ilya','w3','focus');
+function ring(cx,cy,r,i,n){const a=(i/Math.max(n,1))*Math.PI*2-Math.PI/2;return{x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r};}
 
-// Speakers → Weeks
-L('lisovsky','w1','speaks'); L('khanarin','w1','speaks');
-L('ametov','w2','speaks'); L('kleban','w2','speaks');
-L('sidora','w2','speaks'); L('kovalsky','w2','speaks');
-L('strakhov','w2','speaks'); L('kravtsov','w2','speaks');
-L('reid','w3','speaks'); L('annaov','w3','speaks');
-L('buzko','w3','speaks'); L('ustinov','w3','speaks');
-
-// Curators → Weeks (all 13)
-L('fedoseev','w1','curates'); L('fedoseev','w2','curates');
-L('yury','w1','curates'); L('yury','w2','curates'); L('yury','w3','curates');
-L('jin','w1','curates'); L('jin','w2','curates');
-L('glazov','w2','curates'); L('glazov','w3','curates');
-L('vasiliev-c','w2','curates'); L('vasiliev-c','w3','curates');
-L('sereja','w1','curates'); L('sereja','w2','curates');
-L('gindin','w1','curates'); L('gindin','w2','curates'); L('gindin','w3','curates');
-L('anton-v','w1','curates'); L('anton-v','w2','curates');
-L('stashenko','w2','curates'); L('stashenko','w3','curates');
-L('tkacheva','w1','curates'); L('tkacheva','w2','curates'); L('tkacheva','w3','curates');
-L('smirnov','w2','curates'); L('smirnov','w3','curates');
-L('golubev','w2','curates'); L('golubev','w3','curates');
-L('borodich','w3','curates');
-
-// Curator → Topic expertise
-L('fedoseev','t-skills','expertise'); L('fedoseev','t-context','expertise');
-L('glazov','t-pos','expertise'); L('vasiliev-c','t-orch','expertise');
-L('sereja','t-pos','expertise'); L('gindin','t-content','expertise');
-L('anton-v','t-pos','expertise'); L('smirnov','t-6layer','expertise');
-L('golubev','t-orch','expertise'); L('stashenko','t-champion','expertise');
-L('tkacheva','t-pos','expertise'); L('borodich','t-bizmodel','expertise');
-L('jin','t-pos','expertise');
-
-// Weeks → Topics
-L('w1','t-pos','covers'); L('w1','t-process','covers'); L('w1','t-scaling','covers'); L('w1','t-vibecoding','covers');
-L('w2','t-6layer','covers'); L('w2','t-context','covers'); L('w2','t-orch','covers'); L('w2','t-skills','covers'); L('w2','t-selfimprove','covers'); L('w2','t-content','covers');
-L('w3','t-bizmodel','covers'); L('w3','t-90day','covers'); L('w3','t-champion','covers'); L('w3','t-sales','covers'); L('w3','t-legal','covers');
-
-// Speakers → Topics
-L('lisovsky','t-vibecoding','teaches'); L('khanarin','t-process','teaches');
-L('ametov','t-content','teaches'); L('kleban','t-selfimprove','teaches');
-L('kovalsky','t-vibecoding','teaches'); L('strakhov','t-orch','teaches');
-L('kravtsov','t-context','teaches'); L('reid','t-bizmodel','teaches');
-L('annaov','t-sales','teaches'); L('buzko','t-legal','teaches');
-L('ustinov','t-champion','teaches');
-L('fedoseev','t-skills','teaches');
-L('stepan','t-6layer','teaches'); L('stepan','t-scaling','teaches'); L('stepan','t-bizmodel','teaches'); L('stepan','t-90day','teaches');
-L('alex','t-pos','teaches'); L('alex','t-process','teaches'); L('alex','t-champion','teaches');
-
-// Topics → Tools
-L('t-pos','tool-claude','uses'); L('t-pos','tool-cursor','uses'); L('t-pos','tool-openclaw','uses'); L('t-pos','tool-obsidian','uses');
-L('t-6layer','tool-mcp','uses'); L('t-process','tool-linear','uses');
-L('t-skills','tool-claude','uses'); L('t-orch','tool-n8n','uses');
-L('t-content','tool-tg','uses'); L('t-sales','tool-mcp','uses');
-
-// Weeks → Deliverables
-L('w1','d-asst','produces'); L('w1','d-top10','produces');
-L('w2','d-ontology','produces'); L('w2','d-skillfile','produces');
-L('w3','d-auto','produces'); L('w3','d-plan','produces'); L('w3','d-demo','produces');
-
-// Concepts → Weeks (when taught)
-L('bitter-lesson','w1','taught'); L('token-stream','w1','taught'); L('harness-engineering','w1','taught');
-L('autonomy-levels','w1','taught');
-L('six-layer-architecture','w2','taught'); L('four-orch','w2','taught'); L('context-engineering','w2','taught');
-L('skill-as-job','w2','taught'); L('graph-rag','w2','taught'); L('vsm','w2','taught');
-L('self-improving','w2','taught'); L('mirror-agents','w2','taught');
-L('strangler-fig','w3','taught'); L('ai-champion-model','w3','taught'); L('process-audit-formula','w3','taught');
-L('geo','w3','taught'); L('90-day-plan','w3','taught');
-
-// Concept inter-connections
-L('six-layer-architecture','context-engineering','includes'); L('six-layer-architecture','four-orch','includes');
-L('six-layer-architecture','skill-as-job','includes'); L('harness-engineering','skill-as-job','related');
-L('context-engineering','graph-rag','uses'); L('mirror-agents','four-orch','uses');
-L('process-audit-formula','ai-champion-model','feeds');
-L('self-improving','skill-as-job','evolves');
-
-const graphData = DATA;
-
-// ══════════════════════════════════════════════════
-//  DETERMINISTIC LAYOUT — fixed positions, no simulation jitter
-//  3 week hubs at 120° apart, nodes in concentric rings
-// ══════════════════════════════════════════════════
-const WR = 75; // week hub radius from center
-// Weeks on XY plane — camera looks from Z axis
-const weekCenters = {
-  w1: { x: -WR,        y: 0, z: 0 },
-  w2: { x: WR * 0.5,   y: WR * 0.866, z: 0 },
-  w3: { x: WR * 0.5,   y: -WR * 0.866, z: 0 },
-};
-
-// Find which week(s) each node connects to
-function nodeWeeks(nid) {
-  const weeks = [];
-  graphData.links.forEach(l => {
-    const s = l.source, t = l.target;
-    if (s === nid && ['w1','w2','w3'].includes(t)) weeks.push(t);
-    if (t === nid && ['w1','w2','w3'].includes(s)) weeks.push(s);
-  });
-  return [...new Set(weeks)];
-}
-
-// Find indirect week via neighbors
-function indirectWeek(nid) {
-  for (const l of graphData.links) {
-    const other = l.source === nid ? l.target : (l.target === nid ? l.source : null);
-    if (!other) continue;
-    const ws = nodeWeeks(other);
-    if (ws.length) return ws[0];
-  }
+// Assign to weeks
+function weekOf(nid){
+  for(const l of gd.links){if(l.source===nid&&['w1','w2','w3'].includes(l.target))return l.target;if(l.target===nid&&['w1','w2','w3'].includes(l.source))return l.source;}
+  for(const l of gd.links){const o=l.source===nid?l.target:(l.target===nid?l.source:null);if(!o)continue;for(const l2 of gd.links){if(l2.source===o&&['w1','w2','w3'].includes(l2.target))return l2.target;if(l2.target===o&&['w1','w2','w3'].includes(l2.source))return l2.source;}}
   return null;
 }
 
-// Place nodes in ring on XY plane around center
-function ringPos(cx, cy, cz, radius, index, total) {
-  const angle = (index / Math.max(total, 1)) * Math.PI * 2;
-  return {
-    x: cx + Math.cos(angle) * radius,
-    y: cy + Math.sin(angle) * radius,
-    z: (Math.random() - 0.5) * 6 // slight depth
-  };
-}
-
-// Assign and position all nodes
-const weekNodes = { w1: { sessions:[], speakers:[], curators:[], topics:[], concepts:[], other:[] },
-                    w2: { sessions:[], speakers:[], curators:[], topics:[], concepts:[], other:[] },
-                    w3: { sessions:[], speakers:[], curators:[], topics:[], concepts:[] , other:[] } };
-const sharedNodes = [];
-
-graphData.nodes.forEach(n => {
-  if (['w1','w2','w3'].includes(n.id)) return; // weeks positioned directly
-  const ws = nodeWeeks(n.id);
-  const week = ws[0] || indirectWeek(n.id);
-  if (week && weekNodes[week]) {
-    const bucket = n.type === 'session' ? 'sessions' : n.type === 'speaker' ? 'speakers' :
-                   n.type === 'curator' ? 'curators' : n.type === 'topic' ? 'topics' :
-                   n.type === 'concept' ? 'concepts' : 'other';
-    weekNodes[week][bucket].push(n);
-  } else {
-    sharedNodes.push(n);
-  }
+const buckets={w1:{sp:[],cur:[],top:[],oth:[]},w2:{sp:[],cur:[],top:[],oth:[]},w3:{sp:[],cur:[],top:[],oth:[]}};
+const shared=[];
+gd.nodes.forEach(n=>{
+  if(['w1','w2','w3'].includes(n.id)){n.fx=wc[n.id].x;n.fy=wc[n.id].y;return;}
+  const w=weekOf(n.id);
+  if(w&&buckets[w]){
+    const b=['speaker','team'].includes(n.type)?'sp':n.type==='curator'?'cur':['topic','concept'].includes(n.type)?'top':'oth';
+    buckets[w][b].push(n);
+  } else shared.push(n);
 });
 
-// Position week hubs
-['w1','w2','w3'].forEach(wid => {
-  const n = graphData.nodes.find(x => x.id === wid);
-  const c = weekCenters[wid];
-  n.fx = c.x; n.fy = c.y; n.fz = c.z;
+Object.entries(buckets).forEach(([w,b])=>{
+  const c=wc[w];
+  b.sp.forEach((n,i)=>{const p=ring(c.x,c.y,70,i,b.sp.length);n.fx=p.x;n.fy=p.y;});
+  b.cur.forEach((n,i)=>{const p=ring(c.x,c.y,100,i+0.3,Math.max(b.cur.length,1));n.fx=p.x;n.fy=p.y;});
+  b.top.forEach((n,i)=>{const p=ring(c.x,c.y,130,i,b.top.length);n.fx=p.x;n.fy=p.y;});
+  b.oth.forEach((n,i)=>{const p=ring(c.x,c.y,110,i+0.5,Math.max(b.oth.length,1));n.fx=p.x;n.fy=p.y;});
+});
+shared.forEach((n,i)=>{const p=ring(0,0,50,i,Math.max(shared.length,1));n.fx=p.x;n.fy=p.y;});
+
+// ════════ PRELOAD AVATARS ════════
+const avatarCache={};
+gd.nodes.forEach(n=>{
+  if(!n.avatar)return;
+  const img=new Image();
+  img.crossOrigin='anonymous';
+  img.onload=()=>{avatarCache[n.id]=img;};
+  img.src=n.avatar;
 });
 
-// Position nodes in rings around each week
-Object.entries(weekNodes).forEach(([wid, buckets]) => {
-  const c = weekCenters[wid];
-  // Ring 1: sessions (r=18)
-  buckets.sessions.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 18, i, buckets.sessions.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
-  // Ring 2: speakers (r=32)
-  buckets.speakers.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 32, i, buckets.speakers.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
-  // Ring 2b: curators (r=40, offset angle)
-  buckets.curators.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 40, i+0.3, Math.max(buckets.curators.length,1)); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
-  // Ring 3: topics (r=48)
-  buckets.topics.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 48, i, buckets.topics.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
-  // Ring 4: concepts (r=58)
-  buckets.concepts.forEach((n,i) => { const p = ringPos(c.x,c.y-2,c.z, 58, i, buckets.concepts.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
-  // Other (r=42)
-  buckets.other.forEach((n,i) => { const p = ringPos(c.x,c.y+5,c.z, 42, i, Math.max(buckets.other.length,1)); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
-});
-
-// Shared nodes — center area
-sharedNodes.forEach((n,i) => {
-  const p = ringPos(0, 8, 0, 20, i, Math.max(sharedNodes.length,1));
-  n.fx = p.x; n.fy = p.y; n.fz = p.z;
-});
-
-console.log('Layout: w1=' + Object.values(weekNodes.w1).flat().length +
-  ' w2=' + Object.values(weekNodes.w2).flat().length +
-  ' w3=' + Object.values(weekNodes.w3).flat().length +
-  ' shared=' + sharedNodes.length);
-
-// ══════════════════════════════════════════════════
-//  PARTICLE SHADERS (ambient background)
-// ══════════════════════════════════════════════════
-const PARTICLE_VS = `
-  uniform float uTime; uniform float uSize;
-  attribute float aRand;
-  varying float vAlpha;
-  void main() {
-    vec3 pos = position;
-    pos.x += sin(uTime*0.5 + aRand*6.28)*2.0;
-    pos.y += cos(uTime*0.35 + aRand*3.14)*2.0;
-    pos.z += sin(uTime*0.2 + aRand*9.42)*1.5;
-    vec4 mv = modelViewMatrix * vec4(pos,1.0);
-    gl_Position = projectionMatrix * mv;
-    gl_PointSize = uSize * (250.0 / -mv.z);
-    vAlpha = smoothstep(600.0, 80.0, -mv.z) * (0.2 + 0.6*aRand);
-  }
-`;
-const PARTICLE_FS = `
-  uniform vec3 uColor;
-  varying float vAlpha;
-  void main() {
-    float d = length(gl_PointCoord - 0.5);
-    if (d > 0.5) discard;
-    gl_FragColor = vec4(uColor, smoothstep(0.5,0.0,d) * vAlpha * 0.3);
-  }
-`;
-
-// ══════════════════════════════════════════════════
-//  3D GRAPH
-// ══════════════════════════════════════════════════
-const container = document.getElementById('graph-container');
-let showLabels = true;
-const navHistory = [];
-
-const Graph = ForceGraph3D({ controlType:'orbit' })(container)
-  .backgroundColor('#00000000')
-  .showNavInfo(false)
-  .graphData(graphData)
-  .nodeVal(n => TYPES[n.type]?.size || 4)
-  .nodeColor(n => TYPES[n.type]?.color || '#64748b')
-  .nodeOpacity(0.92)
-  .nodeResolution(12)
-  .nodeThreeObject(n => {
-    const t = TYPES[n.type] || {};
-    const color = t.color || '#64748b';
-    const sz = t.size || 4;
-    const isPerson = ['speaker','curator','team','participant'].includes(n.type);
-    const group = new THREE.Group();
-
-    if (n.type === 'week') {
-      // WEEK — octahedron hub
-      const geo = new THREE.OctahedronGeometry(sz*0.5, 1);
-      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.4, shininess:80, transparent:true, opacity:0.85 });
-      group.add(new THREE.Mesh(geo, mat));
-    } else if (isPerson && n.avatar) {
-      // PEOPLE WITH PHOTO — circular avatar sprite + colored ring
-      const ringGeo = new THREE.RingGeometry(sz*0.55, sz*0.65, 32);
-      const ringMat = new THREE.MeshBasicMaterial({ color, side:THREE.DoubleSide, transparent:true, opacity:0.7 });
-      group.add(new THREE.Mesh(ringGeo, ringMat));
-      // Sync fallback first (visible immediately), then async load avatar over it
-      const fallbackGeo = new THREE.SphereGeometry(sz*0.45, 12, 12);
-      const fallbackMat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3, transparent:true, opacity:0.7 });
-      const fallbackMesh = new THREE.Mesh(fallbackGeo, fallbackMat);
-      group.add(fallbackMesh);
-      // Async load avatar texture
-      new THREE.TextureLoader().load(n.avatar,
-        tex => {
-          // Success — replace fallback with photo sprite
-          group.remove(fallbackMesh);
-          const spMat2 = new THREE.SpriteMaterial({ map:tex });
-          const sp2 = new THREE.Sprite(spMat2);
-          sp2.scale.set(sz*1.1, sz*1.1, 1);
-          group.add(sp2);
-        },
-        undefined,
-        err => console.warn('Avatar load failed:', n.avatar, err)
-      );
-    } else if (isPerson) {
-      // PEOPLE WITHOUT PHOTO — box card with icon
-      const geo = new THREE.BoxGeometry(sz*1.0, sz*1.0, sz*0.3, 2, 2, 2);
-      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.35, shininess:50, transparent:true, opacity:0.88 });
-      group.add(new THREE.Mesh(geo, mat));
-      const icon = new SpriteText(t.icon || '●');
-      icon.textHeight = sz * 0.6;
-      icon.position.z = sz * 0.2;
-      group.add(icon);
-    } else if (n.type === 'concept') {
-      // CONCEPTS — diamond shape
-      const geo = new THREE.OctahedronGeometry(sz*0.45, 0);
-      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.4, shininess:100, transparent:true, opacity:0.85 });
-      group.add(new THREE.Mesh(geo, mat));
-    } else {
-      // Default — sphere
-      const geo = new THREE.SphereGeometry(sz*0.5, 14, 14);
-      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3, shininess:60, transparent:true, opacity:0.87 });
-      group.add(new THREE.Mesh(geo, mat));
-    }
-
-    // Halo glow
-    const haloScale = n.type==='week' ? 3.0 : 2.0;
-    const haloOpacity = n.type==='week' ? 0.25 : 0.15;
-    const spMat = new THREE.SpriteMaterial({ map:glowTex(color), transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, opacity:haloOpacity });
-    const sp = new THREE.Sprite(spMat);
-    sp.scale.set(sz*haloScale, sz*haloScale, 1);
-    group.add(sp);
-
-    // Label — always visible, sized by importance
-    if (showLabels) {
-      const lbl = new SpriteText(n.name);
-      const labelCfg = {
-        week:    { height:2.2, color:'rgba(255,255,255,0.85)', bg:'rgba(22,22,32,0.55)' },
-        team:    { height:1.8, color:'rgba(255,255,255,0.65)', bg:'rgba(22,22,32,0.35)' },
-        speaker: { height:1.6, color:'rgba(255,255,255,0.6)',  bg:'rgba(22,22,32,0.3)' },
-        curator: { height:1.3, color:'rgba(255,255,255,0.45)', bg:'rgba(22,22,32,0.25)' },
-        session: { height:1.2, color:'rgba(150,180,255,0.5)',  bg:'rgba(22,22,32,0.25)' },
-        topic:   { height:1.4, color:'rgba(200,180,255,0.55)', bg:'rgba(22,22,32,0.3)' },
-        concept: { height:1.2, color:'rgba(100,230,180,0.45)', bg:'rgba(22,22,32,0.25)' },
-      };
-      const cfg = labelCfg[n.type] || { height:2.0, color:'rgba(255,255,255,0.5)', bg:'rgba(22,22,32,0.3)' };
-      lbl.color = cfg.color;
-      lbl.textHeight = cfg.height;
-      lbl.fontFace = 'IBM Plex Mono';
-      lbl.fontWeight = n.type==='week' ? '500' : '400';
-      lbl.padding = 0.3;
-      lbl.borderRadius = 2;
-      lbl.backgroundColor = cfg.bg;
-      lbl.position.y = sz * 0.6 + 2;
-      group.add(lbl);
-      n.__label = lbl;
-    }
-
-    n.__group = group;
-    n.__halo = sp;
-    return group;
-  })
-  .nodeThreeObjectExtend(false)
-  .linkWidth(link => {
-    const rel = link.type;
-    if (rel==='lectures'||rel==='facilitates') return 1.2;
-    if (rel==='speaks'||rel==='teaches') return 0.8;
-    if (rel==='covers'||rel==='produces') return 0.6;
-    return 0.3;
-  })
-  .linkColor(link => {
-    const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
-    return s ? (TYPES[s.type]?.color||'#4dc9d4') + '30' : 'rgba(77,201,212,0.12)';
-  })
-  .linkOpacity(0.35)
-  .linkCurvature(0.15)
-  .linkDirectionalParticles(link => {
-    const rel = link.type;
-    return (rel==='lectures'||rel==='speaks'||rel==='teaches'||rel==='covers') ? 2 : 0;
-  })
-  .linkDirectionalParticleWidth(1.0)
-  .linkDirectionalParticleSpeed(0.005)
-  .linkDirectionalParticleColor(link => {
-    const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
-    return s ? TYPES[s.type]?.color||'#4dc9d4' : '#4dc9d4';
-  })
-  // No simulation — all positions are fixed via fx/fy/fz
+// ════════ 2D GRAPH ════════
+const graph = ForceGraph()(document.getElementById('graph'))
+  .graphData(gd)
+  .backgroundColor('#12121c')
   .warmupTicks(0)
   .cooldownTicks(0)
-  .onNodeHover(onHover)
+  .nodeCanvasObject((node,ctx,globalScale)=>{
+    const tp=T[node.type]||{c:'#64748b',s:5};
+    const r=tp.s;
+    const img=avatarCache[node.id];
+
+    // Draw node
+    if(img){
+      // Circular avatar
+      ctx.save();
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.closePath();ctx.clip();
+      ctx.drawImage(img,node.x-r,node.y-r,r*2,r*2);
+      ctx.restore();
+      // Ring border
+      ctx.beginPath();ctx.arc(node.x,node.y,r+1,0,Math.PI*2);
+      ctx.strokeStyle=tp.c;ctx.lineWidth=2;ctx.stroke();
+    } else if(node.type==='week'){
+      // Week: large filled circle with glow
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
+      const grad=ctx.createRadialGradient(node.x,node.y,r*0.3,node.x,node.y,r);
+      grad.addColorStop(0,tp.c);grad.addColorStop(1,tp.c+'60');
+      ctx.fillStyle=grad;ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=2;ctx.stroke();
+    } else {
+      // Default circle
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
+      ctx.fillStyle=tp.c+'cc';ctx.fill();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();
+    }
+
+    // Label
+    const fontSize=node.type==='week'?12/globalScale:Math.min(9/globalScale,11);
+    if(globalScale>0.5||node.type==='week'||['team','speaker'].includes(node.type)){
+      ctx.font=`${node.type==='week'?'600':'400'} ${fontSize}px ${node.type==='week'?'Space Grotesk':'IBM Plex Mono'}`;
+      ctx.textAlign='center';ctx.textBaseline='top';
+      ctx.fillStyle=node.type==='week'?'rgba(255,255,255,.9)':'rgba(255,255,255,.6)';
+      const lines=node.name.split('\n');
+      const ly=node.y+r+3/globalScale;
+      lines.forEach((line,i)=>ctx.fillText(line,node.x,ly+i*fontSize*1.2));
+    }
+  })
+  .nodePointerAreaPaint((node,c,ctx)=>{
+    const r=(T[node.type]||{s:5}).s+4;
+    ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.fill();
+  })
+  .linkColor(()=>'rgba(77,201,212,.08)')
+  .linkWidth(l=>l.rel==='lectures'||l.rel==='leads'?1.5:0.5)
+  .linkDirectionalParticles(l=>['lectures','speaks','teaches'].includes(l.rel)?2:0)
+  .linkDirectionalParticleWidth(2)
+  .linkDirectionalParticleSpeed(0.004)
+  .linkDirectionalParticleColor(()=>'rgba(77,201,212,.4)')
+  .linkCurvature(0.1)
   .onNodeClick(onClick)
-  .onBackgroundClick(onBgClick);
+  .onNodeHover((n)=>{document.getElementById('graph').style.cursor=n?'pointer':'default';});
 
-// Glow texture
-const _gtc = {};
-function glowTex(hex) {
-  if (_gtc[hex]) return _gtc[hex];
-  const c = document.createElement('canvas'); c.width=128; c.height=128;
-  const x = c.getContext('2d');
-  const g = x.createRadialGradient(64,64,0,64,64,64);
-  g.addColorStop(0,hex+'cc'); g.addColorStop(0.3,hex+'40'); g.addColorStop(0.7,hex+'10'); g.addColorStop(1,hex+'00');
-  x.fillStyle=g; x.fillRect(0,0,128,128);
-  return (_gtc[hex] = new THREE.CanvasTexture(c));
-}
+// Fit to view after render
+setTimeout(()=>graph.zoomToFit(300,60),100);
 
-// Scene
-const scene = Graph.scene();
-scene.add(new THREE.AmbientLight(0x404060, 0.7));
-const dl1 = new THREE.DirectionalLight(0x4dc9d4, 0.3); dl1.position.set(80,150,80); scene.add(dl1);
-const dl2 = new THREE.DirectionalLight(0x3b82f6, 0.2); dl2.position.set(-80,-80,150); scene.add(dl2);
-scene.background = new THREE.Color('#0d0d18');
-scene.fog = new THREE.FogExp2('#0d0d18', 0.0012);
+// Make graph accessible globally for controls
+window.graph=graph;
 
-// Ambient particle system
-const PC = 600, SPREAD = 350;
-const pPos = new Float32Array(PC*3), pRand = new Float32Array(PC);
-for (let i=0;i<PC;i++){pPos[i*3]=(Math.random()-0.5)*SPREAD;pPos[i*3+1]=(Math.random()-0.5)*SPREAD;pPos[i*3+2]=(Math.random()-0.5)*SPREAD;pRand[i]=Math.random();}
-const pGeo = new THREE.BufferGeometry();
-pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
-pGeo.setAttribute('aRand', new THREE.BufferAttribute(pRand,1));
-const pUni = {uTime:{value:0},uSize:{value:1.8},uColor:{value:new THREE.Color('#4dc9d4')}};
-const pMat = new THREE.ShaderMaterial({uniforms:pUni,vertexShader:PARTICLE_VS,fragmentShader:PARTICLE_FS,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false});
-const particles = new THREE.Points(pGeo,pMat);
-scene.add(particles);
-// Animate particles
-let pTime = 0;
-(function animP(){requestAnimationFrame(animP);pTime+=0.0003;pUni.uTime.value=pTime*1000;})();
-
-// ══════════════════════════════════════════════════
-//  SEARCH
-// ══════════════════════════════════════════════════
-const fuse = new Fuse(graphData.nodes, { keys:['name','description','type'], threshold:0.35, includeScore:true });
-const searchIn = document.getElementById('search-input');
-const searchRes = document.getElementById('search-results');
-
-searchIn.addEventListener('input', e => {
-  const q = e.target.value.trim();
-  if (!q) { searchRes.classList.remove('open'); searchRes.innerHTML=''; resetHL(); return; }
-  const res = fuse.search(q).slice(0,8);
-  if (!res.length) { searchRes.classList.remove('open'); return; }
-  searchRes.classList.add('open');
-  searchRes.innerHTML = res.map(r => {
-    const c = TYPES[r.item.type]?.color||'#64748b';
-    return `<div class="sr-item" data-id="${r.item.id}"><span class="sr-dot" style="background:${c}"></span>${r.item.name}<span class="sr-type">${r.item.type}</span></div>`;
-  }).join('');
-  searchRes.querySelectorAll('.sr-item').forEach(el => {
-    el.onclick = () => { const nd=graphData.nodes.find(n=>n.id===el.dataset.id); if(nd){onClick(nd);searchIn.value='';searchRes.classList.remove('open');} };
-  });
+// ════════ SEARCH ════════
+const si=document.getElementById('si'),res=document.getElementById('res');
+si.addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase();
+  if(!q){res.classList.remove('on');res.innerHTML='';return;}
+  const hits=gd.nodes.filter(n=>n.name.toLowerCase().includes(q)||n.desc.toLowerCase().includes(q)).slice(0,8);
+  if(!hits.length){res.classList.remove('on');return;}
+  res.classList.add('on');
+  res.innerHTML=hits.map(n=>`<div class="ri" data-id="${n.id}"><span class="rd" style="background:${(T[n.type]||{}).c||'#64748b'}"></span>${n.name.replace(/\n/g,' ')}</div>`).join('');
+  res.querySelectorAll('.ri').forEach(el=>el.onclick=()=>{const nd=gd.nodes.find(n=>n.id===el.dataset.id);if(nd){onClick(nd);si.value='';res.classList.remove('on');}});
+});
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();si.focus();}
+  if(e.key==='Escape'){si.blur();si.value='';res.classList.remove('on');closeInfo();}
 });
 
-document.addEventListener('keydown', e => {
-  if ((e.metaKey||e.ctrlKey) && e.key==='k') { e.preventDefault(); searchIn.focus(); }
-  if (e.key==='Escape') { searchIn.blur(); searchIn.value=''; searchRes.classList.remove('open'); closeInfo(); resetHL(); }
-  if (document.activeElement===searchIn) return;
-  if (e.key==='f'||e.key==='F') { if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
-  if (e.key==='r'||e.key==='R') resetCam();
-  if (e.key==='l'||e.key==='L') toggleLabels();
-  if (e.key==='Backspace') goBack();
-});
-
-// ══════════════════════════════════════════════════
-//  INTERACTION
-// ══════════════════════════════════════════════════
-let hovered=null, selected=null;
-const tip = document.getElementById('tip');
-
-function onHover(node) {
-  container.style.cursor = node?'pointer':'default';
-  // Reset previous hover
-  if (hovered) {
-    if (hovered.__halo) hovered.__halo.material.opacity = hovered.type==='week' ? 0.3 : 0.2;
-  }
-  hovered=node;
-  if (node) {
-    // Highlight on hover
-    if (node.__halo) node.__halo.material.opacity = node.type==='week' ? 0.6 : 0.5;
-    // Show tooltip with type info
-    const t = TYPES[node.type];
-    tip.textContent = `${t?.icon||''} ${node.name}`;
-    tip.classList.add('on');
-  } else {
-    tip.classList.remove('on');
-  }
-}
-document.addEventListener('pointermove', e => { tip.style.left=(e.clientX+10)+'px'; tip.style.top=(e.clientY-6)+'px'; });
-
-function onClick(node) {
-  if (selected) navHistory.push(selected);
+// ════════ CLICK / INFO ════════
+let selected=null;
+function onClick(node){
   selected=node;
-  updateBack();
+  graph.centerAt(node.x,node.y,600);
+  graph.zoom(5,600);
   showInfo(node);
-  highlightConnected(node);
-  // Zoom distance depends on node type — weeks show cluster, others go close
-  const dist = node.type==='week' ? 100 : (TYPES[node.type]?.size||5) * 8;
-  const elevate = node.type==='week' ? 40 : 15;
-  Graph.cameraPosition(
-    {x:node.x+dist*0.7, y:node.y+elevate, z:node.z+dist*0.7},
-    {x:node.x, y:node.y, z:node.z},
-    node.type==='week' ? 1200 : 800
-  );
 }
 
-function onBgClick() { selected=null; closeInfo(); resetHL(); navHistory.length=0; updateBack(); }
-
-function goBack() {
-  if (!navHistory.length) return;
-  const prev=navHistory.pop(); selected=prev; updateBack();
-  showInfo(prev); highlightConnected(prev);
-  Graph.cameraPosition({x:prev.x+50,y:prev.y+20,z:prev.z+50},{x:prev.x,y:prev.y,z:prev.z},600);
-}
-function updateBack() { document.getElementById('nav-back').classList.toggle('show',navHistory.length>0); }
-document.getElementById('nav-back').onclick = goBack;
-
-function highlightConnected(node) {
-  const conn=new Set([node.id]);
-  graphData.links.forEach(l => {
-    const s=typeof l.source==='object'?l.source.id:l.source;
-    const t=typeof l.target==='object'?l.target.id:l.target;
-    if(s===node.id)conn.add(t); if(t===node.id)conn.add(s);
-  });
-  graphData.nodes.forEach(n => {
-    const yes = conn.has(n.id);
-    const isSelf = n.id === node.id;
-    // Dim non-connected, brighten connected
-    if (n.__group) n.__group.children.forEach(c => {
-      if (c.material && c.material.opacity !== undefined)
-        c.material.opacity = yes ? (isSelf ? 0.95 : 0.85) : 0.04;
-    });
-    // Halo: strong on selected, medium on connected, hidden on rest
-    if (n.__halo) n.__halo.material.opacity = yes ? (isSelf ? 0.6 : 0.3) : 0.01;
-    // Labels: always show connected nodes' labels during highlight
-    if (n.__label) n.__label.visible = yes;
-  });
-}
-
-function resetHL() {
-  graphData.nodes.forEach(n => {
-    if (n.__group) n.__group.children.forEach(c => {
-      if (c.material && c.material.opacity !== undefined)
-        c.material.opacity = n.type === 'week' ? 0.9 : 0.87;
-    });
-    if (n.__halo) n.__halo.material.opacity = n.type === 'week' ? 0.3 : 0.2;
-    if (n.__label) n.__label.visible = showLabels;
-  });
-}
-
-// ══════════════════════════════════════════════════
-//  INFO PANEL
-// ══════════════════════════════════════════════════
-const infoEl=document.getElementById('info');
-const infoBody=document.getElementById('info-body');
-
-function showInfo(node) {
-  const t=TYPES[node.type]||{};
-  const color=t.color||'#64748b';
+const infoEl=document.getElementById('info'),ib=document.getElementById('ib');
+function showInfo(n){
+  const tp=T[n.type]||{};
   const conns=[];
-  graphData.links.forEach(l=>{
-    const s=typeof l.source==='object'?l.source.id:l.source;
-    const tt=typeof l.target==='object'?l.target.id:l.target;
-    if(s===node.id){const n2=graphData.nodes.find(n=>n.id===tt);if(n2)conns.push({node:n2,rel:l.type,dir:'→'});}
-    if(tt===node.id){const n2=graphData.nodes.find(n=>n.id===s);if(n2)conns.push({node:n2,rel:l.type,dir:'←'});}
+  gd.links.forEach(l=>{
+    if(l.source.id===n.id){const n2=gd.nodes.find(x=>x.id===l.target.id);if(n2)conns.push({n:n2,r:l.rel,d:'→'});}
+    if(l.target.id===n.id){const n2=gd.nodes.find(x=>x.id===l.source.id);if(n2)conns.push({n:n2,r:l.rel,d:'←'});}
   });
-  // Telegram link for person nodes
-  const isPerson = ['participant','speaker','curator','team'].includes(node.type);
-  const tgMatch = isPerson ? node.description?.match(/@(\w+)/) : null;
-  const tgLink = tgMatch ? `<a class="vault-link" href="https://t.me/${tgMatch[1]}" target="_blank" style="margin-right:8px">@${tgMatch[1]} in Telegram</a>` : '';
-  // Obsidian link for nodes with path property
-  const obsLink = node.path ? `<a class="vault-link" href="obsidian://open?vault=notes&file=${encodeURIComponent(node.path)}" target="_blank">Open in Obsidian</a>` : '';
-  infoBody.innerHTML=`
-    <span class="badge" style="background:${color}18;color:${color};border:1px solid ${color}30">${t.icon||''} ${t.label||node.type}</span>
-    <h2>${node.name}</h2>
-    <div class="desc">${node.description||''}</div>
-    ${(tgLink||obsLink)?`<div style="margin-top:10px">${tgLink}${obsLink}</div>`:''}
-    ${conns.length?`<div class="conn-title">Connections (${conns.length})</div>
-    ${conns.map(c=>`<div class="conn-item" data-id="${c.node.id}"><span class="conn-dot" style="background:${TYPES[c.node.type]?.color||'#64748b'}"></span>${c.dir} ${c.node.name}<span class="conn-rel">${c.rel}</span></div>`).join('')}`:''}
+  const tgm=n.desc?.match(/@(\w+)/);
+  ib.innerHTML=`
+    <span class="badge" style="background:${tp.c||'#64748b'}18;color:${tp.c||'#64748b'};border:1px solid ${tp.c||'#64748b'}30">${tp.l||n.type}</span>
+    <h2>${n.name.replace(/\n/g,' ')}</h2>
+    ${n.avatar?`<img src="${n.avatar}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid ${tp.c};margin-bottom:10px">`:''}
+    <div class="desc">${n.desc}</div>
+    ${tgm?`<a class="tgl" href="https://t.me/${tgm[1]}" target="_blank">@${tgm[1]} in Telegram</a>`:''}
+    ${conns.length?`<div class="ct" style="margin-top:12px">Connections (${conns.length})</div>
+    ${conns.map(c=>`<div class="ci" data-id="${c.n.id}"><span class="cd" style="background:${(T[c.n.type]||{}).c||'#64748b'}"></span>${c.d} ${c.n.name.replace(/\n/g,' ')}<span class="cr">${c.r}</span></div>`).join('')}`:''}
   `;
-  infoBody.querySelectorAll('.conn-item').forEach(el=>{el.onclick=()=>{const nd=graphData.nodes.find(n=>n.id===el.dataset.id);if(nd)onClick(nd);};});
+  ib.querySelectorAll('.ci').forEach(el=>el.onclick=()=>{const nd=gd.nodes.find(x=>x.id===el.dataset.id);if(nd)onClick(nd);});
   infoEl.classList.add('open');
 }
-function closeInfo(){infoEl.classList.remove('open');}
-document.getElementById('info-close').onclick=()=>{closeInfo();resetHL();selected=null;};
+function closeInfo(){infoEl.classList.remove('open');selected=null;}
+document.getElementById('ix').onclick=closeInfo;
 
-// ══════════════════════════════════════════════════
-//  FILTERS
-// ══════════════════════════════════════════════════
-const filtersEl=document.getElementById('filters');
-const activeTypes=new Set(Object.keys(TYPES));
-
-Object.entries(TYPES).forEach(([type,cfg])=>{
-  const count=graphData.nodes.filter(n=>n.type===type).length;
-  if(!count)return;
-  const p=document.createElement('div');
-  p.className='pill on'; p.dataset.type=type;
-  p.innerHTML=`<span class="dot" style="background:${cfg.color}"></span>${cfg.label} (${count})`;
-  p.onclick=()=>{
-    if(activeTypes.has(type)){activeTypes.delete(type);p.classList.remove('on');}
-    else{activeTypes.add(type);p.classList.add('on');}
-    applyFilters();
-  };
-  filtersEl.appendChild(p);
+// ════════ FILTERS ════════
+const pillsEl=document.getElementById('pills');
+const active=new Set(Object.keys(T));
+Object.entries(T).forEach(([k,v])=>{
+  const cnt=gd.nodes.filter(n=>n.type===k).length;if(!cnt)return;
+  const p=document.createElement('div');p.className='pl on';p.dataset.t=k;
+  p.innerHTML=`<span class="d" style="background:${v.c}"></span>${v.l} (${cnt})`;
+  p.onclick=()=>{if(active.has(k)){active.delete(k);p.classList.remove('on');}else{active.add(k);p.classList.add('on');}applyF();};
+  pillsEl.appendChild(p);
 });
-
-function applyFilters(){
-  const nodes=graphData.nodes.filter(n=>activeTypes.has(n.type));
-  const ids=new Set(nodes.map(n=>n.id));
-  const links=graphData.links.filter(l=>{
-    const s=typeof l.source==='object'?l.source.id:l.source;
-    const t=typeof l.target==='object'?l.target.id:l.target;
-    return ids.has(s)&&ids.has(t);
-  });
-  Graph.graphData({nodes,links});
-  updateStats(nodes,links);
+function applyF(){
+  const ns=gd.nodes.filter(n=>active.has(n.type));
+  const ids=new Set(ns.map(n=>n.id));
+  const ls=gd.links.filter(l=>ids.has(typeof l.source==='object'?l.source.id:l.source)&&ids.has(typeof l.target==='object'?l.target.id:l.target));
+  graph.graphData({nodes:ns,links:ls});
+  setTimeout(()=>graph.zoomToFit(300,60),50);
+  upS(ns,ls);
 }
 
-// Legend
-const legItems=document.getElementById('leg-items');
-Object.entries(TYPES).forEach(([type,cfg])=>{
-  const count=graphData.nodes.filter(n=>n.type===type).length;
-  if(!count)return;
-  const d=document.createElement('div'); d.className='leg-item';
-  d.innerHTML=`<span class="leg-dot" style="background:${cfg.color}"></span>${cfg.icon} ${cfg.label}`;
-  legItems.appendChild(d);
+// ════════ LEGEND ════════
+const lis=document.getElementById('lis');
+Object.entries(T).forEach(([k,v])=>{
+  const cnt=gd.nodes.filter(n=>n.type===k).length;if(!cnt)return;
+  const d=document.createElement('div');d.className='li';
+  d.innerHTML=`<span class="ld" style="background:${v.c}"></span>${v.l}`;
+  lis.appendChild(d);
 });
-
-// Controls
-function resetCam(){Graph.cameraPosition({x:0,y:0,z:250},{x:0,y:0,z:0},800);resetHL();closeInfo();selected=null;navHistory.length=0;updateBack();}
-function toggleLabels(){showLabels=!showLabels;document.getElementById('btn-labels').classList.toggle('on',showLabels);graphData.nodes.forEach(n=>{if(n.__label)n.__label.visible=showLabels;});}
-document.getElementById('btn-reset').onclick=resetCam;
-document.getElementById('btn-labels').onclick=toggleLabels;
-document.getElementById('btn-fullscreen').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen();};
 
 // Stats
-function updateStats(nodes,links){
-  document.getElementById('s-nodes').textContent=(nodes||graphData.nodes).length;
-  document.getElementById('s-links').textContent=(links||graphData.links).length;
-  document.getElementById('s-types').textContent=new Set((nodes||graphData.nodes).map(n=>n.type)).size;
-}
-updateStats();
-
-Graph.cameraPosition({x:0, y:0, z:250});
-setTimeout(()=>{document.getElementById('loading').classList.add('done');setTimeout(()=>document.getElementById('loading').remove(),500);},1200);
-new ResizeObserver(()=>{Graph.width(window.innerWidth);Graph.height(window.innerHeight);}).observe(document.body);
+function upS(ns,ls){document.getElementById('sn').textContent=(ns||gd.nodes).length;document.getElementById('sl').textContent=(ls||gd.links).length;}
+upS();
 
 })();
 </script>
