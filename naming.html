@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naming Convention — AI-Native Organizations Sprint</title>
+<meta property="og:title" content="Naming Convention — Interactive Builder">
+<meta property="og:description" content="Interactive file naming convention tool for Obsidian vaults. Build filenames that AI agents can parse. AI-Native Organizations Sprint by AI Mindset.">
+<meta property="og:image" content="https://pos-pipelines.netlify.app/assets/og.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pos-pipelines.netlify.app/naming.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pos-pipelines.netlify.app/assets/og.png">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#161620;--bg2:#1a1a2e;--bg3:#1e1e32;--bg4:#222238;
+  --border:rgba(77,201,212,.12);--border2:rgba(77,201,212,.2);--border-bright:rgba(77,201,212,.35);
+  --text:#e6edf3;--text2:rgba(255,255,255,.6);--text3:rgba(255,255,255,.4);--text-dim:rgba(255,255,255,.25);
+  --teal:#4dc9d4;--teal2:#2ea8b3;--teal-bg:rgba(77,201,212,.06);--teal-glow:rgba(77,201,212,.15);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,.1);
+  --amber:#e5a54b;--amber-bg:rgba(229,165,75,.1);
+  --green:#3fb950;--green-bg:rgba(63,185,80,.1);
+  --purple:#a371f7;--purple-bg:rgba(163,113,247,.1);
+  --red:#f85149;--red-bg:rgba(248,81,73,.1);
+  --mono:'IBM Plex Mono','JetBrains Mono','SF Mono',monospace;
+  --code:'JetBrains Mono','SF Mono','Fira Code',monospace;
+  --heading:'Space Grotesk','Inter',-apple-system,sans-serif;
+  --radius:8px;
+}
+html{font-size:14px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);line-height:1.6;min-height:100vh;overflow-x:hidden;position:relative}
+
+/* Background layers */
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(to right,rgba(77,201,212,.025) 1px,transparent 1px),
+  linear-gradient(to bottom,rgba(77,201,212,.025) 1px,transparent 1px);
+  background-size:60px 60px}
+.mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 25% 20%,rgba(77,201,212,.12) 0%,transparent 50%),
+  radial-gradient(ellipse at 75% 60%,rgba(59,130,246,.06) 0%,transparent 50%),
+  radial-gradient(ellipse at 50% 100%,rgba(77,201,212,.05) 0%,transparent 40%)}
+.noise{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.1;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px 256px}
+.vignette{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 30%,rgba(10,10,20,.6) 100%)}
+
+/* Main wrapper */
+.wrapper{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 24px}
+
+/* Top accent line */
+.top-line{position:fixed;top:0;left:0;right:0;height:2px;z-index:100;
+  background:linear-gradient(90deg,transparent,var(--teal),rgba(77,201,212,.3) 60%,transparent)}
+
+/* Header */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--text3)}
+.topbar .brand{display:flex;align-items:center;gap:10px;color:var(--text2);font-weight:600;letter-spacing:.5px;text-transform:uppercase;font-size:11px}
+.topbar .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal-glow)}
+.topbar a{color:var(--text3);text-decoration:none;transition:color .2s}
+.topbar a:hover{color:var(--teal)}
+.topbar-links{display:flex;gap:16px;align-items:center}
+
+/* Hero */
+.hero{padding:64px 0 48px;text-align:center}
+.hero-label{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid var(--border2);border-radius:100px;font-size:10px;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;font-family:var(--mono)}
+.hero h1{font-family:var(--heading);font-size:clamp(32px,5vw,48px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;color:#fff}
+.hero h1 em{font-style:normal;color:var(--teal)}
+.hero .sub{color:var(--text2);font-size:14px;margin-top:16px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.7;font-family:var(--mono)}
+
+/* Nav */
+.nav{display:flex;flex-wrap:wrap;gap:6px;padding:20px 0;border-bottom:1px solid var(--border);justify-content:center}
+.nav a{padding:6px 14px;border-radius:6px;font-size:11px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);transition:all .2s;text-decoration:none;font-family:var(--mono)}
+.nav a:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-bg)}
+
+/* Sections */
+.section{padding:48px 0 0}
+.section-label{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.section-num{font-family:var(--code);font-size:11px;color:var(--teal);font-weight:700;padding:4px 10px;background:var(--teal-bg);border:1px solid var(--border);border-radius:4px}
+.section-title{font-family:var(--heading);font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px}
+
+/* Divider */
+.divider{border:none;border-top:1px solid var(--border);margin:48px 0 0}
+
+/* Formula display */
+.formula-box{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--border2);border-radius:12px;padding:32px 28px;margin:24px 0;text-align:center;position:relative;overflow:hidden}
+.formula-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent)}
+.formula-code{font-family:var(--code);font-size:20px;color:var(--teal);letter-spacing:.5px;font-weight:600}
+.formula-parts{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.formula-part{padding:5px 12px;border-radius:6px;font-size:11px;font-family:var(--code);font-weight:500}
+.fp-project{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(59,130,246,.25)}
+.fp-type{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(163,113,247,.25)}
+.fp-desc{background:var(--green-bg);color:var(--green);border:1px solid rgba(63,185,80,.25)}
+.fp-date{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(229,165,75,.25)}
+
+/* Builder */
+.builder{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:24px 0}
+.builder-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg4);border-bottom:1px solid var(--border)}
+.builder-dot{width:12px;height:12px;border-radius:50%}
+.builder-dot.r{background:#ff5f57}.builder-dot.y{background:#febc2e}.builder-dot.g{background:#28c840}
+.builder-title{flex:1;text-align:center;color:var(--text3);font-size:11px;font-family:var(--mono);letter-spacing:.5px}
+.builder-body{padding:24px}
+.builder-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:600px){.builder-row{grid-template-columns:1fr}}
+.builder-row.full{grid-template-columns:1fr}
+.builder-field label{display:block;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:var(--mono)}
+.builder-field select,.builder-field input{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
+.builder-field select:focus,.builder-field input:focus{border-color:var(--teal)}
+.builder-field select option{background:var(--bg2);color:var(--text)}
+
+/* Preview */
+.preview-box{margin-top:20px;background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:20px;position:relative}
+.preview-label{font-size:10px;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;font-family:var(--mono)}
+.preview-filename{font-family:var(--code);font-size:16px;color:#fff;word-break:break-all;line-height:1.5}
+.preview-filename .pf-project{color:var(--blue)}
+.preview-filename .pf-type{color:var(--purple)}
+.preview-filename .pf-desc{color:var(--green)}
+.preview-filename .pf-date{color:var(--amber)}
+.preview-filename .pf-sep{color:var(--text3)}
+.preview-actions{display:flex;gap:8px;margin-top:16px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:var(--mono)}
+.btn-teal{background:var(--teal);color:#161620}.btn-teal:hover{background:var(--teal2)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.btn.copied{background:var(--green);color:#fff}
+.char-count{font-size:11px;color:var(--text3);margin-left:auto;font-family:var(--mono)}
+.char-count.over{color:var(--red)}
+
+/* Examples gallery — compact horizontal scroll */
+.examples-grid{display:flex;gap:10px;margin:24px 0;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.examples-grid::-webkit-scrollbar{height:4px}
+.examples-grid::-webkit-scrollbar-track{background:var(--bg2);border-radius:2px}
+.examples-grid::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.example-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;min-width:240px;max-width:280px;flex-shrink:0;scroll-snap-align:start}
+.example-card:hover{border-color:var(--teal);background:var(--bg3)}
+.example-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);opacity:0;transition:opacity .2s}
+.example-card:hover::before{opacity:1}
+.example-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:var(--mono)}
+.example-name{font-family:var(--code);font-size:11px;color:var(--text);word-break:break-all;line-height:1.5}
+.example-name .ex-project{color:var(--blue)}
+.example-name .ex-type{color:var(--purple)}
+.example-name .ex-desc{color:var(--green)}
+.example-name .ex-date{color:var(--amber)}
+.example-name .ex-sep{color:var(--text3)}
+.example-hint{display:none}
+
+/* Rules section */
+.rule-cards{display:grid;gap:12px;margin:24px 0}
+.rule-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;transition:border-color .2s}
+.rule-card:hover{border-color:var(--border2)}
+.rule-card h4{font-family:var(--heading);font-size:15px;font-weight:600;color:#fff;margin-bottom:8px}
+.rule-card p{font-size:13px;color:var(--text2);line-height:1.7}
+.rule-card code{font-family:var(--code);font-size:12px;background:var(--bg);padding:2px 6px;border-radius:4px;color:var(--teal)}
+
+/* Callout boxes */
+.callout{border-left:3px solid var(--teal);padding:14px 18px;margin:20px 0;font-size:13px;color:var(--text2);background:var(--teal-bg);border-radius:0 8px 8px 0;line-height:1.7}
+.callout strong{color:var(--teal)}
+.callout.warn{border-left-color:var(--amber);background:var(--amber-bg)}
+.callout.warn strong{color:var(--amber)}
+.callout.error{border-left-color:var(--red);background:var(--red-bg)}
+.callout.error strong{color:var(--red)}
+
+/* Context section */
+.context-block{background:linear-gradient(135deg,var(--bg2),rgba(77,201,212,.04));border:1px solid var(--border2);border-radius:12px;padding:28px;margin:24px 0;position:relative;overflow:hidden}
+.context-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(59,130,246,.5),transparent)}
+.context-quote{font-family:var(--heading);font-size:20px;font-weight:600;color:#fff;line-height:1.4;margin-bottom:12px;letter-spacing:-.3px}
+.context-quote em{font-style:normal;color:var(--teal)}
+.context-source{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:.3px}
+
+/* Types table */
+.types-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:24px 0}
+@media(max-width:900px){.types-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.types-grid{grid-template-columns:1fr}}
+.type-group{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px}
+.type-group h5{font-size:10px;color:var(--teal);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;font-family:var(--mono)}
+.type-list{list-style:none}
+.type-list li{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,.03)}
+.type-list li:last-child{border:none}
+.type-list .tcode{color:var(--purple);font-family:var(--code)}
+.type-list .tdesc{color:var(--text3)}
+
+/* Projects table */
+.projects-list{margin:24px 0}
+.project-item{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;transition:border-color .2s}
+.project-item:hover{border-color:var(--border2)}
+.project-code{font-family:var(--code);font-size:13px;color:var(--blue);min-width:110px}
+.project-desc{font-size:12px;color:var(--text3)}
+
+/* Footer */
+.footer{text-align:center;padding:48px 0 32px;border-top:1px solid var(--border);margin-top:48px}
+.footer-logo{font-family:var(--heading);font-weight:700;color:var(--text2);letter-spacing:.3px;font-size:14px;margin-bottom:6px}
+.footer-logo span{color:var(--teal)}
+.footer p{font-size:11px;color:var(--text-dim);font-family:var(--mono)}
+.footer a{color:var(--text3);text-decoration:none;transition:color .2s}
+.footer a:hover{color:var(--teal)}
+.footer-links{display:flex;gap:16px;justify-content:center;margin-top:12px}
+
+/* Responsive */
+@media(max-width:600px){
+  .hero h1{font-size:28px}
+  .formula-code{font-size:15px}
+  .builder-body{padding:16px}
+  .wrapper{padding:0 16px}
+  .hero{padding:40px 0 32px}
+}
+
+/* Selection */
+::selection{background:var(--teal);color:#161620}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="mesh"></div>
+<div class="noise"></div>
+<div class="vignette"></div>
+<div class="top-line"></div>
+
+<div class="wrapper">
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="brand"><span class="dot"></span> AI Mindset</div>
+  <div class="topbar-links">
+    <a href="index.html">Stack Explorer</a>
+    <a href="https://pos-pipelines.netlify.app/" target="_blank">POS Pipelines</a>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-label">AI-Native Organizations Sprint</div>
+  <h1>Naming <em>Convention</em></h1>
+  <p class="sub">An agreement between you, your team, and your agents. Without naming, agent is blind.</p>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#builder">Builder</a>
+  <a href="#formula">Formula</a>
+  <a href="#examples">Examples</a>
+  <a href="#types">Types</a>
+  <a href="#projects">Projects</a>
+  <a href="#rules">Rules</a>
+  <a href="#context">Why it matters</a>
+</nav>
+
+<!-- Builder -->
+<div class="section" id="builder">
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <span class="section-title">Interactive Builder</span>
+  </div>
+
+  <div class="builder">
+    <div class="builder-bar">
+      <span class="builder-dot r"></span>
+      <span class="builder-dot y"></span>
+      <span class="builder-dot g"></span>
+      <span class="builder-title">filename-builder.sh</span>
+    </div>
+    <div class="builder-body">
+      <div class="builder-row">
+        <div class="builder-field">
+          <label>Project code</label>
+          <select id="projectSelect">
+            <option value="">-- select project --</option>
+            <option value="{AIM}">{AIM} -- AI Mindset (team rituals)</option>
+            <option value="{space}">{space} -- AI Mindset Space community</option>
+            <option value="{f25}">{f25} -- Lab Fall 2025</option>
+            <option value="{w26}">{w26} -- Lab Winter 2026</option>
+            <option value="{consulting}">{consulting} -- consulting projects</option>
+            <option value="{research}">{research} -- research projects</option>
+            <option value="{strategy}">{strategy} -- strategic documents</option>
+            <option value="{channel}">{channel} -- content channel</option>
+            <option value="{self}">{self} -- personal / self research</option>
+            <option value="{automation}">{automation} -- automation lab</option>
+            <option value="{POS}">{POS} -- Personal Operating System</option>
+            <option value="{undone}">{undone} -- undone project</option>
+            <option value="">(none -- type only)</option>
+          </select>
+        </div>
+        <div class="builder-field">
+          <label>Content type</label>
+          <select id="typeSelect">
+            <option value="">-- select type --</option>
+            <optgroup label="Core">
+              <option value="{rule}">{rule} -- rule, standard</option>
+              <option value="{guide}">{guide} -- guide, instruction</option>
+              <option value="{research}">{research} -- research, analysis</option>
+              <option value="{plan}">{plan} -- plan, roadmap</option>
+              <option value="{prd}">{prd} -- product requirements</option>
+              <option value="{template}">{template} -- template</option>
+              <option value="{prompt}">{prompt} -- AI prompt</option>
+              <option value="{tool}">{tool} -- tool, instrument</option>
+              <option value="{skill}">{skill} -- Claude skill</option>
+            </optgroup>
+            <optgroup label="Meetings">
+              <option value="{transcript}">{transcript} -- transcript</option>
+              <option value="{summary}">{summary} -- summary</option>
+              <option value="{meeting}">{meeting} -- meeting notes</option>
+              <option value="{message}">{message} -- message</option>
+            </optgroup>
+            <optgroup label="Content">
+              <option value="{article}">{article} -- article, post</option>
+              <option value="{demo}">{demo} -- demo, script</option>
+              <option value="{case}">{case} -- case study</option>
+              <option value="{handout}">{handout} -- handout material</option>
+              <option value="{concept}">{concept} -- concept</option>
+              <option value="{draft}">{draft} -- draft</option>
+            </optgroup>
+            <optgroup label="Rituals">
+              <option value="{daily-focus}">{daily-focus} -- daily focus</option>
+              <option value="{weekly-sync}">{weekly-sync} -- weekly sync</option>
+              <option value="{product-sync}">{product-sync} -- product sync</option>
+              <option value="{personal-sync}">{personal-sync} -- 1:1 sync</option>
+              <option value="{retro}">{retro} -- retrospective</option>
+            </optgroup>
+            <optgroup label="Analysis">
+              <option value="{report}">{report} -- report</option>
+              <option value="{analysis}">{analysis} -- analysis</option>
+              <option value="{overview}">{overview} -- overview</option>
+              <option value="{action-items}">{action-items} -- action items</option>
+              <option value="{action-plan}">{action-plan} -- action plan</option>
+              <option value="{checklist}">{checklist} -- checklist</option>
+            </optgroup>
+            <optgroup label="Business">
+              <option value="{proposal}">{proposal} -- proposal</option>
+              <option value="{brief}">{brief} -- creative/project brief</option>
+              <option value="{memo}">{memo} -- internal memo</option>
+              <option value="{review}">{review} -- review, assessment</option>
+              <option value="{invoice}">{invoice} -- invoice, billing</option>
+              <option value="{contract}">{contract} -- contract, agreement</option>
+              <option value="{pitch}">{pitch} -- pitch, presentation</option>
+            </optgroup>
+            <optgroup label="Meta">
+              <option value="{context}">{context} -- context doc</option>
+              <option value="{role}">{role} -- role card</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="builder-row full">
+        <div class="builder-field">
+          <label>Description</label>
+          <input type="text" id="descInput" placeholder="market analysis Q2" maxlength="60" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="preview-box">
+        <div class="preview-label">Generated filename</div>
+        <div class="preview-filename" id="previewFilename">
+          <span class="pf-sep">select project and type to begin...</span>
+        </div>
+        <div class="preview-actions">
+          <button class="btn btn-teal" id="copyBtn" onclick="copyFilename()">copy</button>
+          <button class="btn btn-ghost" onclick="resetBuilder()">reset</button>
+          <span class="char-count" id="charCount"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Formula -->
+<div class="section" id="formula">
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <span class="section-title">Formula</span>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-code">{project} {type} description &ndash; YYYY-MM-DD.md</div>
+    <div class="formula-parts">
+      <span class="formula-part fp-project">{project}</span>
+      <span class="formula-part fp-type">{type}</span>
+      <span class="formula-part fp-desc">description</span>
+      <span class="formula-part fp-date">&ndash; date</span>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <strong>Date goes at the end. Always.</strong> The pattern <code>{project} {2026-03-04} topic</code> breaks sorting and agent parsing.
+  </div>
+  <div class="callout">
+    <strong>EN DASH (&ndash;)</strong> is the only dash. Mac: <code>Option + -</code>. Windows: <code>Alt+0150</code>. Max 80 characters total.
+  </div>
+  <div class="callout error">
+    <strong>No interface suffix.</strong> <code>&ndash; Claude Code</code>, <code>&ndash; Cursor</code>, <code>&ndash; ChatGPT</code> at the end is <strong>deprecated since 2026-02-20</strong>. Filename ends with date.
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Examples -->
+<div class="section" id="examples">
+  <div class="section-label">
+    <span class="section-num">03</span>
+    <span class="section-title">Examples Gallery</span>
+  </div>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Click any example to load it into the builder.</p>
+
+  <div class="examples-grid" id="examplesGrid"></div>
+</div>
+
+<hr class="divider">
+
+<!-- Types -->
+<div class="section" id="types">
+  <div class="section-label">
+    <span class="section-num">04</span>
+    <span class="section-title">Content Types</span>
+  </div>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:4px">Start with 5-7 types. Add more as you need them.</p>
+
+  <div class="types-grid">
+    <div class="type-group">
+      <h5>Core</h5>
+      <ul class="type-list">
+        <li><span class="tcode">{rule}</span><span class="tdesc">rule, standard</span></li>
+        <li><span class="tcode">{guide}</span><span class="tdesc">instruction, how-to</span></li>
+        <li><span class="tcode">{research}</span><span class="tdesc">research, investigation</span></li>
+        <li><span class="tcode">{plan}</span><span class="tdesc">plan, roadmap</span></li>
+        <li><span class="tcode">{template}</span><span class="tdesc">reusable template</span></li>
+        <li><span class="tcode">{prompt}</span><span class="tdesc">AI prompt</span></li>
+        <li><span class="tcode">{tool}</span><span class="tdesc">tool, instrument</span></li>
+        <li><span class="tcode">{prd}</span><span class="tdesc">product requirements doc</span></li>
+        <li><span class="tcode">{skill}</span><span class="tdesc">agent skill definition</span></li>
+      </ul>
+    </div>
+    <div class="type-group">
+      <h5>Meetings & Comms</h5>
+      <ul class="type-list">
+        <li><span class="tcode">{transcript}</span><span class="tdesc">call/meeting transcript</span></li>
+        <li><span class="tcode">{summary}</span><span class="tdesc">summary, digest</span></li>
+        <li><span class="tcode">{meeting}</span><span class="tdesc">meeting notes</span></li>
+        <li><span class="tcode">{message}</span><span class="tdesc">outreach, reply</span></li>
+      </ul>
+    </div>
+    <div class="type-group">
+      <h5>Content & Labs</h5>
+      <ul class="type-list">
+        <li><span class="tcode">{article}</span><span class="tdesc">article, blog post</span></li>
+        <li><span class="tcode">{demo}</span><span class="tdesc">demonstration script</span></li>
+        <li><span class="tcode">{case}</span><span class="tdesc">case study</span></li>
+        <li><span class="tcode">{handout}</span><span class="tdesc">participant material</span></li>
+        <li><span class="tcode">{concept}</span><span class="tdesc">concept, idea</span></li>
+        <li><span class="tcode">{draft}</span><span class="tdesc">work in progress</span></li>
+      </ul>
+    </div>
+    <div class="type-group">
+      <h5>Rituals & Analysis</h5>
+      <ul class="type-list">
+        <li><span class="tcode">{daily-focus}</span><span class="tdesc">daily focus post</span></li>
+        <li><span class="tcode">{weekly-sync}</span><span class="tdesc">weekly team sync</span></li>
+        <li><span class="tcode">{retro}</span><span class="tdesc">retrospective</span></li>
+        <li><span class="tcode">{report}</span><span class="tdesc">report, analysis</span></li>
+        <li><span class="tcode">{analysis}</span><span class="tdesc">deep analysis</span></li>
+        <li><span class="tcode">{overview}</span><span class="tdesc">overview, survey</span></li>
+        <li><span class="tcode">{checklist}</span><span class="tdesc">checklist, todo</span></li>
+      </ul>
+    </div>
+    <div class="type-group">
+      <h5>Business</h5>
+      <ul class="type-list">
+        <li><span class="tcode">{proposal}</span><span class="tdesc">proposal, offer</span></li>
+        <li><span class="tcode">{brief}</span><span class="tdesc">creative/project brief</span></li>
+        <li><span class="tcode">{memo}</span><span class="tdesc">internal memo</span></li>
+        <li><span class="tcode">{review}</span><span class="tdesc">review, assessment</span></li>
+        <li><span class="tcode">{invoice}</span><span class="tdesc">invoice, billing</span></li>
+        <li><span class="tcode">{contract}</span><span class="tdesc">agreement, contract</span></li>
+        <li><span class="tcode">{pitch}</span><span class="tdesc">pitch, presentation</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Projects -->
+<div class="section" id="projects">
+  <div class="section-label">
+    <span class="section-num">05</span>
+    <span class="section-title">Project Codes</span>
+  </div>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:16px">2-8 characters. Unique. Stable. Every new project gets its own code.</p>
+
+  <div class="projects-list">
+    <div class="project-item"><span class="project-code">{AIM}</span><span class="project-desc">AI Mindset -- team rituals, daily-focus, weekly-sync</span></div>
+    <div class="project-item"><span class="project-code">{space}</span><span class="project-desc">AI Mindset Space community</span></div>
+    <div class="project-item"><span class="project-code">{f25}</span><span class="project-desc">AI Mindset Lab Fall 2025</span></div>
+    <div class="project-item"><span class="project-code">{w26}</span><span class="project-desc">AI Mindset Lab Winter 2026</span></div>
+    <div class="project-item"><span class="project-code">{consulting}</span><span class="project-desc">personal consulting projects</span></div>
+    <div class="project-item"><span class="project-code">{research}</span><span class="project-desc">research investigations</span></div>
+    <div class="project-item"><span class="project-code">{strategy}</span><span class="project-desc">strategic documents</span></div>
+    <div class="project-item"><span class="project-code">{channel}</span><span class="project-desc">content channel, blog</span></div>
+    <div class="project-item"><span class="project-code">{self}</span><span class="project-desc">personal / self research</span></div>
+    <div class="project-item"><span class="project-code">{automation}</span><span class="project-desc">automation lab</span></div>
+    <div class="project-item"><span class="project-code">{POS}</span><span class="project-desc">Personal Operating System</span></div>
+    <div class="project-item"><span class="project-code">{undone}</span><span class="project-desc">undone project (mirror of unnamed)</span></div>
+  </div>
+
+  <div class="callout">
+    <strong>Combinations:</strong> <code>{AIM} {research} market analysis</code> -- project + type. Maximum 2 codes before description.
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Rules -->
+<div class="section" id="rules">
+  <div class="section-label">
+    <span class="section-num">06</span>
+    <span class="section-title">Convention Rules</span>
+  </div>
+
+  <div class="rule-cards">
+    <div class="rule-card">
+      <h4>What is a convention?</h4>
+      <p>An <strong>agreement</strong> between you, your team, and your AI agents. Not a technical constraint -- a shared language. When everyone (humans and agents) follows the same pattern, files become searchable, parseable, and navigable without opening them.</p>
+    </div>
+    <div class="rule-card">
+      <h4>Why naming matters for AI agents</h4>
+      <p>An AI agent searches your vault by patterns: <code>glob("*{research}*")</code>, <code>grep("{AIM}")</code>. Without structured naming, the agent is blind -- it cannot distinguish a research doc from a meeting transcript without reading every file. The name IS the API.</p>
+    </div>
+    <div class="rule-card">
+      <h4>Date always at the end</h4>
+      <p>The format is <code>{project} {type} description &ndash; YYYY-MM-DD.md</code>. Date after the en dash, at the very end. This ensures chronological sorting within any folder. Putting the date in the middle (<code>{project} {2026-03-04} {type}</code>) breaks everything.</p>
+    </div>
+    <div class="rule-card">
+      <h4>No interface suffix (deprecated)</h4>
+      <p>Since 2026-02-20, suffixes like <code>&ndash; Claude Code</code>, <code>&ndash; Cursor</code>, <code>&ndash; ChatGPT</code> are <strong>no longer added</strong>. The filename ends with the date. Old files with suffixes are NOT renamed -- only new files follow the new convention.</p>
+    </div>
+    <div class="rule-card">
+      <h4>EN DASH only</h4>
+      <p>Use <strong>&ndash;</strong> (U+2013, EN DASH) as the separator before date. Not em dash (&mdash;), not hyphen (-), not minus. Mac: <code>Option + -</code>. Windows: <code>Alt+0150</code>.</p>
+    </div>
+    <div class="rule-card">
+      <h4>Max 80 characters</h4>
+      <p>Keep filenames under 80 characters for terminal compatibility, Obsidian sidebar readability, and cross-platform safety. If the description is too long, shorten it -- the details live inside the file, not in the name.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- AI-Native Context -->
+<div class="section" id="context">
+  <div class="section-label">
+    <span class="section-num">07</span>
+    <span class="section-title">Why It Matters</span>
+  </div>
+
+  <div class="context-block">
+    <div class="context-quote">"Your vault is your <em>data layer</em>"</div>
+    <div class="context-source">AI-Native Organizations Sprint &middot; L01 &middot; Slide #58</div>
+  </div>
+
+  <div class="context-block">
+    <div class="context-quote">"Without naming, <em>agent is blind</em>"</div>
+    <div class="context-source">AI-Native Organizations Sprint &middot; Workshop &middot; 2026-03-24</div>
+  </div>
+
+  <div class="rule-cards">
+    <div class="rule-card">
+      <h4>Vault as Operating System</h4>
+      <p>In the AI-Native model, your Obsidian vault is not a note-taking app -- it is the <strong>data layer</strong> of your Personal Operating System. Every file is a resource that agents can query, process, and act on. Naming convention is the schema of that data layer.</p>
+    </div>
+    <div class="rule-card">
+      <h4>CLAUDE.md as the API contract</h4>
+      <p>Put your naming convention into <code>CLAUDE.md</code> at the vault root. This is the instruction file that Claude Code, Codex, and other agents read on startup. Your convention becomes an enforceable contract -- agents will follow it automatically.</p>
+    </div>
+    <div class="rule-card">
+      <h4>Pattern matching > folder diving</h4>
+      <p>A well-named file is findable by glob: <code>*{research}*2026-03*</code> finds all research from March 2026 across the entire vault. No need to know which folder it is in. The name carries context -- project, type, topic, date -- in a machine-parseable format.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:24px">
+    <strong>Presentation:</strong> <a href="https://pos-pipelines.netlify.app/" style="color:var(--teal);text-decoration:underline">AI-Native Organizations Sprint -- POS Pipelines</a>
+  </div>
+</div>
+
+<!-- Download Cheatsheet -->
+<div class="section" style="text-align:center;padding-top:32px">
+  <button class="btn btn-teal" onclick="downloadCheatsheet()" style="font-size:14px;padding:12px 28px;cursor:pointer">
+    Download Naming Cheatsheet (.md)
+  </button>
+  <p style="font-size:11px;color:var(--text-dim);margin-top:8px">Markdown file with all types, projects, and rules</p>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-logo">AI <span>Mindset</span></div>
+  <p>AI-Native Organizations Sprint &middot; Personal Operating System</p>
+  <div class="footer-links">
+    <a href="https://pos-pipelines.netlify.app/">POS Pipelines</a>
+    <a href="index.html">Stack Explorer</a>
+    <a href="https://aimindset.org" target="_blank">aimindset.org</a>
+  </div>
+</div>
+
+</div><!-- /wrapper -->
+
+<script>
+// Examples data
+const EXAMPLES = [
+  { project: '{AIM}', type: '{research}', desc: 'market analysis Q2', date: '2026-03-24', label: 'Team research' },
+  { project: '{AIM}', type: '{weekly-sync}', desc: '2026-W13', date: '2026-03-23', label: 'Weekly ritual' },
+  { project: '{AIM}', type: '{daily-focus}', desc: '2026-03-24 Monday', date: 'alex p', label: 'Daily focus', special: true },
+  { project: '{space}', type: '{guide}', desc: 'Obsidian vault setup', date: '2026-03-20', label: 'Community guide' },
+  { project: '{w26}', type: '{demo}', desc: 'Claude Code basics', date: '2026-02-10', label: 'Lab demo' },
+  { project: '{consulting}', type: '{summary}', desc: 'strategy session', date: '2026-03-15', label: 'Consulting' },
+  { project: '{channel}', type: '{article}', desc: 'AI agents in daily work', date: '2026-03-18', label: 'Article' },
+  { project: '{self}', type: '{plan}', desc: 'goals Q2 2026', date: '2026-03-10', label: 'Personal plan' },
+  { project: '{AIM}', type: '{prd}', desc: 'Linear Awareness Layer', date: '2026-02-19', label: 'Product spec' },
+  { project: '{research}', type: '{analysis}', desc: 'AI tools trends', date: '2026-03-22', label: 'Analysis' },
+  { project: '', type: '{rule}', desc: 'file naming for Obsidian', date: '2026-03-24', label: 'Rule' },
+  { project: '{AIM}', type: '{retro}', desc: 'sprint 08 review', date: '2026-03-21', label: 'Retro' },
+  { project: '{consulting}', type: '{proposal}', desc: 'AI integration pilot', date: '2026-03-20', label: 'Proposal' },
+  { project: '{AIM}', type: '{brief}', desc: 'sprint marketing', date: '2026-03-18', label: 'Brief' },
+  { project: '{consulting}', type: '{memo}', desc: 'team restructuring', date: '2026-03-15', label: 'Memo' },
+  { project: '{AIM}', type: '{review}', desc: 'Q1 performance', date: '2026-03-12', label: 'Review' },
+  { project: '{consulting}', type: '{report}', desc: 'automation audit', date: '2026-03-10', label: 'Report' },
+  { project: '{AIM}', type: '{pitch}', desc: 'investor update', date: '2026-03-08', label: 'Pitch' },
+];
+
+function colorize(project, type, desc, date, special) {
+  let parts = [];
+  if (project) parts.push(`<span class="ex-project">${esc(project)}</span>`);
+  parts.push(`<span class="ex-type">${esc(type)}</span>`);
+  parts.push(`<span class="ex-desc">${esc(desc)}</span>`);
+  parts.push(`<span class="ex-sep"> \u2013 </span>`);
+  if (special) {
+    parts.push(`<span class="ex-date">${esc(date)}</span>`);
+  } else {
+    parts.push(`<span class="ex-date">${esc(date)}</span>`);
+  }
+  parts.push(`<span class="ex-sep">.md</span>`);
+  return parts.join(' ');
+}
+
+function esc(s) { return s.replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderExamples() {
+  const grid = document.getElementById('examplesGrid');
+  grid.innerHTML = EXAMPLES.map((ex, i) => `
+    <div class="example-card" onclick="loadExample(${i})">
+      <div class="example-label">${esc(ex.label)}</div>
+      <div class="example-name">${colorize(ex.project, ex.type, ex.desc, ex.date, ex.special)}</div>
+      <div class="example-hint">click to load in builder</div>
+    </div>
+  `).join('');
+}
+
+function loadExample(i) {
+  const ex = EXAMPLES[i];
+  const ps = document.getElementById('projectSelect');
+  const ts = document.getElementById('typeSelect');
+  const di = document.getElementById('descInput');
+
+  // Set project
+  for (let o of ps.options) {
+    if (o.value === ex.project) { ps.value = ex.project; break; }
+  }
+  // Set type
+  for (let o of ts.options) {
+    if (o.value === ex.type) { ts.value = ex.type; break; }
+  }
+  // Set description
+  di.value = ex.desc;
+
+  updatePreview();
+  document.getElementById('builder').scrollIntoView({ behavior: 'smooth' });
+}
+
+function getToday() {
+  const d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth()+1).padStart(2,'0') + '-' +
+    String(d.getDate()).padStart(2,'0');
+}
+
+function updatePreview() {
+  const project = document.getElementById('projectSelect').value;
+  const type = document.getElementById('typeSelect').value;
+  const desc = document.getElementById('descInput').value.trim();
+  const preview = document.getElementById('previewFilename');
+  const counter = document.getElementById('charCount');
+
+  if (!type && !project) {
+    preview.innerHTML = '<span class="pf-sep">select project and type to begin...</span>';
+    counter.textContent = '';
+    return;
+  }
+
+  let parts = [];
+  if (project) parts.push(`<span class="pf-project">${esc(project)}</span>`);
+  if (type) parts.push(`<span class="pf-type">${esc(type)}</span>`);
+  if (desc) parts.push(`<span class="pf-desc">${esc(desc)}</span>`);
+  parts.push(`<span class="pf-sep"> \u2013 </span>`);
+  parts.push(`<span class="pf-date">${getToday()}</span>`);
+  parts.push(`<span class="pf-sep">.md</span>`);
+
+  preview.innerHTML = parts.join(' ');
+
+  // Character count
+  let plain = '';
+  if (project) plain += project + ' ';
+  if (type) plain += type + ' ';
+  if (desc) plain += desc + ' ';
+  plain += '\u2013 ' + getToday() + '.md';
+  const len = plain.length;
+  counter.textContent = len + '/80';
+  counter.className = 'char-count' + (len > 80 ? ' over' : '');
+}
+
+function getPlainFilename() {
+  const project = document.getElementById('projectSelect').value;
+  const type = document.getElementById('typeSelect').value;
+  const desc = document.getElementById('descInput').value.trim();
+
+  let parts = [];
+  if (project) parts.push(project);
+  if (type) parts.push(type);
+  if (desc) parts.push(desc);
+  parts.push('\u2013');
+  parts.push(getToday() + '.md');
+  return parts.join(' ');
+}
+
+function copyFilename() {
+  const text = getPlainFilename();
+  const btn = document.getElementById('copyBtn');
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+function resetBuilder() {
+  document.getElementById('projectSelect').value = '';
+  document.getElementById('typeSelect').value = '';
+  document.getElementById('descInput').value = '';
+  updatePreview();
+}
+
+// Bind events
+document.getElementById('projectSelect').addEventListener('change', updatePreview);
+document.getElementById('typeSelect').addEventListener('change', updatePreview);
+document.getElementById('descInput').addEventListener('input', updatePreview);
+
+// Init
+renderExamples();
+updatePreview();
+
+// Smooth scroll for nav
+document.querySelectorAll('.nav a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Download cheatsheet
+function downloadCheatsheet() {
+  const content = `# Naming Convention Cheatsheet
+
+## Format
+{project} {type} description \u2013 YYYY-MM-DD.md
+
+## Key Rules
+- Date ALWAYS at the end after en dash (\u2013)
+- No interface suffix (\u2013 Claude Code, \u2013 Cursor = deprecated)
+- EN DASH (\u2013) only. Mac: Option + -
+- Max 80 characters total
+
+## Project Codes
+- {AIM} \u2014 AI Mindset team
+- {space} \u2014 community
+- {consulting} \u2014 consulting projects
+- {research} \u2014 research investigations
+- {strategy} \u2014 strategic documents
+- {channel} \u2014 content channel
+- {self} \u2014 personal notes
+- {POS} \u2014 Personal Operating System
+
+## Content Types
+
+### Core
+- {rule} \u2014 rules, standards
+- {guide} \u2014 instructions, how-to
+- {research} \u2014 research, investigation
+- {plan} \u2014 plan, roadmap
+- {prd} \u2014 product requirements
+- {skill} \u2014 agent skill definition
+
+### Meetings
+- {transcript} \u2014 call transcript
+- {meeting} \u2014 meeting notes
+- {summary} \u2014 summary, digest
+
+### Content
+- {article} \u2014 article, post
+- {demo} \u2014 demo script
+- {draft} \u2014 work in progress
+- {concept} \u2014 concept, idea
+
+### Business
+- {proposal} \u2014 proposal, offer
+- {brief} \u2014 creative/project brief
+- {memo} \u2014 internal memo
+- {review} \u2014 review, assessment
+- {report} \u2014 report, analysis
+- {pitch} \u2014 pitch, presentation
+
+### Rituals
+- {daily-focus} \u2014 daily focus
+- {weekly-sync} \u2014 weekly sync
+- {retro} \u2014 retrospective
+
+## Examples
+{AIM} {research} market analysis Q2 \u2013 2026-03-24.md
+{consulting} {proposal} AI integration pilot \u2013 2026-03-20.md
+{AIM} {rule} Communication Style \u2013 2026-01-15.md
+{self} {plan} goals Q2 2026 \u2013 2026-03-10.md
+{AIM} {memo} team restructuring \u2013 2026-03-15.md
+`;
+  const blob = new Blob([content], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'naming-convention-cheatsheet.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
