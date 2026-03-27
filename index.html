@@ -247,22 +247,21 @@
 </div>
 
 <script>
-(async function(){
+(function(){
 'use strict';
 
 // ══════════════════════════════════════════════════
 //  TYPES — Lab-focused categories
 // ══════════════════════════════════════════════════
 const TYPES = {
-  team:        { color:'#f59e0b', label:'Team',         icon:'●',  size:7 },
-  speaker:     { color:'#a78bfa', label:'Speakers',     icon:'🎤', size:6 },
-  curator:     { color:'#38d9a9', label:'Curators',     icon:'✦',  size:5 },
-  participant: { color:'#4dc9d4', label:'Participants',  icon:'👤', size:2.5 },
-  week:        { color:'#3b82f6', label:'Weeks',         icon:'◆',  size:10 },
-  topic:       { color:'#8b5cf6', label:'Topics',        icon:'◉',  size:5 },
-  tool:        { color:'#ff6b6b', label:'Tools',         icon:'⬡',  size:4 },
-  deliver:     { color:'#06b6d4', label:'Deliverables',  icon:'◎',  size:4 },
-  concept:     { color:'#10b981', label:'Concepts',      icon:'✦',  size:4 },
+  team:     { color:'#f59e0b', label:'Team',         icon:'●',  size:8 },
+  speaker:  { color:'#a78bfa', label:'Speakers',     icon:'🎤', size:7 },
+  curator:  { color:'#38d9a9', label:'Curators',     icon:'✦',  size:5 },
+  week:     { color:'#3b82f6', label:'Weeks',         icon:'◆',  size:14 },
+  topic:    { color:'#8b5cf6', label:'Topics',        icon:'◉',  size:6 },
+  tool:     { color:'#ff6b6b', label:'Tools',         icon:'⬡',  size:5 },
+  deliver:  { color:'#06b6d4', label:'Deliverables',  icon:'◎',  size:5 },
+  concept:  { color:'#10b981', label:'Concepts',      icon:'✦',  size:5 },
 };
 
 // ══════════════════════════════════════════════════
@@ -367,14 +366,10 @@ N('geo','GEO','concept','Generative Engine Optimization. llms.txt, JSON-LD, agen
 N('vsm','Viable System Model','concept','Stafford Beer cybernetic org model applied to agent teams');
 N('context-engineering','Context Engineering','concept','Not prompt engineering. Ontology, Graph RAG, telescoping docs');
 N('skill-as-job','Skill = Coded Job','concept','Not prompts but full job specs: workflow, constraints, examples, eval');
-N('five-constraints','5 Breaking Constraints','concept','Cost 10-100x, Speed ms, Bandwidth 50+ agents, Scale 0 marginal, Parallel 30x');
-N('autonomy-levels','5 Autonomy Levels','concept','Traditional ML > LLM Chat > Workflow > Agent > Skill (fully autonomous)');
-N('graph-rag','Graph RAG','concept','Knowledge graph + retrieval augmented generation for company context');
-N('vibe-coding','Vibe-Coding','concept','You = CEO, AI agents = employees. Build business factory via prompts');
-N('self-improving','Self-Improving Agents','concept','Static prompts > feedback loops > quality signals > autonomous improvement');
+N('autonomy-levels','5 Autonomy Levels','concept','ML > LLM Chat > Workflow > Agent > Skill');
+N('graph-rag','Graph RAG','concept','Knowledge graph + retrieval for company context');
+N('self-improving','Self-Improving Agents','concept','Feedback loops > quality signals > autonomous improvement');
 N('90-day-plan','90-Day Transformation','concept','Quick wins (W1-4) > Scaling (W5-8) > New roles (W9-12)');
-N('c-lms','LMS Platform','concept','Learning management. Unique session links. 12-month video access');
-N('c-buddy','Buddy System','concept','1-on-1 participant pairing. Rotation each week');
 
 // ── LINKS ──
 // Team → Weeks
@@ -444,7 +439,7 @@ L('w3','d-auto','produces'); L('w3','d-plan','produces'); L('w3','d-demo','produ
 
 // Concepts → Weeks (when taught)
 L('bitter-lesson','w1','taught'); L('token-stream','w1','taught'); L('harness-engineering','w1','taught');
-L('five-constraints','w1','taught'); L('autonomy-levels','w1','taught'); L('vibe-coding','w1','taught');
+L('autonomy-levels','w1','taught');
 L('six-layer-architecture','w2','taught'); L('four-orch','w2','taught'); L('context-engineering','w2','taught');
 L('skill-as-job','w2','taught'); L('graph-rag','w2','taught'); L('vsm','w2','taught');
 L('self-improving','w2','taught'); L('mirror-agents','w2','taught');
@@ -455,59 +450,10 @@ L('geo','w3','taught'); L('90-day-plan','w3','taught');
 L('six-layer-architecture','context-engineering','includes'); L('six-layer-architecture','four-orch','includes');
 L('six-layer-architecture','skill-as-job','includes'); L('harness-engineering','skill-as-job','related');
 L('context-engineering','graph-rag','uses'); L('mirror-agents','four-orch','uses');
-L('process-audit-formula','ai-champion-model','feeds'); L('vibe-coding','autonomy-levels','related');
+L('process-audit-formula','ai-champion-model','feeds');
 L('self-improving','skill-as-job','evolves');
 
-// LMS & Buddy → Weeks
-L('c-lms','w1','supports'); L('c-lms','w2','supports'); L('c-lms','w3','supports');
-L('c-buddy','w1','supports'); L('c-buddy','w2','supports');
-
-let graphData = DATA;
-
-// ══════════════════════════════════════════════════
-//  LOAD PARTICIPANTS from CSV export
-// ══════════════════════════════════════════════════
-async function loadParticipants() {
-  try {
-    const resp = await fetch('data/participants.json');
-    if (!resp.ok) return;
-    const json = await resp.json();
-    const participants = json.participants || [];
-    console.log(`Loading ${participants.length} participants`);
-
-    participants.forEach(p => {
-      const id = 'p-' + (p.username || p.name.toLowerCase().replace(/\s+/g,'-'));
-      if (graphData.nodes.find(n => n.id === id)) return; // skip dupes
-      N(id, p.name, 'participant',
-        (p.username ? '@' + p.username + ' · ' : '') +
-        (p.location || '') +
-        (p.focus ? ' · ' + p.focus.slice(0,80) : '')
-      );
-      // Connect to week 1 (everyone starts there)
-      L(id, 'w1', 'enrolled');
-      // If they have a buddy, we'll link later
-      if (p.buddy) {
-        const buddyId = 'p-' + p.buddy.replace(/^[@']*/,'');
-        // Defer buddy links until all participants loaded
-        graphData._buddyQueue = graphData._buddyQueue || [];
-        graphData._buddyQueue.push([id, buddyId]);
-      }
-    });
-
-    // Resolve buddy pairs
-    if (graphData._buddyQueue) {
-      const nodeIds = new Set(graphData.nodes.map(n=>n.id));
-      graphData._buddyQueue.forEach(([a,b]) => {
-        if (nodeIds.has(a) && nodeIds.has(b)) L(a, b, 'buddy');
-      });
-      delete graphData._buddyQueue;
-    }
-
-    console.log(`Graph: ${graphData.nodes.length} nodes, ${graphData.links.length} links`);
-  } catch(e) { console.log('No participants.json, using curated data only'); }
-}
-
-await loadParticipants();
+const graphData = DATA;
 
 // ══════════════════════════════════════════════════
 //  PARTICLE SHADERS (ambient background)
@@ -561,40 +507,64 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     const isPerson = ['speaker','curator','team','participant'].includes(n.type);
     const group = new THREE.Group();
 
-    if (isPerson) {
-      // Card node for people
-      const geo = new THREE.BoxGeometry(sz*1.3, sz*1.3, sz*0.4, 2, 2, 2);
-      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3, shininess:40, transparent:true, opacity:0.85 });
+    if (n.type === 'week') {
+      // WEEK — large octahedron, very prominent
+      const geo = new THREE.OctahedronGeometry(sz*0.7, 1);
+      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.5, shininess:80, transparent:true, opacity:0.9 });
+      group.add(new THREE.Mesh(geo, mat));
+      // Inner glow sphere
+      const inner = new THREE.SphereGeometry(sz*0.35, 12, 12);
+      const imat = new THREE.MeshBasicMaterial({ color:'#ffffff', transparent:true, opacity:0.15 });
+      group.add(new THREE.Mesh(inner, imat));
+    } else if (isPerson) {
+      // PEOPLE — rounded box cards
+      const geo = new THREE.BoxGeometry(sz*1.2, sz*1.2, sz*0.35, 2, 2, 2);
+      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.35, shininess:50, transparent:true, opacity:0.88 });
       group.add(new THREE.Mesh(geo, mat));
       const icon = new SpriteText(t.icon || '●');
-      icon.textHeight = sz * 0.8;
-      icon.position.z = sz * 0.25;
+      icon.textHeight = sz * 0.7;
+      icon.position.z = sz * 0.22;
       group.add(icon);
+    } else if (n.type === 'concept') {
+      // CONCEPTS — diamond shape
+      const geo = new THREE.OctahedronGeometry(sz*0.45, 0);
+      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.4, shininess:100, transparent:true, opacity:0.85 });
+      group.add(new THREE.Mesh(geo, mat));
     } else {
-      const geo = new THREE.SphereGeometry(sz*0.5, 12, 12);
-      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.25, shininess:60, transparent:true, opacity:0.85 });
+      // Default — sphere
+      const geo = new THREE.SphereGeometry(sz*0.5, 14, 14);
+      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3, shininess:60, transparent:true, opacity:0.87 });
       group.add(new THREE.Mesh(geo, mat));
     }
 
-    // Subtle halo
-    const spMat = new THREE.SpriteMaterial({ map:glowTex(color), transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, opacity:0.18 });
+    // Halo glow — larger for weeks
+    const haloScale = n.type==='week' ? 4.0 : 2.5;
+    const haloOpacity = n.type==='week' ? 0.3 : 0.2;
+    const spMat = new THREE.SpriteMaterial({ map:glowTex(color), transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, opacity:haloOpacity });
     const sp = new THREE.Sprite(spMat);
-    sp.scale.set(sz*2.2, sz*2.2, 1);
+    sp.scale.set(sz*haloScale, sz*haloScale, 1);
     group.add(sp);
 
-    // Label — participants hidden by default (too many), others always visible
-    const showThisLabel = n.type === 'participant' ? false : showLabels;
-    if (showThisLabel || n.type !== 'participant') {
-      const labelText = n.type === 'participant' ? (n.name.length > 20 ? n.name.slice(0,18)+'…' : n.name) : n.name;
-      const lbl = new SpriteText(labelText);
-      lbl.color = n.type==='week' ? 'rgba(255,255,255,0.8)' : (n.type==='participant' ? 'rgba(77,201,212,0.6)' : 'rgba(255,255,255,0.55)');
-      lbl.textHeight = n.type==='week' ? 3.2 : (n.type==='participant' ? 1.6 : (isPerson ? 2.6 : 2.0));
-      lbl.fontFace = 'IBM Plex Mono';
-      lbl.padding = 0.4;
-      lbl.borderRadius = 2;
-      lbl.backgroundColor = 'rgba(22,22,32,0.35)';
-      lbl.position.y = sz * 0.7 + (n.type==='participant' ? 2 : 3);
-      lbl.visible = n.type === 'participant' ? false : showLabels; // participants hidden initially
+    // Label — always visible, sized by importance
+    if (showLabels) {
+      const lbl = new SpriteText(n.name);
+      const labelCfg = {
+        week:    { height:4.0, color:'rgba(255,255,255,0.9)',  bg:'rgba(22,22,32,0.6)' },
+        team:    { height:2.8, color:'rgba(255,255,255,0.7)',  bg:'rgba(22,22,32,0.4)' },
+        speaker: { height:2.6, color:'rgba(255,255,255,0.65)', bg:'rgba(22,22,32,0.35)' },
+        curator: { height:2.0, color:'rgba(255,255,255,0.5)',  bg:'rgba(22,22,32,0.3)' },
+        topic:   { height:2.4, color:'rgba(200,180,255,0.6)',  bg:'rgba(22,22,32,0.35)' },
+        concept: { height:1.8, color:'rgba(100,230,180,0.55)', bg:'rgba(22,22,32,0.3)' },
+      };
+      const cfg = labelCfg[n.type] || { height:2.0, color:'rgba(255,255,255,0.5)', bg:'rgba(22,22,32,0.3)' };
+      lbl.color = cfg.color;
+      lbl.textHeight = cfg.height;
+      lbl.fontFace = n.type==='week' ? 'Space Grotesk' : 'IBM Plex Mono';
+      lbl.fontWeight = n.type==='week' ? '600' : '400';
+      lbl.padding = n.type==='week' ? 1.5 : 0.5;
+      lbl.borderRadius = 3;
+      lbl.backgroundColor = cfg.bg;
+      lbl.position.y = sz * 0.8 + (n.type==='week' ? 5 : 3);
       group.add(lbl);
       n.__label = lbl;
     }
@@ -604,13 +574,29 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     return group;
   })
   .nodeThreeObjectExtend(false)
-  .linkWidth(0.2)
-  .linkColor(() => 'rgba(77,201,212,0.08)')
-  .linkOpacity(0.18)
-  .linkDirectionalParticles(1)
-  .linkDirectionalParticleWidth(0.8)
-  .linkDirectionalParticleSpeed(0.003)
-  .linkDirectionalParticleColor(() => 'rgba(77,201,212,0.5)')
+  .linkWidth(link => {
+    const rel = link.type;
+    if (rel==='lectures'||rel==='facilitates') return 1.2;
+    if (rel==='speaks'||rel==='teaches') return 0.8;
+    if (rel==='covers'||rel==='produces') return 0.6;
+    return 0.3;
+  })
+  .linkColor(link => {
+    const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
+    return s ? (TYPES[s.type]?.color||'#4dc9d4') + '30' : 'rgba(77,201,212,0.12)';
+  })
+  .linkOpacity(0.35)
+  .linkCurvature(0.15)
+  .linkDirectionalParticles(link => {
+    const rel = link.type;
+    return (rel==='lectures'||rel==='speaks'||rel==='teaches'||rel==='covers') ? 2 : 0;
+  })
+  .linkDirectionalParticleWidth(1.0)
+  .linkDirectionalParticleSpeed(0.005)
+  .linkDirectionalParticleColor(link => {
+    const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
+    return s ? TYPES[s.type]?.color||'#4dc9d4' : '#4dc9d4';
+  })
   .d3Force('charge', d3.forceManyBody().strength(graphData.nodes.length > 100 ? -40 : -100))
   .d3Force('link', d3.forceLink().strength(graphData.nodes.length > 100 ? 0.06 : 0.1))
   .d3Force('center', d3.forceCenter().strength(0.02))
