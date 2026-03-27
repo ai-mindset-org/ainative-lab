@@ -1,221 +1,580 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Native Lab — Hub</title>
-<meta property="og:title" content="AI Native Lab — All Interactive Tools">
-<meta property="og:description" content="Hub for AI-Native Organizations Sprint: knowledge graph, builders, explorers, slides, workshops">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<title>AI-Native Organizations Sprint s2 — guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#12121c;--s:#1a1a2e;--b:rgba(77,201,212,.12);--b2:rgba(77,201,212,.25);--t:rgba(255,255,255,.85);--t2:rgba(255,255,255,.5);--t3:rgba(255,255,255,.25);--teal:#4dc9d4;--tbg:rgba(77,201,212,.06);--blue:#58a6ff;--purple:#a371f7;--green:#3fb950;--orange:#e5a54b;--pink:#f778ba;--mono:'IBM Plex Mono','SF Mono',monospace;--sans:'Space Grotesk',-apple-system,sans-serif}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--t);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh}
-a{color:var(--teal);text-decoration:none}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--bg4:#21262d;
+  --border:rgba(77,201,212,0.12);--border-h:rgba(77,201,212,0.3);
+  --teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.15);--teal-glow:rgba(77,201,212,0.08);
+  --green:#38d9a9;--blue:#3b82f6;--amber:#e8b84d;--red:#ff6b6b;--cyan:#38bdf8;--pink:#d946ef;
+  --text:#c9d1d9;--bright:#ecf0f5;--dim:#6e7681;--muted:#484f58;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --mono:'IBM Plex Mono','JetBrains Mono',monospace;
+  --code:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14px;line-height:1.6;min-height:100vh}
 
-.hdr{padding:40px 32px 28px;text-align:center;border-bottom:1px solid var(--b)}
-.hdr h1{font-family:var(--sans);font-size:28px;font-weight:700;letter-spacing:-.5px;color:var(--teal);margin-bottom:6px}
-.hdr p{font-size:12px;color:var(--t2);max-width:520px;margin:0 auto;line-height:1.6}
-.hdr .badge{display:inline-block;font-size:10px;padding:3px 10px;border-radius:12px;border:1px solid var(--b);color:var(--t2);margin-top:10px}
+/* === TOP BAR === */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:8px 32px;display:flex;align-items:center;gap:16px}
+.topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),var(--green),var(--amber),transparent)}
+.topbar-logo{display:flex;align-items:center;gap:8px}
+.topbar-logo img{height:24px;opacity:0.7}
+.topbar-logo span{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+.topbar-title{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--bright);margin-left:auto}
 
-.main{max-width:960px;margin:0 auto;padding:28px 24px 40px}
-.section{margin-bottom:28px}
-.sh{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px}
-.sh::after{content:'';flex:1;height:1px;background:var(--b)}
+/* === WEEK TABS === */
+.week-tabs{display:flex;gap:4px;padding:0 32px;background:var(--bg);border-bottom:1px solid var(--border)}
+.week-tab{padding:12px 20px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.5px}
+.week-tab:hover{color:var(--text)}
+.week-tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.week-tab .wk-label{font-size:10px;display:block;color:var(--muted);margin-top:2px;font-weight:400}
+.week-tab.active .wk-label{color:rgba(77,201,212,0.5)}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+/* === CONTENT === */
+.content{max-width:1200px;margin:0 auto;padding:32px}
+.week-panel{display:none}
+.week-panel.active{display:block}
 
-a.c{display:block;background:var(--s);border:1px solid var(--b);border-radius:10px;padding:18px 20px;transition:all .25s;position:relative;overflow:hidden;color:inherit}
-a.c:hover{border-color:var(--b2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.c .ac{position:absolute;top:0;left:0;right:0;height:2px;opacity:.6}
-.c .ic{font-size:20px;margin-bottom:10px;display:block}
-.c h3{font-family:var(--sans);font-size:15px;font-weight:600;margin-bottom:4px;color:var(--t)}
-.c p{font-size:11px;color:var(--t2);line-height:1.5}
-.c .tg{display:inline-block;font-size:9px;padding:2px 7px;border-radius:3px;margin-top:8px;border:1px solid var(--b);color:var(--t3)}
+/* === HERO === */
+.hero{margin-bottom:40px;position:relative}
+.hero h1{font-family:var(--sans);font-size:36px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.hero h1 span{color:var(--teal)}
+.hero .hero-sub{font-size:13px;color:var(--dim);max-width:700px;line-height:1.6}
+.hero .hero-meta{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
 
-a.feat{grid-column:span 2;display:flex;gap:20px;align-items:center;padding:24px}
-a.feat .ic{font-size:32px;margin:0;flex-shrink:0}
-a.feat h3{font-size:18px}
-@media(max-width:700px){a.feat{grid-column:span 1;flex-direction:column;text-align:center}}
+/* === SVG HERO VISUAL === */
+.hero-visual{position:absolute;top:-10px;right:0;width:280px;height:200px;opacity:0.15;pointer-events:none}
 
-.ft{text-align:center;padding:20px;font-size:10px;color:var(--t3);border-top:1px solid var(--b)}
-.ft a{color:var(--teal)}
+/* === FILTER TABS === */
+.filters{display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap}
+.filter-btn{padding:6px 14px;border-radius:6px;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--dim);background:transparent;border:1px solid var(--border);cursor:pointer;transition:all 0.2s;text-transform:lowercase;letter-spacing:0.5px}
+.filter-btn:hover{border-color:var(--border-h);color:var(--text)}
+.filter-btn.active{background:var(--teal-dim);color:var(--teal);border-color:rgba(77,201,212,0.25)}
+.filter-label{font-size:11px;color:var(--muted);padding:6px 0;letter-spacing:1px;text-transform:uppercase}
 
-a.c{animation:fi .3s ease}
-@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:700px){.main{padding:20px 16px}.grid{grid-template-columns:1fr}}
+/* === SECTION === */
+.section{margin-bottom:36px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.section-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.section-title{font-family:var(--sans);font-size:18px;font-weight:700;color:var(--bright)}
+.section-speaker{font-size:12px;color:var(--dim);margin-left:auto}
+.section-desc{font-size:13px;color:var(--dim);margin-bottom:14px;max-width:700px;line-height:1.6}
+
+/* === CARDS GRID === */
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;text-decoration:none;display:block}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--teal);opacity:0.6}
+.card.green::before{background:var(--green)}
+.card.blue::before{background:var(--blue)}
+.card.amber::before{background:var(--amber)}
+.card.red::before{background:var(--red)}
+.card.pink::before{background:var(--pink)}
+.card:hover{border-color:var(--border-h);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card-title{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--bright);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.card-desc{font-size:12px;color:var(--dim);line-height:1.5}
+.card-meta{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;letter-spacing:0.5px;text-transform:lowercase}
+.tag-teal{color:var(--teal);border:1px solid rgba(77,201,212,0.25);background:rgba(77,201,212,0.08)}
+.tag-green{color:var(--green);border:1px solid rgba(56,217,169,0.25);background:rgba(56,217,169,0.08)}
+.tag-blue{color:var(--blue);border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08)}
+.tag-amber{color:var(--amber);border:1px solid rgba(232,184,77,0.25);background:rgba(232,184,77,0.08)}
+.tag-red{color:var(--red);border:1px solid rgba(255,107,107,0.25);background:rgba(255,107,107,0.08)}
+.tag-pink{color:var(--pink);border:1px solid rgba(217,70,239,0.25);background:rgba(217,70,239,0.08)}
+.tag-dim{color:var(--dim);border:1px solid var(--border)}
+
+/* === QUOTE === */
+.quote{border-left:3px solid var(--amber);padding:14px 20px;margin:16px 0;background:rgba(232,184,77,0.04);border-radius:0 8px 8px 0}
+.quote p{font-style:italic;color:var(--bright);font-size:14px;line-height:1.6}
+.quote .attr{font-style:normal;font-size:12px;color:var(--dim);margin-top:6px}
+
+/* === LINK ROW === */
+.link-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.link-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--teal);font-size:12px;text-decoration:none;transition:all 0.2s}
+.link-pill:hover{border-color:var(--teal);background:var(--teal-glow)}
+.link-pill.green{color:var(--green)}.link-pill.green:hover{border-color:var(--green)}
+.link-pill.blue{color:var(--blue)}.link-pill.blue:hover{border-color:var(--blue)}
+.link-pill.amber{color:var(--amber)}.link-pill.amber:hover{border-color:var(--amber)}
+
+/* === CHECKLIST === */
+.checklist{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.2s}
+.check-item:hover{border-color:var(--border-h)}
+.check-item.done{border-color:rgba(56,217,169,0.2);background:rgba(56,217,169,0.04)}
+.check-box{width:16px;height:16px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all 0.15s}
+.check-item.done .check-box{border-color:var(--green);color:var(--green);background:rgba(56,217,169,0.1)}
+.check-text{font-size:13px;color:var(--bright)}
+.check-text small{display:block;font-size:11px;color:var(--dim);margin-top:2px}
+.check-text code{font-family:var(--code);font-size:12px;color:var(--green);background:rgba(56,217,169,0.08);padding:1px 6px;border-radius:3px}
+.check-text a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(77,201,212,0.2)}
+.check-text a:hover{border-bottom-color:var(--teal)}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .content{padding:20px 16px}
+  .hero h1{font-size:26px}
+  .cards{grid-template-columns:1fr}
+  .topbar{padding:8px 16px}
+  .week-tabs{padding:0 16px;overflow-x:auto}
+}
 </style>
 </head>
 <body>
 
-<div class="hdr">
-<h1>AI Native Lab</h1>
-<p>Все интерактивные инструменты AI-Native Organizations Sprint. Builders, explorers, slides, workshops — в одном месте.</p>
-<span class="badge">Sprint s2 &middot; March 2026 &middot; 211 participants</span>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <img src="logo.png" alt="">
+    <span>AI Mindset</span>
+  </div>
+  <div class="topbar-title">AI-Native Organizations Sprint s2 — guide</div>
 </div>
 
-<div class="main">
-
-<!-- START HERE -->
-<div class="section">
-<div class="sh">start here</div>
-<div class="grid">
-<a class="c feat" href="https://ai-mindset-org.github.io/pos-assessment/directory.html">
-<span class="ic">&#9670;</span>
-<div><div class="ac" style="background:var(--teal)"></div>
-<h3>Week 1 Dashboard</h3>
-<p>Все материалы первой недели: лекция Гершуни, воркшоп Поваляева, homework, все ссылки и ресерч</p>
-<span class="tg">lecture + workshop + homework</span></div>
-</a>
-<a class="c" href="knowledge-graph.html">
-<div class="ac" style="background:var(--purple)"></div>
-<span class="ic">&#9673;</span>
-<h3>Knowledge Graph</h3>
-<p>Граф спринта: спикеры, сессии, концепции, ресурсы — всё связано. Canvas + поиск</p>
-<span class="tg">interactive canvas</span>
-</a>
-</div></div>
-
-<!-- BUILDERS -->
-<div class="section">
-<div class="sh">builders &mdash; собери своё</div>
-<div class="grid">
-<a class="c" href="naming.html">
-<div class="ac" style="background:var(--orange)"></div>
-<span class="ic">&#9634;</span>
-<h3>Naming Convention Builder</h3>
-<p>Генератор конвенций: проект + тип &rarr; color-coded превью. Каталог типов, примеры</p>
-<span class="tg">workshop 18:00</span>
-</a>
-<a class="c" href="dashboard-workshop.html">
-<div class="ac" style="background:var(--green)"></div>
-<span class="ic">&#9638;</span>
-<h3>Dashboard Workshop</h3>
-<p>Собери дашборд за 30 мин: среда &rarr; данные &rarr; стиль &rarr; промпт. 3 темы</p>
-<span class="tg">workshop 58:34</span>
-</a>
-<a class="c" href="https://ai-mindset-org.github.io/pos-assessment/">
-<div class="ac" style="background:var(--teal)"></div>
-<span class="ic">&#9635;</span>
-<h3>POS Stack Assessment</h3>
-<p>Self-assessment: 6 layers, 24 blocks. Оцени свой стек, получи prompts</p>
-<span class="tg">playbook</span>
-</a>
-</div></div>
-
-<!-- EXPLORERS -->
-<div class="section">
-<div class="sh">explorers &mdash; production POS изнутри</div>
-<div class="grid">
-<a class="c" href="https://ai-mindset-org.github.io/pos-stack-explorer/">
-<div class="ac" style="background:var(--blue)"></div>
-<span class="ic">&#9672;</span>
-<h3>POS Stack Explorer</h3>
-<p>Реальная POS: 6 слоёв, 50+ скиллов, 7 MCP-серверов, граф связей</p>
-<span class="tg">workshop 2:09:28</span>
-</a>
-<a class="c" href="rules.html">
-<div class="ac" style="background:var(--green)"></div>
-<span class="ic">&#9671;</span>
-<h3>Rules & Skills</h3>
-<p>19 правил и 10 core skills — как naming, eval system, context protocol сложились</p>
-<span class="tg">rules + skills</span>
-</a>
-<a class="c" href="https://ai-mindset-org.github.io/team-stack-explorer/">
-<div class="ac" style="background:var(--purple)"></div>
-<span class="ic">&#9670;</span>
-<h3>Team Stack Explorer</h3>
-<p>Команда AI Mindset: 40+ skills, 2 бота, 8 MCP серверов</p>
-<span class="tg">team infrastructure</span>
-</a>
-</div></div>
-
-<!-- SLIDES & TOOLS -->
-<div class="section">
-<div class="sh">slides &amp; tools</div>
-<div class="grid">
-<a class="c" href="https://ai-mindset-org.github.io/ainative-deck/pos-setup-v2.html">
-<div class="ac" style="background:var(--teal)"></div>
-<span class="ic">&#9656;</span>
-<h3>Slides: Personal OS Setup v2</h3>
-<p>35+ слайдов воркшопа. Архитектура POS от keyboard до governance</p>
-<span class="tg">presentation</span>
-</a>
-<a class="c" href="https://keyboard.aimindset.org/">
-<div class="ac" style="background:var(--pink)"></div>
-<span class="ic">&#9000;</span>
-<h3>Keyboard Efficiency</h3>
-<p>Heatmap стоимости шорткатов, эргономика, Karabiner + Raycast</p>
-<span class="tg">workshop 7:12</span>
-</a>
-<a class="c" href="https://ai-mindset-org.github.io/ainative-deck/">
-<div class="ac" style="background:var(--pink)"></div>
-<span class="ic">&#9655;</span>
-<h3>Deck Builder</h3>
-<p>Presentation builder: drag-and-drop, AI generation, GitHub persistence</p>
-<span class="tg">tool</span>
-</a>
-</div></div>
-
-<!-- GERSHUNI -->
-<div class="section">
-<div class="sh">gershuni &mdash; ai-native framework</div>
-<div class="grid">
-<a class="c" href="https://github.com/Gerstep/ai-native-plugin">
-<div class="ac" style="background:var(--orange)"></div>
-<span class="ic">&#10070;</span>
-<h3>AI-Native Plugin</h3>
-<p>Плагин Claude Code / Codex. Скилл для описания контекста компании</p>
-<span class="tg">github</span>
-</a>
-<a class="c" href="https://www.codos.ai/quiz">
-<div class="ac" style="background:var(--purple)"></div>
-<span class="ic">&#10063;</span>
-<h3>AI-Nativeness Quiz</h3>
-<p>Оценка уровня L0 &rarr; L3. AI-зрелость команды</p>
-<span class="tg">assessment</span>
-</a>
-<a class="c" href="https://cybos.ai/harness">
-<div class="ac" style="background:var(--teal)"></div>
-<span class="ic">&#10038;</span>
-<h3>Harness Engineering</h3>
-<p>LLM + обвязка, что модели не могут, конкурентное преимущество</p>
-<span class="tg">research</span>
-</a>
-</div></div>
-
-<!-- LMS -->
-<div class="section">
-<div class="sh">LMS &mdash; полные записи</div>
-<div class="grid">
-<a class="c" href="https://learn.aimindset.org/s2/workshops/s2-w1-lecture">
-<div class="ac" style="background:var(--orange)"></div>
-<span class="ic">&#9654;</span>
-<h3>W1 Лекция — Гершуни</h3>
-<p>Почему AI-трансформация — самое важное. 172 мин, chapters, takeaways</p>
-<span class="tg">23 мар</span>
-</a>
-<a class="c" href="https://learn.aimindset.org/s2/workshops/s2-w1-setup">
-<div class="ac" style="background:var(--teal)"></div>
-<span class="ic">&#9654;</span>
-<h3>W1 Воркшоп — Поваляев</h3>
-<p>Personal OS Setup. 161 мин, 30 chapters, setup guide</p>
-<span class="tg">24 мар</span>
-</a>
-<a class="c" href="https://learn.aimindset.org/s2/qa/s2-w1-setup">
-<div class="ac" style="background:var(--t3)"></div>
-<span class="ic">&#10067;</span>
-<h3>Q&A — Week 1</h3>
-<p>11 вопросов: Obsidian, безопасность, автономность, с чего начать</p>
-<span class="tg">Q&amp;A</span>
-</a>
-</div></div>
-
+<!-- WEEK TABS -->
+<div class="week-tabs">
+  <div class="week-tab active" onclick="switchWeek(0)">W1<span class="wk-label">foundation</span></div>
+  <div class="week-tab" onclick="switchWeek(1)">W2<span class="wk-label">architecture</span></div>
+  <div class="week-tab" onclick="switchWeek(2)">W3<span class="wk-label">strategy</span></div>
+  <div class="week-tab" onclick="switchWeek(3)">tools<span class="wk-label">all resources</span></div>
 </div>
 
-<div class="ft">
-AI-Native Organizations Sprint s2 &middot; <a href="https://ai-mindset.org">AI Mindset</a> &middot; <a href="https://learn.aimindset.org">LMS</a> &middot; <a href="https://github.com/ai-mindset-org">GitHub</a>
+<div class="content">
+
+<!-- ==================== WEEK 1 ==================== -->
+<div class="week-panel active" id="w1">
+
+<div class="hero">
+  <h1>Week 1 — <span>Personal OS Setup</span></h1>
+  <div class="hero-sub">Все материалы первой недели спринта: лекция Степана Гершуни про AI-трансформацию, воркшоп Поваляева про POS, интерактивные инструменты и homework. 211 участников, 24 марта 2026.</div>
+  <div class="hero-meta">
+    <span class="tag tag-teal">23–27 марта</span>
+    <span class="tag tag-green">4 сессии</span>
+    <span class="tag tag-amber">211 участников</span>
+  </div>
+  <!-- SVG visual -->
+  <svg class="hero-visual" viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="140" cy="100" r="80" stroke="#4dc9d4" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="140" cy="100" r="50" stroke="#4dc9d4" stroke-width="0.5" opacity="0.2"/>
+    <circle cx="140" cy="100" r="20" stroke="#4dc9d4" stroke-width="1" opacity="0.4"/>
+    <line x1="60" y1="100" x2="220" y2="100" stroke="#4dc9d4" stroke-width="0.3" opacity="0.2"/>
+    <line x1="140" y1="20" x2="140" y2="180" stroke="#4dc9d4" stroke-width="0.3" opacity="0.2"/>
+    <circle cx="140" cy="100" r="3" fill="#4dc9d4" opacity="0.6"/>
+    <circle cx="100" cy="60" r="2" fill="#38d9a9" opacity="0.4"/>
+    <circle cx="180" cy="140" r="2" fill="#3b82f6" opacity="0.4"/>
+    <circle cx="80" cy="130" r="1.5" fill="#e8b84d" opacity="0.3"/>
+    <path d="M60 100 Q100 60 140 100 Q180 140 220 100" stroke="#4dc9d4" stroke-width="0.5" opacity="0.15" fill="none"/>
+  </svg>
 </div>
 
+<!-- FILTERS -->
+<div class="filters">
+  <span class="filter-label">navigate</span>
+  <button class="filter-btn active" onclick="filterCards(this,'all')">all</button>
+  <button class="filter-btn" onclick="filterCards(this,'lecture')">lecture</button>
+  <button class="filter-btn" onclick="filterCards(this,'workshop')">workshop</button>
+  <button class="filter-btn" onclick="filterCards(this,'tools')">tools</button>
+  <button class="filter-btn" onclick="filterCards(this,'homework')">homework</button>
+  <button class="filter-btn" onclick="filterCards(this,'access')">access</button>
+</div>
+
+<!-- SECTION: LECTURE -->
+<div class="section" data-cat="lecture">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--teal)"></div>
+    <div class="section-title">Лекция: Почему AI-трансформация — самое важное</div>
+    <div class="section-speaker">Степан Гершуни</div>
+  </div>
+  <div class="section-desc">Дофаминовая и кортизоловая ловушки AI, кейсы Shopify/Block/Spotify/Base44, экспоненциальный рост моделей, фреймворк POS → Team OS → Company OS, Harness Engineering.</div>
+  <div class="cards">
+    <a class="card" href="https://ai-native.aimindset.org" target="_blank">
+      <div class="card-title">AI-Native Sprint <span class="tag tag-teal">landing</span></div>
+      <div class="card-desc">Описание программы спринта, структура трёх недель.</div>
+    </a>
+    <a class="card green" href="https://github.com/Gerstep/ai-native-plugin" target="_blank">
+      <div class="card-title">AI-Native Plugin <span class="tag tag-green">github</span></div>
+      <div class="card-desc">Плагин для Claude Code / Codex от Гершуни. Скилл для описания контекста компании.</div>
+    </a>
+    <a class="card blue" href="https://github.com/cyberFund/ai-native-organizations" target="_blank">
+      <div class="card-title">AI-Native Orgs Playbook <span class="tag tag-blue">github</span></div>
+      <div class="card-desc">Открытый playbook по AI-native организациям от cyber.Fund.</div>
+    </a>
+    <a class="card amber" href="https://learn.aimindset.org/s2" target="_blank">
+      <div class="card-title">Запись L01 <span class="tag tag-amber">LMS</span></div>
+      <div class="card-desc">Полная запись лекции + 18 вопросов Q&A.</div>
+    </a>
+  </div>
+  <div class="quote">
+    <p>«Moat — это не модель. Moat — это человек-оркестратор. Домен + границы, 10–20 лет опыта.»</p>
+    <div class="attr">— Степан Гершуни</div>
+  </div>
+</div>
+
+<!-- SECTION: WORKSHOP -->
+<div class="section" data-cat="workshop">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--green)"></div>
+    <div class="section-title">Воркшоп: Personal OS Setup</div>
+    <div class="section-speaker">Александр Поваляев</div>
+  </div>
+  <div class="section-desc">Живая демонстрация production POS: naming convention, Claude Code, Obsidian, MCP, скиллы, дашборды. От эргономики клавиатуры до пайплайнов автоматизации.</div>
+  <div class="cards">
+    <a class="card" href="https://ai-mindset-org.github.io/ainative-deck/pos-setup.html" target="_blank">
+      <div class="card-title">Слайды: POS Setup v2 <span class="tag tag-teal">slides</span></div>
+      <div class="card-desc">35+ слайдов — архитектура POS от Layer 1 (keyboard) до Layer 6 (governance). Terminal aesthetic.</div>
+    </a>
+    <a class="card green" href="https://ai-mindset-org.github.io/pos-stack-explorer/" target="_blank">
+      <div class="card-title">POS Stack Explorer <span class="tag tag-green">interactive</span></div>
+      <div class="card-desc">Интерактивная карта реальной POS: 6 слоёв, 50+ скиллов, 7 MCP-серверов, граф связей.</div>
+    </a>
+    <a class="card blue" href="https://ai-mindset-org.github.io/ainative-lab/naming.html#builder" target="_blank">
+      <div class="card-title">Naming Convention Builder <span class="tag tag-blue">builder</span></div>
+      <div class="card-desc">Генератор конвенций: проект + тип → color-coded превью имени файла. Каталог типов.</div>
+    </a>
+    <a class="card amber" href="https://keyboard.aimindset.org/" target="_blank">
+      <div class="card-title">Keyboard Efficiency <span class="tag tag-amber">tool</span></div>
+      <div class="card-desc">Настройка стоимости морганий — эргономические метрики Karabiner и Raycast.</div>
+    </a>
+    <a class="card" href="https://ai-mindset-org.github.io/team-stack-explorer/" target="_blank">
+      <div class="card-title">Team Stack Explorer <span class="tag tag-teal">explorer</span></div>
+      <div class="card-desc">Инфраструктура команды AI Mindset: 40+ skills, 2 бота, 8 MCP серверов.</div>
+    </a>
+    <a class="card green" href="https://ai-mindset-org.github.io/pos-assessment/" target="_blank">
+      <div class="card-title">POS Stack Assessment <span class="tag tag-green">playbook</span></div>
+      <div class="card-desc">Self-assessment: 6 layers, 24 blocks. Оцени свой текущий стек и получи план.</div>
+    </a>
+  </div>
+</div>
+
+<!-- SECTION: KNOWLEDGE GRAPH -->
+<div class="section" data-cat="tools">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--cyan)"></div>
+    <div class="section-title">Knowledge Graph & Hub</div>
+  </div>
+  <div class="cards">
+    <a class="card blue" href="https://ai-mindset-org.github.io/ainative-lab/" target="_blank">
+      <div class="card-title">AI-Native Lab Hub <span class="tag tag-blue">hub</span></div>
+      <div class="card-desc">Центральная страница лаборатории — ссылки на граф, LMS, лендинг.</div>
+    </a>
+    <a class="card pink" href="https://ai-mindset-org.github.io/ainative-lab/graph/" target="_blank">
+      <div class="card-title">3D Knowledge Graph <span class="tag tag-pink">interactive</span></div>
+      <div class="card-desc">Интерактивная 3D-визуализация спикеров, тем и связей спринта.</div>
+    </a>
+    <a class="card" href="https://ai-mindset-org.github.io/ainative-lab/naming.html" target="_blank">
+      <div class="card-title">Naming Convention Guide <span class="tag tag-teal">guide</span></div>
+      <div class="card-desc">Полный гайд: формула, типы, проекты, примеры, шаблоны. Интерактивный builder.</div>
+    </a>
+    <a class="card green" href="https://ai-mindset-org.github.io/ainative-lab/rules.html" target="_blank">
+      <div class="card-title">POS Rules & Skills <span class="tag tag-green">reference</span></div>
+      <div class="card-desc">19 правил и 18 core skills. Как naming convention, eval system и другие правила сложились.</div>
+    </a>
+  </div>
+</div>
+
+<!-- SECTION: STARTER KIT -->
+<div class="section" data-cat="tools">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--green)"></div>
+    <div class="section-title">Starter Kit — скачай и начни</div>
+  </div>
+  <div class="section-desc">Готовые файлы для старта. Клонируй repo → скопируй в свой vault → запусти Claude Code.</div>
+  <div class="cards">
+    <a class="card green" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-CLAUDE.md" target="_blank">
+      <div class="card-title">starter-CLAUDE.md <span class="tag tag-green">template</span></div>
+      <div class="card-desc">Шаблон CLAUDE.md — "конституция" для AI-агента. Роль, стиль, naming, skills, ALWAYS/NEVER.</div>
+    </a>
+    <a class="card" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-morning-brief.md" target="_blank">
+      <div class="card-title">starter-morning-brief.md <span class="tag tag-teal">skill</span></div>
+      <div class="card-desc">Утренний брифинг: календарь + задачи → фокус дня. Положить в .claude/skills/</div>
+    </a>
+    <a class="card" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-daily-focus.md" target="_blank">
+      <div class="card-title">starter-daily-focus.md <span class="tag tag-teal">skill</span></div>
+      <div class="card-desc">Фокус дня: top-3 задачи + блоки глубокой работы.</div>
+    </a>
+    <a class="card" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-weekly-review.md" target="_blank">
+      <div class="card-title">starter-weekly-review.md <span class="tag tag-teal">skill</span></div>
+      <div class="card-desc">Еженедельный обзор: wins, blocked, next week.</div>
+    </a>
+    <a class="card blue" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-meeting-prep.md" target="_blank">
+      <div class="card-title">starter-meeting-prep.md <span class="tag tag-blue">skill</span></div>
+      <div class="card-desc">Подготовка к встрече: контекст + агенда + вопросы.</div>
+    </a>
+    <a class="card amber" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/naming-convention-cheatsheet.md" target="_blank">
+      <div class="card-title">naming-convention-cheatsheet.md <span class="tag tag-amber">cheatsheet</span></div>
+      <div class="card-desc">Шпаргалка: формула, типы, примеры на одной странице.</div>
+    </a>
+  </div>
+  <div class="link-row">
+    <a class="link-pill" href="https://github.com/ai-mindset-org/ainative-deck/tree/main/downloads" target="_blank">GitHub: все файлы starter kit</a>
+    <a class="link-pill green" href="https://github.com/ai-mindset-org/pos-sprint/tree/main/skill-pack" target="_blank">POS Sprint skill-pack (расширенный)</a>
+  </div>
+</div>
+
+<!-- SECTION: ACCESS -->
+<div class="section" data-cat="access">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--red)"></div>
+    <div class="section-title">Оплата и доступ из России</div>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+    <a class="card red" href="https://grizzlysms.com/claude" target="_blank">
+      <div class="card-title">grizzlysms.com <span class="tag tag-red">SIM</span></div>
+      <div class="card-desc">Аренда виртуального номера для SMS-верификации Claude.</div>
+    </a>
+    <a class="card amber" href="https://platipomiru.com" target="_blank">
+      <div class="card-title">platipomiru.com <span class="tag tag-amber">card</span></div>
+      <div class="card-desc">Карта с пополнением через СБП. Любая страна при оплате.</div>
+    </a>
+    <a class="card" href="https://claude.ai" target="_blank">
+      <div class="card-title">Claude Pro <span class="tag tag-teal">$20/мес</span></div>
+      <div class="card-desc">Веб-чат claude.ai. Подписка для доступа к Claude 4.</div>
+    </a>
+    <a class="card blue" href="https://console.anthropic.com" target="_blank">
+      <div class="card-title">API Console <span class="tag tag-blue">pay-as-you-go</span></div>
+      <div class="card-desc">API-ключ для Claude Code. $5–20/мес по использованию.</div>
+    </a>
+  </div>
+</div>
+
+<!-- SECTION: HOMEWORK -->
+<div class="section" data-cat="homework">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--amber)"></div>
+    <div class="section-title">Homework W1</div>
+  </div>
+  <div class="section-desc">6 шагов для запуска Personal OS. Можно делать в любом порядке.</div>
+  <div class="checklist">
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box">&check;</div>
+      <div class="check-text">Установить Claude Code + написать <code>CLAUDE.md</code>
+        <small>шаблон: <a href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-CLAUDE.md" target="_blank">starter-CLAUDE.md</a></small>
+      </div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box">&check;</div>
+      <div class="check-text">1 рабочий skill в <code>.claude/skills/</code>
+        <small>попробуйте <a href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-morning-brief.md" target="_blank">starter-morning-brief.md</a></small>
+      </div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box">&check;</div>
+      <div class="check-text">Naming convention — переименовать 5 файлов по формуле
+        <small><code>{type} description – YYYY-MM-DD.md</code></small>
+      </div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box">&check;</div>
+      <div class="check-text">3 процесса + L0–L3 карта
+        <small>выбери 3 болезненных процесса, определи уровень автоматизации</small>
+      </div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box">&check;</div>
+      <div class="check-text">Keyboard shortcuts — настроить 3 горячих клавиши
+        <small><a href="https://keyboard.aimindset.org/" target="_blank">keyboard.aimindset.org</a></small>
+      </div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box">&check;</div>
+      <div class="check-text">Скриншот рабочего скилла в #support
+        <small>доказательство что система работает</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LMS LINKS -->
+<div class="section" data-cat="all">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--teal)"></div>
+    <div class="section-title">LMS & платформа</div>
+  </div>
+  <div class="link-row">
+    <a class="link-pill" href="https://learn.aimindset.org/s2" target="_blank">LMS: learn.aimindset.org/s2</a>
+    <a class="link-pill green" href="https://learn.aimindset.org/s2/qa/s2-w1-bonus" target="_blank">Q&A: бонус-сессия для новичков</a>
+    <a class="link-pill blue" href="https://github.com/ai-mindset-org" target="_blank">GitHub: ai-mindset-org</a>
+    <a class="link-pill amber" href="https://ai-mindset-org.github.io/ainative-deck/" target="_blank">Все деки спринта</a>
+  </div>
+</div>
+
+</div><!-- /w1 -->
+
+<!-- ==================== WEEK 2 ==================== -->
+<div class="week-panel" id="w2">
+<div class="hero">
+  <h1>Week 2 — <span>Architecture</span></h1>
+  <div class="hero-sub">Система выше модели. 6 архитектурных слоёв: MCP + context, оркестрация, VSM model. Спикеры-практики из разных индустрий.</div>
+  <div class="hero-meta">
+    <span class="tag tag-green">30 мар – 4 апр</span>
+    <span class="tag tag-blue">7 сессий</span>
+  </div>
+</div>
+<div class="cards">
+  <a class="card" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Гершуни: Архитектура <span class="tag tag-teal">30.03</span></div>
+    <div class="card-desc">6 layers. MCP + context. Оркестрация. VSM model.</div>
+  </a>
+  <a class="card green" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Амётов: AI-контент <span class="tag tag-green">01.04</span></div>
+    <div class="card-desc">AI content для бизнеса. Look At Media / SETKA.</div>
+  </a>
+  <a class="card blue" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Клебан: Self-improving agents <span class="tag tag-blue">01.04</span></div>
+    <div class="card-desc">Агенты, которые улучшают сами себя. cyber.Fund / Everynet.</div>
+  </a>
+  <a class="card amber" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Ковальский: AI-driven dev <span class="tag tag-amber">02.04</span></div>
+    <div class="card-desc">Live build. AI-driven development. Red Mad Robot.</div>
+  </a>
+  <a class="card pink" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Кравцов: Knowledge Graph <span class="tag tag-pink">03.04</span></div>
+    <div class="card-desc">AI-native компании + knowledge graph. Improvado.</div>
+  </a>
+</div>
+</div>
+
+<!-- ==================== WEEK 3 ==================== -->
+<div class="week-panel" id="w3">
+<div class="hero">
+  <h1>Week 3 — <span>Strategy</span></h1>
+  <div class="hero-sub">От стратегии к 90-дневному плану. Business models, process audit, AI Champion role. Demo Day 13 апреля.</div>
+  <div class="hero-meta">
+    <span class="tag tag-red">6–13 апр</span>
+    <span class="tag tag-amber">6 сессий + Demo Day</span>
+  </div>
+</div>
+<div class="cards">
+  <a class="card" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Гершуни: 90-дневный план <span class="tag tag-teal">06.04</span></div>
+    <div class="card-desc">Strategy → plan. Business models, intent economy, FinOps.</div>
+  </a>
+  <a class="card amber" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Рид: AI x Investments <span class="tag tag-amber">07.04</span></div>
+    <div class="card-desc">AI и инвестиционная стратегия. @eugene_rid.</div>
+  </a>
+  <a class="card green" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Аннаков: AI x Sales <span class="tag tag-green">08.04</span></div>
+    <div class="card-desc">Автоматизация продаж. onsa.ai.</div>
+  </a>
+  <a class="card blue" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Бузько: AI x Law <span class="tag tag-blue">09.04</span></div>
+    <div class="card-desc">AI в юридических процессах. Buzko Krasnov / Skala.io.</div>
+  </a>
+  <a class="card pink" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">Устинов: Agent → Product <span class="tag tag-pink">10.04</span></div>
+    <div class="card-desc">Shared workspace → product agent. Plurio AI.</div>
+  </a>
+  <a class="card red" href="https://learn.aimindset.org/s2" target="_blank">
+    <div class="card-title">DEMO DAY <span class="tag tag-red">13.04</span></div>
+    <div class="card-desc">Презентации участников. Все показывают свои системы.</div>
+  </a>
+</div>
+</div>
+
+<!-- ==================== TOOLS TAB ==================== -->
+<div class="week-panel" id="tools-panel">
+<div class="hero">
+  <h1>All <span>Resources</span></h1>
+  <div class="hero-sub">Все инструменты, ссылки и материалы спринта в одном месте.</div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--teal)"></div>
+    <div class="section-title">Платформа</div>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+    <a class="card" href="https://learn.aimindset.org/s2" target="_blank"><div class="card-title">LMS</div><div class="card-desc">learn.aimindset.org/s2</div></a>
+    <a class="card green" href="https://ai-native.aimindset.org" target="_blank"><div class="card-title">Sprint Landing</div><div class="card-desc">ai-native.aimindset.org</div></a>
+    <a class="card blue" href="https://github.com/ai-mindset-org" target="_blank"><div class="card-title">GitHub</div><div class="card-desc">ai-mindset-org</div></a>
+    <a class="card amber" href="https://ai-mindset-org.github.io/ainative-lab/" target="_blank"><div class="card-title">AI-Native Lab Hub</div><div class="card-desc">граф, naming, rules</div></a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--green)"></div>
+    <div class="section-title">Интерактивные инструменты</div>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+    <a class="card" href="https://ai-mindset-org.github.io/pos-stack-explorer/" target="_blank"><div class="card-title">POS Stack Explorer</div><div class="card-desc">6 слоёв, 50+ скиллов</div></a>
+    <a class="card green" href="https://ai-mindset-org.github.io/pos-assessment/" target="_blank"><div class="card-title">POS Assessment</div><div class="card-desc">24 блока, self-assessment</div></a>
+    <a class="card blue" href="https://ai-mindset-org.github.io/ainative-lab/naming.html#builder" target="_blank"><div class="card-title">Naming Builder</div><div class="card-desc">интерактивный конструктор</div></a>
+    <a class="card amber" href="https://keyboard.aimindset.org/" target="_blank"><div class="card-title">Keyboard Shortcuts</div><div class="card-desc">эргономика ввода</div></a>
+    <a class="card pink" href="https://ai-mindset-org.github.io/ainative-lab/graph/" target="_blank"><div class="card-title">3D Knowledge Graph</div><div class="card-desc">визуализация связей</div></a>
+    <a class="card" href="https://ai-mindset-org.github.io/team-stack-explorer/" target="_blank"><div class="card-title">Team Stack Explorer</div><div class="card-desc">40+ skills, 2 бота, 8 MCP</div></a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--blue)"></div>
+    <div class="section-title">Деки и слайды</div>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+    <a class="card" href="https://ai-mindset-org.github.io/ainative-deck/" target="_blank"><div class="card-title">Sprint Deck (main)</div><div class="card-desc">обзорная презентация спринта</div></a>
+    <a class="card green" href="https://ai-mindset-org.github.io/ainative-deck/pos-setup.html" target="_blank"><div class="card-title">POS Setup (W1)</div><div class="card-desc">Personal OS Setup воркшоп</div></a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--red)"></div>
+    <div class="section-title">Оплата из России</div>
+  </div>
+  <div class="link-row">
+    <a class="link-pill" href="https://grizzlysms.com/claude" target="_blank">grizzlysms.com/claude (SIM)</a>
+    <a class="link-pill amber" href="https://platipomiru.com" target="_blank">platipomiru.com (Card)</a>
+    <a class="link-pill blue" href="https://claude.ai" target="_blank">claude.ai ($20/мес)</a>
+    <a class="link-pill green" href="https://console.anthropic.com" target="_blank">API Console (pay-as-you-go)</a>
+    <a class="link-pill" href="https://obsidian.md/download" target="_blank">Obsidian (free)</a>
+    <a class="link-pill green" href="https://nodejs.org" target="_blank">Node.js (для Claude Code)</a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--amber)"></div>
+    <div class="section-title">GitHub Repos</div>
+  </div>
+  <div class="link-row">
+    <a class="link-pill" href="https://github.com/ai-mindset-org/ainative-deck" target="_blank">ainative-deck (slides + starter kit)</a>
+    <a class="link-pill green" href="https://github.com/ai-mindset-org/pos-sprint" target="_blank">pos-sprint (naming + skill-pack)</a>
+    <a class="link-pill blue" href="https://github.com/ai-mindset-org/ainative-lab" target="_blank">ainative-lab (knowledge graph)</a>
+    <a class="link-pill amber" href="https://github.com/ai-mindset-org/pos-assessment" target="_blank">pos-assessment (self-assessment)</a>
+    <a class="link-pill" href="https://github.com/ai-mindset-org/pos-stack-explorer" target="_blank">pos-stack-explorer</a>
+    <a class="link-pill green" href="https://github.com/ai-mindset-org/team-stack-explorer" target="_blank">team-stack-explorer</a>
+    <a class="link-pill blue" href="https://github.com/Gerstep/ai-native-plugin" target="_blank">Gershuni: ai-native-plugin</a>
+    <a class="link-pill amber" href="https://github.com/cyberFund/ai-native-organizations" target="_blank">cyberFund: ai-native playbook</a>
+  </div>
+</div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// Week switching
+function switchWeek(idx) {
+  document.querySelectorAll('.week-tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.week-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Card filtering (W1 only)
+function filterCards(btn, cat) {
+  document.querySelectorAll('#w1 .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#w1 .section').forEach(s => {
+    if (cat === 'all') { s.style.display = ''; return; }
+    const sCat = s.dataset.cat || 'all';
+    s.style.display = (sCat === cat || sCat === 'all') ? '' : 'none';
+  });
+}
+</script>
 </body>
 </html>
