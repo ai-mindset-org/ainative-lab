@@ -144,7 +144,17 @@ function extract() {
     const fm = extractFrontmatter(content);
     const type = extractType(filename);
     const zone = getFolderZone(relPath);
-    const id = slugify(filename) || `node-${idx}`;
+    // Include parent folder in slug to avoid duplicates (e.g. multiple AGENTS.md)
+    const parentFolder = path.basename(path.dirname(filePath));
+    let id = slugify(filename) || `node-${idx}`;
+    // Deduplicate: if ID already seen, prepend parent folder
+    if (nodes.some(n => n.id === id)) {
+      id = slugify(parentFolder + '-' + filename) || `node-${idx}`;
+    }
+    // Final fallback: append index
+    if (nodes.some(n => n.id === id)) {
+      id = id + '-' + idx;
+    }
 
     // Extract first paragraph as description
     const bodyStart = content.indexOf('---', 4);

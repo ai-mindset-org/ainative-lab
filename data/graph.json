@@ -49,18 +49,6 @@
       "linkCount": 0
     },
     {
-      "id": "agents",
-      "name": "AGENTS",
-      "type": "default",
-      "group": -1,
-      "description": "--------|-------|--------|\n| Правило, стандарт | `aim-rules/` | `{rule} {AIM} UTM Links.md` |\n| Спецификация | `aim-rules/` | `{prd} Governance System.md` |\n| Промпт, тулза | `aim-rules/` | `{prompt} ",
-      "path": "AGENTS.md",
-      "zone": "Other",
-      "tags": [],
-      "date": "",
-      "linkCount": 28
-    },
-    {
       "id": "crm-curators-overview",
       "name": "CRM_Curators Overview",
       "type": "default",
@@ -107,18 +95,6 @@
       "tags": [],
       "date": "2026-02-22",
       "linkCount": 5
-    },
-    {
-      "id": "agents",
-      "name": "Agents",
-      "type": "default",
-      "group": 1,
-      "description": "",
-      "path": "Labs/auto02/Agents.md",
-      "zone": "Lab Cohorts",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
     },
     {
       "id": "auto02-retro-internal-prep-2025-12-02-cursor",
@@ -1061,18 +1037,6 @@
       "linkCount": 1
     },
     {
-      "id": "agents",
-      "name": "AGENTS",
-      "type": "default",
-      "group": 1,
-      "description": "",
-      "path": "Labs/s2 – ai-native sprint/AGENTS.md",
-      "zone": "Lab Cohorts",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
       "id": "program-lectures-outline",
       "name": "program-lectures-outline",
       "type": "default",
@@ -2000,18 +1964,6 @@
       "zone": "Lab Cohorts",
       "tags": [],
       "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "w26-context-transcript-ws02-2025-12-11",
-      "name": "ws02",
-      "type": "w26",
-      "group": 1,
-      "description": "1\n00:00:00.000 --> 00:00:03.490\nAlexander Povaliaev: Иран запись есть о нас",
-      "path": "Labs/w26/w26-program/w26 02/{w26} {context} {transcript} ws02 – 2025-12-11.md",
-      "zone": "Lab Cohorts",
-      "tags": [],
-      "date": "2025-12-11",
       "linkCount": 0
     },
     {
@@ -4062,7 +4014,7 @@
       "linkCount": 0
     },
     {
-      "id": "w26-context-transcript-ws02-2025-12-11",
+      "id": "w26-context-sources-w26-context-transcript-ws02-2025-12-11",
       "name": "ws02",
       "type": "w26",
       "group": 1,
@@ -4146,18 +4098,6 @@
       "linkCount": 5
     },
     {
-      "id": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
-      "name": "Spring Lab X26 Ecosystem Redesign",
-      "type": "aim",
-      "group": 1,
-      "description": "",
-      "path": "Labs/x26 – spring lab/{AIM} {plan} Spring Lab X26 Ecosystem Redesign – 2026-03-04.md",
-      "zone": "Lab Cohorts",
-      "tags": [],
-      "date": "2026-03-04",
-      "linkCount": 9
-    },
-    {
       "id": "aim-program-spring-lab-x26-weekly-plan-v3-2026-03-25",
       "name": "Spring Lab X26 Weekly Plan v3",
       "type": "aim",
@@ -4180,26 +4120,6 @@
       "tags": [],
       "date": "2026-03-07",
       "linkCount": 7
-    },
-    {
-      "id": "aim-research-spring-ai-education-lab-packaging-and-pricing-2",
-      "name": "Spring AI Education Lab Packaging and Pricing",
-      "type": "aim",
-      "group": 1,
-      "description": "",
-      "path": "Labs/x26 – spring lab/{AIM} {research} Spring AI Education Lab Packaging and Pricing – 2026-03-07.md",
-      "zone": "Lab Cohorts",
-      "tags": [
-        "[AIM",
-        "research",
-        "education",
-        "labs",
-        "pricing",
-        "cohort",
-        "spring2026]"
-      ],
-      "date": "2026-03-07",
-      "linkCount": 0
     },
     {
       "id": "aim-timeline-spring-lab-x26-calendar-2026-03-25",
@@ -5086,18 +5006,6 @@
       "linkCount": 2
     },
     {
-      "id": "agents",
-      "name": "Agents",
-      "type": "default",
-      "group": 5,
-      "description": "",
-      "path": "Org/Marketing&Sales/AIM Annual Report 2025/Agents.md",
-      "zone": "Marketing",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
       "id": "aim-report-handoff-for-anki-2026-01-06",
       "name": "Handoff for Anki",
       "type": "default",
@@ -5386,18 +5294,6 @@
       "linkCount": 0
     },
     {
-      "id": "aim-content-threads-posts-collection-2026-03-19",
-      "name": "Threads Posts Collection",
-      "type": "aim",
-      "group": 5,
-      "description": "## О контексте и мышлении\r\n\r\n**1.**\r\nкогда начинаешь думать контекстом, а не задачами — всё меняется.\r\n\r\nвместо «мне нужно написать письмо» думаешь «как этот человек воспримет мою просьбу с учётом тог",
-      "path": "Org/Marketing&Sales/content/instagram posts/{AIM} {content} Threads Posts Collection – 2026-03-19.md",
-      "zone": "Marketing",
-      "tags": [],
-      "date": "2026-03-19",
-      "linkCount": 0
-    },
-    {
       "id": "aim-post-instagram-carousel-lms-своя-платформа-vs-готовые-20",
       "name": "instagram carousel LMS своя платформа vs готовые",
       "type": "aim",
@@ -5494,7 +5390,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-post-instagram-carousel-что-для-вас-ai-опрос-и-кейсы-сту",
+      "id": "instagram-posts-aim-post-instagram-carousel-что-для-вас-ai-о",
       "name": "instagram carousel что для вас ai опрос и кейсы студентов – 2026-03-24 3",
       "type": "aim",
       "group": 5,
@@ -5506,7 +5402,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-post-instagram-carousel-что-для-вас-ai-опрос-и-кейсы-сту",
+      "id": "instagram-posts-aim-post-instagram-carousel-что-для-вас-ai-о-448",
       "name": "instagram carousel что для вас ai опрос и кейсы студентов",
       "type": "aim",
       "group": 5,
@@ -5722,19 +5618,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-post-telegram-bot-personal-operational-system-материалы-",
-      "name": "telegram bot personal operational system материалы в записи",
-      "type": "aim",
-      "group": 5,
-      "description": "знаем, что на Personal OS {sprint} было много желающих, и не все смогли зайти в поток.",
-      "path": "Org/Marketing&Sales/content/telegram bot posts/{AIM} {post} telegram bot personal operational system материалы в записи – 2026-03-24.md",
-      "zone": "Marketing",
-      "tags": [],
-      "date": "2026-03-24",
-      "linkCount": 0
-    },
-    {
-      "id": "aim-post-telegram-bot-personal-operational-system-материалы-",
+      "id": "content-aim-post-telegram-bot-personal-operational-system-ма",
       "name": "telegram bot personal operational system материалы в записи",
       "type": "aim",
       "group": 5,
@@ -5743,18 +5627,6 @@
       "zone": "Marketing",
       "tags": [],
       "date": "2026-03-24",
-      "linkCount": 0
-    },
-    {
-      "id": "readme",
-      "name": "README",
-      "type": "default",
-      "group": 5,
-      "description": "**① Technical** — для команды\n- структура 4 фаз (21 дек – 18 янв)\n- 6 типов контента\n- 6 bot flows (каждый 3-4 пост)\n- что кто делает\n**② Content** — все 28 дней\n- тексты copy-paste ready\n- две версии",
-      "path": "Org/Marketing&Sales/events outer/w26-advent-calendar/README.md",
-      "zone": "Marketing",
-      "tags": [],
-      "date": "",
       "linkCount": 0
     },
     {
@@ -6785,30 +6657,6 @@
       "linkCount": 0
     },
     {
-      "id": "readme",
-      "name": "README",
-      "type": "default",
-      "group": 3,
-      "description": "",
-      "path": "Org/Partners/README.md",
-      "zone": "Partnerships",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "template-partner-card",
-      "name": "Template Partner Card",
-      "type": "default",
-      "group": 3,
-      "description": "",
-      "path": "Org/Partners/Template Partner Card.md",
-      "zone": "Partnerships",
-      "tags": [],
-      "date": "",
-      "linkCount": 7
-    },
-    {
       "id": "aim-crm-dataview-dashboard",
       "name": "Dataview Dashboard",
       "type": "aim",
@@ -6857,7 +6705,7 @@
       "linkCount": 1
     },
     {
-      "id": "agents",
+      "id": "processes-agents",
       "name": "AGENTS",
       "type": "default",
       "group": 4,
@@ -6866,7 +6714,7 @@
       "zone": "Processes",
       "tags": [],
       "date": "",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "aim-process-team-calls-structure-2026-03-24",
@@ -7678,18 +7526,6 @@
       "linkCount": 4
     },
     {
-      "id": "agents",
-      "name": "Agents",
-      "type": "default",
-      "group": 7,
-      "description": "*Последнее обновление: 2026-01-05*",
-      "path": "Products Ecosystem/Space/Agents.md",
-      "zone": "Products",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
       "id": "space-video-integration-task",
       "name": "SPACE_VIDEO_INTEGRATION_TASK",
       "type": "default",
@@ -7808,18 +7644,6 @@
       "tags": [],
       "date": "2026-02-24",
       "linkCount": 0
-    },
-    {
-      "id": "space-research-maksim-spiridonov-research-supplementary-2025",
-      "name": "Maksim Spiridonov Research Supplementary – 2025-12-07 – Claude Code",
-      "type": "space",
-      "group": 7,
-      "description": "",
-      "path": "Products Ecosystem/Space/research/{space} {research} Maksim Spiridonov Research Supplementary – 2025-12-07 – Claude Code.md",
-      "zone": "Products",
-      "tags": [],
-      "date": "2025-12-07",
-      "linkCount": 2
     },
     {
       "id": "space-research-social-design-stacks-transcript-analysis-indu",
@@ -9154,30 +8978,6 @@
       "linkCount": 0
     },
     {
-      "id": "agents",
-      "name": "Agents",
-      "type": "default",
-      "group": 7,
-      "description": "|--------|------------|------|\n| 14 | IFS + AI | [[transcripts/{space} {transcript} {youtube} FOS #14 – IFS + AI – 2025-12-18 – Claude Code\\|FOS #14]] | 2025-12-18 |\n| 13 | Бизнес как творчество | [[t",
-      "path": "Products Ecosystem/Space/space-sessions/Agents.md",
-      "zone": "Products",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "agents",
-      "name": "Agents",
-      "type": "default",
-      "group": 7,
-      "description": "|----------|------|------|\n| 14 | IFS + AI | [[{space} {transcript} {youtube} FOS #14 – IFS + AI – 2025-12-18 – Claude Code\\|FOS #14]] | 2025-12-18 |\n| 13 | Бизнес как творчество | [[{space} {transcri",
-      "path": "Products Ecosystem/Space/space-sessions/transcripts/Agents.md",
-      "zone": "Products",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
       "id": "space-transcript-youtube-fos-12-intention-os-2025-12-04-clau",
       "name": "FOS #12 – Intention OS – 2025-12-04 – Claude Code",
       "type": "space",
@@ -9490,7 +9290,7 @@
       "linkCount": 0
     },
     {
-      "id": "space-research-maksim-spiridonov-research-supplementary-2025",
+      "id": "spiridonov-2025-12-11-space-research-maksim-spiridonov-resea",
       "name": "Maksim Spiridonov Research Supplementary – 2025-12-07 – Claude Code",
       "type": "space",
       "group": 7,
@@ -9499,7 +9299,7 @@
       "zone": "Products",
       "tags": [],
       "date": "2025-12-07",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "space-research-maxim-spiridonov-interview-prep-2025-12-07-cu",
@@ -9694,7 +9494,7 @@
       "linkCount": 0
     },
     {
-      "id": "welcome",
+      "id": "ai-mindset-2026-welcome",
       "name": "Welcome",
       "type": "default",
       "group": -1,
@@ -9766,7 +9566,7 @@
       "linkCount": 4
     },
     {
-      "id": "template-partner-card",
+      "id": "aim-rules-template-partner-card",
       "name": "Template Partner Card",
       "type": "default",
       "group": 0,
@@ -9775,7 +9575,7 @@
       "zone": "Rules & Standards",
       "tags": [],
       "date": "",
-      "linkCount": 0
+      "linkCount": 7
     },
     {
       "id": "rule-guide-to-creating-youtube-descriptions-for-ai-mindset-s",
@@ -9932,18 +9732,6 @@
       "tags": [],
       "date": "2026-02-13",
       "linkCount": 4
-    },
-    {
-      "id": "rule-aim-shared-skills-infrastructure-2026-02-11-claude-code",
-      "name": "Shared Skills Infrastructure – 2026-02-11 – Claude Code",
-      "type": "rule",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/rules_tech/{rule} {AIM} Shared Skills Infrastructure – 2026-02-11 – Claude Code.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-11",
-      "linkCount": 0
     },
     {
       "id": "rule-aim-sync-protocol-2026-02-04-claude-code",
@@ -10186,283 +9974,7 @@
       "linkCount": 5
     },
     {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-bio/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 11
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-carousel/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-content-voice/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-crm/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-curator/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-deck-ainative/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-deck-style/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-imagine/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-lab/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-lab-announce/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-lab-closing/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-luma-space-session/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-og-covers/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-pm/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-process/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-space-new-members/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "---\nname: AIM-visual\ndescription: Единая система визуального контента AI Mindset — мета-скилл с 5 режимами\nversion: 2.0\n---",
-      "path": "aim-rules/skills/AIM-visual/AIM-visual/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "cards",
-      "name": "cards",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-visual/AIM-visual/cards.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "covers",
-      "name": "covers",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-visual/AIM-visual/covers.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "present",
-      "name": "present",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-visual/AIM-visual/present.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "svg",
-      "name": "svg",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-visual/AIM-visual/svg.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "wrap",
-      "name": "wrap",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-visual/AIM-visual/wrap.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 2
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "---\nname: AIM-visual\ndescription: Единая система визуального контента AI Mindset — мета-скилл с 5 режимами\nversion: 2.0\n---",
-      "path": "aim-rules/skills/AIM-visual/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "cards",
+      "id": "aim-visual-cards",
       "name": "cards",
       "type": "default",
       "group": 0,
@@ -10474,7 +9986,7 @@
       "linkCount": 0
     },
     {
-      "id": "covers",
+      "id": "aim-visual-covers",
       "name": "covers",
       "type": "default",
       "group": 0,
@@ -10486,7 +9998,7 @@
       "linkCount": 0
     },
     {
-      "id": "present",
+      "id": "aim-visual-present",
       "name": "present",
       "type": "default",
       "group": 0,
@@ -10498,7 +10010,7 @@
       "linkCount": 0
     },
     {
-      "id": "svg",
+      "id": "aim-visual-svg",
       "name": "svg",
       "type": "default",
       "group": 0,
@@ -10510,7 +10022,7 @@
       "linkCount": 0
     },
     {
-      "id": "wrap",
+      "id": "aim-visual-wrap",
       "name": "wrap",
       "type": "default",
       "group": 0,
@@ -10519,19 +10031,7 @@
       "zone": "Rules & Standards",
       "tags": [],
       "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "skill",
-      "name": "SKILL",
-      "type": "default",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/skills/AIM-weekly-sync/SKILL.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "aim-research-team-skills-openclaw-implementation-2026-02-05-",
@@ -10558,7 +10058,7 @@
       "linkCount": 2
     },
     {
-      "id": "readme",
+      "id": "visual-toolkit-readme",
       "name": "README",
       "type": "default",
       "group": 0,
@@ -10567,42 +10067,6 @@
       "zone": "Rules & Standards",
       "tags": [],
       "date": "",
-      "linkCount": 0
-    },
-    {
-      "id": "aim-analysis-style-analyzer-2026-02-21",
-      "name": "Style Analyzer",
-      "type": "aim",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/visual-toolkit/{AIM} {analysis} Style Analyzer – 2026-02-21.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-21",
-      "linkCount": 0
-    },
-    {
-      "id": "aim-overview-visual-skills-stack-2026-02-21",
-      "name": "Visual Skills Stack",
-      "type": "aim",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/visual-toolkit/{AIM} {overview} Visual Skills Stack – 2026-02-21.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-21",
-      "linkCount": 1
-    },
-    {
-      "id": "aim-skill-ai-image-generator-via-openrouter-2026-02-21",
-      "name": "AI Image Generator via OpenRouter",
-      "type": "aim",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/visual-toolkit/{AIM} {skill} AI Image Generator via OpenRouter – 2026-02-21.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-21",
       "linkCount": 0
     },
     {
@@ -10630,60 +10094,12 @@
       "linkCount": 0
     },
     {
-      "id": "aim-skill-visual-brief-wrapper-2026-02-21",
-      "name": "Visual Brief Wrapper",
-      "type": "aim",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/visual-toolkit/{AIM} {skill} Visual Brief Wrapper – 2026-02-21.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-21",
-      "linkCount": 0
-    },
-    {
       "id": "aim-skill-visual-pipeline-2026-02-21",
       "name": "Visual Pipeline",
       "type": "aim",
       "group": 0,
       "description": "",
       "path": "aim-rules/visual-toolkit/{AIM} {skill} Visual Pipeline – 2026-02-21.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-21",
-      "linkCount": 0
-    },
-    {
-      "id": "aim-tool-design-card-generator-2026-02-21",
-      "name": "Design Card Generator",
-      "type": "aim",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/visual-toolkit/{AIM} {tool} Design Card Generator – 2026-02-21.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-21",
-      "linkCount": 0
-    },
-    {
-      "id": "aim-tool-presentation-builder-2026-02-21",
-      "name": "Presentation Builder",
-      "type": "aim",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/visual-toolkit/{AIM} {tool} Presentation Builder – 2026-02-21.md",
-      "zone": "Rules & Standards",
-      "tags": [],
-      "date": "2026-02-21",
-      "linkCount": 0
-    },
-    {
-      "id": "aim-tool-svg-metaphor-generator-2026-02-21",
-      "name": "SVG Metaphor Generator",
-      "type": "aim",
-      "group": 0,
-      "description": "",
-      "path": "aim-rules/visual-toolkit/{AIM} {tool} SVG Metaphor Generator – 2026-02-21.md",
       "zone": "Rules & Standards",
       "tags": [],
       "date": "2026-02-21",
@@ -10810,7 +10226,7 @@
       "linkCount": 0
     },
     {
-      "id": "rule-aim-shared-skills-infrastructure-2026-02-11-claude-code",
+      "id": "aim-rules-rule-aim-shared-skills-infrastructure-2026-02-11-c",
       "name": "Shared Skills Infrastructure – 2026-02-11 – Claude Code",
       "type": "rule",
       "group": 0,
@@ -10954,7 +10370,7 @@
       "linkCount": 0
     },
     {
-      "id": "skill",
+      "id": "deck-skill-public-skill",
       "name": "SKILL",
       "type": "default",
       "group": 9,
@@ -10963,7 +10379,7 @@
       "zone": "Research & Analysis",
       "tags": [],
       "date": "",
-      "linkCount": 0
+      "linkCount": 11
     },
     {
       "id": "readme-skill-deck-public-skill-pos-2026-03-09",
@@ -11306,7 +10722,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-analysis-style-analyzer-2026-02-21",
+      "id": "inbox-aim-analysis-style-analyzer-2026-02-21",
       "name": "Style Analyzer",
       "type": "aim",
       "group": 9,
@@ -11354,7 +10770,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-content-threads-posts-collection-2026-03-19",
+      "id": "inbox-aim-content-threads-posts-collection-2026-03-19",
       "name": "Threads Posts Collection",
       "type": "aim",
       "group": 9,
@@ -11510,7 +10926,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-overview-visual-skills-stack-2026-02-21",
+      "id": "inbox-aim-overview-visual-skills-stack-2026-02-21",
       "name": "Visual Skills Stack",
       "type": "aim",
       "group": 9,
@@ -11519,7 +10935,7 @@
       "zone": "Research & Analysis",
       "tags": [],
       "date": "2026-02-21",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "aim-overview-website-architecture-and-next-steps-2026-03-26",
@@ -11551,7 +10967,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "id": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "name": "Spring Lab X26 Ecosystem Redesign",
       "type": "aim",
       "group": 9,
@@ -11560,7 +10976,7 @@
       "zone": "Research & Analysis",
       "tags": [],
       "date": "2026-03-04",
-      "linkCount": 0
+      "linkCount": 9
     },
     {
       "id": "aim-post-pitch-lab-announcement-2026-02-18-claude-code",
@@ -11625,6 +11041,18 @@
       "tags": [],
       "date": "2026-02-19",
       "linkCount": 4
+    },
+    {
+      "id": "aim-report-lms-security-audit-remediation-2026-03-26",
+      "name": "LMS Security Audit Remediation",
+      "type": "aim",
+      "group": 9,
+      "description": "",
+      "path": "inbox/{AIM} {report} LMS Security Audit Remediation – 2026-03-26.md",
+      "zone": "Research & Analysis",
+      "tags": [],
+      "date": "2026-03-26",
+      "linkCount": 0
     },
     {
       "id": "aim-research-ai-evals-system-overview-2026-02-08-claude-code",
@@ -11881,7 +11309,7 @@
       "linkCount": 6
     },
     {
-      "id": "aim-research-spring-ai-education-lab-packaging-and-pricing-2",
+      "id": "inbox-aim-research-spring-ai-education-lab-packaging-and-pri",
       "name": "Spring AI Education Lab Packaging and Pricing",
       "type": "aim",
       "group": 9,
@@ -11964,7 +11392,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-skill-ai-image-generator-via-openrouter-2026-02-21",
+      "id": "inbox-aim-skill-ai-image-generator-via-openrouter-2026-02-21",
       "name": "AI Image Generator via OpenRouter",
       "type": "aim",
       "group": 9,
@@ -11976,7 +11404,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-skill-visual-brief-wrapper-2026-02-21",
+      "id": "inbox-aim-skill-visual-brief-wrapper-2026-02-21",
       "name": "Visual Brief Wrapper",
       "type": "aim",
       "group": 9,
@@ -11988,7 +11416,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-tool-design-card-generator-2026-02-21",
+      "id": "inbox-aim-tool-design-card-generator-2026-02-21",
       "name": "Design Card Generator",
       "type": "aim",
       "group": 9,
@@ -12024,7 +11452,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-tool-presentation-builder-2026-02-21",
+      "id": "inbox-aim-tool-presentation-builder-2026-02-21",
       "name": "Presentation Builder",
       "type": "aim",
       "group": 9,
@@ -12036,7 +11464,7 @@
       "linkCount": 0
     },
     {
-      "id": "aim-tool-svg-metaphor-generator-2026-02-21",
+      "id": "inbox-aim-tool-svg-metaphor-generator-2026-02-21",
       "name": "SVG Metaphor Generator",
       "type": "aim",
       "group": 9,
@@ -12120,7 +11548,7 @@
       "linkCount": 7
     },
     {
-      "id": "agents",
+      "id": "weekly-syncs-agents",
       "name": "Agents",
       "type": "default",
       "group": 8,
@@ -12129,7 +11557,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "",
-      "linkCount": 0
+      "linkCount": 27
     },
     {
       "id": "aim-infra-sync-2026-w06-w09-site-architecture-and-redesign-2",
@@ -12705,10 +12133,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-19",
-      "linkCount": 3
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-mindset-w-",
+      "id": "meetings-transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-m",
       "name": "30m  Alexander Vasiliev w Alex P (AI mindset) w Povaliaev – 2026-03-16 1550",
       "type": "transcript",
       "group": 8,
@@ -12717,10 +12145,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-16",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-mindset-w-",
+      "id": "meetings-transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-m-1042",
       "name": "30m  Alexander Vasiliev w Alex P (AI mindset) w Povaliaev – 2026-03-19 1746",
       "type": "transcript",
       "group": 8,
@@ -12729,7 +12157,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-19",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "transcript-aim-30m-alexey-ivanov-w-alex-p-ai-mindset-w-poval",
@@ -12885,10 +12313,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-08",
-      "linkCount": 2
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-30m-ilya-gindin-w-alex-p-ai-mindset-w-povalia",
+      "id": "meetings-transcript-aim-30m-ilya-gindin-w-alex-p-ai-mindset-",
       "name": "30m  Ilya Gindin w Alex P (AI mindset) w Povaliaev – 2026-02-25 1736",
       "type": "transcript",
       "group": 8,
@@ -12897,7 +12325,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-25",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "transcript-aim-30m-ilya-valkin-w-alex-p-ai-mindset-w-povalia",
@@ -13077,10 +12505,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-26",
-      "linkCount": 6
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mindset-w-pov",
+      "id": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind",
       "name": "30m  Sergei Khabarov w Alex P (AI mindset) w Povaliaev – 2026-01-28 1638",
       "type": "transcript",
       "group": 8,
@@ -13089,10 +12517,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-28",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mindset-w-pov",
+      "id": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind-1073",
       "name": "30m  Sergei Khabarov w Alex P (AI mindset) w Povaliaev – 2026-03-02 1257",
       "type": "transcript",
       "group": 8,
@@ -13101,7 +12529,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-02",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-30m-tonya-zhukova-w-alex-p-ai-mindset-w-poval",
@@ -13233,10 +12661,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-22",
-      "linkCount": 2
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-30m-александр-васильев-w-alex-p-ai-mindset-w-",
+      "id": "meetings-transcript-aim-30m-александр-васильев-w-alex-p-ai-m",
       "name": "30m  Александр Васильев w Alex P (AI mindset) w Povaliaev – 2026-02-12 1511",
       "type": "transcript",
       "group": 8,
@@ -13245,7 +12673,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-12",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "transcript-aim-30m-андреи-галгашов-w-alex-p-ai-mindset-w-pov",
@@ -13401,10 +12829,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-22",
-      "linkCount": 3
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mindset-w-pov",
+      "id": "meetings-transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mind",
       "name": "30m  Евгений Вольнов w Alex P (AI mindset) w Povaliaev – 2026-03-23 1458",
       "type": "transcript",
       "group": 8,
@@ -13413,10 +12841,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-23",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mindset-w-pov",
+      "id": "meetings-transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mind-1100",
       "name": "30m  Евгений Вольнов w Alex P (AI mindset) w Povaliaev – 2026-03-23 1513",
       "type": "transcript",
       "group": 8,
@@ -13425,7 +12853,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-23",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "transcript-aim-30m-женя-курышев-w-alex-p-ai-mindset-w-povali",
@@ -13557,10 +12985,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-27",
-      "linkCount": 4
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-30m-катя-w-alex-p-ai-mindset-w-povaliaev-levk",
+      "id": "meetings-transcript-aim-30m-катя-w-alex-p-ai-mindset-w-poval",
       "name": "30m  катя w Alex P (AI mindset) w Povaliaev,Levkovets – 2026-03-18 1206",
       "type": "transcript",
       "group": 8,
@@ -13569,7 +12997,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-18",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-30m-юлия-w-alex-p-ai-mindset",
@@ -13728,7 +13156,7 @@
       "linkCount": 0
     },
     {
-      "id": "transcript-aim-ai-mindset-w26-advanced-track-w-2026-02-11-18",
+      "id": "meetings-transcript-aim-ai-mindset-w26-advanced-track-w-2026",
       "name": "AI Mindset . Advanced Track w – 2026-02-11 1855",
       "type": "transcript",
       "group": 8,
@@ -13869,10 +13297,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-16",
-      "linkCount": 2
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-ai-mindset-sex-sale-tochka-lubvi-w-povaliaev-",
+      "id": "meetings-transcript-aim-ai-mindset-sex-sale-tochka-lubvi-w-p",
       "name": "AI mindset sex sale tochka-lubvi w Povaliaev – 2026-01-16 1128",
       "type": "transcript",
       "group": 8,
@@ -13881,7 +13309,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-16",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "transcript-aim-ai-mindset-fos-session-weekly-w-2026-02-12-19",
@@ -13941,10 +13369,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-05",
-      "linkCount": 34
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-06 0957",
       "type": "transcript",
       "group": 8,
@@ -13953,10 +13381,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-06",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1145",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-09 1022",
       "type": "transcript",
       "group": 8,
@@ -13965,10 +13393,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-09",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1146",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-12 1003",
       "type": "transcript",
       "group": 8,
@@ -13977,10 +13405,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-12",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1147",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-13 1003",
       "type": "transcript",
       "group": 8,
@@ -13989,10 +13417,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-13",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1148",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-15 1044",
       "type": "transcript",
       "group": 8,
@@ -14001,10 +13429,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-15",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1149",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-16 1005",
       "type": "transcript",
       "group": 8,
@@ -14013,10 +13441,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-16",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1150",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-19 1008",
       "type": "transcript",
       "group": 8,
@@ -14025,10 +13453,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-19",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1151",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-22 1030",
       "type": "transcript",
       "group": 8,
@@ -14037,10 +13465,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-22",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1152",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-23 1030",
       "type": "transcript",
       "group": 8,
@@ -14049,10 +13477,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-23",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1153",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-27 1006",
       "type": "transcript",
       "group": 8,
@@ -14061,10 +13489,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-27",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1154",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-29 1006",
       "type": "transcript",
       "group": 8,
@@ -14073,10 +13501,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-29",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1155",
       "name": "AI mindset w Ira w Povaliaev – 2026-01-30 0950",
       "type": "transcript",
       "group": 8,
@@ -14085,10 +13513,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-30",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1156",
       "name": "AI mindset w Ira w Povaliaev – 2026-02-02 1006",
       "type": "transcript",
       "group": 8,
@@ -14097,10 +13525,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-02",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1157",
       "name": "AI mindset w Ira w Povaliaev – 2026-02-02 1025",
       "type": "transcript",
       "group": 8,
@@ -14109,10 +13537,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-02",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1158",
       "name": "AI mindset w Ira w Povaliaev – 2026-02-03 1029",
       "type": "transcript",
       "group": 8,
@@ -14121,10 +13549,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-03",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1159",
       "name": "AI mindset w Ira w Povaliaev – 2026-02-06 1030",
       "type": "transcript",
       "group": 8,
@@ -14133,7 +13561,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-06",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
@@ -14145,10 +13573,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-09",
-      "linkCount": 50
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1161",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-10 1002",
       "type": "transcript",
       "group": 8,
@@ -14157,10 +13585,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-10",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1162",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-12 1021",
       "type": "transcript",
       "group": 8,
@@ -14169,10 +13597,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-12",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1163",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-13 1019",
       "type": "transcript",
       "group": 8,
@@ -14181,10 +13609,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-13",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1164",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-16 1008",
       "type": "transcript",
       "group": 8,
@@ -14193,10 +13621,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-16",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1165",
       "name": "AI mindset w Ira w Povaliaev,Nazarova",
       "type": "transcript",
       "group": 8,
@@ -14205,10 +13633,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-17",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1166",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-19 1006",
       "type": "transcript",
       "group": 8,
@@ -14217,10 +13645,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-19",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1167",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-20 1003",
       "type": "transcript",
       "group": 8,
@@ -14229,10 +13657,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-20",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1168",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-23 1005",
       "type": "transcript",
       "group": 8,
@@ -14241,10 +13669,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-23",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1169",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-24 0845",
       "type": "transcript",
       "group": 8,
@@ -14253,10 +13681,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-24",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1170",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-25 1001",
       "type": "transcript",
       "group": 8,
@@ -14265,10 +13693,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-25",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1171",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-02-27 1008",
       "type": "transcript",
       "group": 8,
@@ -14277,10 +13705,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-27",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1172",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-02 1002",
       "type": "transcript",
       "group": 8,
@@ -14289,10 +13717,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-02",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1173",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-03 1010",
       "type": "transcript",
       "group": 8,
@@ -14301,10 +13729,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-03",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1174",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-06 1021",
       "type": "transcript",
       "group": 8,
@@ -14313,10 +13741,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-06",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1175",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-09 1010",
       "type": "transcript",
       "group": 8,
@@ -14325,10 +13753,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-09",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1176",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-10 1012",
       "type": "transcript",
       "group": 8,
@@ -14337,10 +13765,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-10",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1177",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-12 1025",
       "type": "transcript",
       "group": 8,
@@ -14349,10 +13777,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-12",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1178",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-13 1016",
       "type": "transcript",
       "group": 8,
@@ -14361,10 +13789,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-13",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1179",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-16 1006",
       "type": "transcript",
       "group": 8,
@@ -14373,10 +13801,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-16",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1180",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-17 0930",
       "type": "transcript",
       "group": 8,
@@ -14385,10 +13813,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-17",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1181",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-19 1019",
       "type": "transcript",
       "group": 8,
@@ -14397,10 +13825,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-19",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1182",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-20 1025",
       "type": "transcript",
       "group": 8,
@@ -14409,10 +13837,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-20",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1183",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-24 1023",
       "type": "transcript",
       "group": 8,
@@ -14421,10 +13849,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-24",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "id": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1184",
       "name": "AI mindset w Ira w Povaliaev,Nazarova – 2026-03-26 1005",
       "type": "transcript",
       "group": 8,
@@ -14433,7 +13861,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-26",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-infra-w-povaliaev-2026-02-10-1410",
@@ -14481,10 +13909,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-24",
-      "linkCount": 4
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-infra-w-povaliaev-stavenski-nazaro",
+      "id": "meetings-transcript-aim-ai-mindset-infra-w-povaliaev-stavens",
       "name": "AI mindset w Povaliaev,stavenski,Nazarova – 2026-03-10 1806",
       "type": "transcript",
       "group": 8,
@@ -14493,7 +13921,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-10",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-infra-w-stavenski-nazarova-povalia",
@@ -14529,10 +13957,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-19",
-      "linkCount": 6
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-levkovets-nazarova-pov",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-levkovets-naz",
       "name": "AI mindset w Levkovets,Nazarova,Povaliaev – 2026-03-26 1406",
       "type": "transcript",
       "group": 8,
@@ -14541,7 +13969,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-26",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
       "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-levkovets-20",
@@ -14553,10 +13981,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-08",
-      "linkCount": 10
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-levkovets-20",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev",
       "name": "AI mindset w Povaliaev,Levkovets – 2026-01-15 1346",
       "type": "transcript",
       "group": 8,
@@ -14565,10 +13993,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-15",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-levkovets-20",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1196",
       "name": "AI mindset w Povaliaev,Levkovets – 2026-01-22 1502",
       "type": "transcript",
       "group": 8,
@@ -14577,10 +14005,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-22",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-levkovets-20",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1197",
       "name": "AI mindset w Povaliaev,Levkovets – 2026-01-29 1409",
       "type": "transcript",
       "group": 8,
@@ -14589,10 +14017,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-29",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-levkovets-20",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1198",
       "name": "AI mindset w Povaliaev,Levkovets – 2026-02-05 1412",
       "type": "transcript",
       "group": 8,
@@ -14601,7 +14029,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-05",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-nazarova-lev",
@@ -14613,10 +14041,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-12",
-      "linkCount": 16
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-nazarova-lev",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-02-19 1412",
       "type": "transcript",
       "group": 8,
@@ -14625,10 +14053,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-19",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-nazarova-lev",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1201",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-02-26 1412",
       "type": "transcript",
       "group": 8,
@@ -14637,10 +14065,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-26",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-nazarova-lev",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1202",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-03-05 1427",
       "type": "transcript",
       "group": 8,
@@ -14649,10 +14077,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-05",
-      "linkCount": 0
+      "linkCount": 4
     },
     {
-      "id": "transcript-aim-ai-mindset-marketing-w-povaliaev-nazarova-lev",
+      "id": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1203",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-03-12 1408",
       "type": "transcript",
       "group": 8,
@@ -14661,7 +14089,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-12",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
       "id": "transcript-aim-ai-mindset-partnerships-w-nazarova-povaliaev-",
@@ -14697,10 +14125,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-21",
-      "linkCount": 2
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-2026-01-2",
+      "id": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev-",
       "name": "AI mindset w Povaliaev – 2026-01-28 1433",
       "type": "transcript",
       "group": 8,
@@ -14709,7 +14137,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-28",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-2026-02-0",
@@ -14733,10 +14161,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-11",
-      "linkCount": 14
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-nazarova-",
+      "id": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1210",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-02-18 1427",
       "type": "transcript",
       "group": 8,
@@ -14745,10 +14173,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-18",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-nazarova-",
+      "id": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1211",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-02-25 1319",
       "type": "transcript",
       "group": 8,
@@ -14757,10 +14185,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-25",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-nazarova-",
+      "id": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1212",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-02-25 1346",
       "type": "transcript",
       "group": 8,
@@ -14769,10 +14197,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-25",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-nazarova-",
+      "id": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1213",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-03-04 1403",
       "type": "transcript",
       "group": 8,
@@ -14781,10 +14209,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-04",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-nazarova-",
+      "id": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1214",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-03-11 1419",
       "type": "transcript",
       "group": 8,
@@ -14793,10 +14221,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-11",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-partnerships-w-povaliaev-nazarova-",
+      "id": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1215",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-03-18 1420",
       "type": "transcript",
       "group": 8,
@@ -14805,7 +14233,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-18",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-product-w-povaliaev-2026-01-09-144",
@@ -14865,10 +14293,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-13",
-      "linkCount": 11
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-product-w-povaliaev-nazarova-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-02-20 1410",
       "type": "transcript",
       "group": 8,
@@ -14877,10 +14305,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-20",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-product-w-povaliaev-nazarova-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1222",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-02-27 1410",
       "type": "transcript",
       "group": 8,
@@ -14889,10 +14317,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-27",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-product-w-povaliaev-nazarova-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1223",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-03-06 1421",
       "type": "transcript",
       "group": 8,
@@ -14901,10 +14329,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-06",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-product-w-povaliaev-nazarova-2026-",
+      "id": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1224",
       "name": "AI mindset w Povaliaev,Nazarova – 2026-03-13 1403",
       "type": "transcript",
       "group": 8,
@@ -14913,7 +14341,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-13",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-space-sync-w-povaliaev-2026-03-05-",
@@ -15105,10 +14533,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-13",
-      "linkCount": 6
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-sync-w-sergei-khabarov-w-povaliaev",
+      "id": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w-",
       "name": "AI mindset w Sergei Khabarov w Povaliaev – 2026-01-20 1348",
       "type": "transcript",
       "group": 8,
@@ -15117,10 +14545,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-20",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-sync-w-sergei-khabarov-w-povaliaev",
+      "id": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w--1242",
       "name": "AI mindset w Sergei Khabarov w Povaliaev – 2026-02-03 1425",
       "type": "transcript",
       "group": 8,
@@ -15129,7 +14557,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-03",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-team-w-levkovets-nazarova-povaliae",
@@ -15153,10 +14581,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-05",
-      "linkCount": 8
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-levkovets-2026-01",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet",
       "name": "AI mindset w Povaliaev,Levkovets – 2026-01-12 1408",
       "type": "transcript",
       "group": 8,
@@ -15165,10 +14593,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-12",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-levkovets-2026-01",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1246",
       "name": "AI mindset w Povaliaev,Levkovets – 2026-01-19 1333",
       "type": "transcript",
       "group": 8,
@@ -15177,10 +14605,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-19",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-levkovets-2026-01",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1247",
       "name": "AI mindset w Povaliaev,Levkovets – 2026-01-26 1416",
       "type": "transcript",
       "group": 8,
@@ -15189,7 +14617,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-26",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-ai-mindset-team-w-povaliaev-levkovets-2026-02",
@@ -15213,10 +14641,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-09",
-      "linkCount": 18
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-nazarova-levkovet",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-02-16 1413",
       "type": "transcript",
       "group": 8,
@@ -15225,10 +14653,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-16",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-nazarova-levkovet",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1251",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-02-23 1409",
       "type": "transcript",
       "group": 8,
@@ -15237,10 +14665,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-23",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-nazarova-levkovet",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1252",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-03-02 1417",
       "type": "transcript",
       "group": 8,
@@ -15249,10 +14677,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-02",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-nazarova-levkovet",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1253",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-03-09 1411",
       "type": "transcript",
       "group": 8,
@@ -15261,10 +14689,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-09",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-ai-mindset-team-w-povaliaev-nazarova-levkovet",
+      "id": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1254",
       "name": "AI mindset w Povaliaev,Nazarova,Levkovets – 2026-03-16 1415",
       "type": "transcript",
       "group": 8,
@@ -15273,7 +14701,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-16",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
       "id": "transcript-aim-ai-mindset-w26-retro-w-povaliaev-levkovets-na",
@@ -15321,10 +14749,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-13",
-      "linkCount": 21
+      "linkCount": 4
     },
     {
-      "id": "transcript-aim-aim-gershuni-sync-w-povaliaev-nazarova-2026-0",
+      "id": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro",
       "name": "AIM <> Gershuni sync w Povaliaev,Nazarova – 2026-02-16 1800",
       "type": "transcript",
       "group": 8,
@@ -15333,10 +14761,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-16",
-      "linkCount": 0
+      "linkCount": 4
     },
     {
-      "id": "transcript-aim-aim-gershuni-sync-w-povaliaev-nazarova-2026-0",
+      "id": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1260",
       "name": "AIM <> Gershuni sync w Povaliaev,Nazarova – 2026-02-18 1632",
       "type": "transcript",
       "group": 8,
@@ -15345,10 +14773,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-18",
-      "linkCount": 0
+      "linkCount": 4
     },
     {
-      "id": "transcript-aim-aim-gershuni-sync-w-povaliaev-nazarova-2026-0",
+      "id": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1261",
       "name": "AIM <> Gershuni sync w Povaliaev,Nazarova – 2026-02-20 1815",
       "type": "transcript",
       "group": 8,
@@ -15357,10 +14785,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-20",
-      "linkCount": 0
+      "linkCount": 4
     },
     {
-      "id": "transcript-aim-aim-gershuni-sync-w-povaliaev-nazarova-2026-0",
+      "id": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1262",
       "name": "AIM <> Gershuni sync w Povaliaev,Nazarova – 2026-02-25 1806",
       "type": "transcript",
       "group": 8,
@@ -15369,10 +14797,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-25",
-      "linkCount": 0
+      "linkCount": 3
     },
     {
-      "id": "transcript-aim-aim-gershuni-sync-w-povaliaev-nazarova-2026-0",
+      "id": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1263",
       "name": "AIM <> Gershuni sync w Povaliaev,Nazarova – 2026-03-06 1551",
       "type": "transcript",
       "group": 8,
@@ -15381,7 +14809,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-06",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-aim-katty-role-sync-w-povaliaev-levkovets-naz",
@@ -15417,10 +14845,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-09",
-      "linkCount": 6
+      "linkCount": 4
     },
     {
-      "id": "transcript-aim-aim-t4s-community-w-povaliaev-nazarova-2026-0",
+      "id": "meetings-transcript-aim-aim-t4s-community-w-povaliaev-nazaro",
       "name": "AIM <> t4s w Povaliaev,Nazarova – 2026-03-13 1542",
       "type": "transcript",
       "group": 8,
@@ -15429,7 +14857,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-03-13",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-aim-pos-prep-ws04-w-povaliaev-2026-03-10-1854",
@@ -15681,10 +15109,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-16",
-      "linkCount": 2
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-lab-w26-от-вопросов-к-созданию-w-povaliaev-20",
+      "id": "meetings-transcript-aim-lab-w26-от-вопросов-к-созданию-w-pov",
       "name": "LAB W26 от вопросов к созданию w Povaliaev – 2026-01-16 1515",
       "type": "transcript",
       "group": 8,
@@ -15693,7 +15121,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-01-16",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
       "id": "transcript-aim-lena-assist-sync-w-povaliaev-2026-03-09-1100",
@@ -15717,10 +15145,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-19",
-      "linkCount": 9
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-one-on-one-с-alex-ai-mindset-between-alexande",
+      "id": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between",
       "name": "One-on-One с Alex (AI Mindset) between Alexander Povaliaev and Olya Sanochkina w Povaliaev – 2026-02-12 1108",
       "type": "transcript",
       "group": 8,
@@ -15729,10 +15157,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-12",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-one-on-one-с-alex-ai-mindset-between-alexande",
+      "id": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1293",
       "name": "One-on-One с Alex (AI Mindset) between Alexander Povaliaev and Sergei Khabarov w Povaliaev – 2026-02-12 1304",
       "type": "transcript",
       "group": 8,
@@ -15741,10 +15169,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-12",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
-      "id": "transcript-aim-one-on-one-с-alex-ai-mindset-between-alexande",
+      "id": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1294",
       "name": "One-on-One с Alex (AI Mindset) between Alexander Povaliaev and Влада w Povaliaev – 2026-02-11 1105",
       "type": "transcript",
       "group": 8,
@@ -15753,10 +15181,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-11",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-one-on-one-с-alex-ai-mindset-between-alexande",
+      "id": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1295",
       "name": "One-on-One с Alex (AI Mindset) between Alexander Povaliaev and Вячеслав w Povaliaev – 2026-02-25 1043",
       "type": "transcript",
       "group": 8,
@@ -15765,10 +15193,10 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-25",
-      "linkCount": 0
+      "linkCount": 1
     },
     {
-      "id": "transcript-aim-one-on-one-с-alex-ai-mindset-between-alexande",
+      "id": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1296",
       "name": "One-on-One с Alex (AI Mindset) between Alexander Povaliaev and катя w Povaliaev,Levkovets – 2026-02-17 1300",
       "type": "transcript",
       "group": 8,
@@ -15777,7 +15205,7 @@
       "zone": "Meetings",
       "tags": [],
       "date": "2026-02-17",
-      "linkCount": 0
+      "linkCount": 2
     },
     {
       "id": "transcript-aim-seva-aim-w-povaliaev-2026-03-06-2218",
@@ -15932,7 +15360,7 @@
       "name": "Research & Analysis",
       "type": "zone",
       "group": 111,
-      "description": "Semantic zone: Research & Analysis. Contains 90 documents.",
+      "description": "Semantic zone: Research & Analysis. Contains 91 documents.",
       "isZone": true
     },
     {
@@ -15971,7 +15399,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "agents",
+      "source": "processes-agents",
       "target": "zone-other",
       "type": "belongs_to"
     },
@@ -16012,7 +15440,7 @@
     },
     {
       "source": "aim-overview-pitch-lab-follow-up-package-2026-02-22",
-      "target": "aim-overview-visual-skills-stack-2026-02-21",
+      "target": "inbox-aim-overview-visual-skills-stack-2026-02-21",
       "type": "references"
     },
     {
@@ -16021,7 +15449,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "zone-lab-cohorts",
       "type": "belongs_to"
     },
@@ -16622,6 +16050,11 @@
     },
     {
       "source": "sprint-agent-драфт-описания-продукта",
+      "target": "zone-lab-cohorts",
+      "type": "belongs_to"
+    },
+    {
+      "source": "processes-agents",
       "target": "zone-lab-cohorts",
       "type": "belongs_to"
     },
@@ -17451,7 +16884,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "w26-context-transcript-ws02-2025-12-11",
+      "source": "w26-context-sources-w26-context-transcript-ws02-2025-12-11",
       "target": "zone-lab-cohorts",
       "type": "belongs_to"
     },
@@ -18771,27 +18204,27 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "source": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "target": "aim-analysis-w26-lab-comprehensive-analysis-2026-02-16-claud",
       "type": "references"
     },
     {
-      "source": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "source": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "target": "aim-product-sync-2026-w09-2026-02-27",
       "type": "references"
     },
     {
-      "source": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "source": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "target": "02-spring-lab-x26",
       "type": "references"
     },
     {
-      "source": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "source": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "target": "index",
       "type": "references"
     },
     {
-      "source": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "source": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "target": "zone-lab-cohorts",
       "type": "belongs_to"
     },
@@ -18822,7 +18255,7 @@
     },
     {
       "source": "aim-program-spring-lab-x26-v2-2026-03-07",
-      "target": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "target": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "type": "references"
     },
     {
@@ -18841,7 +18274,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-research-spring-ai-education-lab-packaging-and-pricing-2",
+      "source": "inbox-aim-research-spring-ai-education-lab-packaging-and-pri",
       "target": "zone-lab-cohorts",
       "type": "belongs_to"
     },
@@ -19881,37 +19314,37 @@
       "type": "belongs_to"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "aim-report-content-context-gap-v3-final-2025-12-31",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "aim-report-data-key-metrics-2025-12-23",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "aim-report-data-loops-mapping-2025-12-23",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "aim-report-data-community-voice-2025-12-23",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "aim-report-research-extended-industry-research-2025-12-24-cl",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "aim-report-research-humanities-thought-leaders-2025-12-23",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "zone-marketing",
       "type": "belongs_to"
     },
@@ -19962,7 +19395,7 @@
     },
     {
       "source": "aim-report-content-context-gap-v3-final-2025-12-31",
-      "target": "agents",
+      "target": "weekly-syncs-agents",
       "type": "references"
     },
     {
@@ -19987,7 +19420,7 @@
     },
     {
       "source": "aim-report-data-key-metrics-2025-12-23",
-      "target": "agents",
+      "target": "weekly-syncs-agents",
       "type": "references"
     },
     {
@@ -19997,7 +19430,7 @@
     },
     {
       "source": "aim-report-data-loops-mapping-2025-12-23",
-      "target": "agents",
+      "target": "weekly-syncs-agents",
       "type": "references"
     },
     {
@@ -20062,7 +19495,7 @@
     },
     {
       "source": "aim-report-research-extended-industry-research-2025-12-24-cl",
-      "target": "agents",
+      "target": "weekly-syncs-agents",
       "type": "references"
     },
     {
@@ -20181,7 +19614,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-content-threads-posts-collection-2026-03-19",
+      "source": "inbox-aim-content-threads-posts-collection-2026-03-19",
       "target": "zone-marketing",
       "type": "belongs_to"
     },
@@ -20222,6 +19655,16 @@
     },
     {
       "source": "aim-post-instagram-carousel-что-для-вас-ai-опрос-и-кейсы-сту",
+      "target": "zone-marketing",
+      "type": "belongs_to"
+    },
+    {
+      "source": "instagram-posts-aim-post-instagram-carousel-что-для-вас-ai-о",
+      "target": "zone-marketing",
+      "type": "belongs_to"
+    },
+    {
+      "source": "instagram-posts-aim-post-instagram-carousel-что-для-вас-ai-о-448",
       "target": "zone-marketing",
       "type": "belongs_to"
     },
@@ -20311,12 +19754,12 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-post-telegram-bot-personal-operational-system-материалы-",
+      "source": "content-aim-post-telegram-bot-personal-operational-system-ма",
       "target": "zone-marketing",
       "type": "belongs_to"
     },
     {
-      "source": "readme",
+      "source": "visual-toolkit-readme",
       "target": "zone-marketing",
       "type": "belongs_to"
     },
@@ -21257,6 +20700,21 @@
     },
     {
       "source": "partner-speaker-stepan-gershuni",
+      "target": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1261",
+      "type": "references"
+    },
+    {
+      "source": "partner-speaker-stepan-gershuni",
+      "target": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1260",
+      "type": "references"
+    },
+    {
+      "source": "partner-speaker-stepan-gershuni",
+      "target": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro",
+      "type": "references"
+    },
+    {
+      "source": "partner-speaker-stepan-gershuni",
       "target": "transcript-aim-aim-gershuni-sync-w-povaliaev-nazarova-2026-0",
       "type": "references"
     },
@@ -21561,22 +21019,22 @@
       "type": "belongs_to"
     },
     {
-      "source": "readme",
+      "source": "visual-toolkit-readme",
       "target": "zone-partnerships",
       "type": "belongs_to"
     },
     {
-      "source": "template-partner-card",
+      "source": "aim-rules-template-partner-card",
       "target": "role-alexander-povaliaev",
       "type": "references"
     },
     {
-      "source": "template-partner-card",
+      "source": "aim-rules-template-partner-card",
       "target": "crm-partners-overview",
       "type": "references"
     },
     {
-      "source": "template-partner-card",
+      "source": "aim-rules-template-partner-card",
       "target": "zone-partnerships",
       "type": "belongs_to"
     },
@@ -21592,7 +21050,7 @@
     },
     {
       "source": "aim-partner-partners-overview",
-      "target": "template-partner-card",
+      "target": "aim-rules-template-partner-card",
       "type": "references"
     },
     {
@@ -21612,7 +21070,7 @@
     },
     {
       "source": "aim-rec-crm-partners-improvement-plan-2026-01-15-claude-code",
-      "target": "template-partner-card",
+      "target": "aim-rules-template-partner-card",
       "type": "references"
     },
     {
@@ -21641,7 +21099,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "agents",
+      "source": "processes-agents",
       "target": "zone-processes",
       "type": "belongs_to"
     },
@@ -22776,27 +22234,27 @@
       "type": "belongs_to"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "space-index-project-overview-2026-01-05-claude-code",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "space-speakers-speaker-pipeline-archive-2025-10-20",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "space-research-ai-mindset-stacks-product-development-strateg",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "space-research-social-design-stacks-transcript-analysis-indu",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "zone-products",
       "type": "belongs_to"
     },
@@ -22916,12 +22374,12 @@
       "type": "belongs_to"
     },
     {
-      "source": "space-research-maksim-spiridonov-research-supplementary-2025",
+      "source": "spiridonov-2025-12-11-space-research-maksim-spiridonov-resea",
       "target": "ai-mindset-space",
       "type": "references"
     },
     {
-      "source": "space-research-maksim-spiridonov-research-supplementary-2025",
+      "source": "spiridonov-2025-12-11-space-research-maksim-spiridonov-resea",
       "target": "zone-products",
       "type": "belongs_to"
     },
@@ -23596,12 +23054,12 @@
       "type": "belongs_to"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "space-index-founder-os-series-2025-01-05-cursor",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "template-space-session-template",
       "type": "references"
     },
@@ -24121,7 +23579,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "welcome",
+      "source": "ai-mindset-2026-welcome",
       "target": "zone-other",
       "type": "belongs_to"
     },
@@ -24221,7 +23679,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "template-partner-card",
+      "source": "aim-rules-template-partner-card",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
@@ -24406,7 +23864,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "rule-aim-shared-skills-infrastructure-2026-02-11-claude-code",
+      "source": "aim-rules-rule-aim-shared-skills-infrastructure-2026-02-11-c",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
@@ -24601,67 +24059,67 @@
       "type": "belongs_to"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "role-irina-nazarova",
       "type": "references"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "role-alexander-povaliaev",
       "type": "references"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "rule-visuals-index-visual-design-system-2026-02-04-claude-co",
       "type": "references"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "strategy-reference-team-role-matrix-2025-09-16",
       "type": "references"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "rule-visuals-og-covers-styles-2026-02-05-claude-code",
       "type": "references"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "rule-visuals-aim-report-cover-generator-2026-02-04-claude-co",
       "type": "references"
     },
     {
-      "source": "cards",
+      "source": "aim-visual-cards",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "covers",
+      "source": "aim-visual-covers",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "present",
+      "source": "aim-visual-present",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "svg",
+      "source": "aim-visual-svg",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "wrap",
+      "source": "aim-visual-wrap",
       "target": "rule-visual-svg-metaphors-creator-2026-01-11",
       "type": "references"
     },
     {
-      "source": "wrap",
+      "source": "aim-visual-wrap",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
@@ -24682,7 +24140,7 @@
     },
     {
       "source": "aim-research-team-skills-openclaw-implementation-2026-02-05-",
-      "target": "agents",
+      "target": "processes-agents",
       "type": "references"
     },
     {
@@ -24696,22 +24154,22 @@
       "type": "belongs_to"
     },
     {
-      "source": "readme",
+      "source": "visual-toolkit-readme",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "aim-analysis-style-analyzer-2026-02-21",
+      "source": "inbox-aim-analysis-style-analyzer-2026-02-21",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "aim-overview-visual-skills-stack-2026-02-21",
+      "source": "inbox-aim-overview-visual-skills-stack-2026-02-21",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "aim-skill-ai-image-generator-via-openrouter-2026-02-21",
+      "source": "inbox-aim-skill-ai-image-generator-via-openrouter-2026-02-21",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
@@ -24726,7 +24184,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-skill-visual-brief-wrapper-2026-02-21",
+      "source": "inbox-aim-skill-visual-brief-wrapper-2026-02-21",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
@@ -24736,17 +24194,17 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-tool-design-card-generator-2026-02-21",
+      "source": "inbox-aim-tool-design-card-generator-2026-02-21",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "aim-tool-presentation-builder-2026-02-21",
+      "source": "inbox-aim-tool-presentation-builder-2026-02-21",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
     {
-      "source": "aim-tool-svg-metaphor-generator-2026-02-21",
+      "source": "inbox-aim-tool-svg-metaphor-generator-2026-02-21",
       "target": "zone-rules-standards",
       "type": "belongs_to"
     },
@@ -24802,7 +24260,7 @@
     },
     {
       "source": "aim-rule-crm-process-curators-and-partners-2026-02-24",
-      "target": "template-partner-card",
+      "target": "aim-rules-template-partner-card",
       "type": "references"
     },
     {
@@ -24991,7 +24449,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "skill",
+      "source": "deck-skill-public-skill",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25171,7 +24629,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-analysis-style-analyzer-2026-02-21",
+      "source": "inbox-aim-analysis-style-analyzer-2026-02-21",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25206,7 +24664,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-content-threads-posts-collection-2026-03-19",
+      "source": "inbox-aim-content-threads-posts-collection-2026-03-19",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25351,7 +24809,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-overview-visual-skills-stack-2026-02-21",
+      "source": "inbox-aim-overview-visual-skills-stack-2026-02-21",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25391,7 +24849,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
+      "source": "inbox-aim-plan-spring-lab-x26-ecosystem-redesign-2026-03-04",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25442,6 +24900,11 @@
     },
     {
       "source": "aim-program-pitch-lab-workshop-program-2026-02-19-claude-cod",
+      "target": "zone-research-analysis",
+      "type": "belongs_to"
+    },
+    {
+      "source": "aim-report-lms-security-audit-remediation-2026-03-26",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25616,7 +25079,7 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-research-spring-ai-education-lab-packaging-and-pricing-2",
+      "source": "inbox-aim-research-spring-ai-education-lab-packaging-and-pri",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25641,17 +25104,17 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-skill-ai-image-generator-via-openrouter-2026-02-21",
+      "source": "inbox-aim-skill-ai-image-generator-via-openrouter-2026-02-21",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
     {
-      "source": "aim-skill-visual-brief-wrapper-2026-02-21",
+      "source": "inbox-aim-skill-visual-brief-wrapper-2026-02-21",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
     {
-      "source": "aim-tool-design-card-generator-2026-02-21",
+      "source": "inbox-aim-tool-design-card-generator-2026-02-21",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25666,12 +25129,12 @@
       "type": "belongs_to"
     },
     {
-      "source": "aim-tool-presentation-builder-2026-02-21",
+      "source": "inbox-aim-tool-presentation-builder-2026-02-21",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
     {
-      "source": "aim-tool-svg-metaphor-generator-2026-02-21",
+      "source": "inbox-aim-tool-svg-metaphor-generator-2026-02-21",
       "target": "zone-research-analysis",
       "type": "belongs_to"
     },
@@ -25781,57 +25244,57 @@
       "type": "belongs_to"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "rule-aim-sync-protocol-2026-02-04-claude-code",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "rule-aim-telegram-sync-summary-format-2026-02-06-claude-code",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "rule-aim-file-naming-convention-for-obsidian-2025-12-25",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "role-alexander-povaliaev",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "role-vlada-zorina",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "role-irina-nazarova",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "role-danik-vasil-ev",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "role-sergey-khabarov",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "role-katya-levkovets",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "role-ray-svitla",
       "type": "references"
     },
     {
-      "source": "agents",
+      "source": "weekly-syncs-agents",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -25992,7 +25455,7 @@
     },
     {
       "source": "aim-marketing-sync-2026-w10-2026-03-05",
-      "target": "transcript-aim-ai-mindset-marketing-w-povaliaev-nazarova-lev",
+      "target": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1202",
       "type": "references"
     },
     {
@@ -26092,7 +25555,7 @@
     },
     {
       "source": "aim-message-sync-protocol-introduction-2026-02-05-claude-cod",
-      "target": "agents",
+      "target": "weekly-syncs-agents",
       "type": "references"
     },
     {
@@ -26367,7 +25830,7 @@
     },
     {
       "source": "aim-product-sync-2026-w09-2026-02-27",
-      "target": "transcript-aim-ai-mindset-product-w-povaliaev-nazarova-2026-",
+      "target": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1222",
       "type": "references"
     },
     {
@@ -27021,6 +26484,26 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-m",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-m",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-m-1042",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-alexander-vasiliev-w-alex-p-ai-m-1042",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-30m-alexey-ivanov-w-alex-p-ai-mindset-w-poval",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -27147,6 +26630,16 @@
     },
     {
       "source": "transcript-aim-30m-ilya-gindin-w-alex-p-ai-mindset-w-povalia",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-ilya-gindin-w-alex-p-ai-mindset-",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-ilya-gindin-w-alex-p-ai-mindset-",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -27316,6 +26809,36 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind",
+      "target": "role-sergey-khabarov",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind-1073",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind-1073",
+      "target": "role-sergey-khabarov",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-sergei-khabarov-w-alex-p-ai-mind-1073",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-30m-tonya-zhukova-w-alex-p-ai-mindset-w-poval",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -27422,6 +26945,16 @@
     },
     {
       "source": "transcript-aim-30m-александр-васильев-w-alex-p-ai-mindset-w-",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-александр-васильев-w-alex-p-ai-m",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-александр-васильев-w-alex-p-ai-m",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -27556,6 +27089,26 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mind",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mind",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mind-1100",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-евгении-вольнов-w-alex-p-ai-mind-1100",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-30m-женя-курышев-w-alex-p-ai-mindset-w-povali",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -27672,6 +27225,21 @@
     },
     {
       "source": "transcript-aim-30m-катя-w-alex-p-ai-mindset-w-povaliaev-levk",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-катя-w-alex-p-ai-mindset-w-poval",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-катя-w-alex-p-ai-mindset-w-poval",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-30m-катя-w-alex-p-ai-mindset-w-poval",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -27762,6 +27330,11 @@
     },
     {
       "source": "transcript-aim-ai-mindset-w26-advanced-track-w-2026-02-11-18",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-w26-advanced-track-w-2026",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -27861,6 +27434,16 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-ai-mindset-sex-sale-tochka-lubvi-w-p",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-sex-sale-tochka-lubvi-w-p",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-ai-mindset-fos-session-weekly-w-2026-02-12-19",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -27911,6 +27494,246 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1145",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1145",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1145",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1146",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1146",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1146",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1147",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1147",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1147",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1148",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1148",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1148",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1149",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1149",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1149",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1150",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1150",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1150",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1151",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1151",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1151",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1152",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1152",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1152",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1153",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1153",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1153",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1154",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1154",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1154",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1155",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1155",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1155",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1156",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1156",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1156",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1157",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1157",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1157",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1158",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1158",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1158",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1159",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1159",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1159",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -27922,6 +27745,366 @@
     },
     {
       "source": "transcript-aim-ai-mindset-daily-sync-w-ira-w-povaliaev-nazar",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1161",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1161",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1161",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1162",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1162",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1162",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1163",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1163",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1163",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1164",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1164",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1164",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1165",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1165",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1165",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1166",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1166",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1166",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1167",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1167",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1167",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1168",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1168",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1168",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1169",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1169",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1169",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1170",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1170",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1170",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1171",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1171",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1171",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1172",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1172",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1172",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1173",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1173",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1173",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1174",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1174",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1174",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1175",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1175",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1175",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1176",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1176",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1176",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1177",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1177",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1177",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1178",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1178",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1178",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1179",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1179",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1179",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1180",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1180",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1180",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1181",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1181",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1181",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1182",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1182",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1182",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1183",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1183",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1183",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1184",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1184",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-daily-sync-w-ira-w-povali-1184",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -27967,6 +28150,21 @@
     },
     {
       "source": "transcript-aim-ai-mindset-infra-w-povaliaev-stavenski-nazaro",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-infra-w-povaliaev-stavens",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-infra-w-povaliaev-stavens",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-infra-w-povaliaev-stavens",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -28011,6 +28209,26 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-levkovets-naz",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-levkovets-naz",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-levkovets-naz",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-levkovets-naz",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-ai-mindset-marketing-w-povaliaev-levkovets-20",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -28022,6 +28240,66 @@
     },
     {
       "source": "transcript-aim-ai-mindset-marketing-w-povaliaev-levkovets-20",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1196",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1196",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1196",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1197",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1197",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1197",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1198",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1198",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-lev-1198",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -28042,6 +28320,86 @@
     },
     {
       "source": "transcript-aim-ai-mindset-marketing-w-povaliaev-nazarova-lev",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1201",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1201",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1201",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1201",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1202",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1202",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1202",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1202",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1203",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1203",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1203",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-marketing-w-povaliaev-naz-1203",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -28081,6 +28439,16 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev-",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev-",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-ai-mindset-partnerships-w-povaliaev-2026-02-0",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -28102,6 +28470,96 @@
     },
     {
       "source": "transcript-aim-ai-mindset-partnerships-w-povaliaev-nazarova-",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1210",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1210",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1210",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1211",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1211",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1211",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1212",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1212",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1212",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1213",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1213",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1213",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1214",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1214",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1214",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1215",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1215",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-partnerships-w-povaliaev--1215",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -28157,6 +28615,66 @@
     },
     {
       "source": "transcript-aim-ai-mindset-product-w-povaliaev-nazarova-2026-",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1222",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1222",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1222",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1223",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1223",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1223",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1224",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1224",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-product-w-povaliaev-nazar-1224",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -28381,6 +28899,36 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w-",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w-",
+      "target": "role-sergey-khabarov",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w-",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w--1242",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w--1242",
+      "target": "role-sergey-khabarov",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-sync-w-sergei-khabarov-w--1242",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-ai-mindset-team-w-levkovets-nazarova-povaliae",
       "target": "role-katya-levkovets",
       "type": "references"
@@ -28412,6 +28960,51 @@
     },
     {
       "source": "transcript-aim-ai-mindset-team-w-povaliaev-levkovets-2026-01",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1246",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1246",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1246",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1247",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1247",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-levkovet-1247",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -28456,6 +29049,106 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1251",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1251",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1251",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1251",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1252",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1252",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1252",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1252",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1253",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1253",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1253",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1253",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1254",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1254",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1254",
+      "target": "role-katya-levkovets",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-ai-mindset-team-w-povaliaev-nazarova-1254",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-ai-mindset-w26-retro-w-povaliaev-levkovets-na",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -28531,6 +29224,101 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro",
+      "target": "partner-speaker-stepan-gershuni",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1260",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1260",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1260",
+      "target": "partner-speaker-stepan-gershuni",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1260",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1261",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1261",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1261",
+      "target": "partner-speaker-stepan-gershuni",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1261",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1262",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1262",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1262",
+      "target": "partner-speaker-stepan-gershuni",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1262",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1263",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1263",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-gershuni-sync-w-povaliaev-nazaro-1263",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-aim-katty-role-sync-w-povaliaev-levkovets-naz",
       "target": "role-alexander-povaliaev",
       "type": "references"
@@ -28577,6 +29365,21 @@
     },
     {
       "source": "transcript-aim-aim-t4s-community-w-povaliaev-nazarova-2026-0",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-t4s-community-w-povaliaev-nazaro",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-t4s-community-w-povaliaev-nazaro",
+      "target": "role-irina-nazarova",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-aim-t4s-community-w-povaliaev-nazaro",
       "target": "zone-meetings",
       "type": "belongs_to"
     },
@@ -28831,6 +29634,16 @@
       "type": "belongs_to"
     },
     {
+      "source": "meetings-transcript-aim-lab-w26-от-вопросов-к-созданию-w-pov",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-lab-w26-от-вопросов-к-созданию-w-pov",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
       "source": "transcript-aim-lena-assist-sync-w-povaliaev-2026-03-09-1100",
       "target": "zone-meetings",
       "type": "belongs_to"
@@ -28846,14 +29659,64 @@
       "type": "belongs_to"
     },
     {
-      "source": "transcript-aim-one-on-one-с-alex-ai-mindset-between-alexande",
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1293",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1293",
       "target": "role-sergey-khabarov",
       "type": "references"
     },
     {
-      "source": "transcript-aim-one-on-one-с-alex-ai-mindset-between-alexande",
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1293",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1294",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1294",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1295",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1295",
+      "target": "zone-meetings",
+      "type": "belongs_to"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1296",
+      "target": "role-alexander-povaliaev",
+      "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1296",
       "target": "role-katya-levkovets",
       "type": "references"
+    },
+    {
+      "source": "meetings-transcript-aim-one-on-one-с-alex-ai-mindset-between-1296",
+      "target": "zone-meetings",
+      "type": "belongs_to"
     },
     {
       "source": "transcript-aim-seva-aim-w-povaliaev-2026-03-06-2218",
@@ -28893,10 +29756,10 @@
   ],
   "meta": {
     "vault": "/Users/alex/Library/CloudStorage/Dropbox/notes/AI mindset {shared}/ai-mindset-2026",
-    "generated": "2026-03-26T23:44:30.102Z",
-    "totalFiles": 1301,
-    "nodesKept": 1313,
-    "linksCreated": 2589,
+    "generated": "2026-03-26T23:51:16.239Z",
+    "totalFiles": 1302,
+    "nodesKept": 1266,
+    "linksCreated": 2876,
     "zones": 13
   }
 }
