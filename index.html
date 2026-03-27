@@ -268,7 +268,7 @@ const TYPES = {
 //  DATA — AI Native Organizations Sprint (curated)
 // ══════════════════════════════════════════════════
 const DATA = { nodes: [], links: [] };
-const N = (id,name,type,desc) => DATA.nodes.push({id,name,type,description:desc||''});
+const N = (id,name,type,desc,avatar) => DATA.nodes.push({id,name,type,description:desc||'',avatar:avatar||null});
 const L = (s,t,rel) => DATA.links.push({source:s,target:t,type:rel||'connects'});
 
 // Weeks
@@ -277,44 +277,42 @@ N('w2','Week 2: System Above Model','week','6-layer architecture. MCP, context e
 N('w3','Week 3: Company Functions','week','End-to-end automation. 90-day plan. Demo Day. April 6–13.');
 
 // Team
-N('stepan','Stepan Gershuni','team','Co-founder Cyber.Fund & CybOS AI. 200+ portfolio. All Monday lectures.');
-N('alex','Alexander Povaliaev','team','AI Mindset Founder. Product & Coordination. Focus sessions + workshops.');
+N('stepan','Stepan Gershuni','team','@gershuni · Co-founder Cyber.Fund & CybOS AI. 200+ portfolio. All Monday lectures.','speakers/stepan-gershuni.jpg');
+N('alex','Alexander Povaliaev','team','@alex_named · AI Mindset Founder. Product & Coordination. Focus sessions + workshops.','speakers/alexander-povaliaev.jpg');
 N('ira','Irina Nazarova','team','Operations. Speaker logistics, participant support.');
-N('ilya','Ilya Gindin','team','Focus practice facilitator. Tuesday sessions.');
-N('ksenia','Ksenia','team','Focus practice co-facilitator. Tuesday sessions.');
+N('ilya','Ilya Gindin','team','@igindin · Focus practice, AI products, design, PMR.','speakers/ilya-gindin.png');
+N('ksenia','Ksenia Tkacheva','team','@ks_andr_a · Focus practice co-facilitator.','speakers/kseniya-tkacheva.jpg');
 
-// Curators (all 13)
-N('fedoseev','Stanislav Fedoseev','curator','LLM, context management, agent systems, Claude Code. 30min calls.');
-N('yury','Yury','curator','Personal AI assistant, skills, workflows, company ontology.');
-N('jin','Jin Kolesnikov','curator','Strategic thinking, futurism, Obsidian, exocortex.');
-N('glazov','Stanislav Glazov','curator','Claude Code advanced: skills, MCP, hooks, Python.');
-N('vasiliev-c','Alexander Vasiliev','curator','Multi-agent systems, AI infrastructure.');
-N('sereja','Sergey Ris','curator','Claude Code, GitHub, cmux, skills. AI as unfair advantage.');
-N('gindin','Ilya Gindin','curator','AI products, design, PMR, SEO/AEO. Focus sessions.');
-N('anton-v','Anton Voskobovich','curator','Knowledge bases, Obsidian, Claude Code, Cursor.');
-N('stashenko','Alexander Stashenko','curator','Leadership efficiency, products, marketing, HR, ontology.');
-N('tkacheva','Ksenia Tkacheva','curator','Sprint goals, Obsidian/Cursor/CC, skills, KMS.');
-N('smirnov','Denis Smirnov','curator','Technical: system setup to agent harness.');
-N('golubev','Ilya Golubev','curator','AI-stack, agent pipelines, n8n, team standardization.');
-N('borodich','Alexander Borodich','curator','AI-native products, business models, founder lifecycle.');
+// Curators (all 13) — with LMS avatars
+N('fedoseev','Stanislav Fedoseev','curator','@Kettarian_Fox · LLM, context management, agent systems, Claude Code.','speakers/stanislav-fedoseev.jpg');
+N('yury','Yury','curator','@doonto · Personal AI assistant, skills, workflows, company ontology.','speakers/yury-doonto.jpg');
+N('jin','Jin Kolesnikov','curator','@He11ya · Strategic thinking, futurism, Obsidian, exocortex.','speakers/jin-kolesnikov.jpg');
+N('glazov','Stanislav Glazov','curator','@prcdrl · Claude Code advanced: skills, MCP, hooks, Python.','speakers/stanislav-glazov.jpg');
+N('vasiliev-c','Alexander Vasiliev','curator','@AlexFrmn · Multi-agent systems, AI infrastructure.','speakers/alexander-vasiliev.jpg');
+N('sereja','Sergey Ris','curator','@serejaris · Claude Code, GitHub, cmux, skills. AI as unfair advantage.','speakers/sereja-ris.jpg');
+N('anton-v','Anton Voskobovich','curator','@northcapen · Knowledge bases, Obsidian, Claude Code, Cursor.','speakers/anton-voskobovich.jpg');
+N('stashenko','Alexander Stashenko','curator','@Alexander_Stashenko · Leadership, products, marketing, HR, ontology.','speakers/alexander-stashenko.jpg');
+N('smirnov','Denis Smirnov','curator','@densmirnov · Technical: system setup to agent harness.','speakers/denis-smirnov.jpg');
+N('golubev','Ilya Golubev','curator','@oxigen717 · AI-stack, agent pipelines, n8n, team standardization.');
+N('borodich','Alexander Borodich','curator','@borodich · AI-native products, business models, founder lifecycle.');
 
-// Week 1 Speakers
-N('lisovsky','Evgeny Lisovsky','speaker','Business factory via vibe-coding. Thu 26.03.');
-N('khanarin','Dima Khanarin','speaker','AI transformation framework + timeline + pitfalls. Fri 27.03.');
+// Week 1 Speakers — with LMS avatars
+N('lisovsky','Evgeny Lisovsky','speaker','Business factory via vibe-coding. Thu 26.03.','speakers/eugene-lisovskiy.jpg');
+N('khanarin','Dima Khanarin','speaker','@khanarin · AI transformation framework + timeline. Fri 27.03.','speakers/dima-khanarin.jpg');
 
 // Week 2 Speakers
-N('ametov','Alexey Ametov','speaker','AI content for business. Non-slop quality. Wed 01.04.');
-N('kleban','Vitaly Kleban','speaker','Self-improving agents. Feedback loops. Wed 01.04.');
-N('sidora','Gleb Sidora','speaker','Technical coworking. MCP debugging. Thu 02.04.');
-N('kovalsky','Valery Kovalsky','speaker','AI-driven dev. Live build: task → app in 1h. Thu 02.04.');
-N('strakhov','George Strakhov','speaker','Agent team architecture. Oxford insights. Fri 03.04.');
-N('kravtsov','Daniil Kravtsov','speaker','Enterprise data pipelines. 99 agents. Knowledge graphs. Fri 03.04.');
+N('ametov','Alexey Ametov','speaker','@maxrepost · AI content for business. Non-slop. Wed 01.04.','speakers/alex-amyotov.jpg');
+N('kleban','Vitaly Kleban','speaker','@vkleban · Self-improving agents. Feedback loops. Wed 01.04.','speakers/vitaly-kleban.jpg');
+N('sidora','Gleb Sidora','speaker','@arodiss · Technical coworking. MCP debugging. Thu 02.04.','speakers/gleb-sidora.png');
+N('kovalsky','Valery Kovalsky','speaker','AI-driven dev. Live build: task → app in 1h. Thu 02.04.','speakers/valerii-kovalskii.jpg');
+N('strakhov','George Strakhov','speaker','Agent team architecture. Oxford insights. Fri 03.04.','speakers/george-strakhov.png');
+N('kravtsov','Daniil Kravtsov','speaker','Enterprise data pipelines. 99 agents. Knowledge graphs. Fri 03.04.','speakers/daniel-kravtsov.jpeg');
 
 // Week 3 Speakers
-N('reid','Evgeny Reid','speaker','AI × Investments and strategy. Tue 07.04.');
-N('annaov','Bayram Annaov','speaker','Sales automation. L1–L5 autonomy. onsa.ai. Wed 08.04.');
-N('buzko','Roma Buzko','speaker','Legal tech. Contract review. AI regulation. Thu 09.04.');
-N('ustinov','Seva Ustinov','speaker','Product-agent transformation. 30 people → workspace. Fri 10.04.');
+N('reid','Evgeny Reid','speaker','@eugene_rid · AI × Investments and strategy. Tue 07.04.','speakers/eugene-rid.jpg');
+N('annaov','Bayram Annaov','speaker','Sales automation. L1–L5 autonomy. onsa.ai. Wed 08.04.','speakers/bayram-annakov.jpg');
+N('buzko','Roma Buzko','speaker','Legal tech. Contract review. AI regulation. Thu 09.04.','speakers/roma-buzko.jpg');
+N('ustinov','Seva Ustinov','speaker','Product-agent transformation. 30 people → workspace. Fri 10.04.','speakers/seva-ustinov.jpg');
 
 // Topics
 N('t-pos','Personal OS','topic','Personal AI assistant. 10 categories. CLAUDE.md constitution.');
@@ -512,18 +510,35 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
       const geo = new THREE.OctahedronGeometry(sz*0.7, 1);
       const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.5, shininess:80, transparent:true, opacity:0.9 });
       group.add(new THREE.Mesh(geo, mat));
-      // Inner glow sphere
       const inner = new THREE.SphereGeometry(sz*0.35, 12, 12);
       const imat = new THREE.MeshBasicMaterial({ color:'#ffffff', transparent:true, opacity:0.15 });
       group.add(new THREE.Mesh(inner, imat));
+    } else if (isPerson && n.avatar) {
+      // PEOPLE WITH PHOTO — circular avatar sprite + colored ring
+      const ringGeo = new THREE.RingGeometry(sz*0.52, sz*0.62, 32);
+      const ringMat = new THREE.MeshBasicMaterial({ color, side:THREE.DoubleSide, transparent:true, opacity:0.8 });
+      group.add(new THREE.Mesh(ringGeo, ringMat));
+      // Load avatar as circular texture
+      const loader = new THREE.TextureLoader();
+      loader.load(n.avatar, tex => {
+        const spMat2 = new THREE.SpriteMaterial({ map:tex, transparent:false });
+        const avatarSprite = new THREE.Sprite(spMat2);
+        avatarSprite.scale.set(sz*1.0, sz*1.0, 1);
+        group.add(avatarSprite);
+      }, undefined, () => {
+        // Fallback: colored box if image fails
+        const geo = new THREE.BoxGeometry(sz*0.8, sz*0.8, sz*0.2);
+        const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3 });
+        group.add(new THREE.Mesh(geo, mat));
+      });
     } else if (isPerson) {
-      // PEOPLE — rounded box cards
-      const geo = new THREE.BoxGeometry(sz*1.2, sz*1.2, sz*0.35, 2, 2, 2);
+      // PEOPLE WITHOUT PHOTO — box card with icon
+      const geo = new THREE.BoxGeometry(sz*1.0, sz*1.0, sz*0.3, 2, 2, 2);
       const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.35, shininess:50, transparent:true, opacity:0.88 });
       group.add(new THREE.Mesh(geo, mat));
       const icon = new SpriteText(t.icon || '●');
-      icon.textHeight = sz * 0.7;
-      icon.position.z = sz * 0.22;
+      icon.textHeight = sz * 0.6;
+      icon.position.z = sz * 0.2;
       group.add(icon);
     } else if (n.type === 'concept') {
       // CONCEPTS — diamond shape
