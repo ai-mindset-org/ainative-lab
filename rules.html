@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS Rules & Skills — How the System Shaped Itself</title>
+<meta property="og:title" content="POS Rules & Skills — Personal Operating System">
+<meta property="og:description" content="19 rules and 12 core skills that emerged organically in a Claude Code-based Personal Operating System">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117;--s:#161b22;--s2:#1c2129;--b:#30363d;--b2:#484f58;
+  --t:#e6edf3;--t2:#8b949e;--t3:#484f58;
+  --teal:#4dc9d4;--teal-bg:rgba(77,201,212,0.08);
+  --blue:#58a6ff;--purple:#bc8cff;--green:#3fb950;
+  --orange:#d29922;--pink:#f778ba;--red:#f85149;
+  --mono:'IBM Plex Mono','SF Mono','JetBrains Mono','Fira Code',monospace;
+  --sans:'Space Grotesk',-apple-system,system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--t);font-family:var(--mono);font-size:13px;line-height:1.6}
+
+/* Terminal chrome */
+.terminal{background:var(--s);border:1px solid var(--b);border-radius:10px;margin:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.terminal-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#21262d;border-bottom:1px solid var(--b)}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+.terminal-title{flex:1;text-align:center;color:var(--t2);font-size:12px}
+
+/* Header */
+.header{padding:28px 32px 20px;border-bottom:1px solid var(--b)}
+.header h1{font-family:var(--sans);font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:4px}
+.header h1 span{color:var(--teal)}
+.header-sub{font-size:12px;color:var(--t2);max-width:680px;line-height:1.5}
+.header-sub strong{color:var(--teal)}
+
+/* Stats bar */
+.stats-bar{display:flex;gap:24px;padding:12px 32px;border-bottom:1px solid var(--b);font-size:11px;color:var(--t2);flex-wrap:wrap}
+.stats-bar .n{color:var(--t);font-weight:600;font-size:14px;font-family:var(--sans)}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--b)}
+.tab{padding:12px 24px;font-size:12px;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;font-family:var(--mono)}
+.tab:hover{color:var(--t);background:rgba(255,255,255,0.02)}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.tab .tab-count{font-size:10px;color:var(--t3);margin-left:4px}
+
+/* Filters */
+.filters{display:flex;flex-wrap:wrap;gap:6px;padding:12px 32px;border-bottom:1px solid var(--b)}
+.filter{font-size:11px;padding:4px 12px;border-radius:14px;border:1px solid var(--b);color:var(--t3);cursor:pointer;transition:all .15s;background:transparent;font-family:var(--mono)}
+.filter:hover{border-color:var(--t2);color:var(--t2)}
+.filter.active{border-color:var(--teal);color:var(--teal);background:var(--teal-bg)}
+
+/* Content area */
+.content{padding:20px 32px 32px;max-width:100%}
+
+/* Section heading */
+.section-head{display:flex;align-items:center;gap:10px;margin:24px 0 12px;font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px}
+.section-head::after{content:'';flex:1;height:1px;background:var(--b)}
+
+/* Card — shared */
+.card{background:var(--bg);border:1px solid var(--b);border-radius:8px;margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:var(--b2)}
+.card.open{border-color:var(--teal)}
+.card-head{padding:14px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px}
+.card-icon{width:10px;height:10px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.card-main{flex:1;min-width:0}
+.card-name{font-size:13px;font-weight:600;margin-bottom:2px;font-family:var(--sans)}
+.card-oneliner{font-size:11px;color:var(--t2);line-height:1.4}
+.card-badges{display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;max-width:180px}
+.badge{font-size:9px;padding:2px 7px;border-radius:3px;border:1px solid var(--b);color:var(--t3);white-space:nowrap}
+.badge.rule-badge{border-color:rgba(88,166,255,0.3);color:var(--blue);background:rgba(88,166,255,0.06)}
+.badge.skill-badge{border-color:rgba(63,185,80,0.3);color:var(--green);background:rgba(63,185,80,0.06)}
+
+/* Card body */
+.card-body{display:none;padding:0 16px 16px 38px;font-size:12px;color:var(--t2);line-height:1.7}
+.card.open .card-body{display:block}
+.card-body code{background:var(--s2);padding:1px 5px;border-radius:3px;font-size:11px;color:var(--teal)}
+.card-body .ex{background:var(--s);border:1px solid var(--b);border-radius:6px;padding:10px 14px;margin:8px 0;font-size:11px;color:var(--t2);white-space:pre-wrap;line-height:1.6;overflow-x:auto}
+.card-body .ex .hl{color:var(--teal)}
+.card-body .ex .hl2{color:var(--orange)}
+.card-body .ex .hl3{color:var(--green)}
+.card-body .ex .cm{color:var(--t3)}
+.card-body p{margin-bottom:8px}
+.card-body ul{margin:4px 0 8px 16px}
+.card-body li{margin-bottom:3px}
+.card-body h4{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 6px}
+.origin{font-size:10px;color:var(--t3);margin-top:12px;padding-top:10px;border-top:1px solid var(--b);line-height:1.5}
+
+/* Prompt */
+.prompt-section{padding:20px 32px 24px;border-top:1px solid var(--b)}
+.prompt-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.prompt-wrap{position:relative}
+.prompt{background:var(--bg);border:1px solid var(--b);border-radius:8px;padding:16px;font-size:11px;color:var(--t2);line-height:1.6;white-space:pre-wrap;max-height:260px;overflow-y:auto}
+.copy{position:absolute;top:8px;right:8px;background:var(--s);border:1px solid var(--b);color:var(--t2);padding:5px 12px;border-radius:4px;cursor:pointer;font-size:10px;font-family:var(--mono);transition:all .15s}
+.copy:hover{border-color:var(--teal);color:var(--teal)}
+
+/* Footer */
+.footer-bar{padding:12px 32px;border-top:1px solid var(--b);display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--t3);flex-wrap:wrap;gap:8px}
+.footer-bar a{color:var(--teal);text-decoration:none}
+.footer-bar a:hover{text-decoration:underline}
+
+/* Responsive */
+@media(max-width:700px){
+  .terminal{margin:8px}
+  .header,.content,.filters,.prompt-section,.footer-bar{padding-left:16px;padding-right:16px}
+  .stats-bar{padding:12px 16px}
+  .card-badges{display:none}
+  .tabs{overflow-x:auto}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--s)}
+::-webkit-scrollbar-thumb{background:var(--b);border-radius:3px}
+
+/* Animations */
+.card{animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="terminal">
+  <div class="terminal-bar">
+    <div class="dot r"></div>
+    <div class="dot y"></div>
+    <div class="dot g"></div>
+    <div class="terminal-title">pos-rules &mdash; Personal Operating System &mdash; AI Mindset</div>
+  </div>
+
+  <div class="header">
+    <h1><span>&gt;</span> Rules &amp; Skills</h1>
+    <p class="header-sub">
+      Правила и базовые скиллы, которые <strong>сложились органически</strong> в POS за время работы.
+      Каждое правило решает конкретную боль. Каждый скилл автоматизирует повторяющееся действие.
+      Кликните карточку для деталей.
+    </p>
+  </div>
+
+  <div class="stats-bar" id="stats"></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="filters" id="filters"></div>
+
+  <div class="content" id="content"></div>
+
+  <div class="prompt-section">
+    <div class="prompt-label">prompt output</div>
+    <div class="prompt-wrap">
+      <button class="copy" onclick="copyPrompt()">copy</button>
+      <div class="prompt" id="prompt"></div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>POS Rules Explorer &middot; March 2026</span>
+    <span>Built on <a href="https://claude.ai/claude-code" target="_blank">Claude Code</a> &middot; <a href="index.html">Knowledge Graph</a> &middot; AI Mindset</span>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════
+
+const items = [
+
+// ─── RULES ─────────────────────────────────────
+
+{
+  kind: 'rule',
+  name: 'Naming Convention',
+  one: 'каждый файл: {project} {type} description – YYYY-MM-DD.md',
+  cat: 'files',
+  color: '#4dc9d4',
+  tags: ['critical', 'daily'],
+  body: `<p>Жёсткий формат именования всех файлов в Obsidian vault (11,865 документов). Обеспечивает фильтрацию, сортировку и мгновенный поиск без структуры папок.</p>
+
+<h4>Формат</h4>
+<div class="ex"><span class="hl">{project}</span> <span class="hl2">{type}</span> description – <span class="hl3">YYYY-MM-DD</span>.md</div>
+
+<h4>Примеры</h4>
+<div class="ex"><span class="hl">{AIM}</span> <span class="hl2">{research}</span> AI-Native Market Analysis – <span class="hl3">2026-03-15</span>.md
+<span class="hl">{rule}</span> Claude Context Management Protocol – <span class="hl3">2026-02-08</span>.md
+<span class="hl">{AIM}</span> <span class="hl2">{meeting}</span> Weekly Sync Notes – <span class="hl3">2026-03-24</span>.md
+<span class="hl">{AIM}</span> <span class="hl2">{prd}</span> Linear Awareness Layer – <span class="hl3">2026-02-19</span>.md</div>
+
+<h4>Ключевые правила</h4>
+<ul>
+<li>Проект и тип — в <strong>фигурных скобках</strong>: <code>{AIM}</code>, <code>{rule}</code>, <code>{research}</code>, <code>{prd}</code></li>
+<li>Дата <strong>всегда в конце</strong> после EN DASH (–). Дата в середине — критическая ошибка</li>
+<li>Суффикс интерфейса (Claude Code, Cursor) — <strong>deprecated с 2026-02-20</strong></li>
+<li>Обязательный <strong>YAML frontmatter</strong> с тегами в каждом файле</li>
+<li>Перед созданием файла — <strong>прочитать naming rule file</strong> и проверить существующие коды</li>
+</ul>
+
+<div class="origin"><strong>Когда появилось:</strong> ~2025-09, формализовано постепенно.<br><strong>Обновлено:</strong> 2026-02-20 — убрали суффикс интерфейса (было "– Claude Code", стало просто дата).<br><strong>Живёт в:</strong> CLAUDE.md (global + project), .cursorrules, {rule} file naming convention for Obsidian.md<br><strong>Инструмент:</strong> <a href="naming.html" style="color:var(--teal)">Naming Convention Interactive Tool</a></div>`,
+},
+{
+  kind: 'rule',
+  name: 'No New Folders',
+  one: 'никогда не создавать папки — только существующие + naming для группировки',
+  cat: 'files',
+  color: '#4dc9d4',
+  tags: ['critical'],
+  body: `<p>В vault с 11,865 файлами неконтролируемое создание папок = хаос. Организация — через naming convention, теги и wiki-ссылки.</p>
+
+<h4>Правила</h4>
+<ul>
+<li>Новые папки создаёт <strong>только пользователь вручную</strong></li>
+<li>Группировка: теги (<code>#project/aim</code>) + wiki-links (<code>[[topic]]</code>), не директории</li>
+<li>Перед созданием файла — <strong>проверить существующую структуру</strong></li>
+<li>Поиск файлов — через QMD semantic search, не через навигацию по папкам</li>
+</ul>
+
+<div class="origin"><strong>Причина:</strong> vault разрастался хаотично — одни и те же типы файлов в 5 разных папках. Плоская структура + naming convention + поиск масштабируется лучше.<br><strong>Исключение:</strong> _code/ имеет категории (_dashboards, _landings, etc.) — это кодовые проекты, не заметки.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'File Routing',
+  one: '{AIM} файлы → team vault, личное → /notes/, код → _code/',
+  cat: 'files',
+  color: '#4dc9d4',
+  tags: ['daily'],
+  body: `<p>Чёткое разделение потоков: личное, командное, код. Каждый файл имеет один правильный путь.</p>
+
+<h4>Маршруты</h4>
+<div class="ex"><span class="hl">Личные заметки</span>        → /notes/
+<span class="hl">Командная работа AIM</span>   → /AI mindset {shared}/ai-mindset-2026/
+<span class="hl">Linear задачи</span>          → командный vault
+<span class="hl">{AIM} {research}</span>       → ai-mindset-2026/inbox/
+<span class="hl">{rule}, {prd}</span>          → ai-mindset-2026/aim-rules/
+<span class="hl">{meeting}</span>              → ai-mindset-2026/meetings/
+<span class="hl">Code projects</span>          → /Users/alex/Documents/_code/{category}/</div>
+
+<h4>Внутри team vault</h4>
+<ul>
+<li><code>aim-rules/</code> — правила, стандарты, спецификации, скиллы</li>
+<li><code>inbox/</code> — research, analysis, overview, черновики</li>
+<li><code>meetings/</code> — встречи, транскрипты</li>
+<li><code>Org/Partners/</code> — партнёры CRM</li>
+<li><code>Labs/{cohort}/</code> — когорты (f25, w26, auto01)</li>
+</ul>
+
+<div class="origin"><strong>Установилось:</strong> 2025-11.<br><strong>Обновлено:</strong> 2026-03-27 — 13 файлов перенесены по правильным путям после аудита.<br><strong>Индекс структуры:</strong> AGENTS.md в корне team vault.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'File Path References',
+  one: 'простые пути → relative; сложные ({}, пробелы) → absolute; URL-encoded — никогда',
+  cat: 'files',
+  color: '#4dc9d4',
+  tags: ['daily'],
+  body: `<p>Cursor и VSCode не открывают ссылки с URL-encoded символами (<code>%7B</code>, <code>%20</code>). Vault полон файлов с <code>{project}</code> и пробелами.</p>
+
+<h4>Правила</h4>
+<div class="ex"><span class="hl3">Простой путь:</span>  [AIM-utm.md](.claude/skills/AIM-utm.md)
+<span class="hl3">Сложный путь:</span> \`/Users/alex/.../AI mindset {shared}/.../file.md\`
+<span class="hl2">ПЛОХО:</span>       [file](path%20with%20%7Bbraces%7D/file.md)  <span class="cm">← не работает в Cursor</span></div>
+
+<div class="origin"><strong>Причина:</strong> ссылки на файлы в ответах Claude Code — кликабельные. URL-encoding ломает навигацию.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Telegram Message Style',
+  one: 'строчная, без эмоджи, en dash, конкретно, без корпоративщины',
+  cat: 'communication',
+  color: '#f778ba',
+  tags: ['daily'],
+  body: `<p>Все сообщения через MCP Telegram — в стиле AI Mindset Project Communication. Стиль формирует tone of voice всей команды.</p>
+
+<h4>Правила стиля</h4>
+<ul>
+<li><strong>Строчная буква</strong> в начале блоков (кроме имён и заголовков)</li>
+<li><strong>Без эмоджи</strong> — исключение только если пользователь явно попросит</li>
+<li><strong>EN DASH (–)</strong> вместо тире. Не em dash (—), не дефис (-)</li>
+<li><strong>Лаконично</strong> — главная мысль в первых 2–3 строках</li>
+<li><strong>Конкретно</strong> — кто, что, когда, ссылка. Не абстракции</li>
+<li><strong>Без корпоративщины</strong> — никаких «в рамках», «в контексте», «хотелось бы»</li>
+<li><strong>Без ложной вежливости</strong> — никаких «извините за беспокойство»</li>
+<li>Абзацы по 2–4 строки, между блоками — пустая строка</li>
+</ul>
+
+<h4>Пример</h4>
+<div class="ex"><span class="cm">// ПЛОХО:</span>
+Добрый день! Хотелось бы в рамках нашего текущего
+взаимодействия обсудить возможные направления...
+
+<span class="cm">// ХОРОШО:</span>
+обновление по FOS sprint –
+
+запустили когорту auto01, 34 участника
+задачи на неделю раскинули по Linear
+нужен фидбек по первому модулю – до четверга</div>
+
+<div class="origin"><strong>Формализовано:</strong> 2026-01.<br><strong>Референс:</strong> {rule} AI Mindset Project Communication.md</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Forbidden Channels',
+  one: 'AI Mindset канал (1877517944) — никогда не отправлять через MCP',
+  cat: 'communication',
+  color: '#f778ba',
+  tags: ['critical'],
+  body: `<p>Hard blocklist для MCP Telegram. Публичный канал = только ручные посты, никакой автоматики.</p>
+
+<h4>Blocklist</h4>
+<div class="ex">AI Mindset (основной канал)  chat_id: <span class="hl2">1877517944</span>  <span class="cm">← НИКОГДА</span></div>
+
+<h4>Протокол</h4>
+<ul>
+<li>Перед отправкой в любой канал AI Mindset — <strong>проверить chat_id</strong> по blocklist</li>
+<li>При сомнении — отправлять в <strong>Saved Messages</strong> (<code>me</code>) и уточнить у пользователя</li>
+<li>Командные анонсы — <strong>только после явного подтверждения</strong> канала</li>
+</ul>
+
+<div class="origin"><strong>Причина:</strong> инцидент — чуть не отправили тестовое сообщение в публичный канал на 2000+ подписчиков. Теперь — hard blocklist в CLAUDE.md.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Partner Tone',
+  one: 'для партнёрских сообщений — свой тон: action items по сторонам, числа как якоря',
+  cat: 'communication',
+  color: '#f778ba',
+  tags: ['trigger'],
+  body: `<p>Отдельный тон для follow-up сообщений партнёрам в Telegram-группах.</p>
+
+<h4>Паттерн</h4>
+<ul>
+<li>lowercase + en dash (как общий стиль)</li>
+<li>Action items <strong>разделены по сторонам</strong>: "с твоей стороны" / "с нашей"</li>
+<li>Числа как якоря (даты, суммы, метрики)</li>
+<li>Без маркетинга — деловой, casual close</li>
+</ul>
+
+<h4>Триггеры автоопределения</h4>
+<div class="ex">"партнёру", "в группу", "follow-up"  <span class="cm">→ /content-voice tone:partner</span></div>
+
+<div class="origin"><strong>Установлено:</strong> 2026-03-04.<br><strong>Skill:</strong> /content-voice с тоном partner.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Context Management Protocol',
+  one: '< 50% OK, 50–70% WARN compact, > 70% CRIT → handoff only',
+  cat: 'protocol',
+  color: '#58a6ff',
+  tags: ['every-response'],
+  body: `<p>Мониторинг контекстного окна Claude Code. Три режима поведения, обязательный footer в каждом ответе.</p>
+
+<h4>Режимы</h4>
+<div class="ex"><span class="hl3">●</span>  &lt; 50%   OK     полный функционал
+<span class="hl2">◐</span>  50–70%  WARN   компактные ответы, экономия контекста
+<span class="hl2" style="color:var(--red)">○</span>  &gt; 70%   CRIT   ТОЛЬКО handoff, не начинать новое</div>
+
+<h4>Footer (обязателен)</h4>
+<div class="ex">◇ ctx: 12% | ◇118k | <span class="hl3">●</span>
+▫ eval: T:✓ R:✓ C:○</div>
+
+<h4>Критические правила</h4>
+<ul>
+<li>Процент берётся <strong>только из Status Line</strong> — не считать вручную (1M ≠ 200K)</li>
+<li>При CRIT: сохранить прогресс → сгенерировать handoff → не начинать новое</li>
+<li>Handoff: точные пути, что сделано, что осталось, prompt для продолжения</li>
+</ul>
+
+<div class="origin"><strong>Установлено:</strong> 2026-02-08.<br><strong>Причина:</strong> несколько потерянных сессий — контекст переполнялся без предупреждения, работа терялась.<br><strong>Skill:</strong> /context-compact для генерации handoff.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Auto-Eval (T/R/C)',
+  one: 'каждый ответ оценивается: Text, Rules, Code — binary pass/fail',
+  cat: 'protocol',
+  color: '#58a6ff',
+  tags: ['every-response'],
+  body: `<p>"Evals are the new PRD" — Hamel Husain. Self-improvement loop, встроенный в каждый ответ.</p>
+
+<h4>Рубрика</h4>
+<div class="ex"><span class="hl">T (Text)</span>   структура, ясность, инсайты, actionable
+<span class="hl">R (Rules)</span>  naming convention, папки, форматирование
+<span class="hl">C (Code)</span>   работает, минимализм, идиоматичность
+
+<span class="cm">Pass:</span> ✓    <span class="cm">Fail:</span> ✗    <span class="cm">N/A:</span> ○</div>
+
+<h4>Пример</h4>
+<div class="ex">▫ eval: T:✓ R:✓ C:○           <span class="cm">← всё ок, кода не было</span>
+▫ eval: T:✓ R:<span class="hl2">✗</span> C:✓ | → naming  <span class="cm">← fail в Rules, указать где</span></div>
+
+<h4>Escalation</h4>
+<ul>
+<li>При <strong>3+ Fail в одной области</strong> → предложить новое правило для CLAUDE.md</li>
+<li>Лог: <code>~/.claude/evals/log.jsonl</code></li>
+<li>Improvements queue: <code>~/.claude/evals/improvements.md</code></li>
+</ul>
+
+<div class="origin"><strong>Установлено:</strong> 2026-02.<br><strong>Идея:</strong> вместо внешнего QA — self-assessment в реальном времени.<br><strong>Рубрика:</strong> ~/.claude/evals/rubric.md</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Skill Placement (Global / Team / Local)',
+  one: 'при создании скилла — всегда спросить куда сохранить',
+  cat: 'skills',
+  color: '#3fb950',
+  tags: ['trigger'],
+  body: `<p>Три уровня скиллов с разной видимостью. При создании нового скилла — обязательный вопрос.</p>
+
+<h4>Уровни</h4>
+<div class="ex"><span class="hl3">Global</span>   ~/.claude/skills/         <span class="cm">← все проекты, все рабочие директории</span>
+<span class="hl">Team</span>    aim-rules/skills/         <span class="cm">← AI Mindset, синкается через Obsidian Sync</span>
+<span class="hl2">Local</span>   .claude/skills/            <span class="cm">← только текущий проект</span></div>
+
+<h4>Как team skills работают</h4>
+<p>Claude Code видит скиллы только в <code>~/.claude/skills/</code> и <code>.claude/skills/</code> рабочей директории. Team vault — подпапка, его <code>.claude/skills/</code> не видны.</p>
+<p><strong>Решение:</strong> symlinks из <code>/notes/.claude/skills/AIM-*</code> → team vault. Скрипт <code>sync-team-skills.sh</code> создаёт их автоматически.</p>
+
+<div class="origin"><strong>Установлено:</strong> 2026-01.<br><strong>Причина:</strong> team skills терялись при работе из разных рабочих директорий. Symlinks решили проблему.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Spec Before Code',
+  one: 'сложная фича (3+ файлов) → сначала spec через OpenSpec, потом код',
+  cat: 'development',
+  color: '#bc8cff',
+  tags: ['trigger'],
+  body: `<p>Spec-driven development: планируешь → генерируешь спецификацию → кодишь по ней. Спеки живут в репо, не теряются между сессиями.</p>
+
+<h4>Workflow</h4>
+<div class="ex">/opsx:propose "описание"   <span class="cm">← proposal + design + tasks</span>
+/opsx:apply                <span class="cm">← реализация по чеклисту</span>
+/opsx:archive              <span class="cm">← архивация после завершения</span></div>
+
+<h4>Когда предлагать</h4>
+<ul>
+<li>Новая фича <strong>3+ файлов</strong></li>
+<li>Архитектурное изменение</li>
+<li>Неясные требования (пользователь описал цель, но не путь)</li>
+<li>Multi-agent sprint (3+ параллельных агентов)</li>
+</ul>
+
+<h4>Когда НЕ предлагать</h4>
+<ul>
+<li>Быстрый фикс (1–2 файла)</li>
+<li>Контентные правки (markdown, данные)</li>
+<li>Одноразовые скрипты</li>
+</ul>
+
+<div class="origin"><strong>Установлено:</strong> 2026-02.<br><strong>Инструмент:</strong> @fission-ai/openspec</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Team Roles — Always Reference',
+  one: 'при упоминании человека из команды — сверить с карточкой роли',
+  cat: 'team',
+  color: '#f778ba',
+  tags: ['daily'],
+  body: `<p>8 человек в команде, у каждого — файл роли с зонами ответственности.</p>
+
+<h4>Команда</h4>
+<div class="ex">Alex    Founder & Vision Lead
+Ira     Operations
+Vlada   Partnerships
+Dan     Tech
+Katya   Content & Design
+Olya    Operations, POS
+Lena    PM Coordinator
+Karina  (newest member)</div>
+
+<h4>Правила</h4>
+<ul>
+<li>В PM review, sync — <strong>ссылаться на роль</strong> каждого упомянутого</li>
+<li>При назначении задач — <strong>сверять зоны ответственности</strong></li>
+<li><strong>Флагить задачи не по профилю</strong> (tech задача на content role)</li>
+<li>Файлы ролей: <code>Org/HR/roles/{role} {Name}.md</code></li>
+</ul>
+
+<div class="origin"><strong>Установлено:</strong> 2026-01.<br><strong>Причина:</strong> задачи назначались без учёта компетенций — tech задача уходила content человеку.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Cover = HTML, Not SVG',
+  one: 'обложки и баннеры — single-file HTML, terminal chrome, real data',
+  cat: 'content',
+  color: '#d29922',
+  tags: ['media'],
+  body: `<p>Визуальный стиль всех обложек и баннеров — terminal aesthetic.</p>
+
+<h4>Стандарт</h4>
+<ul>
+<li><strong>Single-file HTML</strong> с inline CSS — не SVG, не Figma</li>
+<li><strong>Terminal chrome</strong>: traffic light dots, window title bar</li>
+<li><strong>Monospace fonts</strong>: SF Mono / JetBrains Mono</li>
+<li><strong>Real data</strong> в mockups — actual Linear task IDs, skill names, не placeholders</li>
+<li>GitHub dark palette (<code>#0d1117</code>), 5-level type hierarchy через opacity</li>
+</ul>
+
+<h4>Форматы</h4>
+<div class="ex">Telegram banner:  <span class="hl">1500×500</span> или 1080×360 (3:1)
+OG image:         <span class="hl">1200×630</span>
+Stories:          <span class="hl">1080×1920</span>
+Carousel:         <span class="hl">1080×1350</span></div>
+
+<div class="origin"><strong>Установлено:</strong> 2026-03-12.<br><strong>Причина:</strong> SVG рендерился по-разному в разных средах. HTML + скриншот = pixel-perfect.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'OG Image — Always First',
+  one: 'любой сайт/лендинг — сразу web-cover.png + мета-теги',
+  cat: 'content',
+  color: '#d29922',
+  tags: ['trigger'],
+  body: `<p>При создании любого сайта — в первой же итерации:</p>
+<ul>
+<li>Скриншот hero-секции → <code>assets/web-cover.png</code> (1200×630)</li>
+<li>Полный набор мета-тегов: og:image, og:title, og:description, twitter:card</li>
+</ul>
+
+<div class="origin"><strong>Причина:</strong> несколько лендингов были задеплоены без OG-image. В Telegram и Twitter превью — пустой белый прямоугольник.</div>`,
+},
+
+// ─── SKILLS (базовые, ежедневные) ─────────────
+
+{
+  kind: 'skill',
+  name: '/vox',
+  one: 'terminal day advisor — собирает полный контекст и даёт actionable план дня',
+  cat: 'daily-ops',
+  color: '#3fb950',
+  tags: ['daily', 'core'],
+  body: `<p>Единая точка входа в день. Собирает данные из всех MCP серверов и выдаёт конкретный план.</p>
+
+<h4>Что собирает</h4>
+<ul>
+<li><strong>Calendar</strong> — события на сегодня</li>
+<li><strong>Linear</strong> — In Progress и Todo задачи</li>
+<li><strong>Krisp</strong> — предстоящие встречи, action items</li>
+<li><strong>Vault</strong> — daily focus, текущие проекты</li>
+<li><strong>Sessions</strong> — что делалось вчера</li>
+</ul>
+
+<h4>Выход</h4>
+<p>Не абстрактные советы — <strong>конкретные действия</strong> с приоритетами и таймингом.</p>
+
+<div class="origin"><strong>Тип:</strong> Global skill (~/.claude/skills/vox)<br><strong>MCP:</strong> Krisp, Linear, Google Calendar, QMD</div>`,
+},
+{
+  kind: 'skill',
+  name: '/pos-morning',
+  one: 'утренний бриф — calendar + tasks + sessions + vault → один фокус на день',
+  cat: 'daily-ops',
+  color: '#3fb950',
+  tags: ['daily', 'core'],
+  body: `<p>Автоматический утренний бриф. Три режима вывода: полный, компактный, Telegram.</p>
+
+<h4>Pipeline</h4>
+<div class="ex">MCP servers → gather context → synthesize → <span class="hl">ONE focus sentence</span></div>
+
+<p>Результат — не список всего, а <strong>главный фокус дня</strong> + 3–5 supporting actions.</p>
+
+<div class="origin"><strong>Тип:</strong> Global skill<br><strong>Связан с:</strong> /daily-focus (генерирует TG-сообщение + визуальную метафору)</div>`,
+},
+{
+  kind: 'skill',
+  name: '/daily-focus',
+  one: 'daily focus как Telegram-сообщение (#focus) + визуальная метафора дня',
+  cat: 'daily-ops',
+  color: '#3fb950',
+  tags: ['daily', 'core'],
+  body: `<p>Генерирует два артефакта: текстовый фокус для Telegram и SVG-метафору.</p>
+
+<h4>Формат</h4>
+<div class="ex"><span class="hl">#focus</span> 2026-03-27
+
+один фокус на сегодня – [тема]
+
+supporting:
+– задача 1
+– задача 2
+– задача 3</div>
+
+<p>Визуальная метафора — через <code>/daily-metaphor</code> (SVG на основе фокуса).</p>
+
+<div class="origin"><strong>Тип:</strong> Global skill<br><strong>Отправка:</strong> Telegram Saved Messages → #focus хештег</div>`,
+},
+{
+  kind: 'skill',
+  name: '/research',
+  one: 'unified research — quick lookup или deep parallel через Exa sub-agents',
+  cat: 'research',
+  color: '#bc8cff',
+  tags: ['core'],
+  body: `<p>Один скилл для всех типов исследований. Автоматически определяет глубину.</p>
+
+<h4>Режимы</h4>
+<div class="ex"><span class="hl3">quick</span>    одиночный Exa search, 1 агент
+<span class="hl">deep</span>     параллельные sub-agents, diversified angles
+<span class="hl2">preset</span>   video, competitor, edtech, product, market</div>
+
+<h4>Пресеты</h4>
+<ul>
+<li><strong>video</strong> — YouTube, подкасты, выступления</li>
+<li><strong>competitor</strong> — конкуренты, аналоги, positioning</li>
+<li><strong>market</strong> — тренды, размер рынка, dynamics</li>
+</ul>
+
+<div class="origin"><strong>Тип:</strong> Global skill<br><strong>MCP:</strong> Exa (web search + code context)</div>`,
+},
+{
+  kind: 'skill',
+  name: '/ceo-council',
+  one: 'стратегический анализ от нескольких независимых Opus sub-agents',
+  cat: 'research',
+  color: '#bc8cff',
+  tags: ['core'],
+  body: `<p>Параллельные sub-agents (Opus), каждый анализирует вопрос со своей экспертной позиции. Потом — синтез.</p>
+
+<h4>Как работает</h4>
+<ul>
+<li>Запускаются 3–5 параллельных Opus агентов</li>
+<li>Каждый — независимая perspective (product, growth, ops, tech, finance)</li>
+<li>Результаты синтезируются в единый стратегический ответ</li>
+<li>Разногласия между "советниками" — <strong>подсвечиваются, не скрываются</strong></li>
+</ul>
+
+<div class="origin"><strong>Тип:</strong> Global skill<br><strong>Триггеры:</strong> business decisions, growth strategy, product direction, competitive analysis</div>`,
+},
+{
+  kind: 'skill',
+  name: '/content-voice',
+  one: 'proofread и human voice — убирает AI-звучание из русского текста',
+  cat: 'content',
+  color: '#d29922',
+  tags: ['daily', 'core'],
+  body: `<p>Вычитка русского текста для партнёрских сообщений, эссе, стратегических документов. Цель — звучать как человек, не как ChatGPT.</p>
+
+<h4>Что делает</h4>
+<ul>
+<li>Убирает шаблонные AI-фразы ("в рамках", "хотелось бы")</li>
+<li>Подставляет <strong>конкретику</strong> вместо абстракций</li>
+<li>Сохраняет авторский голос и стиль</li>
+<li>Тон <code>partner</code> — для follow-up партнёрам</li>
+</ul>
+
+<h4>Триггеры</h4>
+<div class="ex">"вычитай", "человеческим языком", "убери ИИ", "proofread", "human voice"</div>
+
+<div class="origin"><strong>Тип:</strong> Global skill<br><strong>Тон partner добавлен:</strong> 2026-03-04</div>`,
+},
+{
+  kind: 'skill',
+  name: '/infocompressor',
+  one: 'сжатие текстов с zero data loss — cheat sheets, dense summaries',
+  cat: 'infrastructure',
+  color: '#f85149',
+  tags: ['core'],
+  body: `<p>Сжимает длинные тексты, сохраняя 100% информации. Разные уровни компрессии.</p>
+
+<h4>Применения</h4>
+<ul>
+<li>Cheat sheets из длинной документации</li>
+<li>Dense summary транскриптов и встреч</li>
+<li>Компрессия контекста при передаче между сессиями</li>
+</ul>
+
+<h4>Триггеры</h4>
+<div class="ex">"compress", "сожми", "cheat sheet", "dense summary"</div>
+
+<div class="origin"><strong>Тип:</strong> Global skill</div>`,
+},
+{
+  kind: 'skill',
+  name: '/context-compact',
+  one: 'handoff контекста при заполнении >50% — structured передача в новую сессию',
+  cat: 'infrastructure',
+  color: '#f85149',
+  tags: ['trigger', 'core'],
+  body: `<p>Генерирует structured handoff для продолжения работы в новой сессии Claude Code.</p>
+
+<h4>Формат handoff</h4>
+<div class="ex"><span class="hl">## Handoff</span>
+<span class="hl2">Проект:</span> POS Explorer
+<span class="hl2">Путь:</span>    _dashboards/pos-explorer/
+
+<span class="hl3">### Сделано</span>
+– базовая структура
+– данные из CLAUDE.md
+
+<span class="hl3">### Осталось</span>
+1. [ ] добавить фильтры
+2. [ ] задеплоить
+
+<span class="hl3">### Prompt</span>
+Продолжи работу над POS Explorer...</div>
+
+<h4>Правила</h4>
+<ul>
+<li><strong>Конкретность</strong> — точные пути, строки кода, имена функций</li>
+<li><strong>Приоритет</strong> — главная задача очевидна</li>
+<li>Создать файл <code>CONTEXT-HANDOFF.md</code> в папке проекта для сложных задач</li>
+</ul>
+
+<div class="origin"><strong>Тип:</strong> Global skill<br><strong>Триггер:</strong> Context Management Protocol CRIT (> 70%)</div>`,
+},
+{
+  kind: 'skill',
+  name: '/linear-action',
+  one: 'действия над задачами Linear из терминала — update, close, comment, reassign, create',
+  cat: 'infrastructure',
+  color: '#f85149',
+  tags: ['daily', 'core'],
+  body: `<p>Quick actions для Linear задач прямо из Claude Code. Запускается из footer suggestions.</p>
+
+<h4>Команды</h4>
+<div class="ex">/linear-action AIM-2054 <span class="hl3">update</span>    <span class="cm">← записать прогресс</span>
+/linear-action AIM-2054 <span class="hl3">close</span>     <span class="cm">← закрыть задачу</span>
+/linear-action AIM-2054 <span class="hl3">comment</span>   <span class="cm">← добавить заметку</span>
+/linear-action AIM-2054 <span class="hl3">reassign</span>  <span class="cm">← делегировать</span>
+/linear-action <span class="hl3">create</span>             <span class="cm">← новая задача</span></div>
+
+<p>Выполняется через background sub-agent (haiku) — не блокирует сессию.</p>
+
+<div class="origin"><strong>Тип:</strong> Global skill<br><strong>MCP:</strong> Linear<br><strong>Связь:</strong> Linear Awareness Layer генерирует suggestions в footer</div>`,
+},
+{
+  kind: 'skill',
+  name: '/ambient-advisor',
+  one: 'фоновый ресерч по теме сессии — auto-trigger при стратегическом запросе',
+  cat: 'research',
+  color: '#bc8cff',
+  tags: ['ambient', 'core'],
+  body: `<p>При стратегическом или multi-step запросе — автоматически запускается фоновый research через Exa.</p>
+
+<h4>Как работает</h4>
+<div class="ex">1. Detect topic из сообщения / Linear issues
+2. Launch: Sonnet sub-agent + Exa search (background)
+3. Continue основную работу — не ждать результатов
+4. Results → /tmp/claude-research-results.md</div>
+
+<h4>Statusline</h4>
+<div class="ex"><span class="hl2">◈</span> topic…     <span class="cm">← running</span>
+<span class="hl3">◉</span> topic ✓    <span class="cm">← done</span></div>
+
+<p>Отключить: "без ресерча" / "no bg research"</p>
+
+<div class="origin"><strong>Тип:</strong> Global skill + SessionStart hook<br><strong>Hook:</strong> ambient-advisor-start.sh</div>`,
+},
+
+// ─── INFRASTRUCTURE RULES (as skills) ──────────
+
+{
+  kind: 'rule',
+  name: 'Linear Awareness Layer',
+  one: 'ambient detection — сессия автоматически привязывается к задачам Linear',
+  cat: 'protocol',
+  color: '#58a6ff',
+  tags: ['ambient', 'every-response'],
+  body: `<p>Passive layer. Работает фоново — определяет связь текущей сессии с задачами без явного вызова.</p>
+
+<h4>Detection</h4>
+<div class="ex">1. SessionStart → linear-sync.sh → cache задач
+2. Background sub-agent: list In Progress + Todo
+3. Match session topic vs task titles:
+   <span class="hl">прямое упоминание AIM-XXXX</span>  → 100% match
+   <span class="hl2">тема совпадает с title</span>       → высокий
+   <span class="cm">файлы в той же папке</span>          → средний</div>
+
+<h4>Footer</h4>
+<div class="ex">▫ linear: <span class="hl">AIM-2054</span> · BOS speakers · ◐ IP → /linear-action AIM-2054 update</div>
+
+<h4>Статусы</h4>
+<div class="ex"><span class="hl2">◐</span> In Progress   <span class="cm">○</span> Todo   <span class="hl3">●</span> Done   ◑ In Review</div>
+
+<div class="origin"><strong>PRD:</strong> 2026-02-19.<br><strong>Hooks:</strong> linear-sync.sh (start), linear-session-end.sh (end).<br><strong>Memory:</strong> linear-tracking.md — cached задачи + accumulated progress.</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Session Lifecycle Hooks',
+  one: '8 hooks: 5 на старт, 1 на Write, 2 на завершение',
+  cat: 'infrastructure',
+  color: '#f85149',
+  tags: ['ambient'],
+  body: `<p>Shell-скрипты, автоматически вызываемые на lifecycle events Claude Code. Каждый решает конкретную боль.</p>
+
+<h4>SessionStart (5 hooks)</h4>
+<div class="ex"><span class="hl3">linear-sync.sh</span>           кэш задач Linear → memory file
+<span class="hl3">ambient-advisor-start.sh</span>  запуск фонового ресерча
+<span class="hl3">telegram-cleanup.sh</span>      очистка Telegram state
+<span class="hl3">cmux-init.sh</span>             инициализация terminal multiplexer
+<span class="hl3">cmux-session-tracker.sh</span>  трекинг сессий в cmux sidebar</div>
+
+<h4>PostToolUse — Write (1 hook)</h4>
+<div class="ex"><span class="hl2">open-in-obsidian.sh</span>      авто-открытие созданных .md в Obsidian</div>
+
+<h4>SessionEnd (2 hooks)</h4>
+<div class="ex"><span style="color:var(--red)">save-daily-sessions.sh</span>  сохранение summary для /history
+<span style="color:var(--red)">linear-session-end.sh</span>   обновление Linear tracking</div>
+
+<div class="origin"><strong>Накапливались:</strong> 2026-01 → 2026-03. Каждый hook = ответ на конкретную проблему (забывали синхить Linear, теряли session history, etc.).</div>`,
+},
+{
+  kind: 'rule',
+  name: 'Memory System',
+  one: '4 типа: user, feedback, project, reference. Не дублировать то, что есть в коде/git.',
+  cat: 'infrastructure',
+  color: '#f85149',
+  tags: ['meta'],
+  body: `<p>File-based persistent memory. Каждый файл — frontmatter (name, description, type) + контент. Индекс в MEMORY.md.</p>
+
+<h4>Типы</h4>
+<div class="ex"><span class="hl">user</span>       роль, знания, предпочтения пользователя
+<span class="hl">feedback</span>   corrections и confirmations подхода (что повторять, что не делать)
+<span class="hl">project</span>    текущая работа, дедлайны, решения (decay fast)
+<span class="hl">reference</span>  указатели на внешние системы (Linear project, Grafana board)</div>
+
+<h4>Что НЕ сохранять</h4>
+<ul>
+<li>Паттерны кода, архитектура — читать из кода</li>
+<li>Git history — <code>git log</code> / <code>git blame</code> авторитетны</li>
+<li>Debugging рецепты — fix в коде, контекст в commit message</li>
+<li>Всё что уже в CLAUDE.md</li>
+</ul>
+
+<div class="origin"><strong>Текущий объём:</strong> 16 memory files.<br><strong>Обновляются:</strong> при каждой сессии.<br><strong>Index:</strong> MEMORY.md (max 200 строк, truncated).</div>`,
+},
+];
+
+// ═══════════════════════════════════════════════
+//  CATEGORIES
+// ═══════════════════════════════════════════════
+
+const categories = {
+  all: 'all',
+  files: 'files & naming',
+  communication: 'communication',
+  protocol: 'protocols',
+  skills: 'skills meta',
+  development: 'development',
+  content: 'content',
+  team: 'team',
+  'daily-ops': 'daily ops',
+  research: 'research',
+  infrastructure: 'infrastructure',
+};
+
+let activeTab = 'all'; // 'all', 'rules', 'skills'
+let activeFilter = 'all';
+let openCard = null;
+
+// ═══════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════
+
+function getFiltered() {
+  let list = items;
+  if (activeTab === 'rules') list = list.filter(i => i.kind === 'rule');
+  if (activeTab === 'skills') list = list.filter(i => i.kind === 'skill');
+  if (activeFilter !== 'all') list = list.filter(i => i.cat === activeFilter);
+  return list;
+}
+
+function render() {
+  const ruleCount = items.filter(i => i.kind === 'rule').length;
+  const skillCount = items.filter(i => i.kind === 'skill').length;
+  const critical = items.filter(i => i.tags.includes('critical')).length;
+  const everyResp = items.filter(i => i.tags.includes('every-response')).length;
+  const ambient = items.filter(i => i.tags.includes('ambient')).length;
+  const core = items.filter(i => i.tags.includes('core')).length;
+
+  // Stats
+  document.getElementById('stats').innerHTML = `
+    <div><span class="n">${items.length}</span> total</div>
+    <div><span class="n">${ruleCount}</span> rules</div>
+    <div><span class="n">${skillCount}</span> skills</div>
+    <div><span class="n">${critical}</span> critical</div>
+    <div><span class="n">${everyResp}</span> every-response</div>
+    <div><span class="n">${ambient}</span> ambient</div>
+    <div><span class="n">${core}</span> core</div>
+  `;
+
+  // Tabs
+  document.getElementById('tabs').innerHTML = `
+    <div class="tab ${activeTab==='all'?'active':''}" onclick="setTab('all')">All<span class="tab-count">${items.length}</span></div>
+    <div class="tab ${activeTab==='rules'?'active':''}" onclick="setTab('rules')">Rules<span class="tab-count">${ruleCount}</span></div>
+    <div class="tab ${activeTab==='skills'?'active':''}" onclick="setTab('skills')">Skills<span class="tab-count">${skillCount}</span></div>
+  `;
+
+  // Filters — only show categories present in current tab
+  const currentItems = activeTab === 'all' ? items : items.filter(i => i.kind === activeTab);
+  const activeCats = new Set(currentItems.map(i => i.cat));
+  const catCounts = {};
+  currentItems.forEach(i => { catCounts[i.cat] = (catCounts[i.cat] || 0) + 1; });
+
+  document.getElementById('filters').innerHTML = `
+    <button class="filter ${activeFilter==='all'?'active':''}" onclick="setFilter('all')">all (${currentItems.length})</button>
+    ${Object.entries(categories).filter(([k]) => k !== 'all' && activeCats.has(k)).map(([k, label]) =>
+      `<button class="filter ${activeFilter===k?'active':''}" onclick="setFilter('${k}')">${label} (${catCounts[k]})</button>`
+    ).join('')}
+  `;
+
+  // Cards
+  const filtered = getFiltered();
+
+  // Group by category
+  const grouped = {};
+  filtered.forEach(item => {
+    const cat = categories[item.cat] || item.cat;
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(item);
+  });
+
+  let html = '';
+  for (const [cat, catItems] of Object.entries(grouped)) {
+    if (Object.keys(grouped).length > 1) {
+      html += `<div class="section-head">${cat}</div>`;
+    }
+    catItems.forEach(item => {
+      const isOpen = openCard === item.name;
+      const kindBadge = item.kind === 'rule'
+        ? '<span class="badge rule-badge">rule</span>'
+        : '<span class="badge skill-badge">skill</span>';
+      html += `
+        <div class="card ${isOpen ? 'open' : ''}">
+          <div class="card-head" onclick="toggle('${item.name.replace(/'/g, "\\'")}')">
+            <span class="card-icon" style="background:${item.color}"></span>
+            <div class="card-main">
+              <div class="card-name">${item.name}</div>
+              <div class="card-oneliner">${item.one}</div>
+            </div>
+            <div class="card-badges">
+              ${kindBadge}
+              ${item.tags.map(t => `<span class="badge">${t}</span>`).join('')}
+            </div>
+          </div>
+          <div class="card-body">${item.body}</div>
+        </div>
+      `;
+    });
+  }
+  document.getElementById('content').innerHTML = html;
+  updatePrompt();
+}
+
+function setTab(t) { activeTab = t; activeFilter = 'all'; openCard = null; render(); }
+function setFilter(f) { activeFilter = f; openCard = null; render(); }
+function toggle(name) { openCard = openCard === name ? null : name; render(); }
+
+function updatePrompt() {
+  const filtered = getFiltered();
+  const rr = filtered.filter(i => i.kind === 'rule');
+  const ss = filtered.filter(i => i.kind === 'skill');
+
+  const label = activeFilter === 'all'
+    ? (activeTab === 'all' ? 'all' : activeTab)
+    : categories[activeFilter];
+
+  let text = `POS (Personal Operating System) built on Claude Code.\n\nShowing: ${label} (${filtered.length} items)\n\n`;
+
+  if (rr.length) {
+    text += `RULES (${rr.length}):\n${rr.map(r => `  ${r.name} — ${r.one}`).join('\n')}\n\n`;
+  }
+  if (ss.length) {
+    text += `SKILLS (${ss.length}):\n${ss.map(s => `  ${s.name} — ${s.one}`).join('\n')}\n\n`;
+  }
+
+  text += `Key distinction:\n`;
+  text += `• Rules = constraints and standards (naming, style, protocols). Shape HOW the system behaves.\n`;
+  text += `• Skills = automated workflows (/command). DO things on demand or on trigger.\n\n`;
+  text += `Rules emerged from pain points. Skills automate recurring actions.\n`;
+  text += `Together: ${items.filter(i=>i.kind==='rule').length} rules + ${items.filter(i=>i.kind==='skill').length} core skills.\n`;
+  text += `Infrastructure: 14 MCP servers, 8 lifecycle hooks, 16 memory files, 11,865 vault docs.`;
+
+  document.getElementById('prompt').textContent = text;
+}
+
+function copyPrompt() {
+  navigator.clipboard.writeText(document.getElementById('prompt').textContent).then(() => {
+    const btn = document.querySelector('.copy');
+    btn.textContent = 'copied!';
+    setTimeout(() => btn.textContent = 'copy', 1200);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
