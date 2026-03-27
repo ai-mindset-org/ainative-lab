@@ -53,6 +53,11 @@
     }
 
     #graph-container { position:fixed; inset:0; z-index:2; }
+    #graph-container::after {
+      content:''; position:fixed; inset:0; z-index:1;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(10,10,20,0.5) 100%);
+      pointer-events:none;
+    }
     #ui { position:fixed; inset:0; z-index:10; pointer-events:none; }
     #ui > * { pointer-events:auto; }
 
@@ -90,6 +95,11 @@
     #filters {
       position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
       display:flex; gap:5px; flex-wrap:wrap; justify-content:center;
+    }
+    #filters::before {
+      content:''; position:absolute; bottom:100%; left:0; right:0; height:40px;
+      background: linear-gradient(to top, var(--bg), transparent);
+      pointer-events:none;
     }
     .pill {
       padding:4px 10px; background:var(--surface);
@@ -204,6 +214,8 @@
     <h1>AI-Native Organizations</h1>
     <div class="sub">AI Mindset × CybOS — Sprint Knowledge Graph</div>
     <div class="stats"><span id="s-nodes">0</span> nodes · <span id="s-links">0</span> links · <span id="s-types">0</span> types</div>
+    <div class="meta" style="font-size:10px;color:var(--text-muted);margin-top:3px;">211 participants · 13 curators · 12 speakers</div>
+    <div class="meta" style="font-size:10px;color:var(--text-muted);margin-top:1px;">March 23 – April 13, 2026</div>
   </div>
 
   <div id="search-box">
@@ -345,6 +357,8 @@ N('c-aifirst','AI-First','concept','Design assuming AI exists.');
 N('c-token','Token Stream','concept','Org = info processor.');
 N('c-mirror','Mirror Agents','concept','MCP + internal loops.');
 N('c-bitter','Bitter Lesson','concept','Scale > engineered knowledge.');
+N('c-lms','LMS Platform','concept','Learning management. Unique session links. 12-month video access.');
+N('c-buddy','Buddy System','concept','1-on-1 participant pairing. Rotation each week.');
 
 // ── LINKS ──
 // Team → Weeks
@@ -466,8 +480,8 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     // Label
     if (showLabels) {
       const lbl = new SpriteText(n.name);
-      lbl.color = 'rgba(255,255,255,0.55)';
-      lbl.textHeight = isPerson ? 2.6 : 2.0;
+      lbl.color = n.type==='week' ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.55)';
+      lbl.textHeight = isPerson ? 2.6 : (n.type==='week' ? 3.2 : 2.0);
       lbl.fontFace = 'IBM Plex Mono';
       lbl.padding = 0.6;
       lbl.borderRadius = 2;
