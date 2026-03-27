@@ -257,6 +257,7 @@ const TYPES = {
   team:     { color:'#f59e0b', label:'Team',         icon:'●',  size:8 },
   speaker:  { color:'#a78bfa', label:'Speakers',     icon:'🎤', size:7 },
   curator:  { color:'#38d9a9', label:'Curators',     icon:'✦',  size:5 },
+  session:  { color:'#60a5fa', label:'Sessions',      icon:'▶',  size:4 },
   week:     { color:'#3b82f6', label:'Weeks',         icon:'◆',  size:14 },
   topic:    { color:'#8b5cf6', label:'Topics',        icon:'◉',  size:6 },
   tool:     { color:'#ff6b6b', label:'Tools',         icon:'⬡',  size:5 },
@@ -275,6 +276,26 @@ const L = (s,t,rel) => DATA.links.push({source:s,target:t,type:rel||'connects'})
 N('w1','Week 1: Personal AI + Team','week','Build personal AI assistant. Process audit. AI Champion model. March 23–28, 2026.');
 N('w2','Week 2: System Above Model','week','6-layer architecture. MCP, context engineering, orchestration, skills. March 30 – April 4.');
 N('w3','Week 3: Company Functions','week','End-to-end automation. 90-day plan. Demo Day. April 6–13.');
+
+// Sessions (from LMS labs.ts)
+N('s-w1-lecture','Lecture: Why AI Transformation','session','Mon 23.03 · 172 min · Stepan Gershuni. Scaling laws, harness engineering, POS → Team OS → Company OS.');
+N('s-w1-setup','POS Setup Workshop','session','Tue 24.03 · 161 min · Alexander Povaliaev. Naming convention, Claude Code, Obsidian, skills, dashboards.');
+N('s-w1-workshop','Personal → Team','session','Wed 25.03 · 150 min · Process audit, 10 automations, AI Champion model. Curator presentations.');
+N('s-w1-lisovskiy','Business Factory','session','Thu 26.03 · 120 min · Evgeny Lisovsky. Live product launch + vibe-coding framework.');
+N('s-w1-khanarin','AI Transformation Framework','session','Fri 27.03 · 120 min · Dima Khanarin. McKinsey Influence Model for AI.');
+N('s-w2-lecture','Lecture: System Above Model','session','Mon 30.03 · 85 min · Stepan Gershuni. 6-layer architecture.');
+N('s-w2-ametov','AI Content for Business','session','Wed 01.04 · 120 min · Alexey Ametov. Content pipeline, non-slop strategies.');
+N('s-w2-kleban','Self-Improving Agents','session','Wed 01.04 · 60 min · Vitaly Kleban. Live demo of agent feedback loops.');
+N('s-w2-sidora','Technical Coworking','session','Thu 02.04 · 120 min · Gleb Sidora. Hands-on MCP debugging.');
+N('s-w2-kovalsky','AI-Driven Dev: Live Build','session','Thu 02.04 · 120 min · Valery Kovalsky. Business task → working app in 1h.');
+N('s-w2-strakhov','Building Agent Teams','session','Fri 03.04 · Strakhov. Agent alignment, Oxford insights.');
+N('s-w2-kravtsov','Enterprise Data Pipelines','session','Fri 03.04 · Daniil Kravtsov. 99 agents, knowledge graphs.');
+N('s-w3-lecture','Lecture: Strategy to Plan','session','Mon 06.04 · Stepan Gershuni. Business models, 90-day transformation.');
+N('s-w3-reid','AI × Investments','session','Tue 07.04 · Evgeny Reid. AI for strategic investing.');
+N('s-w3-annaov','Sales Automation','session','Wed 08.04 · Bayram Annaov. L1–L5 autonomy levels.');
+N('s-w3-buzko','AI in Legal','session','Thu 09.04 · Roma Buzko. Contract review, compliance automation.');
+N('s-w3-ustinov','Product-Agent Transformation','session','Fri 10.04 · Seva Ustinov. 30 people → shared workspace.');
+N('s-demo','Demo Day','session','Mon 13.04 · Final presentations. 5 min + live demo + ROI metrics.');
 
 // Team
 N('stepan','Stepan Gershuni','team','@gershuni · Co-founder Cyber.Fund & CybOS AI. 200+ portfolio. All Monday lectures.','speakers/stepan-gershuni.jpg');
@@ -370,6 +391,24 @@ N('self-improving','Self-Improving Agents','concept','Feedback loops > quality s
 N('90-day-plan','90-Day Transformation','concept','Quick wins (W1-4) > Scaling (W5-8) > New roles (W9-12)');
 
 // ── LINKS ──
+// Sessions → Weeks
+L('s-w1-lecture','w1','in'); L('s-w1-setup','w1','in'); L('s-w1-workshop','w1','in');
+L('s-w1-lisovskiy','w1','in'); L('s-w1-khanarin','w1','in');
+L('s-w2-lecture','w2','in'); L('s-w2-ametov','w2','in'); L('s-w2-kleban','w2','in');
+L('s-w2-sidora','w2','in'); L('s-w2-kovalsky','w2','in');
+L('s-w2-strakhov','w2','in'); L('s-w2-kravtsov','w2','in');
+L('s-w3-lecture','w3','in'); L('s-w3-reid','w3','in'); L('s-w3-annaov','w3','in');
+L('s-w3-buzko','w3','in'); L('s-w3-ustinov','w3','in'); L('s-demo','w3','in');
+
+// Sessions → Speakers
+L('s-w1-lecture','stepan','led_by'); L('s-w1-setup','alex','led_by'); L('s-w1-workshop','alex','led_by');
+L('s-w1-lisovskiy','lisovsky','led_by'); L('s-w1-khanarin','khanarin','led_by');
+L('s-w2-lecture','stepan','led_by'); L('s-w2-ametov','ametov','led_by'); L('s-w2-kleban','kleban','led_by');
+L('s-w2-sidora','sidora','led_by'); L('s-w2-kovalsky','kovalsky','led_by');
+L('s-w2-strakhov','strakhov','led_by'); L('s-w2-kravtsov','kravtsov','led_by');
+L('s-w3-lecture','stepan','led_by'); L('s-w3-reid','reid','led_by'); L('s-w3-annaov','annaov','led_by');
+L('s-w3-buzko','buzko','led_by'); L('s-w3-ustinov','ustinov','led_by');
+
 // Team → Weeks
 L('stepan','w1','lectures'); L('stepan','w2','lectures'); L('stepan','w3','lectures');
 L('alex','w1','facilitates'); L('alex','w2','facilitates'); L('alex','w3','facilitates');
