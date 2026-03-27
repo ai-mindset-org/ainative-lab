@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Native Lab — Knowledge Graph</title>
+  <meta property="og:title" content="AI-Native Organizations — Knowledge Graph">
+  <meta property="og:description" content="Interactive map of the AI-Native Organizations Sprint: speakers, sessions, concepts, tools. AI Mindset × CybOS.">
+  <meta property="og:image" content="https://ai-mindset-org.github.io/ainative-lab/graph/speakers/stepan-gershuni.jpg">
+  <meta property="og:url" content="https://ai-mindset-org.github.io/ainative-lab/graph/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
   <script src="https://unpkg.com/force-graph"></script>
   <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -439,6 +445,10 @@ function onClick(node){
 }
 
 const infoEl=document.getElementById('info'),ib=document.getElementById('ib');
+// LMS session data cache
+let lmsData = null;
+fetch('lms-data.json').then(r=>r.ok?r.json():null).then(d=>{lmsData=d;console.log('LMS data loaded:',d?.sessions?.length,'sessions')}).catch(()=>{});
+
 function showInfo(n){
   const tp=T[n.type]||{};
   const conns=[];
@@ -447,15 +457,26 @@ function showInfo(n){
     if(l.target.id===n.id){const n2=gd.nodes.find(x=>x.id===l.source.id);if(n2)conns.push({n:n2,r:l.rel,d:'←'});}
   });
   const tgm=n.desc?.match(/@(\w+)/);
+
+  // Find matching LMS session
+  const lmsSession = lmsData?.sessions?.find(s => n.id.includes(s.id) || s.title.includes(n.name.replace(/\n/g,' ').split(':')[0]));
+  const videoEmbed = lmsSession?.video ? `<div style="margin:10px 0;border-radius:6px;overflow:hidden"><iframe width="100%" height="160" src="https://www.youtube.com/embed/${lmsSession.video}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="border-radius:6px"></iframe></div>` : '';
+  const matList = lmsSession?.materials ? `<div class="ct" style="margin-top:8px">Materials</div>${lmsSession.materials.map(m=>`<div class="ci" style="cursor:default"><span class="cd" style="background:#fbbf24"></span>${m}</div>`).join('')}` : '';
+  const sessionMeta = lmsSession ? `<div style="font-size:10px;color:var(--dim);margin:6px 0">${lmsSession.date||''} · ${lmsSession.duration||''} · ${lmsSession.speaker||''} · <span style="color:${lmsSession.status==='completed'?'#38d9a9':'#f59e0b'}">${lmsSession.status}</span></div>` : '';
+
   ib.innerHTML=`
     <span class="badge" style="background:${tp.c||'#64748b'}18;color:${tp.c||'#64748b'};border:1px solid ${tp.c||'#64748b'}30">${tp.l||n.type}</span>
     <h2>${n.name.replace(/\n/g,' ')}</h2>
     ${n.avatar?`<img src="${n.avatar}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid ${tp.c};margin-bottom:10px">`:''}
+    ${sessionMeta}
+    ${videoEmbed}
     <div class="desc">${n.desc}</div>
     <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
     ${tgm?`<a class="tgl" href="https://t.me/${tgm[1]}" target="_blank">@${tgm[1]}</a>`:''}
     ${n.url?`<a class="tgl" href="${n.url}" target="_blank">Open in LMS ↗</a>`:''}
+    ${lmsSession?.video?`<a class="tgl" href="https://youtube.com/watch?v=${lmsSession.video}" target="_blank">Watch ▶</a>`:''}
     </div>
+    ${matList}
     ${conns.length?`<div class="ct" style="margin-top:12px">Connections (${conns.length})</div>
     ${conns.map(c=>`<div class="ci" data-id="${c.n.id}"><span class="cd" style="background:${(T[c.n.type]||{}).c||'#64748b'}"></span>${c.d} ${c.n.name.replace(/\n/g,' ')}<span class="cr">${c.r}</span></div>`).join('')}`:''}
   `;

@@ -1,0 +1,220 @@
+{
+  "sessions": [
+    {
+      "id": "s2-prework01",
+      "title": "Prework 1: Что такое POS",
+      "date": "2026-03-02",
+      "speaker": "Поваляев, Хабаров",
+      "duration": "57 мин",
+      "status": "completed",
+      "video": "Cb67otd2MFY"
+    },
+    {
+      "id": "s2-prework02",
+      "title": "Prework 2: Персональная корпорация",
+      "date": "2026-03-04",
+      "speaker": "Рис, Поваляев",
+      "duration": "40 мин",
+      "status": "completed",
+      "video": "YUP8u-2SYdw"
+    },
+    {
+      "id": "s2-prework03",
+      "title": "Prework 3: Циклические пайплайны",
+      "date": "2026-03-09",
+      "speaker": "Поваляев, Хабаров",
+      "duration": "52 мин",
+      "status": "completed",
+      "video": "P4mO45Xi1H4"
+    },
+    {
+      "id": "s2-prework04",
+      "title": "Prework 4: OpenClaw",
+      "date": "2026-03-09",
+      "speaker": "Хабаров",
+      "duration": "51 мин",
+      "status": "completed",
+      "video": "8Xdc7k6AiKo"
+    },
+    {
+      "id": "s2-intro",
+      "title": "Intro Call — Знакомство",
+      "date": "2026-03-21",
+      "speaker": "Поваляев, Гершуни",
+      "duration": "84 мин",
+      "status": "completed",
+      "video": "o1GuGqlGbK4"
+    },
+    {
+      "id": "s2-w1-lecture",
+      "title": "Lecture 1: Why AI Transformation",
+      "date": "2026-03-23",
+      "speaker": "Степан Гершуни",
+      "duration": "172 мин",
+      "status": "completed",
+      "video": "uW91SdM87JM",
+      "materials": [
+        "AI-Native Playbook Slides",
+        "AI-Native Plugin",
+        "Quiz L0-L3",
+        "Harness Engineering",
+        "BVP State of AI",
+        "TBench.ai"
+      ]
+    },
+    {
+      "id": "s2-w1-setup",
+      "title": "W1: Personal OS Setup",
+      "date": "2026-03-24",
+      "speaker": "Поваляев",
+      "duration": "161 мин",
+      "status": "completed",
+      "video": "C73xOOdawPY",
+      "materials": [
+        "POS Setup Slides",
+        "Stack Explorer",
+        "Dashboard Workshop",
+        "Naming Convention",
+        "Keyboard Efficiency"
+      ]
+    },
+    {
+      "id": "s2-w1-workshop",
+      "title": "W1: Personal → Team",
+      "date": "2026-03-25",
+      "speaker": "Поваляев",
+      "duration": "150 мин",
+      "status": "completed",
+      "video": "3acO_wSd8HQ",
+      "materials": [
+        "Team Workshop Slides",
+        "Team Stack Explorer",
+        "AI Corp (Ris)",
+        "AI-Native Lesson (Vasiliev)",
+        "AgentPlane (Smirnov)"
+      ]
+    },
+    {
+      "id": "s2-w1-lisovskiy",
+      "title": "W1: Фабрика бизнесов",
+      "date": "2026-03-26",
+      "speaker": "Лисовский",
+      "duration": "120 мин",
+      "status": "completed",
+      "video": "e4_w_vI1ODY"
+    },
+    {
+      "id": "s2-w1-bonus",
+      "title": "W1: База AI-тулов (новички)",
+      "date": "2026-03-27",
+      "speaker": "Поваляев",
+      "duration": "90 мин",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w1-khanarin",
+      "title": "W1: AI-трансформация",
+      "date": "2026-03-27",
+      "speaker": "Ханарин",
+      "duration": "120 мин",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w2-lecture",
+      "title": "Lecture 2: System Above Model",
+      "date": "2026-03-30",
+      "speaker": "Гершуни",
+      "duration": "85 мин",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w2-ametov",
+      "title": "W2: AI-контент для бизнеса",
+      "date": "2026-04-01",
+      "speaker": "Амётов",
+      "duration": "120 мин",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w2-kleban",
+      "title": "W2: Self-Improving Agents",
+      "date": "2026-04-01",
+      "speaker": "Клебан",
+      "duration": "60 мин",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w2-sidora",
+      "title": "W2: Технический коворкинг",
+      "date": "2026-04-02",
+      "speaker": "Сидора",
+      "duration": "120 мин",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w2-kovalsky",
+      "title": "W2: AI-Driven Dev",
+      "date": "2026-04-02",
+      "speaker": "Ковальский",
+      "duration": "120 мин",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w2-strakhov",
+      "title": "W2: Agent Teams",
+      "date": "2026-04-03",
+      "speaker": "Страхов",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w2-kravtsov",
+      "title": "W2: Data Pipelines",
+      "date": "2026-04-03",
+      "speaker": "Кравцов",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w3-lecture",
+      "title": "Lecture 3: Strategy to Plan",
+      "date": "2026-04-06",
+      "speaker": "Гершуни",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w3-reid",
+      "title": "W3: AI × Investments",
+      "date": "2026-04-07",
+      "speaker": "Рид",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w3-annaov",
+      "title": "W3: Sales Automation",
+      "date": "2026-04-08",
+      "speaker": "Аннаов",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w3-buzko",
+      "title": "W3: AI Legal",
+      "date": "2026-04-09",
+      "speaker": "Бузко",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-w3-ustinov",
+      "title": "W3: Product-Agent",
+      "date": "2026-04-10",
+      "speaker": "Устинов",
+      "status": "upcoming"
+    },
+    {
+      "id": "s2-demo",
+      "title": "Demo Day",
+      "date": "2026-04-13",
+      "speaker": "All",
+      "status": "upcoming"
+    }
+  ],
+  "generated": "2026-03-27T15:27:55.200Z"
+}
