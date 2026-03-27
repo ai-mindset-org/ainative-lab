@@ -101,7 +101,7 @@ const T = {
 
 // ════════ DATA ════════
 const D={nodes:[],links:[]};
-const N=(id,nm,tp,desc,av)=>D.nodes.push({id,name:nm,type:tp,desc:desc||'',avatar:av||null});
+const N=(id,nm,tp,desc,av,url)=>D.nodes.push({id,name:nm,type:tp,desc:desc||'',avatar:av||null,url:url||null});
 const L=(s,t,r)=>D.links.push({source:s,target:t,rel:r||''});
 
 // Weeks
@@ -166,23 +166,23 @@ N('c-5levels','5 Autonomy\nLevels','concept','ML → Chat → Workflow → Agent
 N('c-90day','90-Day\nPlan','concept','Quick wins → Scaling → New roles.');
 
 // Sessions (from LMS — with video links)
-N('s-lecture1','Lecture 1:\nWhy AI Transform','session','172 min · Shopify/Spotify/Block cases. Harness Engineering. POS → Team OS → Company OS.');
-N('s-setup','POS Setup\nWorkshop','session','161 min · Naming convention, Claude Code, Obsidian, skills, dashboards.');
-N('s-team','Personal →\nTeam Workshop','session','150 min · Process audit, 10 automations, AI Champion. Curator demos.');
-N('s-lecture2','Lecture 2:\nSystem Above Model','session','85 min · 6 layers. Context engineering. 4 orchestration topologies.');
-N('s-lecture3','Lecture 3:\nStrategy to Plan','session','90 min · Business models, 90-day plan, AI Champion + AI COO roles.');
-N('s-demo','Demo Day','session','Final presentations. 5 min + live demo + ROI. April 13.');
+N('s-lecture1','Lecture 1:\nWhy AI Transform','session','172 min · Shopify/Spotify/Block cases. Harness Engineering. POS → Team OS → Company OS.',null,'https://learn.aimindset.org/s2/s2-w1-lecture');
+N('s-setup','POS Setup\nWorkshop','session','161 min · Naming convention, Claude Code, Obsidian, skills, dashboards.',null,'https://learn.aimindset.org/s2/s2-w1-setup');
+N('s-team','Personal →\nTeam Workshop','session','150 min · Process audit, 10 automations, AI Champion. Curator demos.',null,'https://learn.aimindset.org/s2/s2-w1-workshop');
+N('s-lecture2','Lecture 2:\nSystem Above Model','session','85 min · 6 layers. Context engineering. 4 orchestration topologies.',null,'https://learn.aimindset.org/s2/s2-w2-lecture');
+N('s-lecture3','Lecture 3:\nStrategy to Plan','session','90 min · Business models, 90-day plan, AI Champion + AI COO roles.',null,'https://learn.aimindset.org/s2/s2-w3-lecture');
+N('s-demo','Demo Day','session','Final presentations. 5 min + live demo + ROI. April 13.',null,'https://learn.aimindset.org/s2/s2-demo-day');
 
-// Key Resources (from LMS speakerMaterials)
-N('r-playbook','AI-Native\nPlaybook Slides','resource','Gershuni lecture slides PDF.');
-N('r-plugin','AI-Native\nPlugin','resource','github.com/Gerstep/ai-native-plugin — Claude Code / Codex.');
-N('r-quiz','AI-Nativeness\nQuiz (L0–L3)','resource','codos.ai/quiz — assess your AI maturity.');
-N('r-harness','Harness\nEngineering','resource','cybos.ai/harness — interactive research.');
-N('r-pos-deck','POS Setup\nSlides','resource','Interactive deck: pos-setup-v2.html');
-N('r-stack','POS Stack\nExplorer','resource','Interactive tool configurator.');
-N('r-keyboard','Keyboard\nEfficiency','resource','keyboard.aimindset.org');
-N('r-team-deck','Team Workshop\nSlides','resource','Team building deck.');
-N('r-aicorp','AI Corp\n(Sereja Ris)','resource','sereja.tech/aicorp — AI corporation framework.');
+// Key Resources (from LMS speakerMaterials — with URLs)
+N('r-playbook','AI-Native\nPlaybook Slides','resource','Gershuni lecture slides PDF.',null,'https://learn.aimindset.org/downloads/s2/s2-w1-lecture-slides.pdf');
+N('r-plugin','AI-Native\nPlugin','resource','Claude Code / Codex plugin by Gershuni.',null,'https://github.com/Gerstep/ai-native-plugin');
+N('r-quiz','AI-Nativeness\nQuiz (L0–L3)','resource','Assess your AI maturity level.',null,'https://www.codos.ai/quiz');
+N('r-harness','Harness\nEngineering','resource','Interactive research by CybOS.',null,'https://cybos.ai/harness');
+N('r-pos-deck','POS Setup\nSlides','resource','Interactive setup deck.',null,'https://ai-mindset-org.github.io/ainative-deck/pos-setup-v2.html');
+N('r-stack','POS Stack\nExplorer','resource','Interactive tool configurator.',null,'https://ai-mindset-org.github.io/pos-stack-explorer/');
+N('r-keyboard','Keyboard\nEfficiency','resource','Keyboard shortcuts for productivity.',null,'https://keyboard.aimindset.org/');
+N('r-team-deck','Team Workshop\nSlides','resource','Team building deck.',null,'https://ai-mindset-org.github.io/ainative-deck/team-workshop.html');
+N('r-aicorp','AI Corp\n(Sereja Ris)','resource','AI corporation framework.',null,'https://sereja.tech/aicorp/');
 
 // ════════ LINKS ════════
 // Team → weeks
@@ -361,8 +361,9 @@ const graph = ForceGraph()(document.getElementById('graph'))
   .onNodeClick(onClick)
   .onNodeHover((n)=>{document.getElementById('graph').style.cursor=n?'pointer':'default';});
 
-// Fit to view after render
-setTimeout(()=>graph.zoomToFit(300,60),100);
+// Fit to view after render — multiple attempts for reliability
+setTimeout(()=>{graph.zoomToFit(400,80);},200);
+setTimeout(()=>{graph.zoomToFit(400,80);},1000);
 
 // Make graph accessible globally for controls
 window.graph=graph;
@@ -406,7 +407,10 @@ function showInfo(n){
     <h2>${n.name.replace(/\n/g,' ')}</h2>
     ${n.avatar?`<img src="${n.avatar}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid ${tp.c};margin-bottom:10px">`:''}
     <div class="desc">${n.desc}</div>
-    ${tgm?`<a class="tgl" href="https://t.me/${tgm[1]}" target="_blank">@${tgm[1]} in Telegram</a>`:''}
+    <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+    ${tgm?`<a class="tgl" href="https://t.me/${tgm[1]}" target="_blank">@${tgm[1]}</a>`:''}
+    ${n.url?`<a class="tgl" href="${n.url}" target="_blank">Open in LMS ↗</a>`:''}
+    </div>
     ${conns.length?`<div class="ct" style="margin-top:12px">Connections (${conns.length})</div>
     ${conns.map(c=>`<div class="ci" data-id="${c.n.id}"><span class="cd" style="background:${(T[c.n.type]||{}).c||'#64748b'}"></span>${c.d} ${c.n.name.replace(/\n/g,' ')}<span class="cr">${c.r}</span></div>`).join('')}`:''}
   `;
