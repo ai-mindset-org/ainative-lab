@@ -496,11 +496,12 @@ const graphData = DATA;
 //  DETERMINISTIC LAYOUT — fixed positions, no simulation jitter
 //  3 week hubs at 120° apart, nodes in concentric rings
 // ══════════════════════════════════════════════════
-const WR = 70; // week hub radius from center
+const WR = 75; // week hub radius from center
+// Weeks on XY plane — camera looks from Z axis
 const weekCenters = {
   w1: { x: -WR,        y: 0, z: 0 },
-  w2: { x: WR * 0.5,   y: 0, z: WR * 0.866 },
-  w3: { x: WR * 0.5,   y: 0, z: -WR * 0.866 },
+  w2: { x: WR * 0.5,   y: WR * 0.866, z: 0 },
+  w3: { x: WR * 0.5,   y: -WR * 0.866, z: 0 },
 };
 
 // Find which week(s) each node connects to
@@ -525,10 +526,14 @@ function indirectWeek(nid) {
   return null;
 }
 
-// Place nodes in ring around center point
+// Place nodes in ring on XY plane around center
 function ringPos(cx, cy, cz, radius, index, total) {
-  const angle = (index / total) * Math.PI * 2;
-  return { x: cx + Math.cos(angle) * radius, y: cy + (Math.random()-0.5)*4, z: cz + Math.sin(angle) * radius };
+  const angle = (index / Math.max(total, 1)) * Math.PI * 2;
+  return {
+    x: cx + Math.cos(angle) * radius,
+    y: cy + Math.sin(angle) * radius,
+    z: (Math.random() - 0.5) * 6 // slight depth
+  };
 }
 
 // Assign and position all nodes
@@ -565,8 +570,8 @@ Object.entries(weekNodes).forEach(([wid, buckets]) => {
   buckets.sessions.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 18, i, buckets.sessions.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
   // Ring 2: speakers (r=32)
   buckets.speakers.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 32, i, buckets.speakers.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
-  // Ring 2b: curators (r=38, offset angle)
-  buckets.curators.forEach((n,i) => { const p = ringPos(c.x,c.y+3,c.z, 38, i+0.5, Math.max(buckets.curators.length,1)); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
+  // Ring 2b: curators (r=40, offset angle)
+  buckets.curators.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 40, i+0.3, Math.max(buckets.curators.length,1)); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
   // Ring 3: topics (r=48)
   buckets.topics.forEach((n,i) => { const p = ringPos(c.x,c.y,c.z, 48, i, buckets.topics.length); n.fx=p.x; n.fy=p.y; n.fz=p.z; });
   // Ring 4: concepts (r=58)
@@ -624,8 +629,6 @@ const navHistory = [];
 const Graph = ForceGraph3D({ controlType:'orbit' })(container)
   .backgroundColor('#00000000')
   .showNavInfo(false)
-  .warmupTicks(60)
-  .cooldownTicks(150)
   .graphData(graphData)
   .nodeVal(n => TYPES[n.type]?.size || 4)
   .nodeColor(n => TYPES[n.type]?.color || '#64748b')
@@ -648,18 +651,24 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
       const ringGeo = new THREE.RingGeometry(sz*0.55, sz*0.65, 32);
       const ringMat = new THREE.MeshBasicMaterial({ color, side:THREE.DoubleSide, transparent:true, opacity:0.7 });
       group.add(new THREE.Mesh(ringGeo, ringMat));
-      const loader = new THREE.TextureLoader();
-      loader.load(n.avatar, tex => {
-        const spMat2 = new THREE.SpriteMaterial({ map:tex });
-        const avatarSprite = new THREE.Sprite(spMat2);
-        avatarSprite.scale.set(sz*1.05, sz*1.05, 1);
-        group.add(avatarSprite);
-      }, undefined, () => {
-        // Fallback: colored box if image fails
-        const geo = new THREE.BoxGeometry(sz*0.8, sz*0.8, sz*0.2);
-        const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3 });
-        group.add(new THREE.Mesh(geo, mat));
-      });
+      // Sync fallback first (visible immediately), then async load avatar over it
+      const fallbackGeo = new THREE.SphereGeometry(sz*0.45, 12, 12);
+      const fallbackMat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.3, transparent:true, opacity:0.7 });
+      const fallbackMesh = new THREE.Mesh(fallbackGeo, fallbackMat);
+      group.add(fallbackMesh);
+      // Async load avatar texture
+      new THREE.TextureLoader().load(n.avatar,
+        tex => {
+          // Success — replace fallback with photo sprite
+          group.remove(fallbackMesh);
+          const spMat2 = new THREE.SpriteMaterial({ map:tex });
+          const sp2 = new THREE.Sprite(spMat2);
+          sp2.scale.set(sz*1.1, sz*1.1, 1);
+          group.add(sp2);
+        },
+        undefined,
+        err => console.warn('Avatar load failed:', n.avatar, err)
+      );
     } else if (isPerson) {
       // PEOPLE WITHOUT PHOTO — box card with icon
       const geo = new THREE.BoxGeometry(sz*1.0, sz*1.0, sz*0.3, 2, 2, 2);
@@ -981,7 +990,7 @@ Object.entries(TYPES).forEach(([type,cfg])=>{
 });
 
 // Controls
-function resetCam(){Graph.cameraPosition({x:0,y:80,z:280},{x:0,y:0,z:0},1000);resetHL();closeInfo();selected=null;navHistory.length=0;updateBack();}
+function resetCam(){Graph.cameraPosition({x:0,y:0,z:250},{x:0,y:0,z:0},800);resetHL();closeInfo();selected=null;navHistory.length=0;updateBack();}
 function toggleLabels(){showLabels=!showLabels;document.getElementById('btn-labels').classList.toggle('on',showLabels);graphData.nodes.forEach(n=>{if(n.__label)n.__label.visible=showLabels;});}
 document.getElementById('btn-reset').onclick=resetCam;
 document.getElementById('btn-labels').onclick=toggleLabels;
@@ -995,7 +1004,7 @@ function updateStats(nodes,links){
 }
 updateStats();
 
-Graph.cameraPosition({x:0,y:80,z:280});
+Graph.cameraPosition({x:0, y:0, z:250});
 setTimeout(()=>{document.getElementById('loading').classList.add('done');setTimeout(()=>document.getElementById('loading').remove(),500);},1200);
 new ResizeObserver(()=>{Graph.width(window.innerWidth);Graph.height(window.innerHeight);}).observe(document.body);
 
