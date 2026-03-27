@@ -254,15 +254,15 @@
 //  TYPES — Lab-focused categories
 // ══════════════════════════════════════════════════
 const TYPES = {
-  team:     { color:'#f59e0b', label:'Team',         icon:'●',  size:8 },
-  speaker:  { color:'#a78bfa', label:'Speakers',     icon:'🎤', size:7 },
-  curator:  { color:'#38d9a9', label:'Curators',     icon:'✦',  size:5 },
-  session:  { color:'#60a5fa', label:'Sessions',      icon:'▶',  size:4 },
-  week:     { color:'#3b82f6', label:'Weeks',         icon:'◆',  size:14 },
-  topic:    { color:'#8b5cf6', label:'Topics',        icon:'◉',  size:6 },
-  tool:     { color:'#ff6b6b', label:'Tools',         icon:'⬡',  size:5 },
-  deliver:  { color:'#06b6d4', label:'Deliverables',  icon:'◎',  size:5 },
-  concept:  { color:'#10b981', label:'Concepts',      icon:'✦',  size:5 },
+  team:     { color:'#f59e0b', label:'Team',         icon:'●',  size:5 },
+  speaker:  { color:'#a78bfa', label:'Speakers',     icon:'🎤', size:4.5 },
+  curator:  { color:'#38d9a9', label:'Curators',     icon:'✦',  size:3.5 },
+  session:  { color:'#60a5fa', label:'Sessions',      icon:'▶',  size:3 },
+  week:     { color:'#3b82f6', label:'Weeks',         icon:'◆',  size:6 },
+  topic:    { color:'#8b5cf6', label:'Topics',        icon:'◉',  size:3.5 },
+  tool:     { color:'#ff6b6b', label:'Tools',         icon:'⬡',  size:3 },
+  deliver:  { color:'#06b6d4', label:'Deliverables',  icon:'◎',  size:3 },
+  concept:  { color:'#10b981', label:'Concepts',      icon:'✦',  size:3 },
 };
 
 // ══════════════════════════════════════════════════
@@ -545,24 +545,20 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     const group = new THREE.Group();
 
     if (n.type === 'week') {
-      // WEEK — large octahedron, very prominent
-      const geo = new THREE.OctahedronGeometry(sz*0.7, 1);
-      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.5, shininess:80, transparent:true, opacity:0.9 });
+      // WEEK — octahedron hub
+      const geo = new THREE.OctahedronGeometry(sz*0.5, 1);
+      const mat = new THREE.MeshPhongMaterial({ color, emissive:color, emissiveIntensity:0.4, shininess:80, transparent:true, opacity:0.85 });
       group.add(new THREE.Mesh(geo, mat));
-      const inner = new THREE.SphereGeometry(sz*0.35, 12, 12);
-      const imat = new THREE.MeshBasicMaterial({ color:'#ffffff', transparent:true, opacity:0.15 });
-      group.add(new THREE.Mesh(inner, imat));
     } else if (isPerson && n.avatar) {
       // PEOPLE WITH PHOTO — circular avatar sprite + colored ring
-      const ringGeo = new THREE.RingGeometry(sz*0.52, sz*0.62, 32);
-      const ringMat = new THREE.MeshBasicMaterial({ color, side:THREE.DoubleSide, transparent:true, opacity:0.8 });
+      const ringGeo = new THREE.RingGeometry(sz*0.55, sz*0.65, 32);
+      const ringMat = new THREE.MeshBasicMaterial({ color, side:THREE.DoubleSide, transparent:true, opacity:0.7 });
       group.add(new THREE.Mesh(ringGeo, ringMat));
-      // Load avatar as circular texture
       const loader = new THREE.TextureLoader();
       loader.load(n.avatar, tex => {
-        const spMat2 = new THREE.SpriteMaterial({ map:tex, transparent:false });
+        const spMat2 = new THREE.SpriteMaterial({ map:tex });
         const avatarSprite = new THREE.Sprite(spMat2);
-        avatarSprite.scale.set(sz*1.0, sz*1.0, 1);
+        avatarSprite.scale.set(sz*1.05, sz*1.05, 1);
         group.add(avatarSprite);
       }, undefined, () => {
         // Fallback: colored box if image fails
@@ -591,9 +587,9 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
       group.add(new THREE.Mesh(geo, mat));
     }
 
-    // Halo glow — larger for weeks
-    const haloScale = n.type==='week' ? 4.0 : 2.5;
-    const haloOpacity = n.type==='week' ? 0.3 : 0.2;
+    // Halo glow
+    const haloScale = n.type==='week' ? 3.0 : 2.0;
+    const haloOpacity = n.type==='week' ? 0.25 : 0.15;
     const spMat = new THREE.SpriteMaterial({ map:glowTex(color), transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, opacity:haloOpacity });
     const sp = new THREE.Sprite(spMat);
     sp.scale.set(sz*haloScale, sz*haloScale, 1);
@@ -603,22 +599,23 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     if (showLabels) {
       const lbl = new SpriteText(n.name);
       const labelCfg = {
-        week:    { height:4.0, color:'rgba(255,255,255,0.9)',  bg:'rgba(22,22,32,0.6)' },
-        team:    { height:2.8, color:'rgba(255,255,255,0.7)',  bg:'rgba(22,22,32,0.4)' },
-        speaker: { height:2.6, color:'rgba(255,255,255,0.65)', bg:'rgba(22,22,32,0.35)' },
-        curator: { height:2.0, color:'rgba(255,255,255,0.5)',  bg:'rgba(22,22,32,0.3)' },
-        topic:   { height:2.4, color:'rgba(200,180,255,0.6)',  bg:'rgba(22,22,32,0.35)' },
-        concept: { height:1.8, color:'rgba(100,230,180,0.55)', bg:'rgba(22,22,32,0.3)' },
+        week:    { height:2.2, color:'rgba(255,255,255,0.85)', bg:'rgba(22,22,32,0.55)' },
+        team:    { height:1.8, color:'rgba(255,255,255,0.65)', bg:'rgba(22,22,32,0.35)' },
+        speaker: { height:1.6, color:'rgba(255,255,255,0.6)',  bg:'rgba(22,22,32,0.3)' },
+        curator: { height:1.3, color:'rgba(255,255,255,0.45)', bg:'rgba(22,22,32,0.25)' },
+        session: { height:1.2, color:'rgba(150,180,255,0.5)',  bg:'rgba(22,22,32,0.25)' },
+        topic:   { height:1.4, color:'rgba(200,180,255,0.55)', bg:'rgba(22,22,32,0.3)' },
+        concept: { height:1.2, color:'rgba(100,230,180,0.45)', bg:'rgba(22,22,32,0.25)' },
       };
       const cfg = labelCfg[n.type] || { height:2.0, color:'rgba(255,255,255,0.5)', bg:'rgba(22,22,32,0.3)' };
       lbl.color = cfg.color;
       lbl.textHeight = cfg.height;
-      lbl.fontFace = n.type==='week' ? 'Space Grotesk' : 'IBM Plex Mono';
-      lbl.fontWeight = n.type==='week' ? '600' : '400';
-      lbl.padding = n.type==='week' ? 1.5 : 0.5;
-      lbl.borderRadius = 3;
+      lbl.fontFace = 'IBM Plex Mono';
+      lbl.fontWeight = n.type==='week' ? '500' : '400';
+      lbl.padding = 0.3;
+      lbl.borderRadius = 2;
       lbl.backgroundColor = cfg.bg;
-      lbl.position.y = sz * 0.8 + (n.type==='week' ? 5 : 3);
+      lbl.position.y = sz * 0.6 + 2;
       group.add(lbl);
       n.__label = lbl;
     }
@@ -651,11 +648,11 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
     return s ? TYPES[s.type]?.color||'#4dc9d4' : '#4dc9d4';
   })
-  .d3Force('charge', d3.forceManyBody().strength(graphData.nodes.length > 100 ? -40 : -100))
-  .d3Force('link', d3.forceLink().strength(graphData.nodes.length > 100 ? 0.06 : 0.1))
-  .d3Force('center', d3.forceCenter().strength(0.02))
-  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||4)*0.8))
-  .d3AlphaDecay(graphData.nodes.length > 100 ? 0.06 : 0.04)
+  .d3Force('charge', d3.forceManyBody().strength(-200))
+  .d3Force('link', d3.forceLink().distance(40).strength(0.08))
+  .d3Force('center', d3.forceCenter().strength(0.03))
+  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||3)*2.5))
+  .d3AlphaDecay(0.03)
   .onNodeHover(onHover)
   .onNodeClick(onClick)
   .onBackgroundClick(onBgClick);
