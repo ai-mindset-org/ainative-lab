@@ -247,21 +247,22 @@
 </div>
 
 <script>
-(function(){
+(async function(){
 'use strict';
 
 // ══════════════════════════════════════════════════
 //  TYPES — Lab-focused categories
 // ══════════════════════════════════════════════════
 const TYPES = {
-  team:     { color:'#f59e0b', label:'Team',        icon:'●',  size:6 },
-  speaker:  { color:'#a78bfa', label:'Speakers',   icon:'🎤', size:6 },
-  curator:  { color:'#38d9a9', label:'Curators',   icon:'✦',  size:5 },
-  week:     { color:'#3b82f6', label:'Weeks',       icon:'◆',  size:9 },
-  topic:    { color:'#8b5cf6', label:'Topics',      icon:'◉',  size:5 },
-  tool:     { color:'#ff6b6b', label:'Tools',       icon:'⬡',  size:4 },
-  deliver:  { color:'#06b6d4', label:'Deliverables',icon:'◎',  size:4 },
-  concept:  { color:'#10b981', label:'Concepts',    icon:'✦',  size:4 },
+  team:        { color:'#f59e0b', label:'Team',         icon:'●',  size:7 },
+  speaker:     { color:'#a78bfa', label:'Speakers',     icon:'🎤', size:6 },
+  curator:     { color:'#38d9a9', label:'Curators',     icon:'✦',  size:5 },
+  participant: { color:'#4dc9d4', label:'Participants',  icon:'👤', size:2.5 },
+  week:        { color:'#3b82f6', label:'Weeks',         icon:'◆',  size:10 },
+  topic:       { color:'#8b5cf6', label:'Topics',        icon:'◉',  size:5 },
+  tool:        { color:'#ff6b6b', label:'Tools',         icon:'⬡',  size:4 },
+  deliver:     { color:'#06b6d4', label:'Deliverables',  icon:'◎',  size:4 },
+  concept:     { color:'#10b981', label:'Concepts',      icon:'✦',  size:4 },
 };
 
 // ══════════════════════════════════════════════════
@@ -434,7 +435,80 @@ L('c-token','t-process','shapes'); L('c-mirror','t-orch','shapes'); L('c-bitter'
 L('c-lms','w1','supports'); L('c-lms','w2','supports'); L('c-lms','w3','supports');
 L('c-buddy','w1','supports'); L('c-buddy','w2','supports');
 
-const graphData = DATA;
+let graphData = DATA;
+
+// ══════════════════════════════════════════════════
+//  LOAD PARTICIPANTS from CSV export
+// ══════════════════════════════════════════════════
+async function loadParticipants() {
+  try {
+    const resp = await fetch('data/participants.json');
+    if (!resp.ok) return;
+    const json = await resp.json();
+    const participants = json.participants || [];
+    console.log(`Loading ${participants.length} participants`);
+
+    participants.forEach(p => {
+      const id = 'p-' + (p.username || p.name.toLowerCase().replace(/\s+/g,'-'));
+      if (graphData.nodes.find(n => n.id === id)) return; // skip dupes
+      N(id, p.name, 'participant',
+        (p.username ? '@' + p.username + ' · ' : '') +
+        (p.location || '') +
+        (p.focus ? ' · ' + p.focus.slice(0,80) : '')
+      );
+      // Connect to week 1 (everyone starts there)
+      L(id, 'w1', 'enrolled');
+      // If they have a buddy, we'll link later
+      if (p.buddy) {
+        const buddyId = 'p-' + p.buddy.replace(/^[@']*/,'');
+        // Defer buddy links until all participants loaded
+        graphData._buddyQueue = graphData._buddyQueue || [];
+        graphData._buddyQueue.push([id, buddyId]);
+      }
+    });
+
+    // Resolve buddy pairs
+    if (graphData._buddyQueue) {
+      const nodeIds = new Set(graphData.nodes.map(n=>n.id));
+      graphData._buddyQueue.forEach(([a,b]) => {
+        if (nodeIds.has(a) && nodeIds.has(b)) L(a, b, 'buddy');
+      });
+      delete graphData._buddyQueue;
+    }
+
+    console.log(`Graph: ${graphData.nodes.length} nodes, ${graphData.links.length} links`);
+  } catch(e) { console.log('No participants.json, using curated data only'); }
+}
+
+await loadParticipants();
+
+// ══════════════════════════════════════════════════
+//  PARTICLE SHADERS (ambient background)
+// ══════════════════════════════════════════════════
+const PARTICLE_VS = `
+  uniform float uTime; uniform float uSize;
+  attribute float aRand;
+  varying float vAlpha;
+  void main() {
+    vec3 pos = position;
+    pos.x += sin(uTime*0.5 + aRand*6.28)*2.0;
+    pos.y += cos(uTime*0.35 + aRand*3.14)*2.0;
+    pos.z += sin(uTime*0.2 + aRand*9.42)*1.5;
+    vec4 mv = modelViewMatrix * vec4(pos,1.0);
+    gl_Position = projectionMatrix * mv;
+    gl_PointSize = uSize * (250.0 / -mv.z);
+    vAlpha = smoothstep(600.0, 80.0, -mv.z) * (0.2 + 0.6*aRand);
+  }
+`;
+const PARTICLE_FS = `
+  uniform vec3 uColor;
+  varying float vAlpha;
+  void main() {
+    float d = length(gl_PointCoord - 0.5);
+    if (d > 0.5) discard;
+    gl_FragColor = vec4(uColor, smoothstep(0.5,0.0,d) * vAlpha * 0.3);
+  }
+`;
 
 // ══════════════════════════════════════════════════
 //  3D GRAPH
@@ -457,7 +531,7 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     const t = TYPES[n.type] || {};
     const color = t.color || '#64748b';
     const sz = t.size || 4;
-    const isPerson = ['speaker','curator','team'].includes(n.type);
+    const isPerson = ['speaker','curator','team','participant'].includes(n.type);
     const group = new THREE.Group();
 
     if (isPerson) {
@@ -481,16 +555,19 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     sp.scale.set(sz*2.2, sz*2.2, 1);
     group.add(sp);
 
-    // Label
-    if (showLabels) {
-      const lbl = new SpriteText(n.name);
-      lbl.color = n.type==='week' ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.55)';
-      lbl.textHeight = isPerson ? 2.6 : (n.type==='week' ? 3.2 : 2.0);
+    // Label — participants hidden by default (too many), others always visible
+    const showThisLabel = n.type === 'participant' ? false : showLabels;
+    if (showThisLabel || n.type !== 'participant') {
+      const labelText = n.type === 'participant' ? (n.name.length > 20 ? n.name.slice(0,18)+'…' : n.name) : n.name;
+      const lbl = new SpriteText(labelText);
+      lbl.color = n.type==='week' ? 'rgba(255,255,255,0.8)' : (n.type==='participant' ? 'rgba(77,201,212,0.6)' : 'rgba(255,255,255,0.55)');
+      lbl.textHeight = n.type==='week' ? 3.2 : (n.type==='participant' ? 1.6 : (isPerson ? 2.6 : 2.0));
       lbl.fontFace = 'IBM Plex Mono';
-      lbl.padding = 0.6;
+      lbl.padding = 0.4;
       lbl.borderRadius = 2;
-      lbl.backgroundColor = 'rgba(22,22,32,0.45)';
-      lbl.position.y = sz * 0.7 + 3;
+      lbl.backgroundColor = 'rgba(22,22,32,0.35)';
+      lbl.position.y = sz * 0.7 + (n.type==='participant' ? 2 : 3);
+      lbl.visible = n.type === 'participant' ? false : showLabels; // participants hidden initially
       group.add(lbl);
       n.__label = lbl;
     }
@@ -503,12 +580,15 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
   .linkWidth(0.2)
   .linkColor(() => 'rgba(77,201,212,0.08)')
   .linkOpacity(0.18)
-  .linkDirectionalParticles(0)
-  .d3Force('charge', d3.forceManyBody().strength(-100))
-  .d3Force('link', d3.forceLink().strength(0.1))
-  .d3Force('center', d3.forceCenter().strength(0.03))
-  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||4)*1.0))
-  .d3AlphaDecay(0.04)
+  .linkDirectionalParticles(1)
+  .linkDirectionalParticleWidth(0.8)
+  .linkDirectionalParticleSpeed(0.003)
+  .linkDirectionalParticleColor(() => 'rgba(77,201,212,0.5)')
+  .d3Force('charge', d3.forceManyBody().strength(graphData.nodes.length > 100 ? -40 : -100))
+  .d3Force('link', d3.forceLink().strength(graphData.nodes.length > 100 ? 0.06 : 0.1))
+  .d3Force('center', d3.forceCenter().strength(0.02))
+  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||4)*0.8))
+  .d3AlphaDecay(graphData.nodes.length > 100 ? 0.06 : 0.04)
   .onNodeHover(onHover)
   .onNodeClick(onClick)
   .onBackgroundClick(onBgClick);
@@ -532,6 +612,21 @@ const dl1 = new THREE.DirectionalLight(0x4dc9d4, 0.3); dl1.position.set(80,150,8
 const dl2 = new THREE.DirectionalLight(0x3b82f6, 0.2); dl2.position.set(-80,-80,150); scene.add(dl2);
 scene.background = new THREE.Color('#0d0d18');
 scene.fog = new THREE.FogExp2('#0d0d18', 0.0012);
+
+// Ambient particle system
+const PC = 600, SPREAD = 350;
+const pPos = new Float32Array(PC*3), pRand = new Float32Array(PC);
+for (let i=0;i<PC;i++){pPos[i*3]=(Math.random()-0.5)*SPREAD;pPos[i*3+1]=(Math.random()-0.5)*SPREAD;pPos[i*3+2]=(Math.random()-0.5)*SPREAD;pRand[i]=Math.random();}
+const pGeo = new THREE.BufferGeometry();
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
+pGeo.setAttribute('aRand', new THREE.BufferAttribute(pRand,1));
+const pUni = {uTime:{value:0},uSize:{value:1.8},uColor:{value:new THREE.Color('#4dc9d4')}};
+const pMat = new THREE.ShaderMaterial({uniforms:pUni,vertexShader:PARTICLE_VS,fragmentShader:PARTICLE_FS,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false});
+const particles = new THREE.Points(pGeo,pMat);
+scene.add(particles);
+// Animate particles
+let pTime = 0;
+(function animP(){requestAnimationFrame(animP);pTime+=0.0003;pUni.uTime.value=pTime*1000;})();
 
 // ══════════════════════════════════════════════════
 //  SEARCH
