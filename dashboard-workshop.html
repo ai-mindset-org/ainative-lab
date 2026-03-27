@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS Dashboard Workshop — AI Mindset Lab</title>
+<meta property="og:title" content="POS Dashboard Workshop — AI Mindset">
+<meta property="og:description" content="Собери свой персональный дашборд за 30 минут">
+<meta property="og:image" content="https://pos-playground.netlify.app/og-dashboard-workshop.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pos-playground.netlify.app/og-dashboard-workshop.png">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e14;--bg2:#131920;--bg3:#1a2130;--border:rgba(85,170,136,0.15);
+  --accent:#55aa88;--accent2:#66ccaa;--accent-dim:#3d7a62;--glow:rgba(85,170,136,0.12);
+  --blue:#4499dd;--amber:#e8b84d;--red:#dd5555;--purple:#bb77cc;--cyan:#44cccc;--teal:#4dc9d4;
+  --text:#c9d1d9;--dim:#6e7681;--bright:#ecf0f5;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',-apple-system,sans-serif;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);line-height:1.6}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.012) 2px,rgba(0,0,0,0.012) 4px);pointer-events:none;z-index:50}
+
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--teal),var(--amber));z-index:200;transition:width .3s}
+.counter{position:fixed;bottom:16px;right:24px;font-size:11px;color:var(--dim);z-index:200;letter-spacing:1px;font-variant-numeric:tabular-nums}
+.ws-time{position:fixed;top:10px;right:24px;font-size:10px;color:var(--accent-dim);z-index:200}
+.cur{display:inline-block;width:12px;height:3px;background:var(--accent);animation:bl 1s step-end infinite;vertical-align:middle;margin-left:3px}
+@keyframes bl{0%,50%{opacity:1}51%,100%{opacity:0}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 4px rgba(85,170,136,.3))}50%{filter:drop-shadow(0 0 14px rgba(85,170,136,.6))}}
+.glow-pulse{animation:glow 2.5s ease-in-out infinite}
+
+.deck{position:relative;width:100vw;height:100vh}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:36px 64px;opacity:0;pointer-events:none;transition:opacity .35s;overflow-y:auto}
+.slide.active{opacity:1;pointer-events:auto}
+
+h1{font-family:var(--sans);font-size:3.6rem;font-weight:900;color:var(--bright);line-height:1.08;margin-bottom:14px;letter-spacing:-2px}
+h1 .g{color:var(--accent)}h1 .a{color:var(--amber)}
+h2{font-family:var(--sans);font-size:2.2rem;font-weight:700;color:var(--bright);margin-bottom:12px;letter-spacing:-.5px}
+h2 .g{color:var(--accent)}
+h3{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:8px}
+.sub{font-size:1.1rem;color:var(--dim);max-width:640px}
+
+.logo-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.logo-row img{height:34px;opacity:.85;filter:drop-shadow(0 0 8px rgba(85,170,136,.3))}
+.logo-row .lt{font-family:var(--sans);font-size:.82rem;font-weight:700;color:var(--bright);letter-spacing:2px;text-transform:uppercase}
+
+.speaker-row{display:flex;gap:28px;align-items:center;padding:14px 0}
+.speaker-card{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.photo-slot{width:100px;height:100px;border-radius:50%;background:var(--bg3);border:3px solid var(--accent);overflow:hidden;box-shadow:0 0 24px rgba(85,170,136,.2)}
+.photo-slot img{width:100%;height:100%;object-fit:cover}
+.speaker-card .name{font-family:var(--sans);font-weight:700;font-size:.95rem;color:var(--bright)}
+.speaker-card .role{font-size:.68rem;color:var(--dim)}
+
+/* cards */
+.g3{display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+.g4{display:grid;gap:12px;grid-template-columns:repeat(4,1fr)}
+.g2{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+.cd{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.cd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent)}
+.cd.bl::before{background:var(--blue)}.cd.am::before{background:var(--amber)}.cd.tl::before{background:var(--teal)}
+.cd:hover{border-color:var(--accent-dim);background:var(--bg3)}
+.cd.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 0 20px var(--glow)}
+.cd.sel::after{content:'';position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.cd h4{font-family:var(--sans);font-size:1rem;font-weight:700;color:var(--bright);margin-bottom:4px}
+.cd p{font-size:.72rem;color:var(--dim);line-height:1.5;margin:0}
+.cd .tg{display:inline-block;font-size:.55rem;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:1px;margin-top:6px;text-transform:uppercase}
+.tg-g{color:var(--accent);border:1px solid var(--accent-dim)}.tg-b{color:var(--blue);border:1px solid rgba(68,153,221,.3)}
+.tg-a{color:var(--amber);border:1px solid rgba(232,184,77,.3)}
+
+/* checkboxes */
+.chk{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:10px}
+.chk:hover{border-color:var(--accent-dim)}.chk.on{border-color:var(--accent);background:var(--glow)}
+.cb{width:16px;height:16px;border:1.5px solid var(--border);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:transparent;transition:all .15s;margin-top:1px}
+.chk.on .cb{border-color:var(--accent);color:var(--accent);background:var(--glow)}
+.cl{font-size:.78rem;color:var(--bright);font-weight:600}
+.cm{font-size:.55rem;color:var(--accent-dim);margin-top:2px;font-family:var(--mono)}
+
+/* style preview */
+.sp{height:170px;border-radius:6px;margin-bottom:8px;overflow:hidden;border:1px solid var(--border);position:relative}
+.sp .mh{height:24px;display:flex;align-items:center;padding:0 10px;gap:4px;font-size:.5rem;font-weight:600;letter-spacing:.5px}
+.sp .md{display:flex;gap:3px}.sp .md span{width:7px;height:7px;border-radius:50%}
+.sp .mb{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;padding:6px 8px;height:calc(100% - 24px)}
+.sp .mp{border-radius:3px;padding:6px;font-size:.45rem;line-height:1.5;overflow:hidden}
+.sp .mt{font-size:.4rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;opacity:.9}
+.sp .mv{font-size:1rem;font-weight:800;line-height:1;margin-bottom:2px}
+.sp .mr{display:flex;align-items:center;gap:3px;margin-bottom:2px}
+.sp .mc{display:inline-block;font-size:.35rem;padding:1px 4px;border-radius:2px;margin:1px}
+
+.pd{background:#0d1117}.pd .mh{background:#161b22;color:#55aa88;border-bottom:1px solid rgba(48,54,61,.6)}
+.pd .md span:nth-child(1){background:#dd5555}.pd .md span:nth-child(2){background:#e8b84d}.pd .md span:nth-child(3){background:#55aa88}
+.pd .mp{background:#161b22;color:#8b949e;border:.5px solid rgba(48,54,61,.6)}.pd .mt{color:#55aa88}.pd .mv{color:#55aa88}.pd .mc{background:rgba(85,170,136,.15);color:#55aa88}
+
+.pl{background:#fafafa}.pl .mh{background:#fff;color:#2d8a5e;border-bottom:1px solid #e5e5e5}
+.pl .md span:nth-child(1){background:#dc2626}.pl .md span:nth-child(2){background:#d97706}.pl .md span:nth-child(3){background:#16a34a}
+.pl .mp{background:#fff;color:#737373;border:1px solid #e5e5e5}.pl .mt{color:#171717}.pl .mv{color:#2d8a5e}.pl .mc{background:#f0fdf4;color:#16a34a}
+
+.pt{background:#161620}.pt .mh{background:#1a1a2e;color:#4dc9d4;border-bottom:1px solid rgba(77,201,212,.2)}
+.pt .md span:nth-child(1){background:#dd5555}.pt .md span:nth-child(2){background:#e8b84d}.pt .md span:nth-child(3){background:#4dc9d4}
+.pt .mp{background:#1a1a2e;color:rgba(255,255,255,.6);border:.5px solid rgba(77,201,212,.15)}.pt .mt{color:#4dc9d4}.pt .mv{color:#4dc9d4}.pt .mc{background:rgba(77,201,212,.12);color:#4dc9d4}
+
+/* chain */
+.chain{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}
+.cn{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;text-align:center;flex:1;min-width:100px}
+.cn b{font-size:.82rem;display:block;margin-bottom:2px}.cn span{font-size:.62rem;color:var(--dim)}
+.ca{color:var(--dim);font-size:1.2rem;flex-shrink:0}
+
+/* prompt */
+.pbox{background:#000;border:1px solid rgba(48,54,61,.4);border-radius:8px;padding:20px;position:relative;max-height:50vh;overflow-y:auto;font-size:.75rem;line-height:1.8;color:var(--accent2);white-space:pre-wrap;word-break:break-word}
+.btn-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.pbtn{padding:8px 18px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--text);font-family:var(--mono);font-size:.7rem;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.pbtn:hover{border-color:var(--accent);color:var(--accent)}
+.pbtn.pri{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.pbtn.pri:hover{background:var(--accent-dim)}
+.pbtn:disabled{opacity:.3;pointer-events:none}
+.pbtn.done{background:var(--accent);color:var(--bg)}
+.pbtn.loading{opacity:.6;pointer-events:none}
+
+/* nav */
+.nr{display:flex;gap:10px;margin-top:auto;padding-top:16px}
+.nb{padding:10px 22px;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--text);font-family:var(--mono);font-size:.78rem;cursor:pointer;transition:all .2s}
+.nb:hover{border-color:var(--accent);color:var(--accent)}
+.nb.pri{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:700}
+.nb.pri:hover{background:var(--accent-dim)}
+.nb.dis{opacity:.25;pointer-events:none}
+
+/* form */
+.ff{display:flex;flex-direction:column;gap:4px}
+.ff label{font-size:.65rem;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.ff input,.ff textarea{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--bright);font-family:var(--mono);font-size:.78rem;outline:none;transition:border-color .2s;resize:vertical}
+.ff input:focus,.ff textarea:focus{border-color:var(--accent)}
+.ff input::placeholder,.ff textarea::placeholder{color:var(--dim)}
+
+/* conditional inputs */
+.cond{margin-top:10px;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;display:none}
+.cond.show{display:block}
+
+.q{border-left:3px solid var(--amber);padding:12px 18px;margin:10px 0;background:rgba(232,184,77,.05);border-radius:0 6px 6px 0}
+.q p{font-style:italic;color:var(--bright);font-size:.92rem;margin:0}
+.q.green{border-left-color:var(--accent);background:rgba(85,170,136,.05)}
+
+@media(max-width:900px){.slide{padding:28px 24px}h1{font-size:2.2rem}.g3,.g4{grid-template-columns:1fr 1fr}.sp .mb{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g3,.g4,.g2{grid-template-columns:1fr}h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+<div class="ws-time">WS05 / 13 MAR 2026 / 18:00 CET / MAIN ROOM</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══ 1. TITLE ═══ -->
+<div class="slide active">
+  <div class="logo-row"><img src="logo.png" alt="AI Mindset"><span class="lt">AI Mindset</span></div>
+  <h3>POS Sprint S26 / Main Room</h3>
+  <h1>Персональный<br><span class="g">дашборд</span></h1>
+  <p class="sub">Конфигуратор → промпт → HTML-дашборд за 30 минут<span class="cur"></span></p>
+  <div class="speaker-row">
+    <div class="speaker-card">
+      <div class="photo-slot glow-pulse"><img src="alex.jpg" alt="Alexander Povaliaev"></div>
+      <div class="name">Alexander Povaliaev</div>
+      <div class="role">Co-founder AI Mindset / POS Architect</div>
+    </div>
+  </div>
+  <div class="nr"><button class="nb pri" onclick="go(1)">Начинаем &rarr;</button></div>
+</div>
+
+<!-- ═══ 2. CONCEPT ═══ -->
+<div class="slide">
+  <h3>Концепт</h3>
+  <h2>Дашборд — <span class="g">снимок</span> POS</h2>
+  <div class="chain">
+    <div class="cn" style="border-top:2px solid var(--accent)"><b style="color:var(--accent)">Аудит</b><span>MCP, скиллы, источники</span></div>
+    <div class="ca">&rarr;</div>
+    <div class="cn" style="border-top:2px solid var(--blue)"><b style="color:var(--blue)">Сбор</b><span>Данные из каждого</span></div>
+    <div class="ca">&rarr;</div>
+    <div class="cn" style="border-top:2px solid var(--amber)"><b style="color:var(--amber)">HTML</b><span>Single-file, inline CSS</span></div>
+    <div class="ca">&rarr;</div>
+    <div class="cn" style="border-top:2px solid var(--teal)"><b style="color:var(--teal)">Open</b><span>/tmp/dashboard.html</span></div>
+  </div>
+  <div class="q green"><p>Дашборд — зеркало системы в одном окне. Один промпт — один артефакт для Demo Day.</p></div>
+  <div class="nr"><button class="nb" onclick="go(0)">&larr;</button><button class="nb pri" onclick="go(2)">Конфигуратор &rarr;</button></div>
+</div>
+
+<!-- ═══ 3. ENVIRONMENT ═══ -->
+<div class="slide">
+  <h3>Шаг 1 / 5</h3>
+  <h2>В какой среде <span class="g">работаешь</span>?</h2>
+  <div class="g4" id="envG">
+    <div class="cd" data-v="claude-code" onclick="sel(this,'envG','env')">
+      <h4>Claude Code</h4>
+      <p>Терминал Anthropic. MCP, скиллы, hooks, /skills. Полный контроль.</p>
+      <span class="tg tg-g">РЕКОМЕНДУЕМ</span>
+    </div>
+    <div class="cd bl" data-v="codex" onclick="sel(this,'envG','env')">
+      <h4>Codex CLI</h4>
+      <p>OpenAI Codex. Облачный sandbox. Совместим с Claude Code промптами.</p>
+      <span class="tg tg-b">CLOUD AGENT</span>
+    </div>
+    <div class="cd am" data-v="cursor" onclick="sel(this,'envG','env')">
+      <h4>Cursor / IDE</h4>
+      <p>IDE с AI. Composer, .cursorrules, MCP через config.</p>
+      <span class="tg tg-a">IDE</span>
+    </div>
+    <div class="cd" data-v="chatgpt" onclick="sel(this,'envG','env')">
+      <h4>ChatGPT / Web</h4>
+      <p>Веб-интерфейс. Без MCP — промпт сгенерирует HTML из текста.</p>
+      <span class="tg" style="color:var(--dim);border:1px solid var(--border)">БАЗОВЫЙ</span>
+    </div>
+  </div>
+  <div class="nr"><button class="nb" onclick="go(1)">&larr;</button><button class="nb pri dis" id="nav3" onclick="go(3)">Далее &rarr;</button></div>
+</div>
+
+<!-- ═══ 4. NOTES ═══ -->
+<div class="slide">
+  <h3>Шаг 2 / 5</h3>
+  <h2>Система <span class="g">заметок</span></h2>
+  <div class="g3" id="notesG">
+    <div class="cd" data-v="obsidian" onclick="sel(this,'notesG','notes');showCond('obsPath')">
+      <h4>Obsidian</h4>
+      <p>Vault на диске. Markdown. Читаем через filesystem.</p>
+      <div style="font-size:.6rem;color:var(--accent-dim);margin-top:4px">mcp: filesystem</div>
+    </div>
+    <div class="cd bl" data-v="notion" onclick="sel(this,'notesG','notes');hideCond('obsPath')">
+      <h4>Notion</h4>
+      <p>Notion MCP. Базы данных, страницы, комменты.</p>
+      <div style="font-size:.6rem;color:var(--blue);margin-top:4px">mcp: notion</div>
+    </div>
+    <div class="cd" data-v="none" onclick="sel(this,'notesG','notes');hideCond('obsPath')">
+      <h4>Другое / нет</h4>
+      <p>Apple Notes, Google Docs, файлы, или без заметок.</p>
+    </div>
+  </div>
+  <div class="cond" id="obsPath">
+    <div class="ff">
+      <label>Путь к Obsidian vault</label>
+      <input type="text" id="vaultPath" placeholder="~/Documents/notes или ~/obsidian-vault">
+    </div>
+  </div>
+  <div class="nr"><button class="nb" onclick="go(2)">&larr;</button><button class="nb pri dis" id="nav4" onclick="go(4)">Далее &rarr;</button></div>
+</div>
+
+<!-- ═══ 5. SOURCES ═══ -->
+<div class="slide">
+  <h3>Шаг 3 / 5</h3>
+  <h2>Источники <span class="g">данных</span></h2>
+  <p style="font-size:.68rem;color:var(--dim);margin-bottom:8px">Выбери что подключено. Нет MCP — агент соберёт из файлов.</p>
+  <div class="g3" id="srcG" style="grid-template-columns:repeat(3,1fr)">
+    <div class="chk" data-v="tasks" onclick="tog(this)"><div class="cb">&check;</div><div><div class="cl">Tasks</div><div style="font-size:.62rem;color:var(--dim)">Задачи, приоритеты, статусы</div><div class="cm">linear / jira / todoist / github</div></div></div>
+    <div class="chk" data-v="calendar" onclick="tog(this)"><div class="cb">&check;</div><div><div class="cl">Calendar</div><div style="font-size:.62rem;color:var(--dim)">Встречи, расписание</div><div class="cm">krisp / google calendar</div></div></div>
+    <div class="chk" data-v="telegram" onclick="tog(this)"><div class="cb">&check;</div><div><div class="cl">Telegram</div><div style="font-size:.62rem;color:var(--dim)">Чаты, каналы, saved</div><div class="cm">telegram mcp (telethon)</div></div></div>
+    <div class="chk" data-v="files" onclick="tog(this)"><div class="cb">&check;</div><div><div class="cl">Filesystem</div><div style="font-size:.62rem;color:var(--dim)">Файлы, проекты, vault</div><div class="cm">filesystem mcp / прямой</div></div></div>
+    <div class="chk" data-v="sessions" onclick="tog(this)"><div class="cb">&check;</div><div><div class="cl">Agent Sessions</div><div style="font-size:.62rem;color:var(--dim)">Claude/Codex сессии за день</div><div class="cm">~/.claude/projects/</div></div></div>
+    <div class="chk" data-v="email" onclick="tog(this)"><div class="cb">&check;</div><div><div class="cl">Email / Slack</div><div style="font-size:.62rem;color:var(--dim)">Письма, каналы</div><div class="cm">gmail / slack mcp</div></div></div>
+  </div>
+  <div class="nr"><button class="nb" onclick="go(3)">&larr;</button><button class="nb pri dis" id="nav5" onclick="go(5)">Далее &rarr;</button></div>
+</div>
+
+<!-- ═══ 6. STYLE ═══ -->
+<div class="slide">
+  <h3>Шаг 4 / 5</h3>
+  <h2>Стиль <span class="g">дашборда</span></h2>
+  <div class="g3" id="styleG">
+    <div class="cd" data-v="dark" onclick="sel(this,'styleG','style')">
+      <div class="sp pd">
+        <div class="mh"><div class="md"><span></span><span></span><span></span></div>&nbsp;CTRL — DASHBOARD</div>
+        <div class="mb">
+          <div class="mp"><div class="mt">FOCUS</div><div class="mv">Build POS</div>sprint week</div>
+          <div class="mp"><div class="mt">TASKS</div><div class="mr"><div style="width:4px;height:4px;border-radius:50%;background:#dd5555"></div>AIM-2054 IP</div><div class="mr"><div style="width:4px;height:4px;border-radius:50%;background:#e8b84d"></div>AIM-2096 Todo</div></div>
+          <div class="mp"><div class="mt">SKILLS</div><div class="mc">/vox</div><div class="mc">/audit</div><div class="mc">/morning</div><div class="mc">/focus</div></div>
+          <div class="mp"><div class="mt">METRICS</div><div class="mv">33</div><div style="font-size:.35rem">sessions</div></div>
+        </div>
+      </div>
+      <h4>Dark Terminal</h4>
+      <p>GitHub dark. Green accent. JetBrains Mono.</p>
+      <span class="tg tg-g">REFERENCE</span>
+    </div>
+    <div class="cd" data-v="light" onclick="sel(this,'styleG','style')">
+      <div class="sp pl">
+        <div class="mh"><div class="md"><span></span><span></span><span></span></div>&nbsp;POS DASHBOARD</div>
+        <div class="mb">
+          <div class="mp"><div class="mt">Focus</div><div class="mv">Build POS</div>sprint week</div>
+          <div class="mp"><div class="mt">Tasks</div><div class="mr"><div style="width:4px;height:4px;border-radius:50%;background:#dc2626"></div>AIM-2054 IP</div><div class="mr"><div style="width:4px;height:4px;border-radius:50%;background:#d97706"></div>AIM-2096 Todo</div></div>
+          <div class="mp"><div class="mt">Skills</div><div class="mc">/vox</div><div class="mc">/audit</div><div class="mc">/morning</div><div class="mc">/focus</div></div>
+          <div class="mp"><div class="mt">Metrics</div><div class="mv">33</div><div style="font-size:.35rem">sessions</div></div>
+        </div>
+      </div>
+      <h4>Light Clean</h4>
+      <p>Белый фон. Inter. Notion-style чистота.</p>
+      <span class="tg tg-b">CLEAN</span>
+    </div>
+    <div class="cd tl" data-v="teal" onclick="sel(this,'styleG','style')">
+      <div class="sp pt">
+        <div class="mh"><div class="md"><span></span><span></span><span></span></div>&nbsp;MISSION CONTROL</div>
+        <div class="mb">
+          <div class="mp"><div class="mt">FOCUS</div><div class="mv">Build POS</div>sprint week</div>
+          <div class="mp"><div class="mt">TASKS</div><div class="mr"><div style="width:4px;height:4px;border-radius:50%;background:#dd5555"></div>AIM-2054 IP</div><div class="mr"><div style="width:4px;height:4px;border-radius:50%;background:#e8b84d"></div>AIM-2096 Todo</div></div>
+          <div class="mp"><div class="mt">SKILLS</div><div class="mc">/vox</div><div class="mc">/audit</div><div class="mc">/morning</div><div class="mc">/focus</div></div>
+          <div class="mp"><div class="mt">METRICS</div><div class="mv">33</div><div style="font-size:.35rem">sessions</div></div>
+        </div>
+      </div>
+      <h4>Teal Grid</h4>
+      <p>AI-native. Teal + blue. Space Grotesk.</p>
+      <span class="tg" style="color:var(--teal);border:1px solid rgba(77,201,212,.3)">AI-NATIVE</span>
+    </div>
+  </div>
+  <div class="nr"><button class="nb" onclick="go(4)">&larr;</button><button class="nb pri dis" id="nav6" onclick="go(6)">Далее &rarr;</button></div>
+</div>
+
+<!-- ═══ 7. CONTEXT ═══ -->
+<div class="slide">
+  <h3>Шаг 5 / 5</h3>
+  <h2>Контекст <span class="g">и пожелания</span></h2>
+  <p style="font-size:.68rem;color:var(--dim);margin-bottom:10px">Имя и фокус — обязательны. Остальное усилит промпт.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="ff"><label>Имя / роль <span style="color:var(--red)">*</span></label><input type="text" id="ctxName" placeholder="Sergei / Product Manager"></div>
+      <div class="ff"><label>Фокус сейчас <span style="color:var(--red)">*</span></label><input type="text" id="ctxFocus" placeholder="Запуск MVP, подготовка к Demo Day..."></div>
+      <div class="ff"><label>Задачи (1-3)</label><textarea id="ctxTasks" rows="3" placeholder="1. Дописать лендинг&#10;2. Подготовить презентацию"></textarea></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="ff"><label>MCP серверы (если знаешь)</label><input type="text" id="ctxMcp" placeholder="linear, krisp, telegram, filesystem..."></div>
+      <div class="ff"><label>Путь к проекту</label><input type="text" id="ctxDir" placeholder="~/projects/my-app"></div>
+      <div class="ff"><label>Пожелания к дашборду</label><textarea id="ctxExtra" rows="3" placeholder="Хочу панель Telegram, метрику файлов за неделю, круглые часы..."></textarea></div>
+    </div>
+  </div>
+  <div class="nr"><button class="nb" onclick="go(5)">&larr;</button><button class="nb pri dis" id="nav7" onclick="go(7)">Сгенерировать промпт &rarr;</button></div>
+</div>
+
+<!-- ═══ 8. PROMPT RESULT ═══ -->
+<div class="slide">
+  <h3>Результат</h3>
+  <h2>Твой <span class="g">промпт</span><span class="cur"></span></h2>
+  <div class="btn-row">
+    <button class="pbtn pri" id="copyBtn" onclick="copyP()">COPY</button>
+    <button class="pbtn" id="dlBtn" onclick="dlP()">DOWNLOAD .md</button>
+    <button class="pbtn" id="aiBtn" onclick="enhanceP()" style="border-color:var(--teal);color:var(--teal)">УСИЛИТЬ ЧЕРЕЗ AI</button>
+    <span id="aiStatus" style="font-size:.62rem;color:var(--dim);align-self:center"></span>
+  </div>
+  <div class="pbox" id="pbox"><div id="pContent"></div></div>
+  <div class="nr"><button class="nb" onclick="go(6)">&larr;</button><button class="nb pri" onclick="go(8)">Финал &rarr;</button></div>
+</div>
+
+<!-- ═══ 9. CLOSING ═══ -->
+<div class="slide">
+  <div class="logo-row"><img src="logo.png" alt="AI Mindset"><span class="lt">AI Mindset</span></div>
+  <h3>POS Sprint S26 / Demo Day Tomorrow</h3>
+  <h2>Что <span class="g">дальше</span></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <div style="font-size:.85rem;line-height:2.2">
+        <p><b style="color:var(--accent)">1.</b> Запусти промпт в агенте</p>
+        <p><b style="color:var(--blue)">2.</b> Открой HTML — проверь данные</p>
+        <p><b style="color:var(--amber)">3.</b> Скриншот в чат</p>
+        <p><b style="color:var(--teal)">4.</b> Demo Day завтра 10:00 CET</p>
+      </div>
+      <div class="q" style="margin-top:10px"><p>Нет MCP? filesystem + скиллы + CLAUDE.md — достаточно для MVP.</p></div>
+    </div>
+    <div>
+      <div style="font-size:.62rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">> Итерация 2</div>
+      <div style="font-size:.72rem;color:var(--dim);line-height:1.9">
+        <p><b style="color:var(--bright)">+MCP:</b> linear, krisp, telegram — больше панелей</p>
+        <p><b style="color:var(--bright)">Уточни:</b> "увеличь метрики", "добавь график"</p>
+        <p><b style="color:var(--bright)">Скилл:</b> сохрани как /dashboard для ежедневного запуска</p>
+        <p><b style="color:var(--bright)">Live:</b> утренний запуск — свежий снимок POS</p>
+        <p><b style="color:var(--bright)">Деплой:</b> netlify deploy --prod</p>
+      </div>
+      <div style="margin-top:8px;font-size:.62rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">> Промпт-хаки</div>
+      <div style="font-size:.68rem;color:var(--dim);line-height:1.8">
+        <p>"Добавь анимацию fade-in для панелей"</p>
+        <p>"Сделай кликабельные skill chips"</p>
+        <p>"Добавь панель AGENT TIMELINE"</p>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:.68rem;color:var(--dim);line-height:1.7">
+    <b style="color:var(--bright)">AI Mindset Lab</b> &bull; POS Sprint S26 &bull; March 2026<br>
+    <span style="color:var(--accent)">aimindset.org</span> &bull; Alexander Povaliaev &bull; <span style="color:var(--amber)">Demo Day: Сб 14 марта, 10:00 CET</span>
+  </div>
+  <div class="nr"><button class="nb" onclick="go(7)">&larr;</button><button class="nb" onclick="go(0)">В начало</button><button class="nb pri" onclick="go(7)">К промпту</button></div>
+</div>
+
+</div>
+
+<script>
+const S = {slide:0, env:'', notes:'', sources:[], style:''};
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function flash(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.borderColor = 'var(--red)';
+  el.style.color = 'var(--red)';
+  el.style.opacity = '1';
+  setTimeout(() => { el.style.borderColor = ''; el.style.color = ''; el.style.opacity = ''; }, 800);
+}
+
+function go(n) {
+  if (n<0||n>=total) return;
+  // strict forward validation
+  if (n > S.slide) {
+    if (n > 2 && !S.env) { flash('nav3'); return; }
+    if (n > 3 && !S.notes) { flash('nav4'); return; }
+    if (n > 4 && S.sources.length===0) { flash('nav5'); return; }
+    if (n > 5 && !S.style) { flash('nav6'); return; }
+    if (n > 6) {
+      const nm = document.getElementById('ctxName').value.trim();
+      const fc = document.getElementById('ctxFocus').value.trim();
+      if (!nm || !fc) { flash('nav7'); return; }
+    }
+  }
+  slides.forEach((s,i) => {s.classList.remove('active'); if(i===n) s.classList.add('active')});
+  S.slide = n;
+  document.getElementById('counter').textContent = `${n+1} / ${total}`;
+  document.getElementById('progress').style.width = `${((n+1)/total)*100}%`;
+  if (n===7) { genP(); enhanceP(); }
+}
+
+function sel(el, gid, key) {
+  document.getElementById(gid).querySelectorAll('.cd').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S[key] = el.dataset.v;
+  // enable nav button
+  const navMap = {envG:'nav3', notesG:'nav4', styleG:'nav6'};
+  const btn = document.getElementById(navMap[gid]);
+  if(btn) btn.classList.remove('dis');
+}
+
+function tog(el) {
+  el.classList.toggle('on');
+  const v = el.dataset.v;
+  if(el.classList.contains('on')) { if(!S.sources.includes(v)) S.sources.push(v); }
+  else { S.sources = S.sources.filter(s=>s!==v); }
+  const b = document.getElementById('nav5');
+  if(b) { if(S.sources.length>0) b.classList.remove('dis'); else b.classList.add('dis'); }
+}
+
+function showCond(id) { document.getElementById(id).classList.add('show'); }
+function hideCond(id) { document.getElementById(id).classList.remove('show'); }
+
+// enable nav7 when required context fields are filled
+['ctxName','ctxFocus'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>{
+    const nm=document.getElementById('ctxName').value.trim();
+    const fc=document.getElementById('ctxFocus').value.trim();
+    const b=document.getElementById('nav7');
+    if(b){if(nm&&fc)b.classList.remove('dis');else b.classList.add('dis')}
+  });
+});
+
+// keyboard navigation disabled — buttons only
+
+// ── PROMPT ──
+function genP() {
+  const env = S.env||'claude-code';
+  const notes = S.notes||'none';
+  const src = S.sources.length ? S.sources : ['files'];
+  const style = S.style||'dark';
+
+  const ctxName = document.getElementById('ctxName').value.trim();
+  const ctxFocus = document.getElementById('ctxFocus').value.trim();
+  const ctxTasks = document.getElementById('ctxTasks').value.trim();
+  const ctxMcp = document.getElementById('ctxMcp').value.trim();
+  const ctxDir = document.getElementById('ctxDir').value.trim();
+  const ctxExtra = document.getElementById('ctxExtra').value.trim();
+  const vaultPath = document.getElementById('vaultPath')?.value.trim() || '';
+
+  const SM = {
+    dark:{name:'Dark Terminal',bg:'#0d1117',bg2:'#161b22',border:'rgba(48,54,61,0.6)',accent:'#55aa88',text:'#c9d1d9',bright:'#e6edf3',font:"'JetBrains Mono','SF Mono',monospace",headerBg:'#161b22',panelShadow:'none'},
+    light:{name:'Light Clean',bg:'#ffffff',bg2:'#f6f8fa',border:'#d0d7de',accent:'#2d8659',text:'#1f2328',bright:'#1f2328',font:"'IBM Plex Mono','Inter',sans-serif",headerBg:'#ffffff',panelShadow:'0 1px 3px rgba(0,0,0,0.08)'},
+    teal:{name:'Teal Grid',bg:'#161620',bg2:'#1a1a2e',border:'rgba(77,201,212,0.2)',accent:'#4dc9d4',text:'rgba(255,255,255,0.75)',bright:'#ffffff',font:"'Space Grotesk','JetBrains Mono',monospace",headerBg:'#1a1a2e',panelShadow:'0 0 20px rgba(77,201,212,0.05)'}
+  };
+  const st = SM[style];
+
+  let p = `Собери мне персональный POS-дашборд. Это single-file HTML-страница с CSS и данными inline. Никаких серверов, никаких фреймворков. Результат — один .html файл который открывается в браузере.\n\n`;
+
+  // context
+  if (ctxName||ctxFocus||ctxTasks) {
+    p += `## Контекст\n\n`;
+    if(ctxName) p += `Пользователь: ${ctxName}\n`;
+    if(ctxFocus) p += `Фокус: ${ctxFocus}\n`;
+    if(ctxTasks) p += `Задачи:\n${ctxTasks}\n`;
+    if(ctxDir) p += `Проект: ${ctxDir}\n`;
+    if(ctxExtra) p += `Пожелания: ${ctxExtra}\n`;
+    p += `\nИспользуй эту информацию для панели FOCUS и контекстных данных. Если чего-то не хватает — СПРОСИ, не выдумывай.\n\n`;
+  }
+
+  // audit
+  if (env==='claude-code'||env==='codex') {
+    p += `## Шаг 1: Аудит инфраструктуры\n\n`;
+    p += `1. Прочитай ~/.claude/mcp.json и .claude/mcp.json (если есть) — список MCP-серверов\n`;
+    p += `2. Категоризируй каждый: Tasks, Calendar, Messaging, Files, Search, Browser, Notes\n`;
+    p += `3. Прочитай список скиллов: ls ~/.claude/skills/ и .claude/skills/\n`;
+    p += `4. Прочитай CLAUDE.md если есть — это описание для панели ABOUT\n`;
+    if(ctxMcp) p += `5. Ожидаемые MCP: ${ctxMcp}\n`;
+    p += `\nЕсли MCP-серверов нет — это нормально. Собирай данные из файлов, скиллов, CLAUDE.md.\n`;
+    p += `Покажи summary аудита: что нашёл, что используешь, чего не хватает.\n\n`;
+  } else if (env==='cursor') {
+    p += `## Шаг 1: Аудит среды\n\nПроверь .cursor/ конфигурацию, .cursorrules, доступные MCP.\n`;
+    if(ctxDir) p += `Проект: ${ctxDir}\n`;
+    p += `\n`;
+  } else {
+    p += `## Шаг 1: Сбор контекста\n\nУ тебя нет прямого доступа к MCP-серверам.\nСпроси меня:\n- Какие задачи в работе? (название, приоритет, статус)\n- Какие встречи сегодня? (время, название)\n- Какие инструменты использую?\n- Что в фокусе?\n\nНа основе моих ответов сгенерируй HTML с реальными данными.\n\n`;
+  }
+
+  // data collection
+  p += `## Шаг 2: Сбор данных\n\nСобери данные из каждого доступного источника. Правило: если источник недоступен — ПРОПУСТИ панель полностью. Пустая панель хуже отсутствующей. Не выдумывай данные.\n\n`;
+
+  if (src.includes('tasks')) {
+    p += `### TASKS\n- Linear MCP: list_issues(assignee:me, status: started+todo+in_review) — или аналог\n- Формат: ID (кликабельный), название, приоритет, статус\n- Группировка: In Progress → In Review → Todo\n- Priority dots: красный=urgent, оранжевый=high, синий=medium, серый=low\n- Показать 10-15 задач максимум\n\n`;
+  }
+  if (src.includes('calendar')) {
+    p += `### CALENDAR\n- Krisp MCP: list_upcoming_meetings (7 дней) — или Google Calendar\n- Формат: дата, время, название, длительность\n- Выделить сегодняшние отдельно (цветом)\n- Показать 5-7 ближайших\n\n`;
+  }
+  if (src.includes('telegram')) {
+    p += `### TELEGRAM\n- Telegram MCP: последние 10 сообщений из Saved Messages (или спроси какие чаты)\n- Формат: время, отправитель, текст (первые 120 символов)\n- Показать 5-8 последних\n\n`;
+  }
+  if (src.includes('files')) {
+    p += `### RECENT FILES\n- Найди .md файлы изменённые за 24 часа\n- Исключи: .obsidian/, .trash/, node_modules/, .git/\n`;
+    if(vaultPath) p += `- Vault path: ${vaultPath}\n`;
+    if(ctxDir) p += `- Project path: ${ctxDir}\n`;
+    p += `- Формат: имя файла, путь, время изменения\n- Показать 10-15 файлов, сортировка по времени\n\n`;
+  }
+  if (src.includes('sessions')) {
+    p += `### AGENT SESSIONS\n- Найди сессии Claude Code за сегодня: ls ~/.claude/projects/*/sessions/ (или аналогичный путь)\n- Для каждой: время старта, длительность, первая строка промпта\n- Это даёт картину рабочего дня — что делал, когда, как долго\n- Показать все сессии за сегодня\n\n`;
+  }
+  if (src.includes('email')) {
+    p += `### EMAIL / SLACK\n- Gmail MCP или Slack MCP если доступны\n- Последние 5 непрочитанных/важных\n- Формат: от кого, тема, время\n- Если недоступно — пропустить\n\n`;
+  }
+
+  // notes
+  if (notes==='obsidian') {
+    p += `### VAULT (Obsidian)\n`;
+    if(vaultPath) p += `- Path: ${vaultPath}\n`;
+    p += `- Прочитай CLAUDE.md — извлеки описание для панели ABOUT\n- Найди последние 5 .md файлов (за 24ч)\n- Посчитай: всего .md файлов, папок, скиллов\n- Если есть daily notes — найди сегодняшнюю\n\n`;
+  } else if (notes==='notion') {
+    p += `### NOTES (Notion)\n- Notion MCP: последние 5 изменённых страниц\n- Извлеки названия для панели DOCUMENTS\n\n`;
+  }
+
+  p += `### SKILLS\n- Список из ~/.claude/skills/ и .claude/skills/\n- Показать как chips: клик копирует /название в буфер\n- Посчитай количество для метрик\n\n`;
+  p += `### METRICS (числовая панель)\nПосчитай и покажи в header strip:\n- Sessions сегодня\n- Tasks In Progress / Todo\n- Skills (количество)\n- Files за 24 часа\n- MCP серверы (количество)\n\n`;
+
+  // design
+  p += `## Шаг 3: Генерация HTML\n\nСгенерируй ОДНУ self-contained HTML-страницу. Максимум 600 строк.\n\n`;
+  p += `### Стиль: ${st.name}\n\n`;
+  p += `\`\`\`css\n:root {\n  --bg: ${st.bg};\n  --bg2: ${st.bg2};\n  --border: ${st.border};\n  --accent: ${st.accent};\n  --text: ${st.text};\n  --text-bright: ${st.bright};\n  --panel-shadow: ${st.panelShadow};\n  font-family: ${st.font};\n}\n\`\`\`\n\n`;
+  p += `### Обязательная структура:\n\n`;
+  p += `**Header bar** (fixed top, 42px):\n- Terminal chrome: traffic light dots (красный, жёлтый, зелёный) слева\n- Заголовок: "> PERSONAL POS DASHBOARD" или имя пользователя\n- Справа: живые часы (HH:MM, обновление каждые 30s), дата генерации\n\n`;
+  p += `**Metric strip** (под header, бегущая строка или статичная):\n- 5-7 ключевых чисел в ряд: SESSIONS TODAY · TASKS IP · TASKS TODO · SKILLS · FILES 24H · MCP SERVERS\n- Моноширинный шрифт, uppercase labels, accent-цвет для чисел\n\n`;
+  p += `**Panel grid** (основное тело):\n- CSS Grid: repeat(auto-fit, minmax(300px, 1fr))\n- Каждая панель: заголовок "> НАЗВАНИЕ" UPPERCASE + badge с количеством + border-top 2px accent\n- Содержимое: строки данных с dot-индикаторами, chips для тегов\n- Hover: subtle border glow (box-shadow 0 0 12px accent с opacity 0.1)\n\n`;
+  p += `**Обязательные детали:**\n- Всё inline — никаких внешних JS/CSS (Google Fonts через <link> — ок)\n- Skill chips: клик → navigator.clipboard.writeText('/name') → визуальный feedback\n- Priority dots: red=urgent, amber=high, blue=medium, gray=low\n- Панели без данных — НЕ ПОКАЗЫВАТЬ (display:none)\n- Responsive: на мобильном grid переходит в 1 колонку\n- Scroll на длинных панелях: max-height + overflow-y:auto\n\n`;
+
+  // save
+  p += `## Шаг 4: Сохрани и открой\n\nСохрани: /tmp/my-pos-dashboard.html\nОткрой: open /tmp/my-pos-dashboard.html\n\nПокажи summary:\n- Какие панели включены\n- Сколько данных из каждого источника\n- Что можно улучшить (итерация 2)\n- Если источник был недоступен — предложи как подключить`;
+
+  document.getElementById('pContent').textContent = p;
+  // reset AI button
+  const ab = document.getElementById('aiBtn');
+  ab.textContent = 'УСИЛИТЬ ЧЕРЕЗ AI';
+  ab.classList.remove('done','loading');
+  ab.disabled = false;
+  document.getElementById('aiStatus').textContent = '';
+}
+
+function copyP() {
+  const t = document.getElementById('pContent').textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    const b = document.getElementById('copyBtn');
+    b.textContent='COPIED';b.classList.add('done');
+    setTimeout(()=>{b.textContent='COPY';b.classList.remove('done')},2500);
+  });
+}
+
+function dlP() {
+  const t = document.getElementById('pContent').textContent;
+  const b = new Blob([t],{type:'text/markdown'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(b);
+  a.download = 'pos-dashboard-prompt.md';
+  a.click();
+  const btn = document.getElementById('dlBtn');
+  btn.textContent='SAVED';setTimeout(()=>{btn.textContent='DOWNLOAD .md'},2000);
+}
+
+async function enhanceP() {
+  const base = document.getElementById('pContent').textContent;
+  const btn = document.getElementById('aiBtn');
+  const status = document.getElementById('aiStatus');
+  btn.textContent='ГЕНЕРИРУЮ...';btn.classList.add('loading');btn.disabled=true;
+  status.textContent='Усиливаю промпт через AI...';
+
+  try {
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method:'POST',
+      headers:{
+        'Authorization':'Bearer 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',
+        'Content-Type':'application/json',
+        'HTTP-Referer':'https://pos-playground.netlify.app',
+        'X-Title':'POS Dashboard Workshop'
+      },
+      body:JSON.stringify({
+        model:'anthropic/claude-3.5-sonnet',
+        messages:[{role:'system',content:`Ты — эксперт по AI-агентам, персональным дашбордам и CSS-дизайну. Твоя задача — усилить промпт для генерации POS-дашборда.
+
+Правила:
+1. Добавь ДЕТАЛЬНЫЕ визуальные спецификации: конкретные размеры, отступы, border-radius, opacity, transition timing
+2. Добавь примеры данных для каждой панели (реалистичные, не placeholder)
+3. Добавь edge cases: что делать если данных мало, если нет MCP, если нет скиллов
+4. Добавь анимации: fade-in для панелей, pulse для live badge, smooth transitions
+5. Добавь accessibility: proper contrast ratios, readable font sizes
+6. Сделай промпт ПОСЛЕДОВАТЕЛЬНЫМ — каждый шаг логически следует из предыдущего
+7. В конце добавь секцию "Итерация 2" — что улучшить после первого прохода
+
+ВЕРНИ ТОЛЬКО улучшенный промпт. Без пояснений. Сохрани markdown. Пиши на русском.`
+        },{role:'user',content:base}],
+        max_tokens:6000,
+        temperature:0.5
+      })
+    });
+    if(!res.ok) {
+      const errBody = await res.json().catch(()=>({}));
+      throw new Error(errBody.error?.message || 'HTTP ' + res.status);
+    }
+    const data = await res.json();
+    if(data.choices && data.choices[0]) {
+      document.getElementById('pContent').textContent = data.choices[0].message.content;
+      btn.textContent='УСИЛЕНО ✓';btn.classList.remove('loading');btn.classList.add('done');
+      status.textContent='Промпт усилен через AI';
+    } else {
+      throw new Error('Empty response from API');
+    }
+  } catch(e) {
+    btn.textContent='ПОВТОРИТЬ AI';btn.classList.remove('loading');btn.disabled=false;
+    status.textContent='AI: '+(e.message||'ошибка сети')+'. Базовый промпт готов.';
+    console.error('OpenRouter:', e);
+  }
+}
+
+go(0);
+</script>
+</body>
+</html>
