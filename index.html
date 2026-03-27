@@ -307,15 +307,12 @@ const graph = ForceGraph()(document.getElementById('graph'))
       ctx.fillStyle=grad;ctx.fill();
       ctx.strokeStyle=tp.c;ctx.lineWidth=2;ctx.stroke();
     } else if(node.type==='resource'){
-      // Resource: small rounded rect
-      const w=r*1.6,h=r*1.2;
-      ctx.beginPath();
-      ctx.roundRect(node.x-w/2,node.y-h/2,w,h,3);
-      ctx.fillStyle=tp.c+'40';ctx.fill();
-      ctx.strokeStyle=tp.c+'80';ctx.lineWidth=0.8;ctx.stroke();
-      // Link icon
-      ctx.fillStyle=tp.c;ctx.font=`${r*0.7}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText('🔗',node.x,node.y);
+      // Resource: small rect with border
+      const w=r*1.4,h=r*1.0;
+      ctx.fillStyle=tp.c+'40';ctx.fillRect(node.x-w/2,node.y-h/2,w,h);
+      ctx.strokeStyle=tp.c+'80';ctx.lineWidth=0.8;ctx.strokeRect(node.x-w/2,node.y-h/2,w,h);
+      // Dot marker
+      ctx.beginPath();ctx.arc(node.x,node.y,r*0.25,0,Math.PI*2);ctx.fillStyle=tp.c;ctx.fill();
     } else if(node.type==='concept'){
       // Concept: diamond shape
       ctx.beginPath();
