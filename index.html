@@ -681,15 +681,21 @@ const tip = document.getElementById('tip');
 
 function onHover(node) {
   container.style.cursor = node?'pointer':'default';
-  if (hovered && hovered.__halo) hovered.__halo.material.opacity=0.18;
-  if (hovered && hovered.__label && hovered.type === 'participant' && !showLabels) hovered.__label.visible = false;
+  // Reset previous hover
+  if (hovered) {
+    if (hovered.__halo) hovered.__halo.material.opacity = hovered.type==='week' ? 0.3 : 0.2;
+  }
   hovered=node;
   if (node) {
-    if(node.__halo)node.__halo.material.opacity=0.4;
-    if (node.__label && node.type === 'participant') node.__label.visible = true;
-    tip.textContent=`${TYPES[node.type]?.icon||''} ${node.name}`; tip.classList.add('on');
+    // Highlight on hover
+    if (node.__halo) node.__halo.material.opacity = node.type==='week' ? 0.6 : 0.5;
+    // Show tooltip with type info
+    const t = TYPES[node.type];
+    tip.textContent = `${t?.icon||''} ${node.name}`;
+    tip.classList.add('on');
+  } else {
+    tip.classList.remove('on');
   }
-  else tip.classList.remove('on');
 }
 document.addEventListener('pointermove', e => { tip.style.left=(e.clientX+10)+'px'; tip.style.top=(e.clientY-6)+'px'; });
 
@@ -699,7 +705,14 @@ function onClick(node) {
   updateBack();
   showInfo(node);
   highlightConnected(node);
-  Graph.cameraPosition({x:node.x+50,y:node.y+20,z:node.z+50},{x:node.x,y:node.y,z:node.z},800);
+  // Zoom distance depends on node type — weeks show cluster, others go close
+  const dist = node.type==='week' ? 100 : (TYPES[node.type]?.size||5) * 8;
+  const elevate = node.type==='week' ? 40 : 15;
+  Graph.cameraPosition(
+    {x:node.x+dist*0.7, y:node.y+elevate, z:node.z+dist*0.7},
+    {x:node.x, y:node.y, z:node.z},
+    node.type==='week' ? 1200 : 800
+  );
 }
 
 function onBgClick() { selected=null; closeInfo(); resetHL(); navHistory.length=0; updateBack(); }
@@ -721,18 +734,28 @@ function highlightConnected(node) {
     if(s===node.id)conn.add(t); if(t===node.id)conn.add(s);
   });
   graphData.nodes.forEach(n => {
-    const yes=conn.has(n.id);
-    if(n.__group) n.__group.children.forEach(c=>{if(c.material&&c.material.opacity!==undefined)c.material.opacity=yes?0.9:0.06;});
-    if(n.__halo) n.__halo.material.opacity=yes?(n.id===node.id?0.45:0.25):0.01;
-    if(n.__label) n.__label.visible=yes;
+    const yes = conn.has(n.id);
+    const isSelf = n.id === node.id;
+    // Dim non-connected, brighten connected
+    if (n.__group) n.__group.children.forEach(c => {
+      if (c.material && c.material.opacity !== undefined)
+        c.material.opacity = yes ? (isSelf ? 0.95 : 0.85) : 0.04;
+    });
+    // Halo: strong on selected, medium on connected, hidden on rest
+    if (n.__halo) n.__halo.material.opacity = yes ? (isSelf ? 0.6 : 0.3) : 0.01;
+    // Labels: always show connected nodes' labels during highlight
+    if (n.__label) n.__label.visible = yes;
   });
 }
 
 function resetHL() {
   graphData.nodes.forEach(n => {
-    if(n.__group)n.__group.children.forEach(c=>{if(c.material&&c.material.opacity!==undefined)c.material.opacity=0.85;});
-    if(n.__halo)n.__halo.material.opacity=0.18;
-    if(n.__label)n.__label.visible=showLabels;
+    if (n.__group) n.__group.children.forEach(c => {
+      if (c.material && c.material.opacity !== undefined)
+        c.material.opacity = n.type === 'week' ? 0.9 : 0.87;
+    });
+    if (n.__halo) n.__halo.material.opacity = n.type === 'week' ? 0.3 : 0.2;
+    if (n.__label) n.__label.visible = showLabels;
   });
 }
 
