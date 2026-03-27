@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Native Lab — Knowledge Graph</title>
-  <script src="//unpkg.com/force-graph"></script>
-  <script src="//unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/force-graph"></script>
+  <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root { --bg:#12121c; --surface:#1a1a2e; --accent:#4dc9d4; --text:rgba(255,255,255,.75); --dim:rgba(255,255,255,.4); --border:rgba(77,201,212,.12); }
@@ -84,6 +84,16 @@
 <script>
 (function(){
 'use strict';
+
+// Error boundary
+window.onerror = (msg,src,line) => {
+  document.getElementById('graph').innerHTML = `<div style="color:#ff6b6b;padding:40px;font-family:monospace">Error: ${msg}<br>Line: ${line}<br>Source: ${src}</div>`;
+};
+
+if (typeof ForceGraph === 'undefined') {
+  document.getElementById('graph').innerHTML = '<div style="color:#ff6b6b;padding:40px;font-family:monospace">ForceGraph library failed to load. Check CDN.</div>';
+  return;
+}
 
 // ════════ TYPES ════════
 const T = {
@@ -279,6 +289,7 @@ gd.nodes.forEach(n=>{
 });
 
 // ════════ 2D GRAPH ════════
+let hoveredNode = null;
 const graph = ForceGraph()(document.getElementById('graph'))
   .graphData(gd)
   .backgroundColor('#12121c')
@@ -289,8 +300,16 @@ const graph = ForceGraph()(document.getElementById('graph'))
     const r=tp.s;
     const img=avatarCache[node.id];
 
+    const t = Date.now() * 0.001; // time for animations
+    const isHovered = node === hoveredNode;
+
     // Draw node
     if(img){
+      // Glow ring on hover
+      if(isHovered){
+        ctx.beginPath();ctx.arc(node.x,node.y,r+4,0,Math.PI*2);
+        ctx.strokeStyle=tp.c+'60';ctx.lineWidth=3;ctx.stroke();
+      }
       // Circular avatar
       ctx.save();
       ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.closePath();ctx.clip();
@@ -298,12 +317,17 @@ const graph = ForceGraph()(document.getElementById('graph'))
       ctx.restore();
       // Ring border
       ctx.beginPath();ctx.arc(node.x,node.y,r+1,0,Math.PI*2);
-      ctx.strokeStyle=tp.c;ctx.lineWidth=2;ctx.stroke();
+      ctx.strokeStyle=tp.c;ctx.lineWidth=isHovered?3:2;ctx.stroke();
     } else if(node.type==='week'){
-      // Week: large filled circle with glow
+      // Week: pulsing glow ring
+      const pulse = 0.7 + Math.sin(t * 1.5 + node.x * 0.01) * 0.3;
+      ctx.beginPath();ctx.arc(node.x,node.y,r+6,0,Math.PI*2);
+      ctx.strokeStyle=tp.c + Math.round(pulse*40).toString(16).padStart(2,'0');
+      ctx.lineWidth=2;ctx.stroke();
+      // Main circle with gradient
       ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);
-      const grad=ctx.createRadialGradient(node.x,node.y,r*0.3,node.x,node.y,r);
-      grad.addColorStop(0,tp.c);grad.addColorStop(1,tp.c+'60');
+      const grad=ctx.createRadialGradient(node.x,node.y,r*0.2,node.x,node.y,r);
+      grad.addColorStop(0,tp.c);grad.addColorStop(1,tp.c+'50');
       ctx.fillStyle=grad;ctx.fill();
       ctx.strokeStyle=tp.c;ctx.lineWidth=2;ctx.stroke();
     } else if(node.type==='resource'){
@@ -351,15 +375,33 @@ const graph = ForceGraph()(document.getElementById('graph'))
     const r=(T[node.type]||{s:5}).s+4;
     ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.fill();
   })
-  .linkColor(()=>'rgba(77,201,212,.08)')
-  .linkWidth(l=>l.rel==='lectures'||l.rel==='leads'?1.5:0.5)
+  .linkColor(l=>{
+    // Highlight links to hovered node
+    if(hoveredNode){
+      const s=typeof l.source==='object'?l.source.id:l.source;
+      const t=typeof l.target==='object'?l.target.id:l.target;
+      if(s===hoveredNode.id||t===hoveredNode.id) return 'rgba(77,201,212,.35)';
+    }
+    return 'rgba(77,201,212,.08)';
+  })
+  .linkWidth(l=>{
+    if(hoveredNode){
+      const s=typeof l.source==='object'?l.source.id:l.source;
+      const t=typeof l.target==='object'?l.target.id:l.target;
+      if(s===hoveredNode.id||t===hoveredNode.id) return 2;
+    }
+    return l.rel==='lectures'||l.rel==='leads'?1.5:0.5;
+  })
   .linkDirectionalParticles(l=>['lectures','speaks','teaches'].includes(l.rel)?2:0)
   .linkDirectionalParticleWidth(2)
   .linkDirectionalParticleSpeed(0.004)
   .linkDirectionalParticleColor(()=>'rgba(77,201,212,.4)')
   .linkCurvature(0.1)
   .onNodeClick(onClick)
-  .onNodeHover((n)=>{document.getElementById('graph').style.cursor=n?'pointer':'default';});
+  .onNodeHover((n)=>{
+    hoveredNode=n;
+    document.getElementById('graph').style.cursor=n?'pointer':'default';
+  });
 
 // Fit to view after render — multiple attempts for reliability
 setTimeout(()=>{graph.zoomToFit(400,80);},200);
