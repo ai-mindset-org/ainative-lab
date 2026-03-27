@@ -5,253 +5,310 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI-Native Lab — Sprint Hub</title>
 <meta property="og:title" content="AI-Native Lab — Sprint Hub">
-<meta property="og:description" content="All interactive tools from AI-Native Organizations Sprint s2">
+<meta property="og:description" content="All sessions, tools, and materials from AI-Native Organizations Sprint s2 — 9 sessions, 11 tools, 211 participants">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--td:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--cyan:#38bdf8;--text:#e6edf3;--t2:rgba(230,237,243,0.7);--t3:rgba(230,237,243,0.4);--b:rgba(77,201,212,0.1);--b2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--dis:'Space Grotesk',sans-serif}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
 body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.02) 1px,transparent 1px);background-size:60px 60px}
 a{color:var(--teal);text-decoration:none}
-.app{display:grid;grid-template-columns:240px 1fr;grid-template-rows:48px 1fr;height:100vh;overflow:hidden}
-.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100}
-.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
-.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}.topbar-r{margin-left:auto;display:flex;gap:16px;align-items:center}
-.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--teal-dim);color:var(--teal);letter-spacing:0.1em;text-transform:uppercase}
-.sidebar{background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 0}.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.sb-h{font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);padding:8px 16px 4px}
-.sb-i{display:flex;align-items:center;gap:8px;padding:7px 16px;cursor:pointer;transition:all 0.15s;font-size:12px;color:var(--text2);border-left:2px solid transparent}
-.sb-i:hover{background:rgba(77,201,212,0.05);color:var(--text)}.sb-i.on{background:rgba(77,201,212,0.08);color:var(--teal);border-left-color:var(--teal)}
-.sb-i .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}.sb-i .cnt{margin-left:auto;font-size:10px;color:var(--text3)}
-.sb-lv{padding:12px 16px 4px;font-family:var(--display);font-size:11px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
-.sb-lv .d{width:4px;height:4px;border-radius:50%;background:var(--teal)}.sb-sep{height:1px;background:var(--border);margin:8px 16px}
-.main{overflow-y:auto}.main::-webkit-scrollbar{width:6px}.main::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-.pnl{display:none;flex-direction:column;min-height:100%}.pnl.on{display:flex}
-.hero-card{width:100%;aspect-ratio:3/1;position:relative;overflow:hidden;background:var(--bg3);flex-shrink:0}
-.hero-card .grid-bg{position:absolute;inset:0;background:linear-gradient(to right,rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
-.hero-card .mesh{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(77,201,212,0.15) 0%,transparent 50%),radial-gradient(ellipse at 85% 40%,rgba(59,130,246,0.08) 0%,transparent 50%)}
-.hero-card .accent-top{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(77,201,212,0.2) 60%,transparent);z-index:10}
-.hero-card .hc{position:absolute;inset:0;z-index:5;padding:32px 40px;display:flex;align-items:center;gap:48px}
-.hero-card .hl{flex:1;display:flex;flex-direction:column;gap:12px}
-.hero-card .hb{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);opacity:0.8}
-.hero-card .ht{font-family:var(--display);font-weight:700;font-size:28px;line-height:0.95;text-transform:uppercase}
-.hero-card .ht .tl{color:var(--teal)}.hero-card .hs{font-size:12px;color:var(--text2);max-width:380px}
-.hero-card .hr{display:flex;flex-direction:column;gap:8px;min-width:300px}
-.hst{display:flex;align-items:center;gap:12px;padding:8px 14px;background:rgba(77,201,212,0.04);border:1px solid var(--border);border-radius:5px}
-.hst .sn{font-family:var(--display);font-weight:700;font-size:20px;color:var(--teal);opacity:0.4;min-width:30px}
-.hst .st{font-size:12px;color:var(--text2)}.hst .sd{font-size:10px;color:var(--text3)}.hst .sm{margin-left:auto;font-size:10px;color:var(--text3)}
-.det{padding:32px 40px;flex:1}.det-sec{margin-bottom:24px}
-.det-sec h3{font-family:var(--display);font-size:13px;font-weight:600;color:var(--teal);margin-bottom:10px;letter-spacing:0.05em;text-transform:uppercase}
-.cards{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
-a.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;text-decoration:none;display:block;color:inherit}
-a.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0.6}
-a.card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3);text-decoration:none}
-a.card.teal::before{background:var(--teal)}a.card.green::before{background:var(--green)}a.card.blue::before{background:var(--blue)}a.card.amber::before{background:var(--amber)}a.card.pink::before{background:var(--pink)}a.card.red::before{background:var(--red)}
-.card .nm{font-family:var(--display);font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.card .ds{font-size:11px;color:var(--text3);line-height:1.5}
-.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;letter-spacing:0.5px}
-.tag-t{color:var(--teal);border:1px solid rgba(77,201,212,0.25);background:rgba(77,201,212,0.08)}
-.tag-g{color:var(--green);border:1px solid rgba(34,197,94,0.25);background:rgba(34,197,94,0.08)}
-.tag-b{color:var(--blue);border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08)}
-.tag-a{color:var(--amber);border:1px solid rgba(245,158,11,0.25);background:rgba(245,158,11,0.08)}
-.tag-p{color:var(--pink);border:1px solid rgba(217,70,239,0.25);background:rgba(217,70,239,0.08)}
-.lrow{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.lpill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--teal);font-size:12px;text-decoration:none;transition:all 0.2s}
-.lpill:hover{border-color:var(--teal);background:rgba(77,201,212,0.06);text-decoration:none}
-.quote{border-left:3px solid var(--amber);padding:12px 18px;margin:14px 0;background:rgba(245,158,11,0.04);border-radius:0 8px 8px 0}
-.quote p{font-style:italic;color:var(--text);font-size:13px;line-height:1.6}.quote .at{font-style:normal;font-size:11px;color:var(--text3);margin-top:4px}
-.term{background:#0a0e14;border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.term-t{background:rgba(77,201,212,0.05);padding:6px 12px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border)}
-.term-t .td{width:8px;height:8px;border-radius:50%}.term-t .td.r{background:#ff5f57;opacity:.7}.term-t .td.y{background:#febc2e;opacity:.7}.term-t .td.g{background:#28c840;opacity:.7}
-.term-t .tt{margin-left:8px;font-size:10px;color:var(--text3)}
-.term-b{padding:12px 16px;font-size:12px;line-height:1.8}
-.term-b .pr{color:var(--teal);opacity:.7}.term-b .cm{color:var(--text)}.term-b .ot{color:var(--text3)}.term-b .ok{color:var(--green)}
-.cur{display:inline-block;width:7px;height:13px;background:var(--teal);opacity:.6;vertical-align:text-bottom;animation:blink 1s step-end infinite}
-@keyframes blink{50%{opacity:0}}
-@media(max-width:768px){.app{grid-template-columns:1fr}.sidebar{display:none}.hero-card .hc{flex-direction:column;gap:16px;padding:20px}.hero-card .hr{min-width:auto}.det{padding:20px 16px}}
+.app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:48px 1fr;height:100vh;overflow:hidden}
+.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--b);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100}
+.tf{display:flex;gap:6px}.tf span{width:10px;height:10px;border-radius:50%}.tf .r{background:#ff5f57}.tf .y{background:#febc2e}.tf .g{background:#28c840}
+.topbar .tt{font-size:12px;color:var(--t3);margin-left:8px}.topbar .tr{margin-left:auto;display:flex;gap:12px;align-items:center}
+.tb{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--td);color:var(--teal);letter-spacing:0.1em;text-transform:uppercase}
+.tp{font-size:11px;color:var(--t3)}.tp strong{color:var(--teal)}
+.sidebar{background:var(--bg2);border-right:1px solid var(--b);overflow-y:auto;padding:12px 0}.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+.sh{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--t3);padding:10px 16px 4px}
+.si{display:flex;align-items:center;gap:8px;padding:6px 16px;cursor:pointer;transition:all 0.15s;font-size:11px;color:var(--t2);border-left:2px solid transparent}
+.si:hover{background:rgba(77,201,212,0.05);color:var(--text)}.si.on{background:rgba(77,201,212,0.08);color:var(--teal);border-left-color:var(--teal)}
+.si .d{width:5px;height:5px;border-radius:50%;flex-shrink:0}.si .m{margin-left:auto;font-size:9px;color:var(--t3)}
+.sl{padding:10px 16px 3px;font-family:var(--dis);font-size:10px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
+.sl i{width:3px;height:3px;border-radius:50%;background:var(--teal);font-style:normal}
+.sep{height:1px;background:var(--b);margin:6px 16px}
+.main{overflow-y:auto}.main::-webkit-scrollbar{width:6px}.main::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
+.P{display:none;flex-direction:column;min-height:100%}.P.on{display:flex}
+.hero{width:100%;aspect-ratio:3/1;position:relative;overflow:hidden;background:var(--bg3);flex-shrink:0}
+.hero .gb{position:absolute;inset:0;background:linear-gradient(to right,rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
+.hero .ms{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(77,201,212,0.15) 0%,transparent 50%),radial-gradient(ellipse at 85% 40%,rgba(59,130,246,0.08) 0%,transparent 50%)}
+.hero .at{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(77,201,212,0.2) 60%,transparent);z-index:10}
+.hero .hc{position:absolute;inset:0;z-index:5;padding:28px 36px;display:flex;align-items:center;gap:40px}
+.hero .hl{flex:1;display:flex;flex-direction:column;gap:10px}
+.hero .hb{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);opacity:0.8}
+.hero .ht{font-family:var(--dis);font-weight:700;font-size:26px;line-height:0.95;text-transform:uppercase}.hero .ht .tl{color:var(--teal)}
+.hero .hs{font-size:11px;color:var(--t2);max-width:360px}
+.hero .hr{display:flex;flex-direction:column;gap:6px;min-width:280px}
+.hs2{display:flex;align-items:center;gap:10px;padding:7px 12px;background:rgba(77,201,212,0.04);border:1px solid var(--b);border-radius:5px}
+.hs2 .sn{font-family:var(--dis);font-weight:700;font-size:18px;color:var(--teal);opacity:0.35;min-width:26px}
+.hs2 .st{font-size:11px;color:var(--t2)}.hs2 .sd{font-size:9px;color:var(--t3)}.hs2 .sm{margin-left:auto;font-size:9px;color:var(--t3)}
+.det{padding:28px 36px;flex:1}.ds{margin-bottom:22px}
+.ds h3{font-family:var(--dis);font-size:12px;font-weight:600;color:var(--teal);margin-bottom:8px;letter-spacing:0.05em;text-transform:uppercase}
+.G{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+a.C{background:var(--bg2);border:1px solid var(--b);border-radius:8px;padding:14px 16px;transition:all 0.2s;position:relative;overflow:hidden;text-decoration:none;display:block;color:inherit}
+a.C::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0.6}
+a.C:hover{border-color:var(--b2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3);text-decoration:none}
+a.C.c1::before{background:var(--teal)}a.C.c2::before{background:var(--green)}a.C.c3::before{background:var(--blue)}a.C.c4::before{background:var(--amber)}a.C.c5::before{background:var(--pink)}a.C.c6::before{background:var(--red)}a.C.c7::before{background:var(--cyan)}
+.C .n{font-family:var(--dis);font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.C .p{font-size:10px;color:var(--t3);line-height:1.4}
+.T{display:inline-block;font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600}
+.T1{color:var(--teal);border:1px solid rgba(77,201,212,0.25);background:rgba(77,201,212,0.08)}
+.T2{color:var(--green);border:1px solid rgba(34,197,94,0.25);background:rgba(34,197,94,0.08)}
+.T3{color:var(--blue);border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08)}
+.T4{color:var(--amber);border:1px solid rgba(245,158,11,0.25);background:rgba(245,158,11,0.08)}
+.T5{color:var(--pink);border:1px solid rgba(217,70,239,0.25);background:rgba(217,70,239,0.08)}
+.lr{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.lp{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;background:var(--bg2);border:1px solid var(--b);color:var(--teal);font-size:11px;text-decoration:none;transition:all 0.2s}
+.lp:hover{border-color:var(--teal);background:rgba(77,201,212,0.06);text-decoration:none}
+.Q{border-left:3px solid var(--amber);padding:10px 16px;margin:12px 0;background:rgba(245,158,11,0.04);border-radius:0 8px 8px 0}
+.Q p{font-style:italic;color:var(--text);font-size:12px;line-height:1.5}.Q .a{font-style:normal;font-size:10px;color:var(--t3);margin-top:3px}
+.tm{background:#0a0e14;border:1px solid var(--b);border-radius:6px;overflow:hidden}
+.tm .tt2{background:rgba(77,201,212,0.05);padding:5px 10px;display:flex;align-items:center;gap:5px;border-bottom:1px solid var(--b)}
+.tm .tt2 i{width:7px;height:7px;border-radius:50%;font-style:normal}.tm .tt2 .r{background:#ff5f57;opacity:.7}.tm .tt2 .y{background:#febc2e;opacity:.7}.tm .tt2 .g{background:#28c840;opacity:.7}
+.tm .tt2 span{margin-left:6px;font-size:9px;color:var(--t3)}
+.tm .tb2{padding:10px 14px;font-size:11px;line-height:1.8}
+.tm .pr{color:var(--teal);opacity:.7}.tm .cm{color:var(--text)}.tm .ot{color:var(--t3)}.tm .ok{color:var(--green)}
+.cur{display:inline-block;width:6px;height:12px;background:var(--teal);opacity:.6;vertical-align:text-bottom;animation:bl 1s step-end infinite}
+@keyframes bl{50%{opacity:0}}
+/* Session header */
+.SH{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.SH .num{font-family:var(--dis);font-weight:700;font-size:42px;color:var(--teal);opacity:0.2;line-height:1}
+.SH .ti{font-family:var(--dis);font-weight:700;font-size:22px}.SH .me{font-size:11px;color:var(--t2);margin-top:2px}
+.SH .tags{display:flex;gap:6px;margin-top:5px}
+@media(max-width:768px){.app{grid-template-columns:1fr}.sidebar{display:none}.hero .hc{flex-direction:column;gap:12px;padding:16px}.hero .hr{min-width:auto}.det{padding:16px}}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="topbar"><div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div><div class="topbar-t">ainative-lab — AI-Native Organizations Sprint s2</div><div class="topbar-r"><div class="topbar-badge">sprint hub</div></div></div>
+<div class="topbar"><div class="tf"><span class="r"></span><span class="y"></span><span class="g"></span></div><span class="tt">ainative-lab — AI-Native Organizations Sprint s2</span><div class="tr"><div class="tb">sprint hub</div><div class="tp"><strong>9</strong> sessions &middot; <strong>11</strong> tools</div></div></div>
 
 <div class="sidebar">
-<div class="sb-i on" onclick="show('overview',this)"><span class="dot" style="background:var(--teal)"></span> Overview</div>
-<div class="sb-sep"></div>
-<div class="sb-lv"><span class="d"></span> Week 1 — Foundation</div>
-<div class="sb-i" onclick="show('w1l',this)"><span class="dot" style="background:var(--amber)"></span> L01: AI-трансформация <span class="cnt">Гершуни</span></div>
-<div class="sb-i" onclick="show('w1s',this)"><span class="dot" style="background:var(--teal)"></span> W01: POS Setup <span class="cnt">Поваляев</span></div>
-<div class="sb-lv"><span class="d"></span> Week 2 — Architecture</div>
-<div class="sb-i" onclick="show('w2',this)"><span class="dot" style="background:var(--green)"></span> L02 + sessions <span class="cnt">5</span></div>
-<div class="sb-lv"><span class="d"></span> Week 3 — Strategy</div>
-<div class="sb-i" onclick="show('w3',this)"><span class="dot" style="background:var(--pink)"></span> L03 + Demo Day <span class="cnt">6</span></div>
-<div class="sb-sep"></div>
-<div class="sb-h">tools</div>
-<div class="sb-i" onclick="show('builders',this)"><span class="dot" style="background:var(--green)"></span> Builders</div>
-<div class="sb-i" onclick="show('explorers',this)"><span class="dot" style="background:var(--blue)"></span> Explorers</div>
-<div class="sb-i" onclick="show('gershuni',this)"><span class="dot" style="background:var(--amber)"></span> Gershuni Framework</div>
-<div class="sb-i" onclick="show('starter',this)"><span class="dot" style="background:var(--green)"></span> Starter Kit</div>
-<div class="sb-sep"></div>
-<div class="sb-h">navigate</div>
-<div class="sb-i" onclick="show('graph',this)"><span class="dot" style="background:var(--pink)"></span> Knowledge Graph</div>
-<div class="sb-i" onclick="window.open('https://learn.aimindset.org/s2','_blank')"><span class="dot" style="background:var(--text3)"></span> LMS <span class="cnt">&nearr;</span></div>
-<div class="sb-i" onclick="window.open('https://github.com/ai-mindset-org','_blank')"><span class="dot" style="background:var(--text3)"></span> GitHub <span class="cnt">&nearr;</span></div>
-<div style="margin-top:auto;padding:16px;font-size:9px;color:var(--text3);letter-spacing:0.15em;text-transform:uppercase;text-align:center">AI Mindset &middot; 2026</div>
+<div class="si on" onclick="S('ov',this)"><span class="d" style="background:var(--teal)"></span> Overview</div>
+<div class="sep"></div>
+
+<div class="sh">prework</div>
+<div class="si" onclick="S('pw1',this)"><span class="d" style="background:var(--t3)"></span> Что такое POS <span class="m">57m</span></div>
+<div class="si" onclick="S('pw2',this)"><span class="d" style="background:var(--t3)"></span> Персональная корпорация <span class="m">40m</span></div>
+<div class="si" onclick="S('pw3',this)"><span class="d" style="background:var(--t3)"></span> Циклические пайплайны <span class="m">52m</span></div>
+<div class="si" onclick="S('pw4',this)"><span class="d" style="background:var(--t3)"></span> OpenClaw в Telegram <span class="m">51m</span></div>
+
+<div class="sl"><i></i> Week 1 — Foundation</div>
+<div class="si" onclick="S('intro',this)"><span class="d" style="background:var(--cyan)"></span> Intro Call <span class="m">84m</span></div>
+<div class="si" onclick="S('l01',this)"><span class="d" style="background:var(--amber)"></span> L01: AI-трансформация <span class="m">172m</span></div>
+<div class="si" onclick="S('w01',this)"><span class="d" style="background:var(--teal)"></span> W01: POS Setup <span class="m">161m</span></div>
+<div class="si" onclick="S('w01b',this)"><span class="d" style="background:var(--green)"></span> W01b: Personal→Team <span class="m">130m</span></div>
+<div class="si" onclick="S('lis',this)"><span class="d" style="background:var(--pink)"></span> Лисовский: Фабрика <span class="m">160m</span></div>
+
+<div class="sl"><i></i> Week 2 — Architecture</div>
+<div class="si" onclick="S('w2',this)"><span class="d" style="background:var(--green)"></span> 5 sessions <span class="m">soon</span></div>
+
+<div class="sl"><i></i> Week 3 — Strategy</div>
+<div class="si" onclick="S('w3',this)"><span class="d" style="background:var(--pink)"></span> 6 sessions + Demo Day <span class="m">soon</span></div>
+
+<div class="sep"></div>
+<div class="sh">tools</div>
+<div class="si" onclick="S('build',this)"><span class="d" style="background:var(--green)"></span> Builders</div>
+<div class="si" onclick="S('expl',this)"><span class="d" style="background:var(--blue)"></span> Explorers</div>
+<div class="si" onclick="S('ger',this)"><span class="d" style="background:var(--amber)"></span> Gershuni Framework</div>
+<div class="si" onclick="S('kit',this)"><span class="d" style="background:var(--green)"></span> Starter Kit</div>
+<div class="si" onclick="S('gr',this)"><span class="d" style="background:var(--pink)"></span> Knowledge Graph</div>
+<div class="sep"></div>
+<div class="si" onclick="window.open('https://learn.aimindset.org/s2','_blank')"><span class="d" style="background:var(--t3)"></span> LMS <span class="m">&nearr;</span></div>
+<div class="si" onclick="window.open('https://github.com/ai-mindset-org','_blank')"><span class="d" style="background:var(--t3)"></span> GitHub <span class="m">&nearr;</span></div>
+<div style="padding:12px 16px;font-size:8px;color:var(--t3);letter-spacing:0.15em;text-transform:uppercase;text-align:center;margin-top:auto">AI Mindset &middot; 2026</div>
 </div>
 
 <div class="main">
+
 <!-- OVERVIEW -->
-<div class="pnl on" id="p-overview">
-<div class="hero-card"><div class="accent-top"></div><div class="grid-bg"></div><div class="mesh"></div>
-<div class="hc"><div class="hl"><div class="hb">AI-Native Organizations Sprint s2</div><div class="ht">AI NATIVE<br><span class="tl">LAB HUB</span></div><div class="hs">Builders, explorers, slides, starter kit — all interactive tools. 211 participants, March 2026.</div></div>
+<div class="P on" id="p-ov">
+<div class="hero"><div class="at"></div><div class="gb"></div><div class="ms"></div>
+<div class="hc"><div class="hl"><div class="hb">AI-Native Organizations Sprint s2</div><div class="ht">AI NATIVE<br><span class="tl">LAB HUB</span></div><div class="hs">9 sessions, 11 tools, starter kit. All materials from the sprint — prework to Demo Day.</div></div>
 <div class="hr">
-<div class="hst"><div class="sn">W1</div><div><div class="st">Personal OS Setup</div><div class="sd">naming &middot; CLAUDE.md &middot; skills &middot; dashboard</div></div><div class="sm">2 sessions</div></div>
-<div class="hst"><div class="sn">W2</div><div><div class="st">Architecture</div><div class="sd">MCP &middot; context &middot; orchestration &middot; VSM</div></div><div class="sm">7 sessions</div></div>
-<div class="hst"><div class="sn">W3</div><div><div class="st">Strategy</div><div class="sd">90-day plan &middot; governance &middot; Demo Day</div></div><div class="sm">6 sessions</div></div>
+<div class="hs2"><div class="sn">PW</div><div><div class="st">Prework</div><div class="sd">POS &middot; корпорация &middot; пайплайны &middot; OpenClaw</div></div><div class="sm">4 &times; 50m</div></div>
+<div class="hs2"><div class="sn">W1</div><div><div class="st">Foundation</div><div class="sd">Гершуни &middot; Поваляев &middot; Лисовский</div></div><div class="sm">5 sessions</div></div>
+<div class="hs2"><div class="sn">W2</div><div><div class="st">Architecture</div><div class="sd">MCP &middot; context &middot; orchestration</div></div><div class="sm">7 sessions</div></div>
+<div class="hs2"><div class="sn">W3</div><div><div class="st">Strategy + Demo Day</div><div class="sd">90-day plan &middot; governance</div></div><div class="sm">6 sessions</div></div>
 </div></div></div>
 <div class="det">
-<div class="det-sec"><h3>Quick Access</h3>
-<div class="cards">
-<a class="card teal" href="knowledge-graph.html"><div class="nm">Knowledge Graph <span class="tag tag-t">canvas</span></div><div class="ds">Спикеры, сессии, концепции — интерактивный граф связей</div></a>
-<a class="card green" href="naming.html"><div class="nm">Naming Builder <span class="tag tag-g">builder</span></div><div class="ds">Генератор конвенций: проект + тип &rarr; color-coded превью</div></a>
-<a class="card blue" href="dashboard-workshop.html"><div class="nm">Dashboard Workshop <span class="tag tag-b">builder</span></div><div class="ds">Дашборд за 30 мин: 5 шагов &rarr; промпт для агента</div></a>
-<a class="card amber" href="rules.html"><div class="nm">Rules & Skills <span class="tag tag-a">explorer</span></div><div class="ds">19 правил и 10 core skills — как система сложилась</div></a>
-<a class="card teal" href="https://ai-mindset-org.github.io/pos-stack-explorer/"><div class="nm">POS Stack Explorer <span class="tag tag-t">interactive</span></div><div class="ds">6 слоёв, 50+ скиллов, 7 MCP-серверов</div></a>
-<a class="card pink" href="https://ai-mindset-org.github.io/pos-assessment/"><div class="nm">POS Assessment <span class="tag tag-p">playbook</span></div><div class="ds">Self-assessment: 6 layers, 24 blocks</div></a>
+<div class="ds"><h3>Quick Access</h3>
+<div class="G">
+<a class="C c1" href="knowledge-graph.html"><div class="n">Knowledge Graph <span class="T T1">canvas</span></div><div class="p">Спикеры, сессии, концепции — граф связей</div></a>
+<a class="C c2" href="naming.html"><div class="n">Naming Builder <span class="T T2">builder</span></div><div class="p">Проект + тип &rarr; color-coded превью</div></a>
+<a class="C c3" href="dashboard-workshop.html"><div class="n">Dashboard Workshop <span class="T T3">builder</span></div><div class="p">Дашборд за 30 мин &rarr; промпт</div></a>
+<a class="C c4" href="rules.html"><div class="n">Rules & Skills <span class="T T4">explorer</span></div><div class="p">19 правил, 10 core skills</div></a>
+<a class="C c1" href="https://ai-mindset-org.github.io/pos-stack-explorer/"><div class="n">POS Stack Explorer <span class="T T1">6 layers</span></div><div class="p">50+ скиллов, 7 MCP</div></a>
+<a class="C c5" href="https://ai-mindset-org.github.io/pos-assessment/"><div class="n">POS Assessment <span class="T T5">playbook</span></div><div class="p">Self-assessment, 24 blocks</div></a>
 </div></div>
-<div class="det-sec"><h3>Start Building</h3>
-<div class="term"><div class="term-t"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tt">terminal</span></div>
-<div class="term-b"><span class="pr">$</span> <span class="cm">npm install -g @anthropic-ai/claude-code</span><br><span class="pr">$</span> <span class="cm">claude</span><br><span class="ot">&#9654; Claude Code v2.1 (Opus 4.6)</span><br><span class="ot">&#9654; Reading CLAUDE.md...</span><br><br><span class="pr">claude&gt;</span> <span class="cm">create naming convention for my files</span><br><span class="ok">&#9654; Opening Naming Builder...</span><br><span class="pr">claude&gt;</span> <span class="cur"></span></div></div></div>
-</div></div>
-
-<!-- W1 LECTURE -->
-<div class="pnl" id="p-w1l"><div class="det" style="padding-top:28px">
-<div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px"><div style="font-family:var(--display);font-weight:700;font-size:48px;color:var(--amber);opacity:0.2;line-height:1">L01</div><div><div style="font-family:var(--display);font-weight:700;font-size:24px">Почему AI-трансформация — самое важное</div><div style="font-size:12px;color:var(--text2)">Степан Гершуни &middot; 23 мар &middot; 172 мин</div><div style="display:flex;gap:8px;margin-top:6px"><span class="tag tag-a">lecture</span><span class="tag tag-t">211 участников</span></div></div></div>
-<div class="det-sec"><h3>Materials</h3><div class="cards">
-<a class="card amber" href="https://github.com/Gerstep/ai-native-plugin" target="_blank"><div class="nm">AI-Native Plugin <span class="tag tag-g">github</span></div><div class="ds">Плагин Claude Code / Codex. Описание контекста компании</div></a>
-<a class="card teal" href="https://www.codos.ai/quiz" target="_blank"><div class="nm">AI-Nativeness Quiz <span class="tag tag-p">L0&rarr;L3</span></div><div class="ds">Оценка AI-зрелости команды</div></a>
-<a class="card blue" href="https://cybos.ai/harness" target="_blank"><div class="nm">Harness Engineering <span class="tag tag-b">research</span></div><div class="ds">LLM + обвязка, что модели не могут</div></a>
-<a class="card green" href="https://github.com/cyberFund/ai-native-organizations" target="_blank"><div class="nm">AI-Native Orgs Playbook <span class="tag tag-g">open</span></div><div class="ds">Открытый playbook от cyber.Fund</div></a>
-</div></div>
-<div class="det-sec"><h3>Research</h3><div class="lrow">
-<a class="lpill" href="https://openai.com/index/harness-engineering/" target="_blank">OpenAI: Harness Engineering</a>
-<a class="lpill" href="https://www.bvp.com/atlas/the-state-of-ai-2025" target="_blank">BVP State of AI</a>
-<a class="lpill" href="https://www.emcap.com/thoughts/the-new-language-of-startup-performance" target="_blank">Emergence Capital</a>
-<a class="lpill" href="https://www.tbench.ai/" target="_blank">TBench.ai</a>
-</div></div>
-<div class="quote"><p>&laquo;Moat — это не модель. Moat — это человек-оркестратор.&raquo;</p><div class="at">— Степан Гершуни</div></div>
-<div class="lrow"><a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-lecture" target="_blank">&#9654; LMS</a></div>
+<div class="ds"><h3>Start Building</h3>
+<div class="tm"><div class="tt2"><i class="r"></i><i class="y"></i><i class="g"></i><span>terminal</span></div>
+<div class="tb2"><span class="pr">$</span> <span class="cm">npm install -g @anthropic-ai/claude-code</span><br><span class="pr">$</span> <span class="cm">claude</span><br><span class="ot">&#9654; Claude Code v2.1 (Opus 4.6)</span><br><span class="ot">&#9654; Reading CLAUDE.md...</span><br><br><span class="pr">claude&gt;</span> <span class="cm">/daily-focus</span><br><span class="ok">&#9654; Generating focus for today...</span><br><span class="pr">claude&gt;</span> <span class="cur"></span></div></div></div>
 </div></div>
 
-<!-- W1 SETUP -->
-<div class="pnl" id="p-w1s"><div class="det" style="padding-top:28px">
-<div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px"><div style="font-family:var(--display);font-weight:700;font-size:48px;color:var(--teal);opacity:0.2;line-height:1">W01</div><div><div style="font-family:var(--display);font-weight:700;font-size:24px">Personal OS Setup</div><div style="font-size:12px;color:var(--text2)">Александр Поваляев &middot; 24 мар &middot; 161 мин</div><div style="display:flex;gap:8px;margin-top:6px"><span class="tag tag-t">workshop</span><span class="tag tag-g">live demo</span></div></div></div>
-<div class="det-sec"><h3>Interactive Tools</h3><div class="cards">
-<a class="card teal" href="https://ai-mindset-org.github.io/ainative-deck/pos-setup-v2.html" target="_blank"><div class="nm">Slides v2 <span class="tag tag-t">35+</span></div><div class="ds">Архитектура POS от keyboard до governance</div></a>
-<a class="card green" href="https://ai-mindset-org.github.io/pos-stack-explorer/" target="_blank"><div class="nm">Stack Explorer <span class="tag tag-g">2:09:28</span></div><div class="ds">6 слоёв, 50+ скиллов, 7 MCP</div></a>
-<a class="card blue" href="dashboard-workshop.html"><div class="nm">Dashboard Workshop <span class="tag tag-b">58:34</span></div><div class="ds">Дашборд за 30 мин</div></a>
-<a class="card amber" href="naming.html"><div class="nm">Naming Builder <span class="tag tag-a">18:00</span></div><div class="ds">Генератор конвенций</div></a>
-<a class="card pink" href="https://keyboard.aimindset.org/" target="_blank"><div class="nm">Keyboard Efficiency <span class="tag tag-p">7:12</span></div><div class="ds">Heatmap стоимости шорткатов</div></a>
-<a class="card teal" href="rules.html"><div class="nm">Rules & Skills <span class="tag tag-t">explorer</span></div><div class="ds">19 правил и 10 core skills</div></a>
+<!-- PREWORK 1 -->
+<div class="P" id="p-pw1"><div class="det">
+<div class="SH"><div class="num" style="color:var(--t3)">PW1</div><div><div class="ti">Что такое POS</div><div class="me">Поваляев, Хабаров &middot; 2 мар &middot; 57 мин</div><div class="tags"><span class="T T1">prework</span><span class="T T2">Claude Code</span></div></div></div>
+<div class="ds"><p style="font-size:12px;color:var(--t2);margin-bottom:12px">Первое знакомство с Personal Operating System: Claude Code, Obsidian, Linear, MCP. Что это, зачем, как начать.</p>
+<div class="lr"><a class="lp" href="https://youtube.com/watch?v=Cb67otd2MFY" target="_blank">&#9654; YouTube</a><a class="lp" href="https://learn.aimindset.org/s2" target="_blank">LMS</a></div></div>
 </div></div>
-<div class="quote"><p>&laquo;Если одно что-то заберёте — заберите naming convention&raquo;</p><div class="at">— Александр Поваляев</div></div>
-<div class="lrow"><a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-setup" target="_blank">&#9654; LMS</a><a class="lpill" href="https://learn.aimindset.org/s2/qa/s2-w1-setup" target="_blank">&#10067; Q&A</a></div>
+
+<!-- PREWORK 2 -->
+<div class="P" id="p-pw2"><div class="det">
+<div class="SH"><div class="num" style="color:var(--t3)">PW2</div><div><div class="ti">Персональная корпорация</div><div class="me">Серёжа Рис, Поваляев &middot; 4 мар &middot; 40 мин</div><div class="tags"><span class="T T1">prework</span><span class="T T4">vibe-coding</span></div></div></div>
+<div class="ds"><p style="font-size:12px;color:var(--t2);margin-bottom:12px">CEO Council skill live, Chrome extension с персональным дашбордом. Vibe coding подход.</p>
+<div class="lr"><a class="lp" href="https://youtube.com/watch?v=YUP8u-2SYdw" target="_blank">&#9654; YouTube</a><a class="lp" href="https://learn.aimindset.org/s2" target="_blank">LMS</a></div></div>
+</div></div>
+
+<!-- PREWORK 3 -->
+<div class="P" id="p-pw3"><div class="det">
+<div class="SH"><div class="num" style="color:var(--t3)">PW3</div><div><div class="ti">Циклические пайплайны</div><div class="me">Поваляев, Хабаров &middot; 9 мар &middot; 52 мин</div><div class="tags"><span class="T T1">prework</span><span class="T T2">pipelines</span></div></div></div>
+<div class="ds"><p style="font-size:12px;color:var(--t2);margin-bottom:12px">Daily Focus pipeline, content mining, network CRM автоматизация. От скилла к цепочке.</p>
+<div class="lr"><a class="lp" href="https://youtube.com/watch?v=P4mO45Xi1H4" target="_blank">&#9654; YouTube</a><a class="lp" href="https://learn.aimindset.org/s2" target="_blank">LMS</a></div></div>
+</div></div>
+
+<!-- PREWORK 4 -->
+<div class="P" id="p-pw4"><div class="det">
+<div class="SH"><div class="num" style="color:var(--t3)">PW4</div><div><div class="ti">OpenClaw в Telegram</div><div class="me">Серёжа Рис, Поваляев &middot; 9 мар &middot; 51 мин</div><div class="tags"><span class="T T1">prework</span><span class="T T3">Telegram bot</span></div></div></div>
+<div class="ds"><p style="font-size:12px;color:var(--t2);margin-bottom:12px">Setup OpenClaw Telegram бота с GitHub integration. AI-агент в мессенджере.</p>
+<div class="lr"><a class="lp" href="https://youtube.com/watch?v=8Xdc7k6AiKo" target="_blank">&#9654; YouTube</a><a class="lp" href="https://learn.aimindset.org/s2" target="_blank">LMS</a></div></div>
+</div></div>
+
+<!-- INTRO -->
+<div class="P" id="p-intro"><div class="det">
+<div class="SH"><div class="num" style="color:var(--cyan)">00</div><div><div class="ti">Знакомство — Intro Call</div><div class="me">Поваляев, Гершуни &middot; 21 мар &middot; 84 мин</div><div class="tags"><span class="T T1">intro</span><span class="T T4">211 участников</span></div></div></div>
+<div class="ds"><p style="font-size:12px;color:var(--t2);margin-bottom:12px">Знакомство участников, формат спринта, ожидания, кураторы, buddy-система.</p>
+<div class="lr"><a class="lp" href="https://youtube.com/watch?v=o1GuGqlGbK4" target="_blank">&#9654; YouTube</a><a class="lp" href="https://learn.aimindset.org/s2" target="_blank">LMS</a></div></div>
+</div></div>
+
+<!-- L01 GERSHUNI -->
+<div class="P" id="p-l01"><div class="det">
+<div class="SH"><div class="num" style="color:var(--amber)">L01</div><div><div class="ti">Почему AI-трансформация — самое важное</div><div class="me">Степан Гершуни &middot; 23 мар &middot; 172 мин</div><div class="tags"><span class="T T4">lecture</span><span class="T T1">keynote</span></div></div></div>
+<div class="ds"><h3>Materials</h3><div class="G">
+<a class="C c4" href="https://github.com/Gerstep/ai-native-plugin" target="_blank"><div class="n">AI-Native Plugin <span class="T T2">github</span></div><div class="p">Скилл описания контекста компании</div></a>
+<a class="C c1" href="https://www.codos.ai/quiz" target="_blank"><div class="n">AI-Nativeness Quiz <span class="T T5">L0&rarr;L3</span></div><div class="p">Оценка AI-зрелости</div></a>
+<a class="C c3" href="https://cybos.ai/harness" target="_blank"><div class="n">Harness Engineering <span class="T T3">research</span></div><div class="p">LLM + обвязка</div></a>
+<a class="C c2" href="https://github.com/cyberFund/ai-native-organizations" target="_blank"><div class="n">AI-Native Playbook <span class="T T2">open</span></div><div class="p">cyber.Fund</div></a>
+</div></div>
+<div class="ds"><h3>Research</h3><div class="lr">
+<a class="lp" href="https://openai.com/index/harness-engineering/" target="_blank">OpenAI: Harness</a>
+<a class="lp" href="https://www.bvp.com/atlas/the-state-of-ai-2025" target="_blank">BVP State of AI</a>
+<a class="lp" href="https://www.emcap.com/thoughts/the-new-language-of-startup-performance" target="_blank">Emergence Capital</a>
+<a class="lp" href="https://www.tbench.ai/" target="_blank">TBench.ai</a>
+</div></div>
+<div class="Q"><p>&laquo;Moat — это не модель. Moat — это человек-оркестратор.&raquo;</p><div class="a">— Степан Гершуни</div></div>
+<div class="lr"><a class="lp" href="https://learn.aimindset.org/s2/workshops/s2-w1-lecture" target="_blank">&#9654; Полная запись</a></div>
+</div></div>
+
+<!-- W01 SETUP -->
+<div class="P" id="p-w01"><div class="det">
+<div class="SH"><div class="num" style="color:var(--teal)">W01</div><div><div class="ti">Personal OS Setup</div><div class="me">Александр Поваляев &middot; 24 мар &middot; 161 мин</div><div class="tags"><span class="T T1">workshop</span><span class="T T2">live demo</span></div></div></div>
+<div class="ds"><h3>Interactive Tools</h3><div class="G">
+<a class="C c1" href="https://ai-mindset-org.github.io/ainative-deck/pos-setup-v2.html" target="_blank"><div class="n">Slides v2 <span class="T T1">35+</span></div><div class="p">Архитектура POS</div></a>
+<a class="C c2" href="https://ai-mindset-org.github.io/pos-stack-explorer/" target="_blank"><div class="n">Stack Explorer <span class="T T2">2:09:28</span></div><div class="p">6 слоёв, 50+ скиллов</div></a>
+<a class="C c3" href="dashboard-workshop.html"><div class="n">Dashboard Workshop <span class="T T3">58:34</span></div><div class="p">Дашборд за 30 мин</div></a>
+<a class="C c4" href="naming.html"><div class="n">Naming Builder <span class="T T4">18:00</span></div><div class="p">Генератор конвенций</div></a>
+<a class="C c5" href="https://keyboard.aimindset.org/" target="_blank"><div class="n">Keyboard Efficiency <span class="T T5">7:12</span></div><div class="p">Heatmap шорткатов</div></a>
+<a class="C c1" href="rules.html"><div class="n">Rules & Skills <span class="T T1">19+10</span></div><div class="p">Как правила сложились</div></a>
+</div></div>
+<div class="Q"><p>&laquo;Если одно что-то заберёте — заберите naming convention&raquo;</p><div class="a">— Александр Поваляев</div></div>
+<div class="lr"><a class="lp" href="https://learn.aimindset.org/s2/workshops/s2-w1-setup" target="_blank">&#9654; Полная запись</a><a class="lp" href="https://learn.aimindset.org/s2/qa/s2-w1-setup" target="_blank">&#10067; Q&A</a></div>
+</div></div>
+
+<!-- W01b Personal→Team -->
+<div class="P" id="p-w01b"><div class="det">
+<div class="SH"><div class="num" style="color:var(--green)">W01b</div><div><div class="ti">Personal → Team</div><div class="me">Поваляев, Васильев, Смирнов, Рис &middot; 25 мар &middot; 130 мин</div><div class="tags"><span class="T T2">workshop</span><span class="T T1">team</span></div></div></div>
+<div class="ds"><p style="font-size:12px;color:var(--t2);margin-bottom:12px">Symlinks для team skills, Harness engineering на практике, GitHub queues, масштабирование от личной системы к командной.</p>
+<div class="lr"><a class="lp" href="https://youtube.com/watch?v=3acO_wSd8HQ" target="_blank">&#9654; YouTube</a><a class="lp" href="https://learn.aimindset.org/s2" target="_blank">LMS</a></div></div>
+</div></div>
+
+<!-- LISOVSKIY -->
+<div class="P" id="p-lis"><div class="det">
+<div class="SH"><div class="num" style="color:var(--pink)">L02</div><div><div class="ti">Как построить фабрику бизнесов</div><div class="me">Евгений Лисовский &middot; 26 мар &middot; 160 мин</div><div class="tags"><span class="T T5">lecture</span><span class="T T4">3x founder</span></div></div></div>
+<div class="ds"><p style="font-size:12px;color:var(--t2);margin-bottom:12px">Level Up Factory: multi-agent development, deep research, creative automation. Как строить бизнесы с AI-first подходом.</p>
+<div class="lr"><a class="lp" href="https://youtube.com/watch?v=e4_w_vI1ODY" target="_blank">&#9654; YouTube</a><a class="lp" href="https://learn.aimindset.org/s2" target="_blank">LMS</a></div></div>
 </div></div>
 
 <!-- W2 -->
-<div class="pnl" id="p-w2"><div class="det" style="padding-top:28px">
-<div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px"><div style="font-family:var(--display);font-weight:700;font-size:48px;color:var(--green);opacity:0.2;line-height:1">W2</div><div><div style="font-family:var(--display);font-weight:700;font-size:24px">Architecture</div><div style="font-size:12px;color:var(--text2)">30 мар – 4 апр &middot; 7 сессий</div></div></div>
-<div class="cards">
-<a class="card teal" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Гершуни: Архитектура <span class="tag tag-t">30.03</span></div><div class="ds">6 layers, MCP + context, VSM</div></a>
-<a class="card green" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Амётов: AI-контент <span class="tag tag-g">01.04</span></div><div class="ds">Look At Media / SETKA</div></a>
-<a class="card blue" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Клебан: Self-improving agents <span class="tag tag-b">01.04</span></div><div class="ds">cyber.Fund / Everynet</div></a>
-<a class="card amber" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Ковальский: AI-driven dev <span class="tag tag-a">02.04</span></div><div class="ds">Red Mad Robot</div></a>
-<a class="card pink" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Кравцов: Knowledge Graph <span class="tag tag-p">03.04</span></div><div class="ds">Improvado</div></a>
+<div class="P" id="p-w2"><div class="det">
+<div class="SH"><div class="num" style="color:var(--green)">W2</div><div><div class="ti">Architecture</div><div class="me">30 мар – 4 апр &middot; 7 сессий</div></div></div>
+<div class="G">
+<a class="C c1" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Гершуни: Архитектура <span class="T T1">30.03</span></div><div class="p">6 layers, MCP, VSM</div></a>
+<a class="C c2" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Амётов: AI-контент <span class="T T2">01.04</span></div><div class="p">Look At Media</div></a>
+<a class="C c3" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Клебан: Self-improving agents <span class="T T3">01.04</span></div><div class="p">cyber.Fund</div></a>
+<a class="C c4" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Ковальский: AI-driven dev <span class="T T4">02.04</span></div><div class="p">Red Mad Robot</div></a>
+<a class="C c5" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Кравцов: Knowledge Graph <span class="T T5">03.04</span></div><div class="p">Improvado</div></a>
 </div></div></div>
 
 <!-- W3 -->
-<div class="pnl" id="p-w3"><div class="det" style="padding-top:28px">
-<div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:24px"><div style="font-family:var(--display);font-weight:700;font-size:48px;color:var(--pink);opacity:0.2;line-height:1">W3</div><div><div style="font-family:var(--display);font-weight:700;font-size:24px">Strategy & Demo Day</div><div style="font-size:12px;color:var(--text2)">6 – 13 апр &middot; 6 сессий</div></div></div>
-<div class="cards">
-<a class="card teal" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Гершуни: 90-day plan <span class="tag tag-t">06.04</span></div><div class="ds">Strategy, FinOps</div></a>
-<a class="card amber" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Рид: AI x Investments <span class="tag tag-a">07.04</span></div><div class="ds">@eugene_rid</div></a>
-<a class="card green" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Аннаков: AI x Sales <span class="tag tag-g">08.04</span></div><div class="ds">onsa.ai</div></a>
-<a class="card blue" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Бузько: AI x Law <span class="tag tag-b">09.04</span></div><div class="ds">Buzko Krasnov</div></a>
-<a class="card pink" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">Устинов: Agent &rarr; Product <span class="tag tag-p">10.04</span></div><div class="ds">Plurio AI</div></a>
-<a class="card red" href="https://learn.aimindset.org/s2" target="_blank"><div class="nm">DEMO DAY <span class="tag" style="color:var(--red);border:1px solid rgba(239,68,68,.25);background:rgba(239,68,68,.08)">13.04</span></div><div class="ds">Презентации участников</div></a>
+<div class="P" id="p-w3"><div class="det">
+<div class="SH"><div class="num" style="color:var(--pink)">W3</div><div><div class="ti">Strategy & Demo Day</div><div class="me">6 – 13 апр &middot; 6 сессий</div></div></div>
+<div class="G">
+<a class="C c1" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Гершуни: 90-day plan <span class="T T1">06.04</span></div><div class="p">Strategy, FinOps</div></a>
+<a class="C c4" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Рид: AI x Investments <span class="T T4">07.04</span></div><div class="p">@eugene_rid</div></a>
+<a class="C c2" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Аннаков: AI x Sales <span class="T T2">08.04</span></div><div class="p">onsa.ai</div></a>
+<a class="C c3" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Бузько: AI x Law <span class="T T3">09.04</span></div><div class="p">Buzko Krasnov</div></a>
+<a class="C c5" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">Устинов: Agent &rarr; Product <span class="T T5">10.04</span></div><div class="p">Plurio AI</div></a>
+<a class="C c6" href="https://learn.aimindset.org/s2" target="_blank"><div class="n">DEMO DAY <span class="T" style="color:var(--red);border:1px solid rgba(239,68,68,.25);background:rgba(239,68,68,.08)">13.04</span></div><div class="p">Презентации участников</div></a>
 </div></div></div>
 
 <!-- BUILDERS -->
-<div class="pnl" id="p-builders"><div class="det" style="padding-top:28px">
-<div style="font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:16px">Builders — собери своё</div>
-<div class="cards">
-<a class="card green" href="naming.html"><div class="nm">Naming Builder <span class="tag tag-g">builder</span></div><div class="ds">Проект + тип &rarr; color-coded превью. Каталог типов</div></a>
-<a class="card blue" href="dashboard-workshop.html"><div class="nm">Dashboard Workshop <span class="tag tag-b">builder</span></div><div class="ds">Дашборд за 30 мин: 5 шагов &rarr; промпт</div></a>
-<a class="card teal" href="https://ai-mindset-org.github.io/pos-assessment/"><div class="nm">POS Assessment <span class="tag tag-t">playbook</span></div><div class="ds">6 layers, 24 blocks, implementation prompts</div></a>
-<a class="card amber" href="https://ai-mindset-org.github.io/ainative-deck/"><div class="nm">Deck Builder <span class="tag tag-a">tool</span></div><div class="ds">Drag-and-drop, AI generation, GitHub persistence</div></a>
+<div class="P" id="p-build"><div class="det">
+<div style="font-family:var(--dis);font-weight:700;font-size:22px;margin-bottom:14px">Builders — собери своё</div>
+<div class="G">
+<a class="C c2" href="naming.html"><div class="n">Naming Builder <span class="T T2">builder</span></div><div class="p">Проект + тип &rarr; превью</div></a>
+<a class="C c3" href="dashboard-workshop.html"><div class="n">Dashboard Workshop <span class="T T3">builder</span></div><div class="p">5 шагов &rarr; промпт</div></a>
+<a class="C c1" href="https://ai-mindset-org.github.io/pos-assessment/"><div class="n">POS Assessment <span class="T T1">playbook</span></div><div class="p">24 blocks, prompts</div></a>
+<a class="C c4" href="https://ai-mindset-org.github.io/ainative-deck/"><div class="n">Deck Builder <span class="T T4">tool</span></div><div class="p">AI generation, GitHub</div></a>
 </div></div></div>
 
 <!-- EXPLORERS -->
-<div class="pnl" id="p-explorers"><div class="det" style="padding-top:28px">
-<div style="font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:16px">Explorers — production POS изнутри</div>
-<div class="cards">
-<a class="card teal" href="https://ai-mindset-org.github.io/pos-stack-explorer/"><div class="nm">POS Stack Explorer <span class="tag tag-t">6 layers</span></div><div class="ds">50+ скиллов, 7 MCP, граф связей</div></a>
-<a class="card green" href="rules.html"><div class="nm">Rules & Skills <span class="tag tag-g">19+10</span></div><div class="ds">Как правила сложились органически</div></a>
-<a class="card blue" href="https://ai-mindset-org.github.io/team-stack-explorer/"><div class="nm">Team Stack <span class="tag tag-b">team</span></div><div class="ds">40+ skills, 2 бота, 8 MCP</div></a>
-<a class="card pink" href="https://keyboard.aimindset.org/"><div class="nm">Keyboard Efficiency <span class="tag tag-p">tool</span></div><div class="ds">Heatmap стоимости шорткатов</div></a>
+<div class="P" id="p-expl"><div class="det">
+<div style="font-family:var(--dis);font-weight:700;font-size:22px;margin-bottom:14px">Explorers — production POS изнутри</div>
+<div class="G">
+<a class="C c1" href="https://ai-mindset-org.github.io/pos-stack-explorer/"><div class="n">POS Stack <span class="T T1">6 layers</span></div><div class="p">50+ скиллов, 7 MCP</div></a>
+<a class="C c2" href="rules.html"><div class="n">Rules & Skills <span class="T T2">19+10</span></div><div class="p">Как правила сложились</div></a>
+<a class="C c3" href="https://ai-mindset-org.github.io/team-stack-explorer/"><div class="n">Team Stack <span class="T T3">team</span></div><div class="p">40+ skills, 2 бота</div></a>
+<a class="C c5" href="https://keyboard.aimindset.org/"><div class="n">Keyboard <span class="T T5">tool</span></div><div class="p">Heatmap шорткатов</div></a>
 </div></div></div>
 
 <!-- GERSHUNI -->
-<div class="pnl" id="p-gershuni"><div class="det" style="padding-top:28px">
-<div style="font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:16px">Gershuni — AI-Native Framework</div>
-<div class="cards">
-<a class="card amber" href="https://github.com/Gerstep/ai-native-plugin" target="_blank"><div class="nm">AI-Native Plugin <span class="tag tag-g">github</span></div><div class="ds">Описание контекста компании</div></a>
-<a class="card teal" href="https://www.codos.ai/quiz" target="_blank"><div class="nm">Quiz L0&rarr;L3 <span class="tag tag-p">assessment</span></div><div class="ds">AI-зрелость команды</div></a>
-<a class="card blue" href="https://cybos.ai/harness" target="_blank"><div class="nm">Harness Engineering <span class="tag tag-b">research</span></div><div class="ds">LLM + обвязка</div></a>
-<a class="card green" href="https://github.com/cyberFund/ai-native-organizations" target="_blank"><div class="nm">AI-Native Playbook <span class="tag tag-g">open</span></div><div class="ds">cyber.Fund</div></a>
+<div class="P" id="p-ger"><div class="det">
+<div style="font-family:var(--dis);font-weight:700;font-size:22px;margin-bottom:14px">Gershuni — AI-Native Framework</div>
+<div class="G">
+<a class="C c4" href="https://github.com/Gerstep/ai-native-plugin" target="_blank"><div class="n">AI-Native Plugin <span class="T T2">github</span></div><div class="p">Контекст компании</div></a>
+<a class="C c1" href="https://www.codos.ai/quiz" target="_blank"><div class="n">Quiz L0&rarr;L3 <span class="T T5">assess</span></div><div class="p">AI-зрелость</div></a>
+<a class="C c3" href="https://cybos.ai/harness" target="_blank"><div class="n">Harness Engineering <span class="T T3">research</span></div><div class="p">LLM + обвязка</div></a>
+<a class="C c2" href="https://github.com/cyberFund/ai-native-organizations" target="_blank"><div class="n">AI-Native Playbook <span class="T T2">open</span></div><div class="p">cyber.Fund</div></a>
 </div>
-<div class="lrow">
-<a class="lpill" href="https://openai.com/index/harness-engineering/" target="_blank">OpenAI article</a>
-<a class="lpill" href="https://www.bvp.com/atlas/the-state-of-ai-2025" target="_blank">BVP State of AI</a>
-<a class="lpill" href="https://www.emcap.com/thoughts/the-new-language-of-startup-performance" target="_blank">Emergence Capital</a>
-</div></div></div>
+<div class="lr"><a class="lp" href="https://openai.com/index/harness-engineering/" target="_blank">OpenAI</a><a class="lp" href="https://www.bvp.com/atlas/the-state-of-ai-2025" target="_blank">BVP</a><a class="lp" href="https://www.emcap.com/thoughts/the-new-language-of-startup-performance" target="_blank">Emergence</a></div>
+</div></div>
 
 <!-- STARTER -->
-<div class="pnl" id="p-starter"><div class="det" style="padding-top:28px">
-<div style="font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:4px">Starter Kit</div>
-<div style="font-size:12px;color:var(--text2);margin-bottom:16px">Клонируй repo &rarr; скопируй в vault &rarr; запусти Claude Code.</div>
-<div class="cards">
-<a class="card green" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-CLAUDE.md" target="_blank"><div class="nm">starter-CLAUDE.md <span class="tag tag-g">template</span></div><div class="ds">Роль, стиль, naming, ALWAYS/NEVER</div></a>
-<a class="card teal" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-morning-brief.md" target="_blank"><div class="nm">morning-brief.md <span class="tag tag-t">skill</span></div><div class="ds">Календарь + задачи &rarr; фокус дня</div></a>
-<a class="card teal" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-daily-focus.md" target="_blank"><div class="nm">daily-focus.md <span class="tag tag-t">skill</span></div><div class="ds">Top-3 задачи + блоки работы</div></a>
-<a class="card teal" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-weekly-review.md" target="_blank"><div class="nm">weekly-review.md <span class="tag tag-t">skill</span></div><div class="ds">Wins, blocked, next week</div></a>
-<a class="card blue" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-meeting-prep.md" target="_blank"><div class="nm">meeting-prep.md <span class="tag tag-b">skill</span></div><div class="ds">Контекст + агенда</div></a>
-<a class="card amber" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/naming-convention-cheatsheet.md" target="_blank"><div class="nm">naming-cheatsheet.md <span class="tag tag-a">cheatsheet</span></div><div class="ds">Формула, типы, примеры</div></a>
+<div class="P" id="p-kit"><div class="det">
+<div style="font-family:var(--dis);font-weight:700;font-size:22px;margin-bottom:4px">Starter Kit</div>
+<div style="font-size:11px;color:var(--t2);margin-bottom:14px">Клонируй &rarr; скопируй в vault &rarr; запусти claude</div>
+<div class="G">
+<a class="C c2" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-CLAUDE.md" target="_blank"><div class="n">starter-CLAUDE.md <span class="T T2">template</span></div><div class="p">Роль, стиль, naming</div></a>
+<a class="C c1" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-morning-brief.md" target="_blank"><div class="n">morning-brief.md <span class="T T1">skill</span></div><div class="p">Фокус дня</div></a>
+<a class="C c1" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-daily-focus.md" target="_blank"><div class="n">daily-focus.md <span class="T T1">skill</span></div><div class="p">Top-3 задачи</div></a>
+<a class="C c1" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-weekly-review.md" target="_blank"><div class="n">weekly-review.md <span class="T T1">skill</span></div><div class="p">Wins, blocked, next</div></a>
+<a class="C c3" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/starter-meeting-prep.md" target="_blank"><div class="n">meeting-prep.md <span class="T T3">skill</span></div><div class="p">Контекст + агенда</div></a>
+<a class="C c4" href="https://github.com/ai-mindset-org/ainative-deck/blob/main/downloads/naming-convention-cheatsheet.md" target="_blank"><div class="n">naming-cheatsheet.md <span class="T T4">cheatsheet</span></div><div class="p">Формула и примеры</div></a>
 </div>
-<div class="lrow">
-<a class="lpill" href="https://github.com/ai-mindset-org/ainative-deck/tree/main/downloads" target="_blank">GitHub: all starter files</a>
-<a class="lpill" href="https://github.com/ai-mindset-org/pos-sprint/tree/main/skill-pack" target="_blank">POS Sprint skill-pack</a>
-</div></div></div>
+<div class="lr"><a class="lp" href="https://github.com/ai-mindset-org/ainative-deck/tree/main/downloads" target="_blank">GitHub: all files</a><a class="lp" href="https://github.com/ai-mindset-org/pos-sprint/tree/main/skill-pack" target="_blank">POS Sprint skill-pack</a></div>
+</div></div>
 
 <!-- GRAPH -->
-<div class="pnl" id="p-graph"><div class="det" style="padding-top:28px">
-<div style="font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:16px">Knowledge Graph</div>
-<div class="cards" style="grid-template-columns:1fr 1fr">
-<a class="card teal" href="knowledge-graph.html"><div class="nm">Canvas Graph <span class="tag tag-t">2D</span></div><div class="ds">Спикеры, сессии, концепции. Поиск и фильтры</div></a>
-<a class="card pink" href="graph/"><div class="nm">Force Graph <span class="tag tag-p">3D</span></div><div class="ds">d3 force-directed. Legacy</div></a>
+<div class="P" id="p-gr"><div class="det">
+<div style="font-family:var(--dis);font-weight:700;font-size:22px;margin-bottom:14px">Knowledge Graph</div>
+<div class="G" style="grid-template-columns:1fr 1fr">
+<a class="C c1" href="knowledge-graph.html"><div class="n">Canvas Graph <span class="T T1">2D</span></div><div class="p">Поиск и фильтры</div></a>
+<a class="C c5" href="graph/"><div class="n">Force Graph <span class="T T5">3D</span></div><div class="p">d3 force-directed</div></a>
 </div></div></div>
 
 </div></div>
-<script>
-function show(id,el){
-document.querySelectorAll('.pnl').forEach(function(p){p.classList.remove('on')});
-document.querySelectorAll('.sb-i').forEach(function(i){i.classList.remove('on')});
-var p=document.getElementById('p-'+id);if(p)p.classList.add('on');
-if(el)el.classList.add('on');
-document.querySelector('.main').scrollTop=0;
-}
-</script>
+<script>function S(id,el){document.querySelectorAll('.P').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.si').forEach(function(i){i.classList.remove('on')});var p=document.getElementById('p-'+id);if(p)p.classList.add('on');if(el)el.classList.add('on');document.querySelector('.main').scrollTop=0}</script>
 </body>
 </html>
