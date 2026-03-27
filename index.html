@@ -721,17 +721,36 @@ const Graph = ForceGraph3D({ controlType:'orbit' })(container)
     const s = typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source);
     return s ? TYPES[s.type]?.color||'#4dc9d4' : '#4dc9d4';
   })
-  .d3Force('charge', d3.forceManyBody().strength(-120))
-  .d3Force('link', d3.forceLink().distance(30).strength(0.06))
-  .d3Force('center', d3.forceCenter().strength(0.005))
-  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||3)*2.0))
-  // Clustering forces — pull nodes toward their week cluster center (XY plane)
-  .d3Force('clusterX', d3.forceX(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).x).strength(0.2))
-  .d3Force('clusterY', d3.forceY(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).y).strength(0.2))
-  .d3AlphaDecay(0.02)
+  .d3Force('charge', d3.forceManyBody().strength(-100))
+  .d3Force('link', d3.forceLink()
+    .distance(link => {
+      // Cross-cluster links are longer (push clusters apart)
+      const sCluster = (typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source))?._cluster;
+      const tCluster = (typeof link.target==='object'?link.target:graphData.nodes.find(n=>n.id===link.target))?._cluster;
+      return (sCluster && tCluster && sCluster !== tCluster) ? 80 : 25;
+    })
+    .strength(link => {
+      const sCluster = (typeof link.source==='object'?link.source:graphData.nodes.find(n=>n.id===link.source))?._cluster;
+      const tCluster = (typeof link.target==='object'?link.target:graphData.nodes.find(n=>n.id===link.target))?._cluster;
+      return (sCluster && tCluster && sCluster !== tCluster) ? 0.01 : 0.08;
+    })
+  )
+  .d3Force('center', d3.forceCenter().strength(0.003))
+  .d3Force('collision', d3.forceCollide(n => (TYPES[n.type]?.size||3)*2.2))
+  .d3Force('clusterX', d3.forceX(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).x).strength(0.25))
+  .d3Force('clusterY', d3.forceY(n => (CLUSTER_CENTERS[n._cluster]||CLUSTER_CENTERS.shared).y).strength(0.25))
+  .d3AlphaDecay(0.025)
+  .d3VelocityDecay(0.4)
+  .warmupTicks(120)
+  .cooldownTicks(300)
   .onNodeHover(onHover)
   .onNodeClick(onClick)
-  .onBackgroundClick(onBgClick);
+  .onBackgroundClick(onBgClick)
+  .onEngineStop(() => {
+    // Freeze all node positions after simulation settles — no more jitter
+    graphData.nodes.forEach(n => { n.fx = n.x; n.fy = n.y; n.fz = n.z; });
+    console.log('Engine settled — positions frozen');
+  });
 
 // Glow texture
 const _gtc = {};
