@@ -120,32 +120,32 @@ const D={nodes:[],links:[]};
 const N=(id,nm,tp,desc,av,url)=>D.nodes.push({id,name:nm,type:tp,desc:desc||'',avatar:av||null,url:url||null});
 const L=(s,t,r)=>D.links.push({source:s,target:t,rel:r||''});
 
-// Weeks
-N('w1','Week 1:\nPersonal AI + Team','week','March 23–28. Personal OS, process audit, AI Champion.');
-N('w2','Week 2:\nSystem Above Model','week','March 30 – April 4. 6-layer architecture, MCP, orchestration.');
-N('w3','Week 3:\nCompany Functions','week','April 6–13. Business automation, 90-day plan, Demo Day.');
+// Weeks — link to LMS
+N('w1','Week 1:\nPersonal AI + Team','week','March 23–28. Personal OS, process audit, AI Champion.',null,'https://learn.aimindset.org/s2');
+N('w2','Week 2:\nSystem Above Model','week','March 30 – April 4. 6-layer architecture, MCP, orchestration.',null,'https://learn.aimindset.org/s2');
+N('w3','Week 3:\nCompany Functions','week','April 6–13. Business automation, 90-day plan, Demo Day.',null,'https://learn.aimindset.org/s2');
 
 // Team
-N('stepan','Stepan\nGershuni','team','@gershuni · CybOS AI. All Monday lectures.','speakers/stepan-gershuni.jpg');
-N('alex','Alexander\nPovaliaev','team','@alex_named · AI Mindset Founder.','speakers/alexander-povaliaev.jpg');
-N('ira','Irina\nNazarova','team','Operations.','speakers/alexander-povaliaev.jpg');
-N('ilya','Ilya\nGindin','team','@igindin · Focus practice.','speakers/ilya-gindin.png');
+N('stepan','Stepan\nGershuni','team','@gershuni · CybOS AI. All Monday lectures.','speakers/stepan-gershuni.jpg','https://learn.aimindset.org/speakers/gershuni');
+N('alex','Alexander\nPovaliaev','team','@alex_named · AI Mindset Founder.','speakers/alexander-povaliaev.jpg','https://learn.aimindset.org/speakers/povalyaev');
+N('ira','Irina\nNazarova','team','Operations.',null);
+N('ilya','Ilya\nGindin','team','@igindin · Focus practice.','speakers/ilya-gindin.png','https://learn.aimindset.org/speakers/gindin');
 
 // Speakers W1
-N('lisovsky','Evgeny\nLisovsky','speaker','Vibe-coding factory. Thu 26.03.','speakers/eugene-lisovskiy.jpg');
-N('khanarin','Dima\nKhanarin','speaker','@khanarin · AI transformation. Fri 27.03.','speakers/dima-khanarin.jpg');
+N('lisovsky','Evgeny\nLisovsky','speaker','Vibe-coding factory. Thu 26.03.','speakers/eugene-lisovskiy.jpg','https://learn.aimindset.org/speakers/lisovskiy');
+N('khanarin','Dima\nKhanarin','speaker','@khanarin · AI transformation. Fri 27.03.','speakers/dima-khanarin.jpg','https://learn.aimindset.org/speakers/khanarin');
 // Speakers W2
-N('ametov','Alexey\nAmetov','speaker','AI content. Wed 01.04.','speakers/alex-amyotov.jpg');
-N('kleban','Vitaly\nKleban','speaker','Self-improving agents. Wed 01.04.','speakers/vitaly-kleban.jpg');
-N('sidora','Gleb\nSidora','speaker','Technical coworking. Thu 02.04.','speakers/gleb-sidora.png');
-N('kovalsky','Valery\nKovalsky','speaker','AI-driven dev. Thu 02.04.','speakers/valerii-kovalskii.jpg');
-N('strakhov','George\nStrakhov','speaker','Agent teams. Fri 03.04.','speakers/george-strakhov.png');
-N('kravtsov','Daniil\nKravtsov','speaker','Data pipelines. Fri 03.04.','speakers/daniel-kravtsov.jpeg');
+N('ametov','Alexey\nAmetov','speaker','AI content. Wed 01.04.','speakers/alex-amyotov.jpg','https://learn.aimindset.org/speakers/ametov');
+N('kleban','Vitaly\nKleban','speaker','Self-improving agents. Wed 01.04.','speakers/vitaly-kleban.jpg','https://learn.aimindset.org/speakers/kleban');
+N('sidora','Gleb\nSidora','speaker','Technical coworking. Thu 02.04.','speakers/gleb-sidora.png','https://learn.aimindset.org/speakers/sidora');
+N('kovalsky','Valery\nKovalsky','speaker','AI-driven dev. Thu 02.04.','speakers/valerii-kovalskii.jpg','https://learn.aimindset.org/speakers/kovalsky');
+N('strakhov','George\nStrakhov','speaker','Agent teams. Fri 03.04.','speakers/george-strakhov.png','https://learn.aimindset.org/speakers/strakhov');
+N('kravtsov','Daniil\nKravtsov','speaker','Data pipelines. Fri 03.04.','speakers/daniel-kravtsov.jpeg','https://learn.aimindset.org/speakers/kravtsov');
 // Speakers W3
-N('reid','Evgeny\nReid','speaker','AI × Investments. Tue 07.04.','speakers/eugene-rid.jpg');
-N('annaov','Bayram\nAnnaov','speaker','Sales automation. Wed 08.04.','speakers/bayram-annakov.jpg');
-N('buzko','Roma\nBuzko','speaker','Legal tech. Thu 09.04.','speakers/roma-buzko.jpg');
-N('ustinov','Seva\nUstinov','speaker','Product-agent. Fri 10.04.','speakers/seva-ustinov.jpg');
+N('reid','Evgeny\nReid','speaker','AI × Investments. Tue 07.04.','speakers/eugene-rid.jpg','https://learn.aimindset.org/speakers/reid');
+N('annaov','Bayram\nAnnaov','speaker','Sales automation. Wed 08.04.','speakers/bayram-annakov.jpg','https://learn.aimindset.org/speakers/annakov');
+N('buzko','Roma\nBuzko','speaker','Legal tech. Thu 09.04.','speakers/roma-buzko.jpg','https://learn.aimindset.org/speakers/buzko');
+N('ustinov','Seva\nUstinov','speaker','Product-agent. Fri 10.04.','speakers/seva-ustinov.jpg','https://learn.aimindset.org/speakers/ustinov');
 
 // Curators (top 6)
 N('fedoseev','Stanislav\nFedoseev','curator','@Kettarian_Fox · LLM, agents.','speakers/stanislav-fedoseev.jpg');
@@ -453,13 +453,20 @@ function showInfo(n){
   const tp=T[n.type]||{};
   const conns=[];
   gd.links.forEach(l=>{
-    if(l.source.id===n.id){const n2=gd.nodes.find(x=>x.id===l.target.id);if(n2)conns.push({n:n2,r:l.rel,d:'→'});}
-    if(l.target.id===n.id){const n2=gd.nodes.find(x=>x.id===l.source.id);if(n2)conns.push({n:n2,r:l.rel,d:'←'});}
+    const sid=typeof l.source==='object'?l.source.id:l.source;
+    const tid=typeof l.target==='object'?l.target.id:l.target;
+    if(sid===n.id){const n2=gd.nodes.find(x=>x.id===tid);if(n2)conns.push({n:n2,r:l.rel,d:'→'});}
+    if(tid===n.id){const n2=gd.nodes.find(x=>x.id===sid);if(n2)conns.push({n:n2,r:l.rel,d:'←'});}
   });
   const tgm=n.desc?.match(/@(\w+)/);
 
-  // Find matching LMS session
-  const lmsSession = lmsData?.sessions?.find(s => n.id.includes(s.id) || s.title.includes(n.name.replace(/\n/g,' ').split(':')[0]));
+  // Find matching LMS session — match by ID overlap or name keywords
+  const nName = n.name.replace(/\n/g,' ').toLowerCase();
+  const lmsSession = lmsData?.sessions?.find(s => {
+    if (n.id.startsWith('s-') && s.id.includes(n.id.replace('s-',''))) return true;
+    const sTitle = s.title.toLowerCase();
+    return nName.split(' ').filter(w=>w.length>3).some(w=>sTitle.includes(w));
+  });
   const videoEmbed = lmsSession?.video ? `<div style="margin:10px 0;border-radius:6px;overflow:hidden"><iframe width="100%" height="160" src="https://www.youtube.com/embed/${lmsSession.video}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="border-radius:6px"></iframe></div>` : '';
   const matList = lmsSession?.materials ? `<div class="ct" style="margin-top:8px">Materials</div>${lmsSession.materials.map(m=>`<div class="ci" style="cursor:default"><span class="cd" style="background:#fbbf24"></span>${m}</div>`).join('')}` : '';
   const sessionMeta = lmsSession ? `<div style="font-size:10px;color:var(--dim);margin:6px 0">${lmsSession.date||''} · ${lmsSession.duration||''} · ${lmsSession.speaker||''} · <span style="color:${lmsSession.status==='completed'?'#38d9a9':'#f59e0b'}">${lmsSession.status}</span></div>` : '';
