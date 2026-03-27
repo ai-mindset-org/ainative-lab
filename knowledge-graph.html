@@ -308,9 +308,17 @@ const graph = ForceGraph()(document.getElementById('graph'))
 
     const t = Date.now() * 0.001;
     const isHovered = node === hoveredNode;
+    const isSelected = node === selected;
 
     // Safety: skip render if position is NaN
     if (!isFinite(node.x) || !isFinite(node.y)) return;
+
+    // Selected ring (pulsing)
+    if (isSelected) {
+      const pulse = 0.5 + Math.sin(t * 3) * 0.5;
+      ctx.beginPath();ctx.arc(node.x,node.y,r+6+pulse*2,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(77,201,212,${0.3+pulse*0.3})`;ctx.lineWidth=2;ctx.stroke();
+    }
 
     // Draw node
     if(img){
@@ -381,7 +389,8 @@ const graph = ForceGraph()(document.getElementById('graph'))
     }
   })
   .nodePointerAreaPaint((node,c,ctx)=>{
-    const r=(T[node.type]||{s:5}).s+4;
+    if (!isFinite(node.x)||!isFinite(node.y)) return;
+    const r=(T[node.type]||{s:5}).s+8; // larger click area
     ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.fill();
   })
   .linkColor(l=>{
@@ -407,6 +416,7 @@ const graph = ForceGraph()(document.getElementById('graph'))
   .linkDirectionalParticleColor(()=>'rgba(77,201,212,.4)')
   .linkCurvature(0.1)
   .onNodeClick(onClick)
+  .onBackgroundClick(()=>{selected=null;closeInfo();graph.zoomToFit(400,60);})
   .onNodeHover((n)=>{
     hoveredNode=n;
     document.getElementById('graph').style.cursor=n?'pointer':'default';
@@ -443,6 +453,11 @@ function onClick(node){
   graph.zoom(5,600);
   showInfo(node);
 }
+
+// Double-click opens LMS/URL directly
+graph.onNodeRightClick(node => {
+  if (node.url) window.open(node.url, '_blank');
+});
 
 const infoEl=document.getElementById('info'),ib=document.getElementById('ib');
 // LMS session data cache
