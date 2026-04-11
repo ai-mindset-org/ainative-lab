@@ -1,0 +1,127 @@
+<!--
+  AI-Native Lab — Shared Top Navigation
+  Usage (two patterns):
+
+  A) Static include (copy the <div class="site-nav"> block into your page).
+     Then call injectNav() on DOMContentLoaded to set active link.
+
+  B) Dynamic fetch + inject. Example from a root page (index.html):
+       <div id="nav-root"></div>
+       <script>
+         fetch('./shared/nav.html').then(r => r.text()).then(html => {
+           document.getElementById('nav-root').innerHTML = html;
+           injectNav('./');
+         });
+       </script>
+     From a subdir page (e.g. weeks/index.html) pass basePath='../'.
+
+  Notes:
+  - On GitHub Pages the site root is /ainative-lab/. Locally via
+    `python3 -m http.server` the root is /. injectNav() handles both
+    by using RELATIVE links — this file emits href="./section/" and
+    then injectNav() rewrites each href against the given basePath.
+-->
+
+<style>
+  /* Self-contained nav styles — safe to include alongside site.css */
+  .site-nav {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .site-nav a {
+    font-size: 11px;
+    color: rgba(230, 237, 243, 0.7);
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .site-nav a:hover {
+    color: #4dc9d4;
+    background: rgba(77, 201, 212, 0.12);
+  }
+  .site-nav a.active {
+    color: #4dc9d4;
+    background: rgba(77, 201, 212, 0.08);
+    border-color: rgba(77, 201, 212, 0.2);
+  }
+</style>
+
+<div class="site-nav" data-nav>
+  <a href="./" data-section="">Hub</a>
+  <a href="./graph/" data-section="graph">Graph</a>
+  <a href="./weeks/" data-section="weeks">Weeks</a>
+  <a href="./sessions/" data-section="sessions">Sessions</a>
+  <a href="./speakers-page/" data-section="speakers-page">Speakers</a>
+  <a href="./participants/" data-section="participants">Participants</a>
+  <a href="./stories/" data-section="stories">Stories</a>
+  <a href="./results/" data-section="results">Results</a>
+</div>
+
+<script>
+  /**
+   * injectNav(basePath) — rewrites .site-nav links for the given base and
+   * sets .active on the link that matches the current URL.
+   *
+   * basePath examples:
+   *   './'  — from root index.html (e.g. /ainative-lab/index.html)
+   *   '../' — from weeks/index.html, sessions/index.html, etc.
+   *   '../../' — from weeks/w1.html if weeks has deeper nesting
+   *
+   * If called with no argument it tries to infer the depth from the
+   * current pathname.
+   */
+  function injectNav(basePath) {
+    var navs = document.querySelectorAll('.site-nav[data-nav]');
+    if (!navs.length) return;
+
+    // Auto-infer depth if not provided.
+    if (!basePath) {
+      var p = location.pathname.replace(/\/ainative-lab\//, '/');
+      // Strip leading /, trailing /index.html
+      p = p.replace(/^\//, '').replace(/index\.html$/, '');
+      var segments = p.split('/').filter(Boolean);
+      // e.g. weeks/ => 1 segment => ../
+      // e.g. weeks/w1.html => 1 segment after filtering trailing file => depth 1
+      var depth = segments.length;
+      if (location.pathname.endsWith('.html') && !location.pathname.endsWith('/index.html')) {
+        depth = Math.max(0, depth - 0); // html file inside a folder: still N up
+      }
+      basePath = depth === 0 ? './' : new Array(depth + 1).join('../');
+    }
+
+    navs.forEach(function (nav) {
+      var links = nav.querySelectorAll('a[data-section]');
+      links.forEach(function (a) {
+        var section = a.getAttribute('data-section');
+        var href = section ? (basePath + section + '/') : basePath;
+        a.setAttribute('href', href);
+
+        // Active-link detection.
+        var here = location.pathname.replace(/\/ainative-lab\//, '/');
+        if (section === '') {
+          if (here === '/' || here.endsWith('/index.html') && here.split('/').length <= 3) {
+            // Only activate Hub when we're at the very root.
+            var parts = here.replace(/^\//, '').replace(/index\.html$/, '').split('/').filter(Boolean);
+            if (parts.length === 0) a.classList.add('active');
+          }
+        } else if (here.indexOf('/' + section + '/') !== -1 || here.indexOf('/' + section) === here.length - section.length - 1) {
+          a.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // Auto-run if DOM is ready and nav is already in the page.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { injectNav(); });
+  } else {
+    injectNav();
+  }
+</script>

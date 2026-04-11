@@ -1,0 +1,166 @@
+{
+  "generated": "2026-04-11",
+  "sprint": "AI-Native Organizations Sprint S2",
+  "speakers": [
+    {
+      "id": "stepan-gershuni",
+      "name": "Степан Гершуни",
+      "name_en": "Stepan Gershuni",
+      "photo": "graph/speakers/stepan-gershuni.jpg",
+      "role": "Partner, CybOS / AI Mindset",
+      "track": "lecture",
+      "sessions": ["s2-intro", "s2-w1-lecture", "s2-w2-lecture", "s2-w3-lecture"],
+      "bio": "Lead lecturer on AI transformation strategy — три недели лекций от Why до 90-day plan."
+    },
+    {
+      "id": "alexander-povaliaev",
+      "name": "Александр Поваляев",
+      "name_en": "Alexander Povaliaev",
+      "photo": "graph/speakers/alexander-povaliaev.jpg",
+      "role": "Founder, AI Mindset",
+      "track": "workshop",
+      "sessions": ["s2-prework01", "s2-prework02", "s2-prework03", "s2-intro", "s2-w1-setup", "s2-w1-workshop", "s2-w1-bonus"],
+      "bio": "Ведёт Personal OS Setup и Personal → Team workshop — от нулевой конфигурации Claude Code к командной работе."
+    },
+    {
+      "id": "sergey-khabarov",
+      "name": "Сергей Хабаров",
+      "name_en": "Sergey Khabarov",
+      "photo": "graph/speakers/sergey-khabarov.jpg",
+      "role": "Engineer, AI Mindset",
+      "track": "workshop",
+      "sessions": ["s2-prework01", "s2-prework03", "s2-prework04"],
+      "bio": "Prework по POS, циклическим пайплайнам и OpenClaw — автономным агентским системам."
+    },
+    {
+      "id": "sereja-ris",
+      "name": "Сергей Рис",
+      "name_en": "Sereja Ris",
+      "photo": "graph/speakers/sereja-ris.jpg",
+      "role": "Founder, AI Corp",
+      "track": "workshop",
+      "sessions": ["s2-prework02"],
+      "bio": "Ведёт prework о персональной корпорации — как превратить себя в AI-native компанию из одного человека."
+    },
+    {
+      "id": "eugene-lisovskiy",
+      "name": "Евгений Лисовский",
+      "name_en": "Eugene Lisovskiy",
+      "photo": "graph/speakers/eugene-lisovskiy.jpg",
+      "role": "Serial Entrepreneur",
+      "track": "founder",
+      "sessions": ["s2-w1-lisovskiy"],
+      "bio": "Фабрика бизнесов — как строить и запускать продукты параллельными потоками с AI-командой."
+    },
+    {
+      "id": "dima-khanarin",
+      "name": "Дима Ханарин",
+      "name_en": "Dima Khanarin",
+      "photo": "graph/speakers/dima-khanarin.jpg",
+      "role": "Founder",
+      "track": "founder",
+      "sessions": ["s2-w1-khanarin"],
+      "bio": "AI-трансформация с точки зрения операционного фаундера — что работает на практике."
+    },
+    {
+      "id": "alex-amyotov",
+      "name": "Алекс Амётов",
+      "name_en": "Alex Amyotov",
+      "photo": "graph/speakers/alex-amyotov.jpg",
+      "role": "Content & Marketing",
+      "track": "founder",
+      "sessions": ["s2-w2-ametov"],
+      "bio": "AI-контент для бизнеса — как собирать пайплайны генерации контента промышленного масштаба."
+    },
+    {
+      "id": "vitaly-kleban",
+      "name": "Виталий Клебан",
+      "name_en": "Vitaly Kleban",
+      "photo": "graph/speakers/vitaly-kleban.jpg",
+      "role": "AI Engineer",
+      "track": "founder",
+      "sessions": ["s2-w2-kleban"],
+      "bio": "Self-Improving Agents — агенты которые учатся на собственных ошибках и улучшают свои промпты."
+    },
+    {
+      "id": "gleb-sidora",
+      "name": "Глеб Сидора",
+      "name_en": "Gleb Sidora",
+      "photo": "graph/speakers/gleb-sidora.png",
+      "role": "Engineer",
+      "track": "founder",
+      "sessions": ["s2-w2-sidora"],
+      "bio": "Технический коворкинг — live coding сессия с участниками лаборатории по инфраструктуре агентов."
+    },
+    {
+      "id": "valerii-kovalskii",
+      "name": "Валерий Ковальский",
+      "name_en": "Valerii Kovalskii",
+      "photo": "graph/speakers/valerii-kovalskii.jpg",
+      "role": "Engineering Lead",
+      "track": "founder",
+      "sessions": ["s2-w2-kovalsky"],
+      "bio": "AI-Driven Development — рабочие практики и pitfalls при построении продукта с AI-ассистентами."
+    },
+    {
+      "id": "george-strakhov",
+      "name": "George Страхов",
+      "name_en": "George Strakhov",
+      "photo": "graph/speakers/george-strakhov.png",
+      "role": "AI Teams Architect",
+      "track": "founder",
+      "sessions": ["s2-w2-strakhov"],
+      "bio": "Agent Teams — архитектура команд из агентов с разделением ролей и координацией."
+    },
+    {
+      "id": "daniel-kravtsov",
+      "name": "Даниил Кравцов",
+      "name_en": "Daniel Kravtsov",
+      "photo": "graph/speakers/daniel-kravtsov.jpeg",
+      "role": "Data Engineer",
+      "track": "founder",
+      "sessions": ["s2-w2-kravtsov"],
+      "bio": "Data Pipelines — как строить надёжные агентские пайплайны обработки данных в продакшене."
+    },
+    {
+      "id": "eugene-rid",
+      "name": "Евгений Рид",
+      "name_en": "Eugene Rid",
+      "photo": "graph/speakers/eugene-rid.jpg",
+      "role": "Investor",
+      "track": "founder",
+      "sessions": ["s2-w3-reid"],
+      "bio": "AI × Investments — как венчурный рынок смотрит на AI-native компании и что важно для founders."
+    },
+    {
+      "id": "bayram-annakov",
+      "name": "Байрам Аннаков",
+      "name_en": "Bayram Annakov",
+      "photo": "graph/speakers/bayram-annakov.jpg",
+      "role": "Founder, App in the Air",
+      "track": "founder",
+      "sessions": ["s2-w3-annaov"],
+      "bio": "Sales Automation — автоматизация продаж через агентские системы в B2B-сегменте."
+    },
+    {
+      "id": "roma-buzko",
+      "name": "Рома Бузко",
+      "name_en": "Roma Buzko",
+      "photo": "graph/speakers/roma-buzko.jpg",
+      "role": "Founder, Buzko Krasnov",
+      "track": "founder",
+      "sessions": ["s2-w3-buzko"],
+      "bio": "AI Legal — как юридическая практика трансформируется под AI-native модель работы."
+    },
+    {
+      "id": "seva-ustinov",
+      "name": "Сева Устинов",
+      "name_en": "Seva Ustinov",
+      "photo": "graph/speakers/seva-ustinov.jpg",
+      "role": "Product Lead",
+      "track": "founder",
+      "sessions": ["s2-w3-ustinov"],
+      "bio": "Product-Agent — как продуктовая команда живёт когда часть фич пишут агенты."
+    }
+  ]
+}

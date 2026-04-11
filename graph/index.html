@@ -1,101 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Native Lab — Knowledge Graph</title>
-  <meta property="og:title" content="AI-Native Organizations — Knowledge Graph">
-  <meta property="og:description" content="Interactive map: speakers, sessions, concepts, tools. AI Mindset × CybOS.">
-  <meta property="og:image" content="https://ai-mindset-org.github.io/ainative-lab/graph/speakers/stepan-gershuni.jpg">
-  <script src="https://unpkg.com/force-graph"></script>
-  <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--td:rgba(77,201,212,.12);--tg:rgba(77,201,212,.35);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--purple:#a78bfa;--red:#ff6b6b;--text:#e6edf3;--t2:rgba(230,237,243,.7);--t3:rgba(230,237,243,.4);--brd:rgba(77,201,212,.1);--brd2:rgba(77,201,212,.2);--mono:'IBM Plex Mono',monospace;--sans:'Space Grotesk',sans-serif}
-    body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;height:100vh;overflow:hidden}
-    body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,.02) 1px,transparent 1px);background-size:60px 60px}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Native Lab — Knowledge Graph</title>
+<meta property="og:title" content="AI-Native Organizations — Knowledge Graph">
+<meta property="og:description" content="Interactive map of AI-Native Organizations S2: sessions, speakers, concepts, timeline.">
+<meta property="og:image" content="https://ai-mindset-org.github.io/ainative-lab/graph/speakers/stepan-gershuni.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://unpkg.com/force-graph"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--bg4:#0a0e14;
+  --teal:#4dc9d4;--td:rgba(77,201,212,.12);--tg:rgba(77,201,212,.35);
+  --blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--purple:#a78bfa;--red:#ff6b6b;--pink:#ec4899;
+  --text:#e6edf3;--t2:rgba(230,237,243,.72);--t3:rgba(230,237,243,.42);
+  --brd:rgba(77,201,212,.1);--brd2:rgba(77,201,212,.22);
+  --mono:'IBM Plex Mono',monospace;--sans:'Space Grotesk',sans-serif;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.55;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(77,201,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,.025) 1px,transparent 1px);
+  background-size:60px 60px}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,transparent 0%,rgba(0,0,0,.45) 100%)}
 
-    .app{display:grid;grid-template-columns:240px 1fr 320px;grid-template-rows:44px 1fr;height:100vh;overflow:hidden}
-    .app.detail-closed{grid-template-columns:240px 1fr 0}
+.app{position:relative;z-index:1;display:grid;grid-template-columns:260px 1fr 340px;grid-template-rows:46px 1fr;height:100vh;overflow:hidden}
+.app.detail-closed{grid-template-columns:260px 1fr 0}
 
-    /* Topbar */
-    .top{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 14px;gap:10px;z-index:100}
-    .dots{display:flex;gap:5px}.dots span{width:9px;height:9px;border-radius:50%}.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
-    .top-title{font-size:11px;color:var(--t3);margin-left:6px}
-    .top-right{margin-left:auto;display:flex;gap:12px;align-items:center}
-    .top-badge{font-size:9px;padding:2px 8px;border-radius:3px;background:var(--td);color:var(--teal);letter-spacing:.1em;text-transform:uppercase}
-    .top-search{padding:4px 10px;background:var(--bg3);border:1px solid var(--brd);border-radius:4px;color:var(--text);font:11px var(--mono);width:200px;outline:none}
-    .top-search:focus{border-color:var(--teal)}
-    .top-search::placeholder{color:var(--t3)}
+/* Topbar */
+.top{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100}
+.dots{display:flex;gap:6px}.dots span{width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
+.top-title{font-size:11px;color:var(--t3);margin-left:4px}
+.top-title b{color:var(--text);font-weight:500}
+.top-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.view-toggle{display:flex;background:var(--bg3);border:1px solid var(--brd);border-radius:5px;overflow:hidden}
+.view-toggle button{background:transparent;border:none;color:var(--t2);font:10px/1 var(--mono);padding:6px 12px;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:all .15s}
+.view-toggle button:hover{color:var(--text)}
+.view-toggle button.on{background:var(--td);color:var(--teal)}
+.top-badge{font-size:9px;padding:3px 8px;border-radius:3px;background:var(--td);color:var(--teal);letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--brd2)}
+.top-search{padding:5px 10px;background:var(--bg3);border:1px solid var(--brd);border-radius:4px;color:var(--text);font:11px var(--mono);width:200px;outline:none}
+.top-search:focus{border-color:var(--teal)}
+.top-search::placeholder{color:var(--t3)}
 
-    /* Sidebar */
-    .side{background:var(--bg2);border-right:1px solid var(--brd);overflow-y:auto;padding:12px 0}
-    .side::-webkit-scrollbar{width:3px}.side::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
-    .sh{font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);padding:10px 14px 4px}
-    .si{display:flex;align-items:center;gap:7px;padding:5px 14px;cursor:pointer;font-size:11px;color:var(--t2);border-left:2px solid transparent;transition:all .12s}
-    .si:hover{background:rgba(77,201,212,.05);color:var(--text)}
-    .si.on{background:rgba(77,201,212,.08);color:var(--teal);border-left-color:var(--teal)}
-    .si .ic{width:18px;height:18px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1px solid var(--brd2)}
-    .si .ic img{width:100%;height:100%;object-fit:cover}
-    .si .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-    .si .tag{font-size:9px;color:var(--t3);margin-left:auto}
+/* Sidebar */
+.side{background:var(--bg2);border-right:1px solid var(--brd);overflow-y:auto;padding:14px 0}
+.side::-webkit-scrollbar{width:4px}.side::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+.sh{font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);padding:14px 16px 6px}
+.si{display:flex;align-items:center;gap:8px;padding:6px 16px;cursor:pointer;font-size:11px;color:var(--t2);border-left:2px solid transparent;transition:all .12s;user-select:none}
+.si:hover{background:rgba(77,201,212,.05);color:var(--text)}
+.si.on{background:rgba(77,201,212,.09);color:var(--teal);border-left-color:var(--teal)}
+.si .chk{width:10px;height:10px;border:1px solid var(--brd2);border-radius:2px;flex-shrink:0;display:grid;place-items:center}
+.si.on .chk{background:var(--teal);border-color:var(--teal)}
+.si.on .chk::after{content:'';width:4px;height:7px;border:solid var(--bg);border-width:0 1.5px 1.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.si .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.si .tag{font-size:9px;color:var(--t3);margin-left:auto}
+.legend{padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 12px;font-size:9px;color:var(--t3)}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
 
-    /* Graph area */
-    .graph-area{position:relative;overflow:hidden}
-    #graph{width:100%;height:100%}
+/* Graph area */
+.graph-area{position:relative;overflow:hidden;background:var(--bg4)}
+#graph{width:100%;height:100%}
+.graph-hint{position:absolute;bottom:14px;left:16px;font-size:9px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.graph-hint b{color:var(--teal)}
+.week-label{position:absolute;top:14px;font:600 10px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--t3);pointer-events:none}
+.mobile-btn{display:none;position:absolute;top:14px;left:14px;z-index:50;background:var(--bg2);border:1px solid var(--brd);color:var(--teal);padding:8px 12px;border-radius:5px;font:10px var(--mono);cursor:pointer}
 
-    /* Detail panel */
-    .detail{background:var(--bg2);border-left:1px solid var(--brd);overflow-y:auto;padding:0;transition:width .2s}
-    .detail::-webkit-scrollbar{width:3px}.detail::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
-    .detail.empty{display:flex;align-items:center;justify-content:center}
-    .detail .empty-msg{text-align:center;color:var(--t3);font-size:11px}
-    .dh{padding:16px;border-bottom:1px solid var(--brd)}
-    .dh .badge{font-size:9px;padding:2px 7px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;display:inline-block;margin-bottom:6px}
-    .dh h2{font-family:var(--sans);font-size:16px;font-weight:600;line-height:1.3;margin-bottom:4px}
-    .dh .meta{font-size:10px;color:var(--t3)}
-    .dh .meta span{color:var(--teal)}
-    .dh .avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--teal);margin:8px 0}
-    .dh .desc{font-size:11px;color:var(--t2);line-height:1.5;margin-top:8px}
-    .dlinks{padding:12px 16px;display:flex;flex-wrap:wrap;gap:5px;border-bottom:1px solid var(--brd)}
-    .dlinks a{font-size:10px;padding:3px 8px;background:var(--td);border:1px solid var(--brd);border-radius:4px;color:var(--teal);text-decoration:none;transition:all .15s}
-    .dlinks a:hover{background:var(--tg);border-color:var(--teal)}
-    .dvideo{padding:12px 16px;border-bottom:1px solid var(--brd)}
-    .dvideo iframe{width:100%;height:160px;border-radius:6px;border:none}
-    .dconns{padding:12px 16px}
-    .dconns h3{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
-    .ci{display:flex;align-items:center;gap:6px;padding:4px 8px;margin-bottom:2px;border-radius:4px;cursor:pointer;font-size:10px;color:var(--t2);transition:background .12s}
-    .ci:hover{background:rgba(77,201,212,.06);color:var(--text)}
-    .ci .cd{width:4px;height:4px;border-radius:50%;flex-shrink:0}
-    .ci .cr{opacity:.3;font-size:8px;margin-left:auto}
-    .dmats{padding:12px 16px;border-top:1px solid var(--brd)}
-    .dmats h3{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
-    .mat{font-size:10px;color:var(--t2);padding:3px 0;display:flex;align-items:center;gap:5px}
-    .mat::before{content:'◇';color:var(--amber);font-size:8px}
-  </style>
+/* Detail panel */
+.detail{background:var(--bg2);border-left:1px solid var(--brd);overflow-y:auto;padding:0;transition:opacity .2s}
+.detail::-webkit-scrollbar{width:4px}.detail::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+.detail.empty{display:flex;align-items:center;justify-content:center}
+.detail .empty-msg{text-align:center;color:var(--t3);font-size:11px;line-height:1.8;padding:20px}
+.detail .empty-msg b{color:var(--teal);display:block;margin-bottom:6px;font-size:12px}
+.dh{padding:18px 16px;border-bottom:1px solid var(--brd);position:relative}
+.dh-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;line-height:1}
+.dh-close:hover{color:var(--teal)}
+.dh .badge{font-size:9px;padding:3px 8px;border-radius:3px;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-bottom:8px;margin-right:4px;border:1px solid transparent}
+.badge.w1{background:rgba(77,201,212,.12);color:var(--teal);border-color:var(--brd2)}
+.badge.w2{background:rgba(167,139,250,.12);color:var(--purple);border-color:rgba(167,139,250,.3)}
+.badge.w3{background:rgba(245,158,11,.12);color:var(--amber);border-color:rgba(245,158,11,.3)}
+.badge.prework,.badge.intro{background:rgba(107,114,128,.15);color:var(--t2);border-color:rgba(107,114,128,.3)}
+.badge.demo{background:rgba(236,72,153,.12);color:var(--pink);border-color:rgba(236,72,153,.3)}
+.badge.done{background:rgba(34,197,94,.12);color:var(--green);border-color:rgba(34,197,94,.3)}
+.badge.upc{background:rgba(59,130,246,.12);color:var(--blue);border-color:rgba(59,130,246,.3)}
+.dh h2{font-family:var(--sans);font-size:17px;font-weight:600;line-height:1.3;margin-bottom:6px;padding-right:20px}
+.dh .meta{font-size:10px;color:var(--t3);margin-top:4px}
+.dh .meta span{color:var(--teal)}
+.dh .avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--teal);margin:10px 0 6px;background:var(--bg3)}
+.dh .desc{font-size:11px;color:var(--t2);line-height:1.55;margin-top:8px}
+.speakers-row{display:flex;gap:8px;margin:10px 0 4px;flex-wrap:wrap}
+.speakers-row .sp{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--brd);border-radius:20px;padding:3px 10px 3px 3px;font-size:10px;color:var(--t2);cursor:pointer;transition:all .15s}
+.speakers-row .sp:hover{border-color:var(--teal);color:var(--text)}
+.speakers-row .sp img{width:22px;height:22px;border-radius:50%;object-fit:cover;background:var(--bg4)}
+.dvideo{padding:12px 16px;border-bottom:1px solid var(--brd)}
+.dvideo iframe{width:100%;aspect-ratio:16/9;border-radius:6px;border:none;background:var(--bg4)}
+.dsect{padding:14px 16px;border-bottom:1px solid var(--brd)}
+.dsect:last-child{border-bottom:none}
+.dsect h3{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:8px;font-weight:600}
+.mat,.ci{font-size:10px;color:var(--t2);padding:4px 0;display:flex;align-items:center;gap:7px;cursor:pointer;transition:color .12s}
+.mat::before{content:'◇';color:var(--amber);font-size:9px;flex-shrink:0}
+.ci::before{content:'→';color:var(--teal);font-size:10px;flex-shrink:0;opacity:.6}
+.ci:hover,.mat:hover{color:var(--text)}
+.dlinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.dlinks a{font-size:10px;padding:4px 10px;background:var(--td);border:1px solid var(--brd2);border-radius:4px;color:var(--teal);text-decoration:none;transition:all .15s}
+.dlinks a:hover{background:var(--tg);border-color:var(--teal)}
+
+/* Mobile */
+@media (max-width:768px){
+  .app{grid-template-columns:0 1fr 0;grid-template-rows:46px 1fr}
+  .side{position:fixed;left:0;top:46px;bottom:0;width:260px;z-index:90;transform:translateX(-100%);transition:transform .22s}
+  .side.show{transform:translateX(0)}
+  .detail{position:fixed;right:0;top:46px;bottom:0;width:100%;max-width:340px;z-index:90;transform:translateX(100%);transition:transform .22s}
+  .detail.show{transform:translateX(0)}
+  .mobile-btn{display:block}
+  .top-search{width:130px}
+  .top-title{display:none}
+}
+</style>
 </head>
 <body>
 <div class="app detail-closed">
 
-  <!-- Topbar -->
   <div class="top">
     <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
-    <span class="top-title">AI-Native Organizations · Knowledge Graph</span>
+    <span class="top-title">ainative-lab · <b>knowledge graph</b></span>
     <div class="top-right">
-      <input class="top-search" id="search" type="text" placeholder="Search... (⌘K)">
+      <div class="view-toggle">
+        <button id="view-graph" class="on">Graph</button>
+        <button id="view-timeline">Timeline</button>
+      </div>
+      <input class="top-search" id="search" type="text" placeholder="Search...">
       <span class="top-badge">S2 Sprint</span>
     </div>
   </div>
 
-  <!-- Sidebar -->
   <div class="side" id="sidebar"></div>
 
-  <!-- Graph -->
-  <div class="graph-area"><div id="graph"></div></div>
+  <div class="graph-area">
+    <button class="mobile-btn" id="mobile-filter">☰ Filter</button>
+    <div id="graph"></div>
+    <div class="graph-hint"><b>Click</b> node · <b>Drag</b> pan · <b>Scroll</b> zoom</div>
+  </div>
 
-  <!-- Detail -->
   <div class="detail empty" id="detail">
-    <div class="empty-msg">Click a node<br>to see details</div>
+    <div class="empty-msg"><b>Click a node</b>to see session details,<br>speaker info, or linked concepts</div>
   </div>
 
 </div>
@@ -104,275 +158,496 @@
 (function(){
 'use strict';
 
-if(typeof ForceGraph==='undefined'){document.getElementById('graph').innerHTML='<div style="color:#ff6b6b;padding:40px;font-family:monospace">ForceGraph failed to load</div>';return;}
+if(typeof ForceGraph==='undefined'||typeof d3==='undefined'){
+  document.getElementById('graph').innerHTML='<div style="color:#ff6b6b;padding:40px;font-family:monospace">Libraries failed to load</div>';
+  return;
+}
 
-// ════════ TYPES ════════
-const T={
-  team:{c:'#f59e0b',l:'Team',s:10},speaker:{c:'#a78bfa',l:'Speaker',s:9},curator:{c:'#38d9a9',l:'Curator',s:7},
-  session:{c:'#60a5fa',l:'Session',s:5},week:{c:'#3b82f6',l:'Week',s:16},topic:{c:'#8b5cf6',l:'Topic',s:6},
-  tool:{c:'#ff6b6b',l:'Tool',s:5},deliver:{c:'#06b6d4',l:'Deliverable',s:5},concept:{c:'#10b981',l:'Concept',s:5},
-  resource:{c:'#fbbf24',l:'Resource',s:4}
+const CUTOFF='2026-04-11';
+const LMS='https://learn.aimindset.org/s2/workshops/';
+
+// ═══════════ STATE ═══════════
+const state={
+  view:'graph',
+  filters:{weeks:new Set(['prework','intro','w1','w2','w3','demo']),types:new Set(['session','speaker','concept']),status:new Set(['completed','upcoming'])},
+  search:'',
+  selected:null,
+  data:null
 };
 
-// ════════ DATA ════════
-const D={nodes:[],links:[]};
-const N=(id,nm,tp,desc,av,url)=>D.nodes.push({id,name:nm,type:tp,desc:desc||'',avatar:av||null,url:url||null});
-const L=(s,t,r)=>D.links.push({source:s,target:t,rel:r||''});
+// ═══════════ TYPE COLORS ═══════════
+const TYPE={
+  session:{c:'#4dc9d4',l:'Session',s:7},
+  speaker:{c:'#a78bfa',l:'Speaker',s:6},
+  concept:{c:'#22c55e',l:'Concept',s:5},
+  resource:{c:'#fbbf24',l:'Resource',s:4}
+};
+const WEEKCOLOR={
+  prework:'#6b7280',intro:'#6b7280',
+  w1:'#4dc9d4',w2:'#a78bfa',w3:'#f59e0b',demo:'#ec4899'
+};
+const WEEK_LABEL={prework:'Prework',intro:'Intro',w1:'Week 1',w2:'Week 2',w3:'Week 3',demo:'Demo'};
 
-// Weeks
-N('w1','Week 1: Personal AI + Team','week','March 23–28. Personal OS, process audit, AI Champion.',null,'https://learn.aimindset.org/s2');
-N('w2','Week 2: System Above Model','week','March 30 – April 4. 6-layer architecture, MCP, orchestration.',null,'https://learn.aimindset.org/s2');
-N('w3','Week 3: Company Functions','week','April 6–13. Business automation, 90-day plan, Demo Day.',null,'https://learn.aimindset.org/s2');
+// ═══════════ LOAD DATA ═══════════
+fetch('data.json').then(r=>r.json()).then(raw=>{
+  state.data=processData(raw);
+  renderSidebar();
+  buildGraph();
+  bindEvents();
+}).catch(err=>{
+  document.getElementById('graph').innerHTML=
+    '<div style="color:#ff6b6b;padding:40px;font-family:monospace">Failed to load data.json: '+err.message+'</div>';
+});
 
-// Team
-N('stepan','Stepan Gershuni','team','@gershuni · CybOS AI. All Monday lectures.','speakers/stepan-gershuni.jpg','https://learn.aimindset.org/speakers/gershuni');
-N('alex','Alexander Povaliaev','team','@alex_named · AI Mindset Founder.','speakers/alexander-povaliaev.jpg','https://learn.aimindset.org/speakers/povalyaev');
-N('ira','Irina Nazarova','team','Operations.');
-N('ilya','Ilya Gindin','team','@igindin · Focus practice.','speakers/ilya-gindin.png','https://learn.aimindset.org/speakers/gindin');
-
-// Speakers W1
-N('lisovsky','Evgeny Lisovsky','speaker','Vibe-coding factory. Thu 26.03.','speakers/eugene-lisovskiy.jpg','https://learn.aimindset.org/speakers/lisovskiy');
-N('khanarin','Dima Khanarin','speaker','@khanarin · AI transformation. Fri 27.03.','speakers/dima-khanarin.jpg','https://learn.aimindset.org/speakers/khanarin');
-// W2
-N('ametov','Alexey Ametov','speaker','AI content. Wed 01.04.','speakers/alex-amyotov.jpg','https://learn.aimindset.org/speakers/ametov');
-N('kleban','Vitaly Kleban','speaker','Self-improving agents. Wed 01.04.','speakers/vitaly-kleban.jpg','https://learn.aimindset.org/speakers/kleban');
-N('sidora','Gleb Sidora','speaker','Technical coworking. Thu 02.04.','speakers/gleb-sidora.png','https://learn.aimindset.org/speakers/sidora');
-N('kovalsky','Valery Kovalsky','speaker','AI-driven dev. Thu 02.04.','speakers/valerii-kovalskii.jpg','https://learn.aimindset.org/speakers/kovalsky');
-N('strakhov','George Strakhov','speaker','Agent teams. Fri 03.04.','speakers/george-strakhov.png','https://learn.aimindset.org/speakers/strakhov');
-N('kravtsov','Daniil Kravtsov','speaker','Data pipelines. Fri 03.04.','speakers/daniel-kravtsov.jpeg','https://learn.aimindset.org/speakers/kravtsov');
-// W3
-N('reid','Evgeny Reid','speaker','AI × Investments. Tue 07.04.','speakers/eugene-rid.jpg','https://learn.aimindset.org/speakers/reid');
-N('annaov','Bayram Annaov','speaker','Sales automation. Wed 08.04.','speakers/bayram-annakov.jpg','https://learn.aimindset.org/speakers/annakov');
-N('buzko','Roma Buzko','speaker','Legal tech. Thu 09.04.','speakers/roma-buzko.jpg','https://learn.aimindset.org/speakers/buzko');
-N('ustinov','Seva Ustinov','speaker','Product-agent. Fri 10.04.','speakers/seva-ustinov.jpg','https://learn.aimindset.org/speakers/ustinov');
-
-// Curators
-N('fedoseev','Stanislav Fedoseev','curator','@Kettarian_Fox · LLM, agents.','speakers/stanislav-fedoseev.jpg');
-N('yury','Yury','curator','@doonto · AI assistant, skills.','speakers/yury-doonto.jpg');
-N('anton-v','Anton Voskobovich','curator','@northcapen · Obsidian, CC.','speakers/anton-voskobovich.jpg');
-N('sereja','Sergey Ris','curator','@serejaris · Claude Code, GitHub.','speakers/sereja-ris.jpg');
-N('glazov','Stanislav Glazov','curator','@prcdrl · MCP, hooks.','speakers/stanislav-glazov.jpg');
-N('borodich','Alexander Borodich','curator','@borodich · AI-native biz.','speakers/alexander-povaliaev.jpg');
-
-// Topics
-N('t-pos','Personal OS','topic','AI assistant + 10 categories.');
-N('t-process','Process Audit','topic','Freq × Time × Error × Scale.');
-N('t-6layer','6-Layer Architecture','topic','Infra → Context → Orchestration → Skills → People → Mgmt.');
-N('t-orch','Orchestration','topic','Sequential, Parallel, Conditional, Recursive.');
-N('t-skills','Skills = Jobs','topic','Full specs with constraints + eval.');
-N('t-bizmodel','AI Business Models','topic','Moats, Strangler Fig, GEO.');
-N('t-90day','90-Day Plan','topic','Quick wins → Scaling → New roles.');
-N('t-champion','AI Champion','topic','First AI hire per department.');
-
-// Tools
-N('tool-claude','Claude Code','tool','AI assistant. Skills, MCP.');
-N('tool-obsidian','Obsidian','tool','Knowledge vault.');
-N('tool-cursor','Cursor','tool','AI editor.');
-N('tool-mcp','MCP Servers','tool','Firecrawl, Exa, GitHub.');
-
-// Concepts
-N('c-harness','Harness Engineering','concept','80% value from harness, 20% model.');
-N('c-token','Token Stream','concept','Org = info processor.');
-N('c-bitter','Bitter Lesson','concept','Scale > engineered knowledge.');
-N('c-mirror','Mirror Agents','concept','MCP + internal control loops.');
-N('c-strangler','Strangler Fig','concept','Gradually wrap old process.');
-N('c-geo','GEO','concept','llms.txt, JSON-LD agent data.');
-N('c-5levels','5 Autonomy Levels','concept','ML → Chat → Workflow → Agent → Skill.');
-N('c-90day','90-Day Plan','concept','Quick wins → Scaling → New roles.');
-
-// Sessions
-N('s-lecture1','Lecture 1: Why AI Transform','session','172 min · Harness Engineering. POS → Team OS → Company OS.',null,'https://learn.aimindset.org/s2/workshops/s2-w1-lecture');
-N('s-setup','POS Setup Workshop','session','161 min · Claude Code, Obsidian, skills, dashboards.',null,'https://learn.aimindset.org/s2/workshops/s2-w1-setup');
-N('s-team','Personal → Team Workshop','session','150 min · Process audit, AI Champion. Curator demos.',null,'https://learn.aimindset.org/s2/workshops/s2-w1-workshop');
-N('s-lecture2','Lecture 2: System Above Model','session','85 min · 6 layers, 4 topologies.',null,'https://learn.aimindset.org/s2/workshops/s2-w2-lecture');
-N('s-lecture3','Lecture 3: Strategy to Plan','session','90 min · Business models, 90-day plan.',null,'https://learn.aimindset.org/s2/workshops/s2-w3-lecture');
-N('s-demo','Demo Day','session','Final presentations + ROI.',null,'https://learn.aimindset.org/s2/workshops/s2-demo-day');
-
-// Resources
-N('r-playbook','AI-Native Playbook','resource','Lecture slides PDF.',null,'https://learn.aimindset.org/downloads/s2/s2-w1-lecture-slides.pdf');
-N('r-plugin','AI-Native Plugin','resource','Claude Code / Codex plugin.',null,'https://github.com/Gerstep/ai-native-plugin');
-N('r-quiz','AI-Nativeness Quiz','resource','L0–L3 assessment.',null,'https://www.codos.ai/quiz');
-N('r-harness','Harness Research','resource','Interactive by CybOS.',null,'https://cybos.ai/harness');
-N('r-pos-deck','POS Setup Slides','resource','Interactive deck.',null,'https://ai-mindset-org.github.io/ainative-deck/pos-setup-v2.html');
-N('r-stack','Stack Explorer','resource','Tool configurator.',null,'https://ai-mindset-org.github.io/pos-stack-explorer/');
-
-// ════════ LINKS ════════
-L('stepan','w1','lectures');L('stepan','w2','lectures');L('stepan','w3','lectures');
-L('alex','w1','leads');L('alex','w2','leads');L('alex','w3','leads');
-L('ira','w1','ops');L('ira','w2','ops');L('ira','w3','ops');
-L('ilya','w1','focus');L('ilya','w2','focus');
-L('lisovsky','w1','speaks');L('khanarin','w1','speaks');
-L('ametov','w2','speaks');L('kleban','w2','speaks');L('sidora','w2','speaks');L('kovalsky','w2','speaks');L('strakhov','w2','speaks');L('kravtsov','w2','speaks');
-L('reid','w3','speaks');L('annaov','w3','speaks');L('buzko','w3','speaks');L('ustinov','w3','speaks');
-L('fedoseev','w1','curates');L('fedoseev','w2','curates');L('yury','w1','curates');L('yury','w3','curates');
-L('anton-v','w1','curates');L('sereja','w1','curates');L('glazov','w2','curates');L('borodich','w3','curates');
-L('w1','t-pos','covers');L('w1','t-process','covers');
-L('w2','t-6layer','covers');L('w2','t-orch','covers');L('w2','t-skills','covers');
-L('w3','t-bizmodel','covers');L('w3','t-90day','covers');L('w3','t-champion','covers');
-L('stepan','t-6layer','teaches');L('stepan','t-bizmodel','teaches');L('alex','t-pos','teaches');L('alex','t-process','teaches');
-L('khanarin','t-process','teaches');L('ametov','t-skills','teaches');L('kleban','t-skills','teaches');L('strakhov','t-orch','teaches');
-L('annaov','t-bizmodel','teaches');L('buzko','t-bizmodel','teaches');
-L('t-pos','tool-claude','uses');L('t-pos','tool-obsidian','uses');L('t-pos','tool-cursor','uses');L('t-6layer','tool-mcp','uses');
-L('c-harness','t-skills','shapes');L('c-token','t-process','shapes');L('c-bitter','t-6layer','shapes');L('c-mirror','t-orch','shapes');
-L('c-strangler','t-bizmodel','shapes');L('c-geo','t-bizmodel','shapes');L('c-5levels','t-skills','shapes');L('c-90day','t-champion','shapes');
-L('s-lecture1','w1','in');L('s-setup','w1','in');L('s-team','w1','in');L('s-lecture2','w2','in');L('s-lecture3','w3','in');L('s-demo','w3','in');
-L('s-lecture1','stepan','led_by');L('s-setup','alex','led_by');L('s-team','alex','led_by');L('s-lecture2','stepan','led_by');L('s-lecture3','stepan','led_by');
-L('r-playbook','s-lecture1','material');L('r-plugin','s-lecture1','material');L('r-quiz','s-lecture1','material');L('r-harness','s-lecture1','material');
-L('r-pos-deck','s-setup','material');L('r-stack','s-setup','material');
-
-const gd=D;
-
-// ════════ LAYOUT ════════
-const WR=200;
-const wc={w1:{x:-WR,y:0},w2:{x:WR*.5,y:-WR*.87},w3:{x:WR*.5,y:WR*.87}};
-function ring(cx,cy,r,i,n){const a=(i/Math.max(n,1))*Math.PI*2-Math.PI/2;return{x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r};}
-function weekOf(nid){
-  for(const l of gd.links){if(l.source===nid&&['w1','w2','w3'].includes(l.target))return l.target;if(l.target===nid&&['w1','w2','w3'].includes(l.source))return l.source;}
-  for(const l of gd.links){const o=l.source===nid?l.target:(l.target===nid?l.source:null);if(!o)continue;for(const l2 of gd.links){if(l2.source===o&&['w1','w2','w3'].includes(l2.target))return l2.target;if(l2.target===o&&['w1','w2','w3'].includes(l2.source))return l2.source;}}
-  return null;
+function processData(raw){
+  const speakers={}; raw.speakers.forEach(s=>speakers[s.id]=s);
+  const sessions=raw.sessions.map(s=>({
+    ...s,
+    status:(s.date<CUTOFF?'completed':'upcoming'),
+    speakerObjs:(s.speakers||[]).map(id=>speakers[id]).filter(Boolean)
+  }));
+  return {speakers:raw.speakers,sessions,concepts:raw.concepts,chains:raw.chains,meta:raw.meta,speakerMap:speakers};
 }
-const bk={w1:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w2:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]},w3:{sp:[],cur:[],ses:[],top:[],res:[],oth:[]}};
-const shared=[];
-gd.nodes.forEach(n=>{
-  if(['w1','w2','w3'].includes(n.id)){n.x=n.fx=wc[n.id].x;n.y=n.fy=wc[n.id].y;return;}
-  const w=weekOf(n.id);
-  if(w&&bk[w]){const b=['speaker','team'].includes(n.type)?'sp':n.type==='curator'?'cur':n.type==='session'?'ses':['topic','concept'].includes(n.type)?'top':n.type==='resource'?'res':'oth';bk[w][b].push(n);}
-  else shared.push(n);
-});
-Object.entries(bk).forEach(([w,b])=>{const c=wc[w];
-  b.ses.forEach((n,i)=>{const p=ring(c.x,c.y,50,i,Math.max(b.ses.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
-  b.sp.forEach((n,i)=>{const p=ring(c.x,c.y,80,i,b.sp.length);n.x=n.fx=p.x;n.y=n.fy=p.y;});
-  b.cur.forEach((n,i)=>{const p=ring(c.x,c.y,110,i+.3,Math.max(b.cur.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
-  b.top.forEach((n,i)=>{const p=ring(c.x,c.y,140,i,b.top.length);n.x=n.fx=p.x;n.y=n.fy=p.y;});
-  b.res.forEach((n,i)=>{const p=ring(c.x,c.y,170,i,Math.max(b.res.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
-  b.oth.forEach((n,i)=>{const p=ring(c.x,c.y,120,i+.5,Math.max(b.oth.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
-});
-shared.forEach((n,i)=>{const p=ring(0,0,50,i,Math.max(shared.length,1));n.x=n.fx=p.x;n.y=n.fy=p.y;});
 
-// ════════ AVATARS ════════
-const avc={};
-gd.nodes.forEach(n=>{if(!n.avatar)return;const img=new Image();img.crossOrigin='anonymous';img.onload=()=>{avc[n.id]=img};img.src=n.avatar;});
-
-// ════════ LMS DATA ════════
-let lms=null;
-fetch('lms-data.json').then(r=>r.ok?r.json():null).then(d=>{lms=d}).catch(()=>{});
-
-// ════════ SIDEBAR ════════
-const sb=document.getElementById('sidebar');
-function buildSidebar(){
+// ═══════════ SIDEBAR ═══════════
+function renderSidebar(){
+  const sb=document.getElementById('sidebar');
+  const weeks=[['prework','Prework'],['intro','Intro'],['w1','Week 1'],['w2','Week 2'],['w3','Week 3'],['demo','Demo Day']];
+  const types=[['session','Sessions'],['speaker','Speakers'],['concept','Concepts']];
+  const statuses=[['completed','Completed'],['upcoming','Upcoming']];
   let h='';
-  [['w1','Week 1 — Personal AI'],['w2','Week 2 — System'],['w3','Week 3 — Company']].forEach(([wid,label])=>{
-    h+=`<div class="sh">${label}</div>`;
-    // Sessions
-    bk[wid].ses.forEach(n=>{h+=`<div class="si" data-id="${n.id}"><span class="dot" style="background:${T.session.c}"></span>${n.name.split(':').pop().trim().slice(0,25)}<span class="tag">▶</span></div>`;});
-    // Speakers
-    bk[wid].sp.forEach(n=>{
-      const av=n.avatar?`<span class="ic"><img src="${n.avatar}"></span>`:`<span class="dot" style="background:${T[n.type].c}"></span>`;
-      h+=`<div class="si" data-id="${n.id}">${av}${n.name.replace(/\n/g,' ').slice(0,22)}<span class="tag">${T[n.type].l}</span></div>`;
-    });
-    // Topics
-    bk[wid].top.forEach(n=>{h+=`<div class="si" data-id="${n.id}"><span class="dot" style="background:${T[n.type]?.c||'#8b5cf6'}"></span>${n.name.replace(/\n/g,' ').slice(0,22)}</div>`;});
+  h+='<div class="sh">Week</div>';
+  weeks.forEach(([k,l])=>{
+    const n=state.data.sessions.filter(s=>s.week===k).length;
+    h+=`<div class="si ${state.filters.weeks.has(k)?'on':''}" data-f="weeks" data-v="${k}"><span class="chk"></span><span class="dot" style="background:${WEEKCOLOR[k]}"></span>${l}<span class="tag">${n}</span></div>`;
   });
-  // Shared
-  if(shared.length){
-    h+=`<div class="sh">Tools & More</div>`;
-    shared.forEach(n=>{h+=`<div class="si" data-id="${n.id}"><span class="dot" style="background:${T[n.type]?.c||'#64748b'}"></span>${n.name.replace(/\n/g,' ').slice(0,22)}</div>`;});
-  }
+  h+='<div class="sh">Type</div>';
+  types.forEach(([k,l])=>{
+    let n=0;
+    if(k==='session')n=state.data.sessions.length;
+    if(k==='speaker')n=state.data.speakers.length;
+    if(k==='concept')n=state.data.concepts.length;
+    h+=`<div class="si ${state.filters.types.has(k)?'on':''}" data-f="types" data-v="${k}"><span class="chk"></span><span class="dot" style="background:${TYPE[k].c}"></span>${l}<span class="tag">${n}</span></div>`;
+  });
+  h+='<div class="sh">Status</div>';
+  statuses.forEach(([k,l])=>{
+    const n=state.data.sessions.filter(s=>s.status===k).length;
+    const dotColor=k==='completed'?'#22c55e':'#3b82f6';
+    h+=`<div class="si ${state.filters.status.has(k)?'on':''}" data-f="status" data-v="${k}"><span class="chk"></span><span class="dot" style="background:${dotColor}"></span>${l}<span class="tag">${n}</span></div>`;
+  });
+  h+='<div class="sh">Legend</div><div class="legend">';
+  h+='<span><i style="background:'+TYPE.session.c+'"></i>session</span>';
+  h+='<span><i style="background:'+TYPE.speaker.c+'"></i>speaker</span>';
+  h+='<span><i style="background:'+TYPE.concept.c+'"></i>concept</span>';
+  h+='</div>';
   sb.innerHTML=h;
-  sb.querySelectorAll('.si').forEach(el=>el.onclick=()=>{const nd=gd.nodes.find(n=>n.id===el.dataset.id);if(nd)selectNode(nd);});
-}
-buildSidebar();
-
-// ════════ GRAPH ════════
-let hoveredNode=null,selected=null;
-const graph=ForceGraph()(document.getElementById('graph'))
-  .graphData(gd).backgroundColor('#0d1117').warmupTicks(0).cooldownTicks(0)
-  .nodeCanvasObject((node,ctx,gs)=>{
-    const tp=T[node.type]||{c:'#64748b',s:5};const r=tp.s;if(!isFinite(node.x)||!isFinite(node.y))return;
-    const t=Date.now()*.001,isH=node===hoveredNode,isS=node===selected;
-    const img=avc[node.id];
-
-    if(isS){const p=.5+Math.sin(t*3)*.5;ctx.beginPath();ctx.arc(node.x,node.y,r+5+p*2,0,Math.PI*2);ctx.strokeStyle=`rgba(77,201,212,${.2+p*.3})`;ctx.lineWidth=2;ctx.stroke();}
-    if(isH&&!isS){ctx.beginPath();ctx.arc(node.x,node.y,r+3,0,Math.PI*2);ctx.strokeStyle=tp.c+'50';ctx.lineWidth=1.5;ctx.stroke();}
-
-    if(img){ctx.save();ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.closePath();ctx.clip();ctx.drawImage(img,node.x-r,node.y-r,r*2,r*2);ctx.restore();ctx.beginPath();ctx.arc(node.x,node.y,r+1,0,Math.PI*2);ctx.strokeStyle=tp.c;ctx.lineWidth=isH?2.5:1.5;ctx.stroke();}
-    else if(node.type==='week'){const p=.7+Math.sin(t*1.5+node.x*.01)*.3;ctx.beginPath();ctx.arc(node.x,node.y,r+4,0,Math.PI*2);ctx.strokeStyle=tp.c+Math.round(p*30).toString(16).padStart(2,'0');ctx.lineWidth=1.5;ctx.stroke();ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);const g=ctx.createRadialGradient(node.x,node.y,r*.2,node.x,node.y,r);g.addColorStop(0,tp.c);g.addColorStop(1,tp.c+'50');ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=tp.c;ctx.lineWidth=1.5;ctx.stroke();}
-    else if(node.type==='concept'){ctx.beginPath();ctx.moveTo(node.x,node.y-r);ctx.lineTo(node.x+r*.8,node.y);ctx.lineTo(node.x,node.y+r);ctx.lineTo(node.x-r*.8,node.y);ctx.closePath();ctx.fillStyle=tp.c+'99';ctx.fill();ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();}
-    else if(node.type==='session'){ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.fillStyle=tp.c+'60';ctx.fill();ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();ctx.beginPath();ctx.moveTo(node.x-r*.3,node.y-r*.4);ctx.lineTo(node.x+r*.5,node.y);ctx.lineTo(node.x-r*.3,node.y+r*.4);ctx.closePath();ctx.fillStyle='rgba(255,255,255,.7)';ctx.fill();}
-    else if(node.type==='resource'){const w=r*1.4,h=r*1.0;ctx.fillStyle=tp.c+'40';ctx.fillRect(node.x-w/2,node.y-h/2,w,h);ctx.strokeStyle=tp.c+'80';ctx.lineWidth=.8;ctx.strokeRect(node.x-w/2,node.y-h/2,w,h);}
-    else{ctx.beginPath();ctx.arc(node.x,node.y,r,0,Math.PI*2);ctx.fillStyle=tp.c+'cc';ctx.fill();ctx.strokeStyle=tp.c;ctx.lineWidth=1;ctx.stroke();}
-
-    const fs=node.type==='week'?11/gs:Math.min(8/gs,10);
-    if(gs>.4||node.type==='week'||['team','speaker'].includes(node.type)||isS||isH){
-      ctx.font=`${node.type==='week'?'600':'400'} ${fs}px ${node.type==='week'?'Space Grotesk':'IBM Plex Mono'}`;
-      ctx.textAlign='center';ctx.textBaseline='top';ctx.fillStyle=isS?'rgba(77,201,212,.9)':(node.type==='week'?'rgba(255,255,255,.85)':'rgba(255,255,255,.55)');
-      const nm=node.name.replace(/\n/g,' ');ctx.fillText(nm,node.x,node.y+r+2/gs);
-    }
-  })
-  .nodePointerAreaPaint((node,c,ctx)=>{if(!isFinite(node.x)||!isFinite(node.y))return;ctx.beginPath();ctx.arc(node.x,node.y,(T[node.type]||{s:5}).s+8,0,Math.PI*2);ctx.fill();})
-  .linkColor(l=>{if(!hoveredNode)return'rgba(77,201,212,.06)';const s=typeof l.source==='object'?l.source.id:l.source,t=typeof l.target==='object'?l.target.id:l.target;return(s===hoveredNode.id||t===hoveredNode.id)?'rgba(77,201,212,.3)':'rgba(77,201,212,.04)';})
-  .linkWidth(l=>{if(!hoveredNode)return l.rel==='lectures'||l.rel==='leads'?1.2:.4;const s=typeof l.source==='object'?l.source.id:l.source,t=typeof l.target==='object'?l.target.id:l.target;return(s===hoveredNode.id||t===hoveredNode.id)?2:.3;})
-  .linkDirectionalParticles(l=>['lectures','speaks','teaches'].includes(l.rel)?2:0)
-  .linkDirectionalParticleWidth(1.5).linkDirectionalParticleSpeed(.004).linkDirectionalParticleColor(()=>'rgba(77,201,212,.35)')
-  .linkCurvature(.1)
-  .onNodeClick(selectNode)
-  .onNodeHover(n=>{hoveredNode=n;document.getElementById('graph').style.cursor=n?'pointer':'default';})
-  .onBackgroundClick(()=>{selected=null;showEmpty();document.querySelector('.app').classList.add('detail-closed');sb.querySelectorAll('.si').forEach(s=>s.classList.remove('on'));graph.zoomToFit(400,60);});
-
-setTimeout(()=>graph.zoomToFit(400,60),200);
-setTimeout(()=>graph.zoomToFit(400,60),1000);
-
-// ════════ SELECT ════════
-function selectNode(node){
-  selected=node;
-  graph.centerAt(node.x,node.y,500);
-  graph.zoom(5,500);
-  document.querySelector('.app').classList.remove('detail-closed');
-  sb.querySelectorAll('.si').forEach(s=>s.classList.toggle('on',s.dataset.id===node.id));
-  showDetail(node);
-}
-
-// ════════ DETAIL ════════
-const det=document.getElementById('detail');
-function showEmpty(){det.className='detail empty';det.innerHTML='<div class="empty-msg">Click a node<br>to see details</div>';}
-function showDetail(n){
-  det.className='detail';
-  const tp=T[n.type]||{};
-  const conns=[];
-  gd.links.forEach(l=>{const s=typeof l.source==='object'?l.source.id:l.source,t=typeof l.target==='object'?l.target.id:l.target;
-    if(s===n.id){const n2=gd.nodes.find(x=>x.id===t);if(n2)conns.push({n:n2,r:l.rel,d:'→'});}
-    if(t===n.id){const n2=gd.nodes.find(x=>x.id===s);if(n2)conns.push({n:n2,r:l.rel,d:'←'});}
+  sb.querySelectorAll('.si').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const f=el.dataset.f,v=el.dataset.v;
+      if(state.filters[f].has(v))state.filters[f].delete(v);
+      else state.filters[f].add(v);
+      el.classList.toggle('on');
+      buildGraph();
+    });
   });
-  const tgm=n.desc?.match(/@(\w+)/);
-  const lmsS=lms?.sessions?.find(s=>{const nm=n.name.toLowerCase();return nm.split(' ').filter(w=>w.length>3).some(w=>s.title.toLowerCase().includes(w));});
-  const vid=lmsS?.video?`<div class="dvideo"><iframe src="https://www.youtube.com/embed/${lmsS.video}" allowfullscreen></iframe></div>`:'';
-  const mats=lmsS?.materials?`<div class="dmats"><h3>Materials</h3>${lmsS.materials.map(m=>`<div class="mat">${m}</div>`).join('')}</div>`:'';
-
-  det.innerHTML=`
-    <div class="dh">
-      <span class="badge" style="background:${tp.c||'#64748b'}18;color:${tp.c||'#64748b'};border:1px solid ${tp.c||'#64748b'}30">${tp.l||n.type}</span>
-      <h2>${n.name.replace(/\n/g,' ')}</h2>
-      ${lmsS?`<div class="meta">${lmsS.date||''} · ${lmsS.duration||''} · <span>${lmsS.status||''}</span></div>`:''}
-      ${n.avatar?`<img class="avatar" src="${n.avatar}">`:''}
-      <div class="desc">${n.desc}</div>
-    </div>
-    <div class="dlinks">
-      ${tgm?`<a href="https://t.me/${tgm[1]}" target="_blank">@${tgm[1]}</a>`:''}
-      ${n.url?`<a href="${n.url}" target="_blank">Open in LMS ↗</a>`:''}
-      ${lmsS?.video?`<a href="https://youtube.com/watch?v=${lmsS.video}" target="_blank">Watch ▶</a>`:''}
-    </div>
-    ${vid}${mats}
-    ${conns.length?`<div class="dconns"><h3>Connections (${conns.length})</h3>
-      ${conns.map(c=>`<div class="ci" data-id="${c.n.id}"><span class="cd" style="background:${(T[c.n.type]||{}).c||'#64748b'}"></span>${c.d} ${c.n.name.replace(/\n/g,' ')}<span class="cr">${c.r}</span></div>`).join('')}
-    </div>`:''}
-  `;
-  det.querySelectorAll('.ci').forEach(el=>el.onclick=()=>{const nd=gd.nodes.find(x=>x.id===el.dataset.id);if(nd)selectNode(nd);});
 }
 
-// ════════ SEARCH ════════
-const si=document.getElementById('search');
-si.addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();if(!q)return;const hit=gd.nodes.find(n=>n.name.toLowerCase().replace(/\n/g,' ').includes(q));if(hit)selectNode(hit);});
-document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();si.focus();}if(e.key==='Escape'){selected=null;showEmpty();document.querySelector('.app').classList.add('detail-closed');}});
+// ═══════════ BUILD NODES/LINKS ═══════════
+function buildGraphData(){
+  const nodes=[],links=[];
+  const {filters,search}=state;
+
+  // Sessions
+  const sessionsVisible=state.data.sessions.filter(s=>
+    filters.weeks.has(s.week)&&filters.types.has('session')&&filters.status.has(s.status)&&
+    (!search||matchSearch(s.title,search)||matchSearch(s.id,search))
+  );
+  sessionsVisible.forEach(s=>{
+    nodes.push({
+      id:s.id,type:'session',week:s.week,status:s.status,
+      name:s.title,date:s.date,duration:s.duration,
+      track:s.track,raw:s,
+      val:s.track==='lecture'?12:s.track==='demo'?14:6
+    });
+  });
+
+  // Speakers (only those connected to visible sessions)
+  if(filters.types.has('speaker')){
+    const speakerIds=new Set();
+    sessionsVisible.forEach(s=>s.speakerObjs.forEach(sp=>speakerIds.add(sp.id)));
+    const searchedSpeakers=search?state.data.speakers.filter(sp=>matchSearch(sp.name,search)||matchSearch(sp.short||'',search)):[];
+    searchedSpeakers.forEach(sp=>speakerIds.add(sp.id));
+    speakerIds.forEach(id=>{
+      const sp=state.data.speakerMap[id];
+      if(!sp)return;
+      nodes.push({id:sp.id,type:'speaker',name:sp.short||sp.name,raw:sp,val:5});
+    });
+    sessionsVisible.forEach(s=>{
+      s.speakerObjs.forEach(sp=>{
+        if(speakerIds.has(sp.id))links.push({source:sp.id,target:s.id,kind:'hosts',w:1});
+      });
+    });
+  }
+
+  // Concepts
+  if(filters.types.has('concept')){
+    const sessIds=new Set(sessionsVisible.map(s=>s.id));
+    state.data.concepts.forEach(c=>{
+      const linked=c.sessions.filter(sid=>sessIds.has(sid));
+      if(linked.length===0&&!(search&&matchSearch(c.name,search)))return;
+      nodes.push({id:c.id,type:'concept',name:c.name,raw:c,val:4});
+      linked.forEach(sid=>links.push({source:c.id,target:sid,kind:'discusses',w:.6}));
+    });
+  }
+
+  // Chains — thicker links
+  const nodeSet=new Set(nodes.map(n=>n.id));
+  state.data.chains.forEach(ch=>{
+    for(let i=0;i<ch.sessions.length-1;i++){
+      const a=ch.sessions[i],b=ch.sessions[i+1];
+      if(nodeSet.has(a)&&nodeSet.has(b))links.push({source:a,target:b,kind:'chain',chain:ch.id,w:2.5});
+    }
+  });
+
+  return {nodes,links};
+}
+function matchSearch(v,q){return (v||'').toLowerCase().includes(q.toLowerCase())}
+
+// ═══════════ BUILD GRAPH ═══════════
+let graph=null;
+function buildGraph(){
+  const gData=buildGraphData();
+  const el=document.getElementById('graph');
+  el.innerHTML='';
+  // clear any week labels
+  document.querySelectorAll('.week-label').forEach(n=>n.remove());
+
+  graph=ForceGraph()(el)
+    .graphData(gData)
+    .backgroundColor('#0a0e14')
+    .nodeRelSize(4)
+    .nodeVal(n=>n.val||5)
+    .linkColor(l=>l.kind==='chain'?'rgba(77,201,212,.55)':l.kind==='hosts'?'rgba(167,139,250,.28)':'rgba(34,197,94,.22)')
+    .linkWidth(l=>l.w||1)
+    .linkDirectionalParticles(l=>l.kind==='chain'?2:0)
+    .linkDirectionalParticleSpeed(.006)
+    .linkDirectionalParticleWidth(2)
+    .nodeCanvasObjectMode(()=>'replace')
+    .nodeCanvasObject((node,ctx,scale)=>drawNode(node,ctx,scale))
+    .nodePointerAreaPaint((node,color,ctx)=>{
+      ctx.fillStyle=color;
+      const r=Math.sqrt(node.val||5)*4;
+      ctx.beginPath();ctx.arc(node.x,node.y,r,0,2*Math.PI);ctx.fill();
+    })
+    .onNodeClick(node=>{openDetail(node);focusNode(node)})
+    .onNodeHover(n=>{el.style.cursor=n?'pointer':'grab'})
+    .cooldownTicks(state.view==='graph'?100:0)
+    .d3AlphaDecay(.028)
+    .d3VelocityDecay(.35);
+
+  if(state.view==='graph'){
+    applyGraphForces();
+  }else{
+    applyTimelineLayout(gData);
+  }
+
+  setTimeout(()=>graph.zoomToFit(400,60),state.view==='timeline'?50:800);
+}
+
+function drawNode(node,ctx,scale){
+  const r=Math.sqrt(node.val||5)*4;
+  const color=TYPE[node.type]?.c||'#888';
+  const selected=state.selected&&state.selected.id===node.id;
+
+  // halo for lectures / demo
+  if(node.type==='session'&&(node.track==='lecture'||node.track==='demo')){
+    ctx.beginPath();ctx.arc(node.x,node.y,r+6,0,2*Math.PI);
+    ctx.fillStyle=WEEKCOLOR[node.week]+'22';ctx.fill();
+  }
+
+  // speaker: photo
+  if(node.type==='speaker'&&node.raw?.photo){
+    drawSpeakerImg(node,ctx,r);
+  }else{
+    ctx.beginPath();ctx.arc(node.x,node.y,r,0,2*Math.PI);
+    ctx.fillStyle=node.type==='session'?WEEKCOLOR[node.week]||color:color;
+    if(node.type==='session'&&node.status==='upcoming'){
+      ctx.globalAlpha=.45;ctx.fill();ctx.globalAlpha=1;
+      ctx.strokeStyle=WEEKCOLOR[node.week]||color;ctx.lineWidth=1.2;ctx.stroke();
+    }else{
+      ctx.fill();
+    }
+  }
+
+  if(selected){
+    ctx.beginPath();ctx.arc(node.x,node.y,r+4,0,2*Math.PI);
+    ctx.strokeStyle='#4dc9d4';ctx.lineWidth=2;ctx.stroke();
+  }
+
+  // label
+  if(scale>.7||node.type==='session'&&(node.track==='lecture'||node.track==='demo')){
+    const fs=Math.max(3,11/scale);
+    ctx.font=`500 ${fs}px 'IBM Plex Mono',monospace`;
+    ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillStyle='rgba(230,237,243,.85)';
+    const label=(node.name||'').length>34?node.name.slice(0,32)+'…':node.name;
+    ctx.fillText(label,node.x,node.y+r+3);
+  }
+}
+
+const imgCache={};
+function drawSpeakerImg(node,ctx,r){
+  const photo=node.raw.photo;
+  if(!imgCache[photo]){
+    const img=new Image();img.src='speakers/'+photo;
+    imgCache[photo]={img,loaded:false};
+    img.onload=()=>{imgCache[photo].loaded=true;try{graph&&graph.d3ReheatSimulation&&graph.d3ReheatSimulation()}catch(e){}};
+    img.onerror=()=>{imgCache[photo].error=true};
+  }
+  const entry=imgCache[photo];
+  if(entry.loaded){
+    ctx.save();
+    ctx.beginPath();ctx.arc(node.x,node.y,r,0,2*Math.PI);ctx.closePath();ctx.clip();
+    ctx.drawImage(entry.img,node.x-r,node.y-r,r*2,r*2);
+    ctx.restore();
+    ctx.beginPath();ctx.arc(node.x,node.y,r,0,2*Math.PI);
+    ctx.strokeStyle='#a78bfa';ctx.lineWidth=1.4;ctx.stroke();
+  }else{
+    ctx.beginPath();ctx.arc(node.x,node.y,r,0,2*Math.PI);
+    ctx.fillStyle='#a78bfa';ctx.fill();
+  }
+}
+
+// ═══════════ GRAPH MODE: clustered by week ═══════════
+function applyGraphForces(){
+  const el=document.getElementById('graph');
+  const W=el.clientWidth,H=el.clientHeight;
+  const weekX={prework:W*.5,intro:W*.5,w1:W*.22,w2:W*.5,w3:W*.78,demo:W*.5};
+  const weekY={prework:H*.12,intro:H*.22,w1:H*.5,w2:H*.5,w3:H*.5,demo:H*.88};
+
+  graph
+    .d3Force('charge').strength(-120);
+  graph
+    .d3Force('center',null)
+    .d3Force('x',d3.forceX(n=>{
+      if(n.type==='session')return weekX[n.week]||W/2;
+      if(n.type==='speaker'){
+        const avg=avgSessionX(n,weekX);return avg;
+      }
+      return W/2;
+    }).strength(.24))
+    .d3Force('y',d3.forceY(n=>{
+      if(n.type==='session')return weekY[n.week]||H/2;
+      if(n.type==='speaker'){
+        const avg=avgSessionY(n,weekY);return avg-60;
+      }
+      return H/2+80;
+    }).strength(.22))
+    .d3Force('collide',d3.forceCollide(n=>Math.sqrt(n.val||5)*5+4));
+  graph.d3ReheatSimulation();
+  drawWeekLabels(weekX,weekY);
+}
+function avgSessionX(speakerNode,weekX){
+  const sessIds=state.data.sessions.filter(s=>s.speakers&&s.speakers.includes(speakerNode.id)).map(s=>s.week);
+  if(!sessIds.length)return document.getElementById('graph').clientWidth/2;
+  const sum=sessIds.reduce((a,w)=>a+(weekX[w]||0),0);
+  return sum/sessIds.length;
+}
+function avgSessionY(speakerNode,weekY){
+  const sessIds=state.data.sessions.filter(s=>s.speakers&&s.speakers.includes(speakerNode.id)).map(s=>s.week);
+  if(!sessIds.length)return document.getElementById('graph').clientHeight/2;
+  const sum=sessIds.reduce((a,w)=>a+(weekY[w]||0),0);
+  return sum/sessIds.length;
+}
+function drawWeekLabels(weekX,weekY){
+  const ga=document.querySelector('.graph-area');
+  [['w1','Week 1',weekX.w1],['w2','Week 2',weekX.w2],['w3','Week 3',weekX.w3]].forEach(([k,l,x])=>{
+    const d=document.createElement('div');
+    d.className='week-label';
+    d.textContent=l;
+    d.style.left=(x-24)+'px';
+    d.style.color=WEEKCOLOR[k];
+    ga.appendChild(d);
+  });
+}
+
+// ═══════════ TIMELINE MODE ═══════════
+function applyTimelineLayout(gData){
+  const el=document.getElementById('graph');
+  const W=el.clientWidth,H=el.clientHeight;
+  const pad=80;
+  const sessions=gData.nodes.filter(n=>n.type==='session');
+  if(!sessions.length)return;
+  const dates=sessions.map(s=>new Date(s.date));
+  const dmin=new Date(Math.min(...dates)),dmax=new Date(Math.max(...dates));
+  const xScale=d3.scaleTime().domain([dmin,dmax]).range([pad,W-pad]);
+  // tracks as lanes
+  const tracks=['prework','intro','lecture','workshop','founder','demo'];
+  const laneH=(H-100)/tracks.length;
+  const laneY={};tracks.forEach((t,i)=>laneY[t]=70+laneH*(i+.5));
+
+  gData.nodes.forEach(n=>{
+    if(n.type==='session'){
+      n.fx=xScale(new Date(n.date));
+      n.fy=laneY[n.track]||H/2;
+    }else if(n.type==='speaker'){
+      // position near their first session
+      const sess=state.data.sessions.find(s=>s.speakers&&s.speakers.includes(n.id)&&n.type==='speaker');
+      if(sess){n.fx=xScale(new Date(sess.date));n.fy=(laneY[sess.track]||H/2)-36}
+      else{n.fx=pad;n.fy=H-40}
+    }else{
+      n.fx=W-pad;n.fy=40;
+    }
+  });
+
+  graph.d3Force('charge',null).d3Force('center',null).d3Force('x',null).d3Force('y',null).d3Force('collide',null);
+  graph.d3ReheatSimulation();
+
+  // draw lane labels
+  const ga=document.querySelector('.graph-area');
+  tracks.forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='week-label';
+    d.textContent=t.toUpperCase();
+    d.style.top=(60+laneH*(i+.5)-6)+'px';
+    d.style.left='12px';
+    d.style.color='rgba(230,237,243,.35)';
+    ga.appendChild(d);
+  });
+}
+
+function focusNode(node){
+  if(!node||node.x==null)return;
+  graph.centerAt(node.x,node.y,700);
+  graph.zoom(2.2,700);
+}
+
+// ═══════════ DETAIL PANEL ═══════════
+function openDetail(node){
+  state.selected=node;
+  const det=document.getElementById('detail');
+  document.querySelector('.app').classList.remove('detail-closed');
+  det.classList.remove('empty');
+  det.classList.add('show');
+  if(node.type==='session')det.innerHTML=renderSession(node);
+  else if(node.type==='speaker')det.innerHTML=renderSpeaker(node);
+  else if(node.type==='concept')det.innerHTML=renderConcept(node);
+  det.querySelectorAll('[data-nav]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const id=el.dataset.nav;
+      const gd=graph.graphData();
+      const tgt=gd.nodes.find(n=>n.id===id);
+      if(tgt){openDetail(tgt);focusNode(tgt)}
+    });
+  });
+  const closeBtn=det.querySelector('.dh-close');
+  if(closeBtn)closeBtn.addEventListener('click',closeDetail);
+}
+function closeDetail(){
+  state.selected=null;
+  const det=document.getElementById('detail');
+  det.classList.add('empty');
+  det.classList.remove('show');
+  det.innerHTML='<div class="empty-msg"><b>Click a node</b>to see session details,<br>speaker info, or linked concepts</div>';
+  if(window.innerWidth>768)document.querySelector('.app').classList.add('detail-closed');
+}
+function renderSession(node){
+  const s=node.raw;
+  const status=node.status==='completed'?'<span class="badge done">Completed</span>':'<span class="badge upc">Upcoming</span>';
+  const week=`<span class="badge ${s.week}">${WEEK_LABEL[s.week]||s.week}</span>`;
+  const date=formatDate(s.date);
+  const speakers=(s.speakerObjs||[]).map(sp=>`<div class="sp" data-nav="${sp.id}"><img src="speakers/${sp.photo}" loading="lazy" onerror="this.style.display='none'"><span>${sp.short||sp.name}</span></div>`).join('');
+  const video=s.video?`<div class="dvideo"><iframe src="https://www.youtube.com/embed/${s.video}" allowfullscreen loading="lazy"></iframe></div>`:'';
+  const mats=(s.materials&&s.materials.length)?`<div class="dsect"><h3>Materials</h3>${s.materials.map(m=>`<div class="mat">${m}</div>`).join('')}</div>`:'';
+  // related concepts
+  const concepts=state.data.concepts.filter(c=>c.sessions.includes(s.id));
+  const conceptsBlock=concepts.length?`<div class="dsect"><h3>Concepts</h3>${concepts.map(c=>`<div class="ci" data-nav="${c.id}">${c.name}</div>`).join('')}</div>`:'';
+  const lmsUrl=LMS+s.id;
+  return `
+    <div class="dh">
+      <button class="dh-close">×</button>
+      ${week}${status}
+      <h2>${s.title}</h2>
+      <div class="meta"><span>${date}</span>${s.duration?' · '+s.duration:''}${s.track?' · '+s.track:''}</div>
+      ${speakers?'<div class="speakers-row">'+speakers+'</div>':''}
+      <div class="dlinks"><a href="${lmsUrl}" target="_blank">Open in LMS ↗</a></div>
+    </div>
+    ${video}
+    ${mats}
+    ${conceptsBlock}
+  `;
+}
+function renderSpeaker(node){
+  const sp=node.raw;
+  const sessions=state.data.sessions.filter(s=>s.speakers&&s.speakers.includes(sp.id));
+  const sessList=sessions.map(s=>`<div class="ci" data-nav="${s.id}">${s.title}</div>`).join('');
+  const photo=sp.photo?`<img class="avatar" src="speakers/${sp.photo}" loading="lazy" onerror="this.style.display='none'">`:'';
+  return `
+    <div class="dh">
+      <button class="dh-close">×</button>
+      <span class="badge w1">Speaker</span>
+      ${photo}
+      <h2>${sp.name}</h2>
+      <div class="meta">${sp.affiliation||''}</div>
+    </div>
+    <div class="dsect"><h3>Sessions (${sessions.length})</h3>${sessList}</div>
+  `;
+}
+function renderConcept(node){
+  const c=node.raw;
+  const sessions=state.data.sessions.filter(s=>c.sessions.includes(s.id));
+  const list=sessions.map(s=>`<div class="ci" data-nav="${s.id}">${s.title}</div>`).join('');
+  return `
+    <div class="dh">
+      <button class="dh-close">×</button>
+      <span class="badge w2">Concept</span>
+      <h2>${c.name}</h2>
+      <div class="desc">${c.desc||''}</div>
+    </div>
+    <div class="dsect"><h3>Linked sessions</h3>${list}</div>
+  `;
+}
+function formatDate(iso){
+  try{
+    const d=new Date(iso);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }catch(e){return iso}
+}
+
+// ═══════════ EVENTS ═══════════
+function bindEvents(){
+  document.getElementById('view-graph').addEventListener('click',()=>setView('graph'));
+  document.getElementById('view-timeline').addEventListener('click',()=>setView('timeline'));
+  document.getElementById('search').addEventListener('input',e=>{
+    state.search=e.target.value.trim();
+    buildGraph();
+  });
+  document.getElementById('mobile-filter').addEventListener('click',()=>{
+    document.querySelector('.side').classList.toggle('show');
+  });
+  window.addEventListener('resize',()=>{
+    if(graph){
+      const el=document.getElementById('graph');
+      graph.width(el.clientWidth).height(el.clientHeight);
+      if(state.view==='graph')applyGraphForces();
+      else buildGraph();
+    }
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape')closeDetail();
+    if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();document.getElementById('search').focus()}
+  });
+}
+function setView(v){
+  state.view=v;
+  document.getElementById('view-graph').classList.toggle('on',v==='graph');
+  document.getElementById('view-timeline').classList.toggle('on',v==='timeline');
+  // Unfreeze any fixed positions
+  if(graph){
+    graph.graphData().nodes.forEach(n=>{n.fx=null;n.fy=null});
+  }
+  buildGraph();
+}
 
 })();
 </script>

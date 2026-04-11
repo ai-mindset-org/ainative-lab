@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W2 — System Above Model · AI-Native Lab</title>
+<meta property="og:title" content="Week 2 — System Above Model · AI-Native Lab">
+<meta property="og:description" content="Machine Operating System — infrastructure, data, orchestration, skills, people, governance. Week 2 of Sprint s2.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif;--accent:var(--green)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;height:48px;position:sticky;top:0;z-index:100}
+.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}
+.topbar-r{margin-left:auto;display:flex;gap:12px;align-items:center}
+.topbar-back{font-size:11px;color:var(--teal);text-decoration:none;padding:4px 10px;border:1px solid var(--border2);border-radius:4px}
+.topbar-back:hover{background:var(--teal-dim);text-decoration:none}
+.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(34,197,94,0.12);color:var(--accent);letter-spacing:0.1em;text-transform:uppercase}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 32px 80px}
+.hero{position:relative;overflow:hidden;background:var(--bg3);border-radius:10px;border:1px solid var(--border);margin-bottom:36px;padding:44px 48px}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(34,197,94,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(34,197,94,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 40%,rgba(34,197,94,0.14) 0%,transparent 55%),radial-gradient(ellipse at 85% 80%,rgba(77,201,212,0.08) 0%,transparent 55%);pointer-events:none}
+.hero-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),rgba(34,197,94,0.2) 60%,transparent)}
+.hero-in{position:relative;z-index:2;display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.hero-l{flex:1;min-width:320px}
+.hero-n{font-family:var(--display);font-size:110px;font-weight:700;line-height:0.85;color:var(--accent);opacity:0.22;letter-spacing:-0.04em;margin-bottom:8px}
+.hero-b{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);opacity:0.8;margin-bottom:8px}
+.hero-t{font-family:var(--display);font-weight:700;font-size:38px;line-height:1;text-transform:uppercase;margin-bottom:14px}
+.hero-t .tl{color:var(--accent)}
+.hero-sub{font-size:13px;color:var(--text2);max-width:560px;line-height:1.65}
+.hero-r{display:flex;flex-direction:column;gap:10px;min-width:260px}
+.hstat{display:flex;gap:14px;padding:12px 18px;background:rgba(34,197,94,0.04);border:1px solid var(--border);border-radius:6px}
+.hstat .sn{font-family:var(--display);font-weight:700;font-size:22px;color:var(--accent);opacity:0.55;min-width:46px}
+.hstat .sl{font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+.hstat .sv{font-size:12px;color:var(--text);margin-top:2px}
+h2{font-family:var(--display);font-size:14px;font-weight:600;color:var(--accent);margin:40px 0 16px;letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+h2::before{content:'';width:4px;height:14px;background:var(--accent);opacity:0.7;border-radius:1px}
+.concepts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.cc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px 20px;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0.6}
+.cc .ct{font-family:var(--display);font-weight:700;font-size:14px;color:var(--text);margin-bottom:6px}
+.cc .cd{font-size:12px;color:var(--text3);line-height:1.6}
+.sessions{display:flex;flex-direction:column;gap:18px}
+.sess{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.2s}
+.sess:hover{border-color:var(--border2)}
+.sess-h{padding:20px 24px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.sess-n{font-family:var(--display);font-weight:700;font-size:36px;color:var(--accent);opacity:0.32;line-height:0.9;min-width:52px}
+.sess-info{flex:1;min-width:260px}
+.sess-t{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:4px;line-height:1.2}
+.sess-m{font-size:11px;color:var(--text3);display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.sess-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;letter-spacing:0.5px}
+.tag-t{color:var(--teal);border:1px solid rgba(77,201,212,0.25);background:rgba(77,201,212,0.08)}
+.tag-g{color:var(--green);border:1px solid rgba(34,197,94,0.25);background:rgba(34,197,94,0.08)}
+.tag-b{color:var(--blue);border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08)}
+.tag-a{color:var(--amber);border:1px solid rgba(245,158,11,0.25);background:rgba(245,158,11,0.08)}
+.tag-p{color:var(--pink);border:1px solid rgba(217,70,239,0.25);background:rgba(217,70,239,0.08)}
+.sess-body{padding:20px 24px;display:grid;gap:20px;grid-template-columns:minmax(300px,2fr) minmax(200px,1fr)}
+.sess-placeholder{display:flex;align-items:center;justify-content:center;height:220px;background:var(--bg3);color:var(--text3);font-size:12px;border:1px solid var(--border);border-radius:6px}
+.sess-video{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;border:1px solid var(--border);background:#000}
+.sess-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sess-side{display:flex;flex-direction:column;gap:14px}
+.sess-side h4{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;font-weight:600;font-family:var(--display)}
+.mat-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.mat-list li{font-size:11px;color:var(--text2);padding:5px 10px;background:rgba(34,197,94,0.04);border:1px solid var(--border);border-radius:4px}
+.lrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.lpill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:5px;background:var(--bg2);border:1px solid var(--border);color:var(--teal);font-size:11px;text-decoration:none;transition:all 0.2s}
+.lpill:hover{border-color:var(--teal);background:rgba(77,201,212,0.06);text-decoration:none}
+.speakers{display:flex;flex-wrap:wrap;gap:18px}
+.sp{display:flex;flex-direction:column;align-items:center;gap:8px;width:96px}
+.sp img{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);filter:grayscale(0.2)}
+.sp .n{font-size:11px;color:var(--text2);text-align:center;line-height:1.3}
+.sp .r{font-size:9px;color:var(--text3);letter-spacing:0.05em;text-transform:uppercase}
+.quote{border-left:3px solid var(--green);padding:14px 20px;margin:10px 0 10px;background:rgba(34,197,94,0.05);border-radius:0 8px 8px 0}
+.quote p{font-style:italic;color:var(--text);font-size:13px;line-height:1.6}
+.quote .at{font-style:normal;font-size:11px;color:var(--text3);margin-top:6px}
+.layers{display:grid;gap:10px;grid-template-columns:repeat(6,1fr);margin-bottom:12px}
+.layer{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:12px 14px;text-align:center;position:relative;overflow:hidden}
+.layer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0.55}
+.layer .ln{font-family:var(--display);font-weight:700;font-size:12px;color:var(--text)}
+.layer .ld{font-size:10px;color:var(--text3);margin-top:3px}
+.res-row{display:flex;gap:8px;flex-wrap:wrap}
+.nav-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.navpill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:12px;text-decoration:none;transition:all 0.2s}
+.navpill:hover{border-color:var(--teal);color:var(--teal);text-decoration:none}
+@media(max-width:768px){.wrap{padding:24px 16px 48px}.hero{padding:24px 22px}.hero-n{font-size:72px}.hero-t{font-size:26px}.hero-r{min-width:auto;width:100%}.sess-body{grid-template-columns:1fr}.sess-n{font-size:26px}.layers{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="topbar">
+<div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<div class="topbar-t">ainative-lab / weeks / w2</div>
+<div class="topbar-r">
+<a class="topbar-back" href="index.html">&larr; weeks</a>
+<a class="topbar-back" href="../index.html">&larr; hub</a>
+<div class="topbar-badge">week 2</div>
+</div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+<div class="hero-accent"></div>
+<div class="hero-in">
+<div class="hero-l">
+<div class="hero-n">W2</div>
+<div class="hero-b">30 Mar – 04 Apr 2026 · Machine Operating System</div>
+<div class="hero-t">SYSTEM ABOVE<br><span class="tl">MODEL</span></div>
+<div class="hero-sub">80% of the return comes from the harness, not the model. Five layers + governance — infrastructure, data &amp; context, orchestration, skills, people. How to make your company machine-readable for agents.</div>
+</div>
+<div class="hero-r">
+<div class="hstat"><div class="sn">7</div><div><div class="sl">sessions</div><div class="sv">1 lecture · 6 specialist workshops</div></div></div>
+<div class="hstat"><div class="sn">7</div><div><div class="sl">speakers</div><div class="sv">Гершуни · Амётов · Клебан · Сидора · Ковальский · Страхов · Кравцов</div></div></div>
+<div class="hstat"><div class="sn">~14h</div><div><div class="sl">material</div><div class="sv">all sessions recorded</div></div></div>
+</div>
+</div>
+</div>
+
+<h2>The Five Layers + Governance</h2>
+<div class="layers">
+<div class="layer"><div class="ln">Infrastructure</div><div class="ld">MCP · RBAC · gateway</div></div>
+<div class="layer"><div class="ln">Data &amp; Context</div><div class="ld">ontology · memory</div></div>
+<div class="layer"><div class="ln">Orchestration</div><div class="ld">4 topologies · VSM</div></div>
+<div class="layer"><div class="ln">Skills</div><div class="ld">evals · self-improve</div></div>
+<div class="layer"><div class="ln">People</div><div class="ld">roles · pods</div></div>
+<div class="layer"><div class="ln">Governance</div><div class="ld">FinOps · compliance</div></div>
+</div>
+
+<h2>Key Concepts</h2>
+<div class="concepts">
+<div class="cc"><div class="ct">Model ≠ System</div><div class="cd">Agent = model + harness. 80% of the return comes from the wrapper: tools, memory, evals, guardrails, orchestration.</div></div>
+<div class="cc"><div class="ct">Context Graph</div><div class="cd">A 90-min transcript = 15K tokens every query. A graph parses once, stores structurally, answers in ~5ms. Semantic + episodic + procedural memory.</div></div>
+<div class="cc"><div class="ct">MCP + AI Gateway</div><div class="cd">Single auth + policy layer. SSO, role-based access, token budgets, DLP, policy engine, full audit. 88% of orgs reported agent security incidents.</div></div>
+<div class="cc"><div class="ct">Four Agent Topologies</div><div class="cd">Sequential · parallel · chat · business-process · hybrid. Pick for the flow, not the other way around.</div></div>
+<div class="cc"><div class="ct">Generator / Discriminator</div><div class="cd">Generator → Judge agents (practical, data freshness, language, substance, completeness) → score → ship or iterate.</div></div>
+<div class="cc"><div class="ct">DGM &amp; Hyperagents</div><div class="cd">Darwin Gödel Machine: a meta-agent improves the task agent. Hyperagent: improves how it evaluates, proposes improvements, stores knowledge.</div></div>
+<div class="cc"><div class="ct">L0 → L3 Progression</div><div class="cd">2024: 80% disengaged. 2025: 50% competent users, 20% technical builders. Tracking AI level as a people metric.</div></div>
+<div class="cc"><div class="ct">Router economics</div><div class="cd">70-80% → Haiku/Flash ($0.25/1M). 20-30% → Opus/Sonnet ($15/1M). 60× cost delta — route or lose.</div></div>
+</div>
+
+<h2>Sessions</h2>
+<div class="sessions">
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">L02</div>
+<div class="sess-info">
+<div class="sess-t">Lecture 2 — System Above Model</div>
+<div class="sess-m"><span>Степан Гершуни</span><span>·</span><span>30 Mar 2026</span><span>·</span><span>~85 min</span></div>
+<div class="sess-tags"><span class="tag tag-g">lecture</span><span class="tag tag-t">MOS</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>6 layers architecture</li>
+<li>MCP · CLI-first · model routing</li>
+<li>Graph RAG vs Vector RAG</li>
+<li>4 orchestration topologies · VSM</li>
+<li>Prompt vs skill file · eval-first</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w2-lecture" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W2a</div>
+<div class="sess-info">
+<div class="sess-t">AI-контент для бизнеса</div>
+<div class="sess-m"><span>Алексей Амётов</span><span>·</span><span>01 Apr 2026 · 12:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-b">content pipeline</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Pipeline: idea → generation → verification → publish</li>
+<li>Reuters: fact-checking AI output</li>
+<li>Look At Media · Hopes and Fears · Setka cases</li>
+<li>Non-slop: what separates good AI content</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w2-ametov" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W2b</div>
+<div class="sess-info">
+<div class="sess-t">Self-Improving Agents</div>
+<div class="sess-m"><span>Виталий Клебан</span><span>·</span><span>01 Apr 2026 · 18:00</span><span>·</span><span>~60 min</span></div>
+<div class="sess-tags"><span class="tag tag-g">live demo</span><span class="tag tag-t">cyber.Fund</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>From static prompts → self-improving loops</li>
+<li>Feedback loops: agent evaluates its own output</li>
+<li>Live demo: real cyber.Fund system</li>
+<li>Applied to investment / deep tech research</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w2-kleban" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W2c</div>
+<div class="sess-info">
+<div class="sess-t">Технический коворкинг</div>
+<div class="sess-m"><span>Глеб Сидора</span><span>·</span><span>02 Apr 2026 · 12:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-t">workshop</span><span class="tag tag-b">office hours</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>ML office hours</li>
+<li>Unblocking technical stucks</li>
+<li>Graph knowledge · data infra questions</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w2-sidora" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W2d</div>
+<div class="sess-info">
+<div class="sess-t">AI-Driven Development: Live Build</div>
+<div class="sess-m"><span>Валерий Ковальский</span><span>·</span><span>02 Apr 2026 · 18:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-g">live build</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>AI-driven workflow for developers</li>
+<li>Live build from zero</li>
+<li>Harness choices · tool selection</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w2-kovalsky" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W2e</div>
+<div class="sess-info">
+<div class="sess-t">Agent Teams</div>
+<div class="sess-m"><span>George Strakhov</span><span>·</span><span>03 Apr 2026 · 12:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-a">orchestration</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>How to build agent teams</li>
+<li>Roles, handoffs, chat topologies</li>
+<li>From solo agents to coordinated pods</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w2-strakhov" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W2f</div>
+<div class="sess-info">
+<div class="sess-t">Data Pipelines + Knowledge Graph</div>
+<div class="sess-m"><span>Даниил Кравцов</span><span>·</span><span>03 Apr 2026 · 18:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-b">enterprise</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Improvado: Philips · Havas · McCann</li>
+<li>99 agents in real-time</li>
+<li>Enterprise → SMB adaptation</li>
+<li>Data pipelines + knowledge graph</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w2-kravtsov" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<h2>Speakers</h2>
+<div class="speakers">
+<div class="sp"><img src="../graph/speakers/stepan-gershuni.jpg" alt="Степан Гершуни"><div class="n">Степан Гершуни</div><div class="r">L02</div></div>
+<div class="sp"><img src="../graph/speakers/alex-amyotov.jpg" alt="Алексей Амётов"><div class="n">Алексей Амётов</div><div class="r">W2a</div></div>
+<div class="sp"><img src="../graph/speakers/vitaly-kleban.jpg" alt="Виталий Клебан"><div class="n">Виталий Клебан</div><div class="r">W2b</div></div>
+<div class="sp"><img src="../graph/speakers/gleb-sidora.png" alt="Глеб Сидора"><div class="n">Глеб Сидора</div><div class="r">W2c</div></div>
+<div class="sp"><img src="../graph/speakers/valerii-kovalskii.jpg" alt="Валерий Ковальский"><div class="n">Валерий Ковальский</div><div class="r">W2d</div></div>
+<div class="sp"><img src="../graph/speakers/george-strakhov.png" alt="George Strakhov"><div class="n">George Strakhov</div><div class="r">W2e</div></div>
+<div class="sp"><img src="../graph/speakers/daniel-kravtsov.jpeg" alt="Даниил Кравцов"><div class="n">Даниил Кравцов</div><div class="r">W2f</div></div>
+</div>
+
+<h2>Resources</h2>
+<div class="res-row">
+<a class="lpill" href="https://github.com/Gerstep/HumanCompiler" target="_blank">HumanCompiler</a>
+<a class="lpill" href="https://arxiv.org/html/2507.03811v1" target="_blank">Tacit Knowledge Gap</a>
+<a class="lpill" href="https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns" target="_blank">Azure Agent Patterns</a>
+<a class="lpill" href="https://langfuse.com/" target="_blank">Langfuse</a>
+<a class="lpill" href="https://arize.com/" target="_blank">Arize</a>
+<a class="lpill" href="https://www.improvado.io/" target="_blank">Improvado</a>
+<a class="lpill" href="https://t.me/sgershuni" target="_blank">@sgershuni</a>
+</div>
+
+<h2>Quotes</h2>
+<div class="quote"><p>&laquo;Я могу себе представить, что в будущем каждому инженеру в нашей компании понадобится годовой токен-бюджет. Может достигать базовой зарплаты.&raquo;</p><div class="at">— Jensen Huang, CEO NVIDIA, GTC 2026</div></div>
+<div class="quote"><p>&laquo;50% офисных сотрудников пишут код, только 20% имеют IT-образование.&raquo;</p><div class="at">— Nicolai Tangen, CEO Norwegian Sovereign Wealth Fund</div></div>
+<div class="quote"><p>&laquo;AI Doesn't Reduce Work — It Intensifies It.&raquo;</p><div class="at">— HBR, Feb 2026</div></div>
+
+<div class="nav-links">
+<a class="navpill" href="index.html">&larr; All weeks</a>
+<a class="navpill" href="w1.html">&larr; Week 1</a>
+<a class="navpill" href="w3.html">Week 3 &rarr;</a>
+<a class="navpill" href="../index.html">Sprint Hub</a>
+<a class="navpill" href="../knowledge-graph.html">Knowledge Graph</a>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speakers — AI-Native Lab</title>
+<meta property="og:title" content="Speakers — AI-Native Organizations Sprint S2">
+<meta property="og:description" content="Спикеры трёх недель лаборатории AI Mindset: лекции, воркшопы, founder stories.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.02) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--teal);text-decoration:none}
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:14px;height:48px}
+.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}
+.topbar-r{margin-left:auto;display:flex;gap:14px;align-items:center}
+.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--teal-dim);color:var(--teal);letter-spacing:0.1em;text-transform:uppercase}
+.back{font-size:11px;color:var(--text2);display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--border);border-radius:4px;transition:all .2s}
+.back:hover{border-color:var(--teal);color:var(--teal)}
+
+.hero{position:relative;overflow:hidden;background:var(--bg3);padding:56px 40px 48px;border-bottom:1px solid var(--border)}
+.hero .mesh{position:absolute;inset:0;background:radial-gradient(ellipse at 10% 40%,rgba(77,201,212,0.15) 0%,transparent 45%),radial-gradient(ellipse at 90% 60%,rgba(59,130,246,0.1) 0%,transparent 50%);pointer-events:none}
+.hero .grid-bg{position:absolute;inset:0;background:linear-gradient(to right,rgba(77,201,212,0.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(77,201,212,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero .accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(77,201,212,0.2) 60%,transparent)}
+.hero-inner{position:relative;max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:48px;flex-wrap:wrap}
+.hero-l{flex:1;min-width:320px}
+.hero .hb{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);opacity:0.8;margin-bottom:12px}
+.hero .ht{font-family:var(--display);font-weight:700;font-size:44px;line-height:0.95;text-transform:uppercase;margin-bottom:14px}
+.hero .ht .tl{color:var(--teal)}
+.hero .hs{font-size:13px;color:var(--text2);max-width:540px;line-height:1.6}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{padding:12px 18px;background:rgba(77,201,212,0.04);border:1px solid var(--border);border-radius:6px;min-width:110px}
+.stat .n{font-family:var(--display);font-weight:700;font-size:28px;color:var(--teal);line-height:1}
+.stat .l{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);margin-top:4px}
+
+.wrap{max-width:1400px;margin:0 auto;padding:40px 40px 80px}
+.filters{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.filt{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--text2);cursor:pointer;transition:all .15s;font-family:var(--mono)}
+.filt:hover{border-color:var(--border2);color:var(--text)}
+.filt.on{background:var(--teal-dim);border-color:var(--teal);color:var(--teal)}
+
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s;position:relative;display:flex;flex-direction:column}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:3;opacity:0.7}
+.card.lecture::before{background:var(--teal)}
+.card.workshop::before{background:var(--blue)}
+.card.founder::before{background:var(--amber)}
+.card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,0.4)}
+.card:hover .ph img{transform:scale(1.08)}
+.ph{aspect-ratio:1/1;overflow:hidden;background:var(--bg3);position:relative}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.8,.2,1);filter:grayscale(0.1)}
+.ph .ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,17,23,0.8) 0%,transparent 40%);pointer-events:none}
+.ph .trk{position:absolute;top:10px;left:10px;font-size:9px;padding:3px 8px;border-radius:3px;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.trk.lecture{background:rgba(77,201,212,0.18);color:var(--teal);border:1px solid rgba(77,201,212,0.35)}
+.trk.workshop{background:rgba(59,130,246,0.18);color:var(--blue);border:1px solid rgba(59,130,246,0.35)}
+.trk.founder{background:rgba(245,158,11,0.18);color:var(--amber);border:1px solid rgba(245,158,11,0.35)}
+.info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.info .nm{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);line-height:1.2}
+.info .en{font-size:10px;color:var(--text3);letter-spacing:0.03em}
+.info .rl{font-size:11px;color:var(--text2);margin-top:6px;line-height:1.4}
+.info .ses{margin-top:auto;padding-top:12px;font-size:10px;color:var(--teal);opacity:0.8;display:flex;align-items:center;gap:6px;letter-spacing:0.05em}
+.info .ses .ar{margin-left:auto;transition:transform .2s}
+.card:hover .ses .ar{transform:translateX(4px)}
+
+.panel-bg{position:fixed;inset:0;background:rgba(5,8,12,0.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:200}
+.panel-bg.on{opacity:1;pointer-events:auto}
+.panel{position:fixed;top:0;right:0;height:100vh;width:min(560px,100vw);background:var(--bg2);border-left:1px solid var(--border2);z-index:201;transform:translateX(100%);transition:transform .3s cubic-bezier(.3,.8,.3,1);overflow-y:auto;display:flex;flex-direction:column}
+.panel.on{transform:translateX(0)}
+.panel::-webkit-scrollbar{width:4px}
+.panel::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.p-close{position:sticky;top:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:10px;z-index:5}
+.p-close .x{cursor:pointer;width:28px;height:28px;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .15s;font-size:16px}
+.p-close .x:hover{border-color:var(--teal);color:var(--teal)}
+.p-close .ttl{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3)}
+.p-body{padding:0 0 40px}
+.p-hero{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg3)}
+.p-hero img{width:100%;height:100%;object-fit:cover}
+.p-hero .gr{position:absolute;inset:0;background:linear-gradient(to top,rgba(22,27,34,0.95) 0%,rgba(22,27,34,0.3) 40%,transparent 100%)}
+.p-hero .cap{position:absolute;left:24px;right:24px;bottom:18px;z-index:2}
+.p-hero .trk{display:inline-block;font-size:9px;padding:3px 10px;border-radius:3px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.p-hero .nm{font-family:var(--display);font-size:28px;font-weight:700;line-height:1.05;color:var(--text);text-transform:uppercase}
+.p-hero .en{font-size:12px;color:var(--text2);margin-top:3px;font-family:var(--mono);letter-spacing:0.02em}
+.p-sec{padding:22px 24px 4px}
+.p-sec h4{font-family:var(--display);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;opacity:0.85}
+.p-role{font-size:12px;color:var(--text);padding:10px 14px;background:rgba(77,201,212,0.04);border:1px solid var(--border);border-radius:6px}
+.p-bio{font-size:13px;color:var(--text2);line-height:1.7}
+.p-sessions{display:flex;flex-direction:column;gap:8px}
+.p-ses{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-decoration:none;color:var(--text);transition:all .15s}
+.p-ses:hover{border-color:var(--border2);background:rgba(77,201,212,0.05)}
+.p-ses .dt{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.05em;min-width:64px;padding-top:2px}
+.p-ses .bd{flex:1;display:flex;flex-direction:column;gap:3px}
+.p-ses .ti{font-family:var(--display);font-size:13px;font-weight:600;line-height:1.3}
+.p-ses .me{font-size:10px;color:var(--text3);letter-spacing:0.03em}
+.p-ses .go{color:var(--teal);opacity:0.5;font-size:14px;align-self:center}
+.p-ses:hover .go{opacity:1;transform:translateX(2px)}
+
+footer{padding:24px 40px 48px;text-align:center;font-size:9px;color:var(--text3);letter-spacing:0.18em;text-transform:uppercase;border-top:1px solid var(--border);margin-top:24px}
+
+@media(max-width:768px){
+  .hero{padding:32px 20px 28px}
+  .hero-inner{gap:24px}
+  .hero .ht{font-size:30px}
+  .stats{gap:8px}
+  .stat{min-width:auto;flex:1;padding:10px 12px}
+  .stat .n{font-size:22px}
+  .wrap{padding:28px 16px 60px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .info{padding:11px 12px 13px}
+  .info .nm{font-size:13px}
+  .panel{width:100vw;border-left:none}
+  .p-hero .nm{font-size:22px}
+  .p-sec{padding:18px 18px 4px}
+  footer{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="topbar-t">speakers — AI-Native Organizations Sprint s2</div>
+  <div class="topbar-r">
+    <a class="back" href="../index.html">&larr; Lab Hub</a>
+    <div class="topbar-badge">gallery</div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="accent"></div>
+  <div class="grid-bg"></div>
+  <div class="mesh"></div>
+  <div class="hero-inner">
+    <div class="hero-l">
+      <div class="hb">AI-Native Organizations Sprint s2</div>
+      <div class="ht"><span class="tl">16</span> Speakers<br>Across 3 Weeks</div>
+      <div class="hs">Лекции Степана Гершуни, воркшопы Personal OS, founder stories от Лисовского до Бузко — 24 сессии трёх недель лаборатории.</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">16</div><div class="l">speakers</div></div>
+      <div class="stat"><div class="n">24</div><div class="l">sessions</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">tracks</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="filters">
+    <div class="filt on" data-f="all">All · <span id="c-all">0</span></div>
+    <div class="filt" data-f="lecture">Lectures · <span id="c-lecture">0</span></div>
+    <div class="filt" data-f="workshop">Workshops · <span id="c-workshop">0</span></div>
+    <div class="filt" data-f="founder">Founder Stories · <span id="c-founder">0</span></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>AI Mindset &middot; AI-Native Lab &middot; 2026</footer>
+
+<div class="panel-bg" id="panel-bg"></div>
+<aside class="panel" id="panel">
+  <div class="p-close">
+    <div class="x" id="p-x">&times;</div>
+    <div class="ttl">speaker detail</div>
+  </div>
+  <div class="p-body" id="p-body"></div>
+</aside>
+
+<script>
+const SESSIONS = {
+  "s2-prework01":{title:"Prework 1: Что такое POS",date:"2026-03-02",duration:"57 мин"},
+  "s2-prework02":{title:"Prework 2: Персональная корпорация",date:"2026-03-04",duration:"40 мин"},
+  "s2-prework03":{title:"Prework 3: Циклические пайплайны",date:"2026-03-09",duration:"52 мин"},
+  "s2-prework04":{title:"Prework 4: OpenClaw",date:"2026-03-09",duration:"51 мин"},
+  "s2-intro":{title:"Intro Call — Знакомство",date:"2026-03-21",duration:"84 мин"},
+  "s2-w1-lecture":{title:"Lecture 1: Why AI Transformation",date:"2026-03-23",duration:"172 мин"},
+  "s2-w1-setup":{title:"W1: Personal OS Setup",date:"2026-03-24",duration:"161 мин"},
+  "s2-w1-workshop":{title:"W1: Personal → Team",date:"2026-03-25",duration:"150 мин"},
+  "s2-w1-lisovskiy":{title:"W1: Фабрика бизнесов",date:"2026-03-26",duration:"120 мин"},
+  "s2-w1-bonus":{title:"W1: База AI-тулов (новички)",date:"2026-03-27",duration:"90 мин"},
+  "s2-w1-khanarin":{title:"W1: AI-трансформация",date:"2026-03-27",duration:"120 мин"},
+  "s2-w2-lecture":{title:"Lecture 2: System Above Model",date:"2026-03-30",duration:"85 мин"},
+  "s2-w2-ametov":{title:"W2: AI-контент для бизнеса",date:"2026-04-01",duration:"120 мин"},
+  "s2-w2-kleban":{title:"W2: Self-Improving Agents",date:"2026-04-01",duration:"60 мин"},
+  "s2-w2-sidora":{title:"W2: Технический коворкинг",date:"2026-04-02",duration:"120 мин"},
+  "s2-w2-kovalsky":{title:"W2: AI-Driven Dev",date:"2026-04-02",duration:"120 мин"},
+  "s2-w2-strakhov":{title:"W2: Agent Teams",date:"2026-04-03",duration:""},
+  "s2-w2-kravtsov":{title:"W2: Data Pipelines",date:"2026-04-03",duration:""},
+  "s2-w3-lecture":{title:"Lecture 3: Strategy to Plan",date:"2026-04-06",duration:""},
+  "s2-w3-reid":{title:"W3: AI × Investments",date:"2026-04-07",duration:""},
+  "s2-w3-annaov":{title:"W3: Sales Automation",date:"2026-04-08",duration:""},
+  "s2-w3-buzko":{title:"W3: AI Legal",date:"2026-04-09",duration:""},
+  "s2-w3-ustinov":{title:"W3: Product-Agent",date:"2026-04-10",duration:""},
+  "s2-demo":{title:"Demo Day",date:"2026-04-13",duration:""}
+};
+
+const TRACK_LABEL = {lecture:"Lecture",workshop:"Workshop",founder:"Founder Story"};
+
+let SPEAKERS = [];
+let currentFilter = "all";
+
+async function load(){
+  const res = await fetch("../data/speakers.json");
+  const data = await res.json();
+  SPEAKERS = data.speakers;
+  render();
+  const counts = {all:SPEAKERS.length,lecture:0,workshop:0,founder:0};
+  SPEAKERS.forEach(s=>counts[s.track]++);
+  Object.keys(counts).forEach(k=>{
+    const el = document.getElementById("c-"+k);
+    if(el) el.textContent = counts[k];
+  });
+}
+
+function render(){
+  const grid = document.getElementById("grid");
+  const list = currentFilter==="all" ? SPEAKERS : SPEAKERS.filter(s=>s.track===currentFilter);
+  grid.innerHTML = list.map(s=>`
+    <div class="card ${s.track}" onclick="openPanel('${s.id}')">
+      <div class="ph">
+        <img src="../${s.photo}" alt="${esc(s.name)}" loading="lazy">
+        <div class="ovl"></div>
+        <div class="trk ${s.track}">${TRACK_LABEL[s.track]}</div>
+      </div>
+      <div class="info">
+        <div class="nm">${esc(s.name)}</div>
+        <div class="en">${esc(s.name_en)}</div>
+        <div class="rl">${esc(s.role)}</div>
+        <div class="ses">${s.sessions.length} session${s.sessions.length>1?"s":""} <span class="ar">&rarr;</span></div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function esc(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function fmtDate(d){
+  if(!d) return "";
+  const [y,m,day] = d.split("-");
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${parseInt(day)} ${months[parseInt(m)-1]}`;
+}
+
+function openPanel(id){
+  const s = SPEAKERS.find(x=>x.id===id);
+  if(!s) return;
+  const body = document.getElementById("p-body");
+  const sessionsHtml = s.sessions.map(sid=>{
+    const sess = SESSIONS[sid] || {title:sid,date:"",duration:""};
+    return `<a class="p-ses" href="../index.html" target="_self">
+      <div class="dt">${fmtDate(sess.date)}</div>
+      <div class="bd">
+        <div class="ti">${esc(sess.title)}</div>
+        <div class="me">${sid}${sess.duration?" · "+sess.duration:""}</div>
+      </div>
+      <div class="go">&rarr;</div>
+    </a>`;
+  }).join("");
+  body.innerHTML = `
+    <div class="p-hero">
+      <img src="../${s.photo}" alt="${esc(s.name)}">
+      <div class="gr"></div>
+      <div class="cap">
+        <div class="trk ${s.track}" style="background:rgba(77,201,212,0.18);color:var(--teal);border:1px solid rgba(77,201,212,0.35)">${TRACK_LABEL[s.track]}</div>
+        <div class="nm">${esc(s.name)}</div>
+        <div class="en">${esc(s.name_en)}</div>
+      </div>
+    </div>
+    <div class="p-sec"><h4>Role</h4><div class="p-role">${esc(s.role)}</div></div>
+    <div class="p-sec"><h4>Bio</h4><div class="p-bio">${esc(s.bio)}</div></div>
+    <div class="p-sec"><h4>Sessions &middot; ${s.sessions.length}</h4><div class="p-sessions">${sessionsHtml}</div></div>
+  `;
+  // track-specific badge color override
+  const trk = body.querySelector(".p-hero .trk");
+  if(trk){
+    if(s.track==="workshop"){trk.style.background="rgba(59,130,246,0.18)";trk.style.color="var(--blue)";trk.style.borderColor="rgba(59,130,246,0.35)"}
+    if(s.track==="founder"){trk.style.background="rgba(245,158,11,0.18)";trk.style.color="var(--amber)";trk.style.borderColor="rgba(245,158,11,0.35)"}
+  }
+  document.getElementById("panel").classList.add("on");
+  document.getElementById("panel-bg").classList.add("on");
+}
+
+function closePanel(){
+  document.getElementById("panel").classList.remove("on");
+  document.getElementById("panel-bg").classList.remove("on");
+}
+
+document.getElementById("p-x").addEventListener("click",closePanel);
+document.getElementById("panel-bg").addEventListener("click",closePanel);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closePanel()});
+
+document.querySelectorAll(".filt").forEach(el=>{
+  el.addEventListener("click",()=>{
+    document.querySelectorAll(".filt").forEach(x=>x.classList.remove("on"));
+    el.classList.add("on");
+    currentFilter = el.dataset.f;
+    render();
+  });
+});
+
+load();
+</script>
+</body>
+</html>

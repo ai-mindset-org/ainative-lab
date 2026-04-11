@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "sprint": "AI-Native Organizations S2",
+    "cutoff": "2026-04-11",
+    "generated": "2026-04-11",
+    "notes": "Derived from lms-data.json. Status computed from date vs cutoff."
+  },
+  "speakers": [
+    { "id": "sp-povaliaev",  "name": "Alexander Povaliaev",  "short": "Поваляев",  "photo": "alexander-povaliaev.jpg",  "affiliation": "AI Mindset · Founder" },
+    { "id": "sp-gershuni",   "name": "Степан Гершуни",       "short": "Гершуни",   "photo": "stepan-gershuni.jpg",       "affiliation": "CybOS AI" },
+    { "id": "sp-khabarov",   "name": "Sergey Khabarov",      "short": "Хабаров",   "photo": "sergey-khabarov.jpg",       "affiliation": "AI Mindset · POS" },
+    { "id": "sp-ris",        "name": "Sergey Ris",           "short": "Рис",       "photo": "sereja-ris.jpg",            "affiliation": "AI Corp" },
+    { "id": "sp-lisovskiy",  "name": "Евгений Лисовский",    "short": "Лисовский", "photo": "eugene-lisovskiy.jpg",      "affiliation": "Vibe-coding factory" },
+    { "id": "sp-khanarin",   "name": "Дима Ханарин",         "short": "Ханарин",   "photo": "dima-khanarin.jpg",         "affiliation": "AI Transformation" },
+    { "id": "sp-ametov",     "name": "Alex Ametov",          "short": "Амётов",    "photo": "alex-amyotov.jpg",          "affiliation": "AI Content" },
+    { "id": "sp-kleban",     "name": "Vitaly Kleban",        "short": "Клебан",    "photo": "vitaly-kleban.jpg",         "affiliation": "Self-Improving Agents" },
+    { "id": "sp-sidora",     "name": "Gleb Sidora",          "short": "Сидора",    "photo": "gleb-sidora.png",           "affiliation": "Technical Coworking" },
+    { "id": "sp-kovalsky",   "name": "Valery Kovalsky",      "short": "Ковальский","photo": "valerii-kovalskii.jpg",     "affiliation": "AI-Driven Dev" },
+    { "id": "sp-strakhov",   "name": "George Strakhov",      "short": "Страхов",   "photo": "george-strakhov.png",       "affiliation": "Agent Teams" },
+    { "id": "sp-kravtsov",   "name": "Daniel Kravtsov",      "short": "Кравцов",   "photo": "daniel-kravtsov.jpeg",      "affiliation": "Data Pipelines" },
+    { "id": "sp-reid",       "name": "Евгений Рид",          "short": "Рид",       "photo": "eugene-rid.jpg",            "affiliation": "AI × Investments" },
+    { "id": "sp-annakov",    "name": "Bayram Annakov",       "short": "Аннаков",   "photo": "bayram-annakov.jpg",        "affiliation": "Sales Automation" },
+    { "id": "sp-buzko",      "name": "Roma Buzko",           "short": "Бузко",     "photo": "roma-buzko.jpg",            "affiliation": "AI Legal" },
+    { "id": "sp-ustinov",    "name": "Seva Ustinov",         "short": "Устинов",   "photo": "seva-ustinov.jpg",          "affiliation": "Product-Agent" }
+  ],
+  "sessions": [
+    { "id": "s2-prework01",   "title": "Prework 1: Что такое POS",        "week": "prework", "track": "prework",  "date": "2026-03-02", "duration": "57 мин",  "speakers": ["sp-povaliaev","sp-khabarov"], "video": "Cb67otd2MFY" },
+    { "id": "s2-prework02",   "title": "Prework 2: Персональная корпорация","week":"prework","track": "prework",  "date": "2026-03-04", "duration": "40 мин",  "speakers": ["sp-ris","sp-povaliaev"],      "video": "YUP8u-2SYdw" },
+    { "id": "s2-prework03",   "title": "Prework 3: Циклические пайплайны","week":"prework","track": "prework",  "date": "2026-03-09", "duration": "52 мин",  "speakers": ["sp-povaliaev","sp-khabarov"], "video": "P4mO45Xi1H4" },
+    { "id": "s2-prework04",   "title": "Prework 4: OpenClaw",             "week":"prework","track": "prework",  "date": "2026-03-09", "duration": "51 мин",  "speakers": ["sp-khabarov"],                "video": "8Xdc7k6AiKo" },
+    { "id": "s2-intro",       "title": "Intro Call — Знакомство",          "week": "intro",   "track": "intro",    "date": "2026-03-21", "duration": "84 мин",  "speakers": ["sp-povaliaev","sp-gershuni"], "video": "o1GuGqlGbK4" },
+    { "id": "s2-w1-lecture",  "title": "Lecture 1: Why AI Transformation", "week": "w1",      "track": "lecture",  "date": "2026-03-23", "duration": "172 мин", "speakers": ["sp-gershuni"],                "video": "uW91SdM87JM", "materials": ["AI-Native Playbook Slides","AI-Native Plugin","Quiz L0-L3","Harness Engineering","BVP State of AI","TBench.ai"] },
+    { "id": "s2-w1-setup",    "title": "W1: Personal OS Setup",            "week": "w1",      "track": "workshop", "date": "2026-03-24", "duration": "161 мин", "speakers": ["sp-povaliaev"],               "video": "C73xOOdawPY", "materials": ["POS Setup Slides","Stack Explorer","Dashboard Workshop","Naming Convention","Keyboard Efficiency"] },
+    { "id": "s2-w1-workshop", "title": "W1: Personal → Team",              "week": "w1",      "track": "workshop", "date": "2026-03-25", "duration": "150 мин", "speakers": ["sp-povaliaev"],               "video": "3acO_wSd8HQ", "materials": ["Team Workshop Slides","Team Stack Explorer","AI Corp (Ris)","AI-Native Lesson (Vasiliev)","AgentPlane (Smirnov)"] },
+    { "id": "s2-w1-lisovskiy","title": "W1: Фабрика бизнесов",             "week": "w1",      "track": "founder",  "date": "2026-03-26", "duration": "120 мин", "speakers": ["sp-lisovskiy"],               "video": "e4_w_vI1ODY" },
+    { "id": "s2-w1-bonus",    "title": "W1: База AI-тулов (новички)",      "week": "w1",      "track": "workshop", "date": "2026-03-27", "duration": "90 мин",  "speakers": ["sp-povaliaev"] },
+    { "id": "s2-w1-khanarin", "title": "W1: AI-трансформация",             "week": "w1",      "track": "founder",  "date": "2026-03-27", "duration": "120 мин", "speakers": ["sp-khanarin"] },
+    { "id": "s2-w2-lecture",  "title": "Lecture 2: System Above Model",    "week": "w2",      "track": "lecture",  "date": "2026-03-30", "duration": "85 мин",  "speakers": ["sp-gershuni"] },
+    { "id": "s2-w2-ametov",   "title": "W2: AI-контент для бизнеса",       "week": "w2",      "track": "founder",  "date": "2026-04-01", "duration": "120 мин", "speakers": ["sp-ametov"] },
+    { "id": "s2-w2-kleban",   "title": "W2: Self-Improving Agents",        "week": "w2",      "track": "founder",  "date": "2026-04-01", "duration": "60 мин",  "speakers": ["sp-kleban"] },
+    { "id": "s2-w2-sidora",   "title": "W2: Технический коворкинг",        "week": "w2",      "track": "workshop", "date": "2026-04-02", "duration": "120 мин", "speakers": ["sp-sidora"] },
+    { "id": "s2-w2-kovalsky", "title": "W2: AI-Driven Dev",                "week": "w2",      "track": "founder",  "date": "2026-04-02", "duration": "120 мин", "speakers": ["sp-kovalsky"] },
+    { "id": "s2-w2-strakhov", "title": "W2: Agent Teams",                  "week": "w2",      "track": "founder",  "date": "2026-04-03", "speakers": ["sp-strakhov"] },
+    { "id": "s2-w2-kravtsov", "title": "W2: Data Pipelines",               "week": "w2",      "track": "workshop", "date": "2026-04-03", "speakers": ["sp-kravtsov"] },
+    { "id": "s2-w3-lecture",  "title": "Lecture 3: Strategy to Plan",      "week": "w3",      "track": "lecture",  "date": "2026-04-06", "speakers": ["sp-gershuni"] },
+    { "id": "s2-w3-reid",     "title": "W3: AI × Investments",             "week": "w3",      "track": "founder",  "date": "2026-04-07", "speakers": ["sp-reid"] },
+    { "id": "s2-w3-annaov",   "title": "W3: Sales Automation",             "week": "w3",      "track": "founder",  "date": "2026-04-08", "speakers": ["sp-annakov"] },
+    { "id": "s2-w3-buzko",    "title": "W3: AI Legal",                     "week": "w3",      "track": "founder",  "date": "2026-04-09", "speakers": ["sp-buzko"] },
+    { "id": "s2-w3-ustinov",  "title": "W3: Product-Agent",                "week": "w3",      "track": "founder",  "date": "2026-04-10", "speakers": ["sp-ustinov"] },
+    { "id": "s2-demo",        "title": "Demo Day",                         "week": "demo",    "track": "demo",     "date": "2026-04-13", "speakers": [] }
+  ],
+  "concepts": [
+    { "id": "c-pos",       "name": "Personal OS",        "desc": "AI assistant + categorized skills across 10 life domains.",            "sessions": ["s2-prework01","s2-w1-setup","s2-w1-workshop"] },
+    { "id": "c-harness",   "name": "Harness Engineering","desc": "80% of value comes from the harness around the model, 20% from model.","sessions": ["s2-w1-lecture","s2-w2-lecture"] },
+    { "id": "c-6layer",    "name": "6-Layer Architecture","desc": "Infra → Context → Orchestration → Skills → People → Management.",      "sessions": ["s2-w2-lecture","s2-w2-sidora"] },
+    { "id": "c-skills",    "name": "Skills = Jobs",      "desc": "Full specs with constraints + eval for agents.",                        "sessions": ["s2-w1-setup","s2-w2-kleban"] },
+    { "id": "c-champion",  "name": "AI Champion",        "desc": "First AI hire per department.",                                         "sessions": ["s2-w1-workshop","s2-w1-khanarin"] },
+    { "id": "c-90day",     "name": "90-Day Plan",        "desc": "Quick wins → Scaling → New roles.",                                     "sessions": ["s2-w3-lecture","s2-demo"] },
+    { "id": "c-strangler", "name": "Strangler Fig",      "desc": "Gradually wrap and replace legacy processes.",                          "sessions": ["s2-w3-lecture","s2-w3-annaov"] },
+    { "id": "c-bizmodel",  "name": "AI Business Models", "desc": "Moats, GEO, defensibility in agent economy.",                           "sessions": ["s2-w3-lecture","s2-w1-lisovskiy","s2-w3-reid"] }
+  ],
+  "chains": [
+    { "id": "ch-gershuni",  "label": "Gershuni Trilogy",  "sessions": ["s2-w1-lecture","s2-w2-lecture","s2-w3-lecture"] },
+    { "id": "ch-pos",       "label": "POS Progression",   "sessions": ["s2-prework01","s2-w1-setup","s2-w1-workshop"] },
+    { "id": "ch-founders",  "label": "Founder Stories",   "sessions": ["s2-w1-lisovskiy","s2-w1-khanarin","s2-w3-reid","s2-w3-annaov","s2-w3-buzko","s2-w3-ustinov"] }
+  ]
+}
