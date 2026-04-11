@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sessions — AI-Native Lab</title>
+<meta property="og:title" content="Sessions — AI-Native Lab">
+<meta property="og:description" content="All 24 sessions from AI-Native Organizations Sprint s2">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.02) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--teal);text-decoration:none}
+/* topbar */
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;height:48px}
+.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}
+.topbar-r{margin-left:auto;display:flex;gap:16px;align-items:center}
+.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--teal-dim);color:var(--teal);letter-spacing:0.1em;text-transform:uppercase}
+.back{font-size:11px;color:var(--text2);padding:4px 10px;border:1px solid var(--border);border-radius:4px;transition:all .15s}
+.back:hover{color:var(--teal);border-color:var(--border2)}
+/* hero */
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 80px}
+.hero{margin-bottom:28px}
+.hero .eyebrow{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);opacity:.8;margin-bottom:8px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:36px;line-height:1;text-transform:uppercase;margin-bottom:10px}
+.hero h1 .tl{color:var(--teal)}
+.hero p{font-size:12px;color:var(--text2);max-width:560px}
+/* filter bar */
+.filters{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;position:sticky;top:48px;z-index:50;backdrop-filter:blur(8px)}
+.fgroup{display:flex;gap:4px;align-items:center}
+.flabel{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);margin-right:6px}
+.chip{font-size:11px;padding:5px 11px;border-radius:4px;background:transparent;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;font-family:var(--mono)}
+.chip:hover{border-color:var(--border2);color:var(--text)}
+.chip.on{background:var(--teal-dim);border-color:var(--teal);color:var(--teal)}
+.chip[data-week="prework"].on{background:rgba(77,201,212,0.12);border-color:var(--teal);color:var(--teal)}
+.chip[data-week="w1"].on{background:rgba(59,130,246,0.12);border-color:var(--blue);color:var(--blue)}
+.chip[data-week="w2"].on{background:rgba(245,158,11,0.12);border-color:var(--amber);color:var(--amber)}
+.chip[data-week="w3"].on{background:rgba(34,197,94,0.12);border-color:var(--green);color:var(--green)}
+.chip[data-week="demo"].on{background:rgba(217,70,239,0.12);border-color:var(--pink);color:var(--pink)}
+.search{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:6px 10px;color:var(--text);font-family:var(--mono);font-size:11px;width:180px;outline:none;transition:all .15s}
+.search:focus{border-color:var(--teal);background:var(--bg3)}
+.search::placeholder{color:var(--text3)}
+.count-pill{margin-left:auto;font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+.count-pill b{color:var(--teal);font-weight:700}
+/* grid */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.wrap{padding:24px 16px 60px}.hero h1{font-size:28px}.filters{position:static}}
+.session-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px;min-height:190px}
+.session-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0.7}
+.session-card.prework::before{background:var(--teal)}
+.session-card.w1::before{background:var(--blue)}
+.session-card.w2::before{background:var(--amber)}
+.session-card.w3::before{background:var(--green)}
+.session-card.demo::before{background:var(--pink)}
+.session-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.35)}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wbadge{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.wbadge.prework{color:var(--teal);background:rgba(77,201,212,0.1);border:1px solid rgba(77,201,212,0.3)}
+.wbadge.w1{color:var(--blue);background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3)}
+.wbadge.w2{color:var(--amber);background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3)}
+.wbadge.w3{color:var(--green);background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3)}
+.wbadge.demo{color:var(--pink);background:rgba(217,70,239,0.1);border:1px solid rgba(217,70,239,0.3)}
+.card-meta{font-size:10px;color:var(--text3);display:flex;align-items:center;gap:8px}
+.card-meta .dot{width:3px;height:3px;background:var(--text3);border-radius:50%}
+.play-ico{width:18px;height:18px;border-radius:50%;background:rgba(77,201,212,0.1);border:1px solid rgba(77,201,212,0.3);color:var(--teal);display:inline-flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0}
+.card-title{font-family:var(--display);font-weight:700;font-size:15px;line-height:1.25;color:var(--text);flex:1}
+.card-speakers{display:flex;align-items:center;gap:8px;margin-top:auto}
+.avstack{display:flex}
+.avstack img,.avstack .avf{width:26px;height:26px;border-radius:50%;border:2px solid var(--bg2);margin-left:-8px;background:var(--bg3);object-fit:cover}
+.avstack img:first-child,.avstack .avf:first-child{margin-left:0}
+.avf{display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);font-family:var(--display)}
+.card-speaker-names{font-size:11px;color:var(--text2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;color:var(--text3);padding-top:10px;border-top:1px dashed var(--border)}
+.foot-tag{display:inline-flex;align-items:center;gap:4px}
+.foot-tag.done{color:var(--green)}
+.foot-tag.up{color:var(--amber)}
+.track-tag{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
+/* modal */
+.modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+.modal.on{display:flex}
+.modal-inner{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;max-width:860px;width:100%;padding:0;overflow:hidden;position:relative;margin:auto}
+.modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,0.5);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .15s}
+.modal-close:hover{color:var(--text);border-color:var(--teal)}
+.modal-video{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.modal-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.modal-video .no-video{display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:8px;color:var(--text3)}
+.modal-video .no-video .ic{font-size:32px;opacity:.3}
+.modal-body{padding:24px 28px 28px}
+.modal-eyebrow{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.modal-body h2{font-family:var(--display);font-size:24px;font-weight:700;line-height:1.1;margin-bottom:10px}
+.modal-meta{font-size:11px;color:var(--text2);display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.modal-meta span{display:inline-flex;align-items:center;gap:5px}
+.modal-meta b{color:var(--text);font-weight:600}
+.modal-section{margin-bottom:18px}
+.modal-section h3{font-family:var(--display);font-size:11px;font-weight:600;color:var(--teal);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase}
+.mat-list{display:flex;flex-wrap:wrap;gap:6px}
+.mat-pill{font-size:11px;padding:5px 11px;border-radius:4px;background:var(--bg);border:1px solid var(--border);color:var(--text2)}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.mbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--teal);font-size:11px;font-family:var(--mono);cursor:pointer;transition:all .15s;text-decoration:none}
+.mbtn:hover{border-color:var(--teal);background:rgba(77,201,212,0.06)}
+.mbtn.primary{background:var(--teal-dim);border-color:var(--teal)}
+/* empty state */
+.empty{grid-column:1/-1;padding:60px 20px;text-align:center;color:var(--text3);font-size:12px}
+.empty .ic{font-size:36px;opacity:.3;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="topbar-t">ainative-lab / sessions</div>
+  <div class="topbar-r">
+    <a class="back" href="../index.html">&larr; Back to Hub</a>
+    <div class="topbar-badge">24 sessions</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">AI-Native Organizations Sprint s2</div>
+    <h1>SESSION<br><span class="tl">INDEX</span></h1>
+    <p>All 24 sessions from the 3-week lab — prework, lectures, workshops, founder talks, Demo Day. Click any card to watch the recording and open materials.</p>
+  </div>
+
+  <div class="filters">
+    <div class="fgroup">
+      <span class="flabel">week</span>
+      <button class="chip on" data-filter="week" data-value="all">All</button>
+      <button class="chip" data-filter="week" data-value="prework" data-week="prework">Prework</button>
+      <button class="chip" data-filter="week" data-value="w1" data-week="w1">W1</button>
+      <button class="chip" data-filter="week" data-value="w2" data-week="w2">W2</button>
+      <button class="chip" data-filter="week" data-value="w3" data-week="w3">W3</button>
+      <button class="chip" data-filter="week" data-value="demo" data-week="demo">Demo</button>
+    </div>
+    <div class="fgroup">
+      <span class="flabel">track</span>
+      <button class="chip on" data-filter="track" data-value="all">All</button>
+      <button class="chip" data-filter="track" data-value="lecture">Lecture</button>
+      <button class="chip" data-filter="track" data-value="workshop">Workshop</button>
+      <button class="chip" data-filter="track" data-value="founder">Founder</button>
+      <button class="chip" data-filter="track" data-value="curator">Curator</button>
+    </div>
+    <div class="fgroup">
+      <span class="flabel">status</span>
+      <button class="chip on" data-filter="status" data-value="all">All</button>
+      <button class="chip" data-filter="status" data-value="completed">Completed</button>
+      <button class="chip" data-filter="status" data-value="upcoming">Upcoming</button>
+    </div>
+    <input type="text" class="search" id="search" placeholder="Search title or speaker...">
+    <div class="count-pill">showing <b id="vcount">24</b> / 24</div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-video" id="mvideo"></div>
+    <div class="modal-body" id="mbody"></div>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  "sessions": [
+    {"id":"s2-prework01","title":"Prework 1: Что такое POS","date":"2026-03-02","speaker":"Поваляев, Хабаров","duration":"57 мин","video":"Cb67otd2MFY"},
+    {"id":"s2-prework02","title":"Prework 2: Персональная корпорация","date":"2026-03-04","speaker":"Рис, Поваляев","duration":"40 мин","video":"YUP8u-2SYdw"},
+    {"id":"s2-prework03","title":"Prework 3: Циклические пайплайны","date":"2026-03-09","speaker":"Поваляев, Хабаров","duration":"52 мин","video":"P4mO45Xi1H4"},
+    {"id":"s2-prework04","title":"Prework 4: OpenClaw","date":"2026-03-09","speaker":"Хабаров","duration":"51 мин","video":"8Xdc7k6AiKo"},
+    {"id":"s2-intro","title":"Intro Call — Знакомство","date":"2026-03-21","speaker":"Поваляев, Гершуни","duration":"84 мин","video":"o1GuGqlGbK4"},
+    {"id":"s2-w1-lecture","title":"Lecture 1: Why AI Transformation","date":"2026-03-23","speaker":"Степан Гершуни","duration":"172 мин","video":"uW91SdM87JM","materials":["AI-Native Playbook Slides","AI-Native Plugin","Quiz L0-L3","Harness Engineering","BVP State of AI","TBench.ai"]},
+    {"id":"s2-w1-setup","title":"W1: Personal OS Setup","date":"2026-03-24","speaker":"Поваляев","duration":"161 мин","video":"C73xOOdawPY","materials":["POS Setup Slides","Stack Explorer","Dashboard Workshop","Naming Convention","Keyboard Efficiency"]},
+    {"id":"s2-w1-workshop","title":"W1: Personal → Team","date":"2026-03-25","speaker":"Поваляев","duration":"150 мин","video":"3acO_wSd8HQ","materials":["Team Workshop Slides","Team Stack Explorer","AI Corp (Ris)","AI-Native Lesson (Vasiliev)","AgentPlane (Smirnov)"]},
+    {"id":"s2-w1-lisovskiy","title":"W1: Фабрика бизнесов","date":"2026-03-26","speaker":"Лисовский","duration":"120 мин","video":"e4_w_vI1ODY"},
+    {"id":"s2-w1-bonus","title":"W1: База AI-тулов (новички)","date":"2026-03-27","speaker":"Поваляев","duration":"90 мин"},
+    {"id":"s2-w1-khanarin","title":"W1: AI-трансформация","date":"2026-03-27","speaker":"Ханарин","duration":"120 мин"},
+    {"id":"s2-w2-lecture","title":"Lecture 2: System Above Model","date":"2026-03-30","speaker":"Гершуни","duration":"85 мин"},
+    {"id":"s2-w2-ametov","title":"W2: AI-контент для бизнеса","date":"2026-04-01","speaker":"Амётов","duration":"120 мин"},
+    {"id":"s2-w2-kleban","title":"W2: Self-Improving Agents","date":"2026-04-01","speaker":"Клебан","duration":"60 мин"},
+    {"id":"s2-w2-sidora","title":"W2: Технический коворкинг","date":"2026-04-02","speaker":"Сидора","duration":"120 мин"},
+    {"id":"s2-w2-kovalsky","title":"W2: AI-Driven Dev","date":"2026-04-02","speaker":"Ковальский","duration":"120 мин"},
+    {"id":"s2-w2-strakhov","title":"W2: Agent Teams","date":"2026-04-03","speaker":"Страхов"},
+    {"id":"s2-w2-kravtsov","title":"W2: Data Pipelines","date":"2026-04-03","speaker":"Кравцов"},
+    {"id":"s2-w3-lecture","title":"Lecture 3: Strategy to Plan","date":"2026-04-06","speaker":"Гершуни"},
+    {"id":"s2-w3-reid","title":"W3: AI × Investments","date":"2026-04-07","speaker":"Рид"},
+    {"id":"s2-w3-annaov","title":"W3: Sales Automation","date":"2026-04-08","speaker":"Аннаов"},
+    {"id":"s2-w3-buzko","title":"W3: AI Legal","date":"2026-04-09","speaker":"Бузко"},
+    {"id":"s2-w3-ustinov","title":"W3: Product-Agent","date":"2026-04-10","speaker":"Устинов"},
+    {"id":"s2-demo","title":"Demo Day","date":"2026-04-13","speaker":"All"}
+  ]
+};
+
+// Speaker name -> kebab-case avatar file (extension resolved at runtime via fallback)
+const SPEAKER_MAP = {
+  "Поваляев":"alexander-povaliaev",
+  "Александр Поваляев":"alexander-povaliaev",
+  "Гершуни":"stepan-gershuni",
+  "Степан Гершуни":"stepan-gershuni",
+  "Лисовский":"eugene-lisovskiy",
+  "Ханарин":"dima-khanarin",
+  "Амётов":"alex-amyotov",
+  "Клебан":"vitaly-kleban",
+  "Сидора":"gleb-sidora",
+  "Ковальский":"valerii-kovalskii",
+  "Страхов":"george-strakhov",
+  "Кравцов":"daniel-kravtsov",
+  "Рид":"eugene-rid",
+  "Аннаов":"bayram-annakov",
+  "Аннаков":"bayram-annakov",
+  "Бузко":"roma-buzko",
+  "Устинов":"seva-ustinov",
+  "Хабаров":"sergey-khabarov",
+  "Рис":"sereja-ris"
+};
+
+// Avatar file extensions (from graph/speakers/ listing)
+const AVATAR_EXT = {
+  "daniel-kravtsov":"jpeg",
+  "george-strakhov":"png",
+  "gleb-sidora":"png"
+};
+
+const TODAY = "2026-04-11";
+
+function computeStatus(date){ return date < TODAY ? "completed" : "upcoming"; }
+
+function classifyWeek(id){
+  if(id.startsWith("s2-prework")) return "prework";
+  if(id === "s2-intro") return "prework";
+  if(id.startsWith("s2-w1")) return "w1";
+  if(id.startsWith("s2-w2")) return "w2";
+  if(id.startsWith("s2-w3")) return "w3";
+  if(id === "s2-demo") return "demo";
+  return "other";
+}
+
+const WEEK_LABEL = {prework:"PREWORK",w1:"WEEK 1",w2:"WEEK 2",w3:"WEEK 3",demo:"DEMO DAY"};
+const WEEK_PAGE = {prework:"../weeks/prework.html",w1:"../weeks/w1.html",w2:"../weeks/w2.html",w3:"../weeks/w3.html",demo:"../weeks/demo.html"};
+
+function classifyTrack(s){
+  const t = s.title.toLowerCase();
+  if(t.includes("lecture")) return "lecture";
+  if(t.includes("pos") || t.includes("workshop") || t.includes("setup") || t.includes("personal → team") || t.includes("personal os")) return "workshop";
+  if(t.includes("prework") || t.includes("intro")) return "workshop";
+  const sp = s.speaker || "";
+  if(sp.includes("Поваляев") && !t.includes("lecture")) return "workshop";
+  if(sp.includes("Гершуни")) return "lecture";
+  if(s.id === "s2-demo") return "workshop";
+  return "founder";
+}
+
+function parseSpeakers(str){
+  if(!str || str === "All") return [];
+  return str.split(",").map(x => x.trim()).filter(Boolean);
+}
+
+function avatarFor(name){
+  // Last word = family name
+  const key = name.split(" ").pop();
+  const slug = SPEAKER_MAP[name] || SPEAKER_MAP[key];
+  if(!slug) return null;
+  const ext = AVATAR_EXT[slug] || "jpg";
+  return `../graph/speakers/${slug}.${ext}`;
+}
+
+function initials(name){
+  const parts = name.trim().split(/\s+/);
+  if(parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.slice(0,2).toUpperCase();
+}
+
+function formatDate(iso){
+  const d = new Date(iso + "T00:00:00");
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${months[d.getMonth()]} ${d.getDate()}`;
+}
+
+// Build card HTML
+function renderCard(s){
+  const week = classifyWeek(s.id);
+  const track = classifyTrack(s);
+  const status = computeStatus(s.date);
+  const speakers = parseSpeakers(s.speaker);
+  const hasVideo = !!s.video;
+  const matCount = (s.materials || []).length;
+
+  const avatars = speakers.slice(0,3).map(sp => {
+    const src = avatarFor(sp);
+    if(src) return `<img src="${src}" alt="${sp}" onerror="this.outerHTML='<span class=\\'avf\\'>${initials(sp)}</span>'">`;
+    return `<span class="avf">${initials(sp)}</span>`;
+  }).join("");
+
+  const speakerText = s.speaker || "—";
+
+  return `<div class="session-card ${week}" data-week="${week}" data-track="${track}" data-status="${status}" data-search="${(s.title + " " + speakerText).toLowerCase()}" onclick="openModal('${s.id}')">
+    <div class="card-head">
+      <span class="wbadge ${week}">${WEEK_LABEL[week] || week.toUpperCase()}</span>
+      <div class="card-meta">
+        <span>${formatDate(s.date)}</span>
+        ${s.duration ? `<span class="dot"></span><span>${s.duration}</span>` : ""}
+        ${hasVideo ? `<span class="play-ico">&#9654;</span>` : ""}
+      </div>
+    </div>
+    <div class="card-title">${s.title}</div>
+    <div class="card-speakers">
+      <div class="avstack">${avatars || '<span class="avf">—</span>'}</div>
+      <div class="card-speaker-names">${speakerText}</div>
+    </div>
+    <div class="card-foot">
+      <span class="track-tag">${track}</span>
+      <span class="foot-tag ${status === 'completed' ? 'done' : 'up'}">
+        ${status === 'completed' ? '&#9679; completed' : '&#9675; upcoming'}
+        ${matCount ? ` &middot; ${matCount} materials` : ""}
+      </span>
+    </div>
+  </div>`;
+}
+
+const grid = document.getElementById("grid");
+grid.innerHTML = DATA.sessions.map(renderCard).join("");
+
+// Filters
+const state = {week:"all",track:"all",status:"all",search:""};
+
+function applyFilters(){
+  const cards = grid.querySelectorAll(".session-card");
+  let visible = 0;
+  cards.forEach(c => {
+    const w = c.dataset.week, t = c.dataset.track, st = c.dataset.status, sr = c.dataset.search;
+    const show = (state.week === "all" || w === state.week)
+              && (state.track === "all" || t === state.track)
+              && (state.status === "all" || st === state.status)
+              && (!state.search || sr.includes(state.search));
+    c.style.display = show ? "" : "none";
+    if(show) visible++;
+  });
+  document.getElementById("vcount").textContent = visible;
+
+  let empty = grid.querySelector(".empty");
+  if(visible === 0){
+    if(!empty){
+      empty = document.createElement("div");
+      empty.className = "empty";
+      empty.innerHTML = '<div class="ic">&#9678;</div>No sessions match these filters.';
+      grid.appendChild(empty);
+    }
+  } else if(empty){
+    empty.remove();
+  }
+}
+
+document.querySelectorAll(".chip").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const group = btn.dataset.filter;
+    document.querySelectorAll(`.chip[data-filter="${group}"]`).forEach(b => b.classList.remove("on"));
+    btn.classList.add("on");
+    state[group] = btn.dataset.value;
+    applyFilters();
+  });
+});
+
+document.getElementById("search").addEventListener("input", e => {
+  state.search = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+
+// Modal
+const modal = document.getElementById("modal");
+const mvideo = document.getElementById("mvideo");
+const mbody = document.getElementById("mbody");
+
+function openModal(id){
+  const s = DATA.sessions.find(x => x.id === id);
+  if(!s) return;
+  const week = classifyWeek(s.id);
+  const track = classifyTrack(s);
+  const status = computeStatus(s.date);
+
+  if(s.video){
+    mvideo.innerHTML = `<iframe src="https://www.youtube.com/embed/${s.video}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  } else {
+    mvideo.innerHTML = `<div class="no-video"><div class="ic">&#9634;</div><div>No recording available yet</div></div>`;
+  }
+
+  const materials = (s.materials || []).map(m => `<span class="mat-pill">${m}</span>`).join("");
+  const lmsUrl = `https://learn.aimindset.org/s2/workshops/${s.id}`;
+  const weekPage = WEEK_PAGE[week] || "../index.html";
+
+  mbody.innerHTML = `
+    <div class="modal-eyebrow">${WEEK_LABEL[week] || week} &middot; ${track}</div>
+    <h2>${s.title}</h2>
+    <div class="modal-meta">
+      <span><b>${s.speaker || '—'}</b></span>
+      <span>&middot;</span>
+      <span>${formatDate(s.date)} 2026</span>
+      ${s.duration ? `<span>&middot;</span><span>${s.duration}</span>` : ""}
+      <span>&middot;</span>
+      <span style="color:${status === 'completed' ? 'var(--green)' : 'var(--amber)'}">${status === 'completed' ? '&#9679; completed' : '&#9675; upcoming'}</span>
+    </div>
+    ${materials ? `<div class="modal-section"><h3>Materials (${(s.materials||[]).length})</h3><div class="mat-list">${materials}</div></div>` : ""}
+    <div class="modal-section"><h3>Session ID</h3><code style="font-size:11px;color:var(--text3)">${s.id}</code></div>
+    <div class="modal-actions">
+      <a class="mbtn primary" href="${lmsUrl}" target="_blank">&#9654; Open in LMS</a>
+      <a class="mbtn" href="${weekPage}">${WEEK_LABEL[week] || week} page</a>
+      ${s.video ? `<a class="mbtn" href="https://www.youtube.com/watch?v=${s.video}" target="_blank">YouTube &#8599;</a>` : ""}
+    </div>
+  `;
+  modal.classList.add("on");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+  modal.classList.remove("on");
+  mvideo.innerHTML = "";
+  document.body.style.overflow = "";
+}
+
+modal.addEventListener("click", e => { if(e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>

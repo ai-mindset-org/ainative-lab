@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Native Lab — Weeks Overview</title>
+<meta property="og:title" content="AI-Native Lab — Weeks Overview">
+<meta property="og:description" content="All 3 weeks of the AI-Native Organizations Sprint s2 — sessions, speakers, themes.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;height:48px;position:sticky;top:0;z-index:100}
+.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}
+.topbar-r{margin-left:auto;display:flex;gap:16px;align-items:center}
+.topbar-back{font-size:11px;color:var(--teal);text-decoration:none;padding:4px 10px;border:1px solid var(--border2);border-radius:4px;transition:all 0.15s}
+.topbar-back:hover{background:var(--teal-dim);text-decoration:none}
+.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--teal-dim);color:var(--teal);letter-spacing:0.1em;text-transform:uppercase}
+.wrap{max-width:1280px;margin:0 auto;padding:40px 32px 80px}
+.hero-card{width:100%;aspect-ratio:3/1;position:relative;overflow:hidden;background:var(--bg3);margin-bottom:40px;border-radius:10px;border:1px solid var(--border)}
+.hero-card .grid-bg{position:absolute;inset:0;background:linear-gradient(to right,rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
+.hero-card .mesh{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(77,201,212,0.15) 0%,transparent 50%),radial-gradient(ellipse at 85% 40%,rgba(59,130,246,0.08) 0%,transparent 50%)}
+.hero-card .accent-top{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(77,201,212,0.2) 60%,transparent);z-index:10}
+.hero-card .hc{position:absolute;inset:0;z-index:5;padding:40px 48px;display:flex;align-items:center;gap:48px}
+.hero-card .hl{flex:1;display:flex;flex-direction:column;gap:14px}
+.hero-card .hb{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);opacity:0.8}
+.hero-card .ht{font-family:var(--display);font-weight:700;font-size:36px;line-height:0.95;text-transform:uppercase}
+.hero-card .ht .tl{color:var(--teal)}
+.hero-card .hs{font-size:13px;color:var(--text2);max-width:480px}
+.hero-card .hr{display:flex;flex-direction:column;gap:10px;min-width:260px}
+.hstat{display:flex;gap:14px;padding:12px 18px;background:rgba(77,201,212,0.04);border:1px solid var(--border);border-radius:6px}
+.hstat .sn{font-family:var(--display);font-weight:700;font-size:26px;color:var(--teal);opacity:0.45;min-width:42px}
+.hstat .sl{font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+.hstat .sv{font-size:13px;color:var(--text);margin-top:2px}
+h1{font-family:var(--display);font-size:18px;font-weight:700;color:var(--teal);margin-bottom:18px;letter-spacing:0.05em;text-transform:uppercase}
+.weeks{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));margin-bottom:48px}
+.wk{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:28px;position:relative;overflow:hidden;transition:all 0.2s;text-decoration:none;color:inherit;display:block}
+.wk::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.wk.teal::before{background:var(--teal)}
+.wk.green::before{background:var(--green)}
+.wk.pink::before{background:var(--pink)}
+.wk:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.35);text-decoration:none}
+.wk .wk-num{font-family:var(--display);font-size:56px;font-weight:700;line-height:0.9;opacity:0.2;margin-bottom:8px}
+.wk.teal .wk-num{color:var(--teal)}
+.wk.green .wk-num{color:var(--green)}
+.wk.pink .wk-num{color:var(--pink)}
+.wk .wk-title{font-family:var(--display);font-weight:700;font-size:22px;margin-bottom:6px;line-height:1.1}
+.wk .wk-dates{font-size:11px;color:var(--text3);margin-bottom:18px;letter-spacing:0.05em;text-transform:uppercase}
+.wk .wk-desc{font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:18px}
+.wk .wk-meta{display:flex;gap:16px;margin-bottom:18px;padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.wk .wk-meta .m{flex:1}
+.wk .wk-meta .ml{font-size:9px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+.wk .wk-meta .mv{font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);margin-top:2px}
+.wk .wk-meta .mv.teal{color:var(--teal)}
+.wk .wk-meta .mv.green{color:var(--green)}
+.wk .wk-meta .mv.pink{color:var(--pink)}
+.wk .wk-themes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.pill{display:inline-block;font-size:10px;padding:3px 9px;border-radius:4px;background:rgba(77,201,212,0.06);border:1px solid var(--border);color:var(--text2);letter-spacing:0.02em}
+.wk .wk-cta{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--teal);font-weight:600;margin-top:4px}
+.wk .wk-cta::after{content:'→';transition:transform 0.2s}
+.wk:hover .wk-cta::after{transform:translateX(4px)}
+.nav-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.navpill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:12px;text-decoration:none;transition:all 0.2s}
+.navpill:hover{border-color:var(--teal);color:var(--teal);text-decoration:none}
+@media(max-width:768px){.wrap{padding:24px 16px 48px}.hero-card{aspect-ratio:auto}.hero-card .hc{flex-direction:column;align-items:flex-start;gap:20px;padding:28px 22px}.hero-card .hr{min-width:auto;width:100%}.hero-card .ht{font-size:26px}.weeks{grid-template-columns:1fr}.wk{padding:22px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+<div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<div class="topbar-t">ainative-lab / weeks</div>
+<div class="topbar-r">
+<a class="topbar-back" href="../index.html">&larr; hub</a>
+<div class="topbar-badge">weeks overview</div>
+</div>
+</div>
+
+<div class="wrap">
+<div class="hero-card">
+<div class="accent-top"></div>
+<div class="grid-bg"></div>
+<div class="mesh"></div>
+<div class="hc">
+<div class="hl">
+<div class="hb">AI-Native Organizations Sprint s2 · 2026</div>
+<div class="ht">THREE WEEKS<br><span class="tl">ONE TRAJECTORY</span></div>
+<div class="hs">From Personal OS to organizational architecture to 90-day strategy. 17 live sessions, 14 speakers, 211 participants — all recorded.</div>
+</div>
+<div class="hr">
+<div class="hstat"><div class="sn">17</div><div><div class="sl">sessions</div><div class="sv">live workshops + lectures</div></div></div>
+<div class="hstat"><div class="sn">14</div><div><div class="sl">speakers</div><div class="sv">practitioners, not talking heads</div></div></div>
+<div class="hstat"><div class="sn">3W</div><div><div class="sl">timeline</div><div class="sv">23 Mar – 13 Apr 2026</div></div></div>
+</div>
+</div>
+</div>
+
+<h1>All Weeks</h1>
+<div class="weeks">
+
+<a class="wk teal" href="w1.html">
+<div class="wk-num">W1</div>
+<div class="wk-title">Why AI Transformation</div>
+<div class="wk-dates">23 Mar – 28 Mar 2026 · Personal OS + Team</div>
+<div class="wk-desc">Why AI-transformation matters, how to build a Personal OS in Claude Code, extend it to team processes, run the first transformation audit.</div>
+<div class="wk-meta">
+<div class="m"><div class="ml">sessions</div><div class="mv teal">6</div></div>
+<div class="m"><div class="ml">main speaker</div><div class="mv teal">Гершуни</div></div>
+<div class="m"><div class="ml">format</div><div class="mv teal">L + WS</div></div>
+</div>
+<div class="wk-themes">
+<span class="pill">Personal OS</span><span class="pill">Claude Code</span><span class="pill">CLAUDE.md</span><span class="pill">Team Audit</span><span class="pill">AI Champion</span><span class="pill">Influence Model</span>
+</div>
+<div class="wk-cta">Open Week 1</div>
+</a>
+
+<a class="wk green" href="w2.html">
+<div class="wk-num">W2</div>
+<div class="wk-title">System Above Model</div>
+<div class="wk-dates">30 Mar – 04 Apr 2026 · MOS Architecture</div>
+<div class="wk-desc">Five layers + governance. Infrastructure, data &amp; context, orchestration, skills, people — how to make your company machine-readable for agents.</div>
+<div class="wk-meta">
+<div class="m"><div class="ml">sessions</div><div class="mv green">7</div></div>
+<div class="m"><div class="ml">main speaker</div><div class="mv green">Гершуни</div></div>
+<div class="m"><div class="ml">format</div><div class="mv green">L + 6 WS</div></div>
+</div>
+<div class="wk-themes">
+<span class="pill">MCP</span><span class="pill">Context Graph</span><span class="pill">Self-Improving</span><span class="pill">Agent Topologies</span><span class="pill">Data Pipelines</span><span class="pill">Evals</span><span class="pill">Skills</span>
+</div>
+<div class="wk-cta">Open Week 2</div>
+</a>
+
+<a class="wk pink" href="w3.html">
+<div class="wk-num">W3</div>
+<div class="wk-title">Strategy to Plan</div>
+<div class="wk-dates">06 Apr – 13 Apr 2026 · Agent Pipelines + Demo</div>
+<div class="wk-desc">From stack to strategy: business models, moats, process audit, 90-day plan. Specialist sessions in investments, sales, legal, product-agent.</div>
+<div class="wk-meta">
+<div class="m"><div class="ml">sessions</div><div class="mv pink">5</div></div>
+<div class="m"><div class="ml">main speaker</div><div class="mv pink">Гершуни</div></div>
+<div class="m"><div class="ml">format</div><div class="mv pink">L + specialists</div></div>
+</div>
+<div class="wk-themes">
+<span class="pill">90-day Plan</span><span class="pill">FinOps</span><span class="pill">Process Audit</span><span class="pill">Sales Agents</span><span class="pill">Legal Tech</span><span class="pill">Product-Agent</span><span class="pill">AI × Investments</span>
+</div>
+<div class="wk-cta">Open Week 3</div>
+</a>
+
+</div>
+
+<h1>Related</h1>
+<div class="nav-links">
+<a class="navpill" href="../index.html">&larr; Sprint Hub</a>
+<a class="navpill" href="../knowledge-graph.html">Knowledge Graph</a>
+<a class="navpill" href="../naming.html">Naming Builder</a>
+<a class="navpill" href="../dashboard-workshop.html">Dashboard Workshop</a>
+<a class="navpill" href="../rules.html">Rules &amp; Skills</a>
+<a class="navpill" href="https://learn.aimindset.org/s2" target="_blank">LMS &nearr;</a>
+</div>
+
+</div>
+</body>
+</html>

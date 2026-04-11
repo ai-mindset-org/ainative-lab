@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Native Lab — Participants</title>
+<meta property="og:title" content="AI-Native Lab — Participants">
+<meta property="og:description" content="Cohort of AI-Native Organizations Sprint s2 — participants across cities">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.02) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--teal);text-decoration:none}
+
+.topbar{position:sticky;top:0;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100;height:48px}
+.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}
+.topbar-r{margin-left:auto;display:flex;gap:16px;align-items:center}
+.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--teal-dim);color:var(--teal);letter-spacing:0.1em;text-transform:uppercase}
+.back{font-size:11px;color:var(--text3);display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--border);border-radius:4px;transition:all 0.15s}
+.back:hover{color:var(--teal);border-color:var(--border2)}
+
+.hero-card{width:100%;aspect-ratio:3/1;max-height:320px;position:relative;overflow:hidden;background:var(--bg3)}
+.hero-card .grid-bg{position:absolute;inset:0;background:linear-gradient(to right,rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
+.hero-card .mesh{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(77,201,212,0.15) 0%,transparent 50%),radial-gradient(ellipse at 85% 40%,rgba(59,130,246,0.08) 0%,transparent 50%)}
+.hero-card .accent-top{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(77,201,212,0.2) 60%,transparent);z-index:10}
+.hero-card .hc{position:absolute;inset:0;z-index:5;padding:32px 40px;display:flex;align-items:center;gap:48px}
+.hero-card .hl{flex:1;display:flex;flex-direction:column;gap:12px}
+.hero-card .hb{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);opacity:0.8}
+.hero-card .ht{font-family:var(--display);font-weight:700;font-size:28px;line-height:0.95;text-transform:uppercase}
+.hero-card .ht .tl{color:var(--teal)}
+.hero-card .hs{font-size:12px;color:var(--text2);max-width:420px}
+.hero-card .hr{display:flex;flex-direction:column;gap:8px;min-width:300px}
+.hst{display:flex;align-items:center;gap:12px;padding:8px 14px;background:rgba(77,201,212,0.04);border:1px solid var(--border);border-radius:5px}
+.hst .sn{font-family:var(--display);font-weight:700;font-size:20px;color:var(--teal);opacity:0.4;min-width:30px}
+.hst .st{font-size:12px;color:var(--text2)}
+.hst .sm{margin-left:auto;font-size:10px;color:var(--text3)}
+
+.container{padding:24px 40px 80px}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:8px}
+.ctrl-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3)}
+.search{flex:1;min-width:200px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:8px 12px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;transition:border 0.15s}
+.search:focus{border-color:var(--teal)}
+.search::placeholder{color:var(--text3)}
+.seg{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:5px;overflow:hidden}
+.seg button{background:transparent;border:none;color:var(--text3);font-family:var(--mono);font-size:11px;padding:7px 14px;cursor:pointer;transition:all 0.15s;letter-spacing:0.05em}
+.seg button:hover{color:var(--text2)}
+.seg button.on{background:var(--teal-dim);color:var(--teal)}
+.loc-select{background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:7px 12px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;min-width:140px;cursor:pointer}
+.loc-select:focus{border-color:var(--teal)}
+.count-pill{font-size:10px;color:var(--text3);padding:6px 10px;border-radius:4px;background:rgba(77,201,212,0.04);border:1px solid var(--border);margin-left:auto}
+.count-pill b{color:var(--teal);font-weight:600}
+
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.pcard{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0.6;background:var(--teal)}
+.pcard.adv::before{background:var(--amber)}
+.pcard:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.pcard-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.avatar{width:40px;height:40px;border-radius:8px;background:var(--teal-dim);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:14px;font-weight:700;color:var(--teal);flex-shrink:0;letter-spacing:0.02em}
+.pcard.adv .avatar{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:var(--amber)}
+.pcard-main{flex:1;min-width:0}
+.pname{font-family:var(--display);font-size:14px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ploc{font-size:10px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.ploc svg{flex-shrink:0;opacity:0.6}
+.badge{display:inline-block;font-size:9px;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;align-self:flex-start}
+.badge-adv{color:var(--amber);border:1px solid rgba(245,158,11,0.25);background:rgba(245,158,11,0.08)}
+.badge-str{color:var(--teal);border:1px solid rgba(77,201,212,0.25);background:rgba(77,201,212,0.08)}
+.pfocus{font-size:11px;color:var(--text2);line-height:1.55;margin-top:8px;max-height:68px;overflow:hidden;position:relative}
+.pcard.open .pfocus{max-height:none}
+.pcard.open{background:var(--bg3)}
+.pfocus-full{display:none;white-space:pre-wrap}
+.pcard.open .pfocus-preview{display:none}
+.pcard.open .pfocus-full{display:block}
+
+.map-view{display:none}
+.map-view.on{display:block}
+.grid-view.off{display:none}
+.loc-group{margin-bottom:24px}
+.loc-group h3{font-family:var(--display);font-size:15px;font-weight:600;color:var(--teal);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.loc-group h3 .cnt{font-size:10px;color:var(--text3);font-weight:400;margin-left:auto}
+.loc-list{display:flex;flex-wrap:wrap;gap:8px}
+.loc-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;font-size:11px;color:var(--text2)}
+.loc-chip .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);opacity:0.6}
+
+.empty{text-align:center;padding:60px 20px;color:var(--text3);font-size:12px}
+
+@media(max-width:768px){
+  .hero-card{aspect-ratio:auto;max-height:none}
+  .hero-card .hc{flex-direction:column;gap:16px;padding:20px;align-items:flex-start}
+  .hero-card .hr{min-width:auto;width:100%}
+  .hero-card .ht{font-size:22px}
+  .container{padding:16px}
+  .controls{flex-direction:column;align-items:stretch}
+  .count-pill{margin-left:0;text-align:center}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="topbar-t">ainative-lab / participants</div>
+  <div class="topbar-r">
+    <a class="back" href="../index.html">&larr; sprint hub</a>
+    <div class="topbar-badge">cohort</div>
+  </div>
+</div>
+
+<div class="hero-card">
+  <div class="grid-bg"></div>
+  <div class="mesh"></div>
+  <div class="accent-top"></div>
+  <div class="hc">
+    <div class="hl">
+      <div class="hb">// cohort s2 · ai-native organizations</div>
+      <div class="ht"><span class="tl">230</span> participants<br>across <span class="tl">114</span> cities</div>
+      <div class="hs">A distributed cohort of founders, operators, and builders exploring AI-native workflows in a 3-week sprint.</div>
+    </div>
+    <div class="hr">
+      <div class="hst"><div class="sn">01</div><div class="st">total participants</div><div class="sm">230</div></div>
+      <div class="hst"><div class="sn">02</div><div class="st">advanced track</div><div class="sm">0</div></div>
+      <div class="hst"><div class="sn">03</div><div class="st">unique cities</div><div class="sm">114</div></div>
+      <div class="hst"><div class="sn">04</div><div class="st">buddy pairs</div><div class="sm">101</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="controls">
+    <span class="ctrl-label">filter</span>
+    <input class="search" id="q" placeholder="search by name or focus...">
+    <div class="seg" id="track">
+      <button data-v="all" class="on">All</button>
+      <button data-v="adv">Advanced</button>
+      <button data-v="str">Starter</button>
+    </div>
+    <select class="loc-select" id="loc"><option value="">All locations</option></select>
+    <div class="seg" id="view">
+      <button data-v="grid" class="on">Grid</button>
+      <button data-v="map">By Location</button>
+    </div>
+    <div class="count-pill"><b id="count">0</b> shown</div>
+  </div>
+
+  <div class="grid grid-view" id="grid"></div>
+  <div class="map-view" id="map"></div>
+</div>
+
+<script>
+// ---- CONFIG ----
+const SHOW_HANDLES = false; // flip to true to reveal @usernames publicly
+
+// ---- DATA ----
+const DATA = [{"name": "A", "location": "Рига, Латвия", "city": "Рига", "focus": "Я работаю финансовым директором (CFO) в IT service компании scandiweb и отвечаю за юридический и...", "isAdvanced": false}, {"name": "aaa", "location": "Москва", "city": "Москва", "focus": "фокус сейчас на углублении знаний в области программирования, в частности: устройство нейросетей,...", "isAdvanced": false}, {"name": "Aigars", "location": "Riga, latvia", "city": "Riga", "focus": "Ecommerce", "isAdvanced": false}, {"name": "Aleksandr Ivanov", "location": "Москва", "city": "Москва", "focus": "Автоматизация компаний с помощью AI-агентов и платформенных решения корпоративного уровня.", "isAdvanced": false}, {"name": "Aleksandr Kolesnikov", "location": "NL", "city": "NL", "focus": "миграции и автоматизации ИТ", "isAdvanced": false}, {"name": "Aleksandr Novikov", "location": "Москва", "city": "Москва", "focus": "Я 24/7 Ai-консультант: занимаюсь ai adoption в организациях и несложными проектами внедрения в...", "isAdvanced": false}, {"name": "Aleksei", "location": "Лондон, Великобритания.", "city": "Лондон", "focus": "- Готовлюсь к Лондонскому  марафону: бегаю по 200 км в неделю\n- Кайфую от ранней фазы отцовства:...", "isAdvanced": false}, {"name": "Aleksei Ulianin", "location": "Таганрог", "city": "Таганрог", "focus": "", "isAdvanced": false}, {"name": "Aleksey Kozlov", "location": "Нижний Новгород", "city": "Нижний Новгород", "focus": "Я предприниматель и фаундер proptech стартапа", "isAdvanced": false}, {"name": "Alex", "location": "Сейчас нахожусь в Москве.", "city": "Сейчас нахожусь в Москве", "focus": "Основной фокус сейчас на развитии компании Admon.ai, выстраивании процессов и выход из операционной...", "isAdvanced": false}, {"name": "Alex Kolokolov", "location": "Da Nang", "city": "Da Nang", "focus": "Бизнес и финансы", "isAdvanced": false}, {"name": "Alex P", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Alex P {AI mindset}", "location": "lisbon", "city": "lisbon", "focus": "потестировать аккаунты AI mindset", "isAdvanced": false}, {"name": "Alex S.", "location": "Бишкек", "city": "Бишкек", "focus": "", "isAdvanced": false}, {"name": "Alex Smirnov", "location": "москва и алтай", "city": "москва и алтай", "focus": "Основные фокусы, значит бизнес, это FMCG, косметика, две FMCG операционных компании, обе в России,...", "isAdvanced": false}, {"name": "Alex Z", "location": "Израиль", "city": "Израиль", "focus": "Свой бизнес, инвестиции, здоровье, дети", "isAdvanced": false}, {"name": "Alexander Bogdanov", "location": "В сша сан-Франциско", "city": "В сша сан-Франциско", "focus": "Работа! Компания AGIMA", "isAdvanced": false}, {"name": "Alexander Dolgov", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Alexander Fal", "location": "Москва", "city": "Москва", "focus": "Рабочие проекты, карьера. Всё связано с работой с ИИ агентами и LLM. десь больше всего фокуса и...", "isAdvanced": false}, {"name": "Alexander Ivanov", "location": "Мск", "city": "Мск", "focus": "", "isAdvanced": false}, {"name": "Alexander S.", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Alexander Stashenko", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Alexander Vasiliev", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Alisa Larionova", "location": "Прямо сейчас я в Таиланде, у меня отпуск, но, может, это и хорошо для программы. Ну, правда, минус только в том, что у меня разница 6 часов с тем временем, когда будут проходить основные видеолекции, общения. Вот. Вообще, я живу в России и Екатеринбург, но, наверное, в скором времени буду переезжать в Москву.", "city": "Прямо сейчас я в Таиланде", "focus": "Основной фокус сейчас — это несколько проектов. Первый — это рабочий проект. Я из России, города...", "isAdvanced": false}, {"name": "Alla", "location": "Живу локально в Санкт-Петербурге, часто бываю в Москве, а ближайшие две недели буду в Таиланде.", "city": "Живу локально в Санкт-Петербурге", "focus": "Конкретно сейчас я собираюсь на пару неделек на морюшко, потому фокус будет на небольшом замедлении...", "isAdvanced": false}, {"name": "Anastasia", "location": "Berlin", "city": "Berlin", "focus": "Операционная деятельность компании, финансы", "isAdvanced": false}, {"name": "Anastasia Kataeva", "location": "Москва", "city": "Москва", "focus": "Ой Фокус растить выручку в компании в роли CPO в небольшой и компактной команде", "isAdvanced": false}, {"name": "Andrei Mukhametov", "location": "Лимассол, Кипр", "city": "Лимассол", "focus": "Главный фокус — AI-трансформация компании, буквально перестраиваю FunCorp в AI Powered Company....", "isAdvanced": false}, {"name": "Andrew", "location": "Москва", "city": "Москва", "focus": "1. Построение автономной разработки, управление знаниями в корпоративно-инвестиционном блоке...", "isAdvanced": false}, {"name": "Andrew 🇺🇦❤️🇺🇦", "location": "Улучшаться в объединенных Арабских Эмиратах.", "city": "Улучшаться в объединенных Арабских Эмиратах", "focus": "Я сейчас изучаю IGN Decoding, делаю 8 тестовых проектов параллельно. Один из них — это Business...", "isAdvanced": false}, {"name": "Andrey", "location": "Дубай", "city": "Дубай", "focus": "У меня два направления. У меня свой family office по работе с состоятельными клиентами. Вообще у...", "isAdvanced": false}, {"name": "Andrey Chegodaev", "location": "Москва, район метро Нагатинская", "city": "Москва", "focus": "Работа в traveltech компании. Там занимаюсь архитектурными вопросами", "isAdvanced": false}, {"name": "Andrey Chernodarov", "location": "В Москве", "city": "В Москве", "focus": "Я фокусируюсь на внутрикорпоративных проектах автоматизации, таких как управление производством,...", "isAdvanced": false}, {"name": "Andrey Subbotin", "location": "Прага", "city": "Прага", "focus": "", "isAdvanced": false}, {"name": "Anna Babak", "location": "Москва", "city": "Москва", "focus": "Основной фокус - только работа. Отвечаю за операционку, где очень много мелких деталей,...", "isAdvanced": false}, {"name": "Anthony", "location": "Рига", "city": "Рига", "focus": "Я руководитель агентства, мы разрабатываем технологии для клиентов и занимаемся диджитал...", "isAdvanced": false}, {"name": "Anton", "location": "Амстердам", "city": "Амстердам", "focus": "Работа, интергация различных систем вокруг HR и инфры, AI во всех сферах, Azure", "isAdvanced": false}, {"name": "Anton M.", "location": "Дубай", "city": "Дубай", "focus": "", "isAdvanced": false}, {"name": "Anton Rozenblum", "location": "Москва", "city": "Москва", "focus": "Занимаюсь созданием ИИ рекламы, фокус на всем что касается ИИ визуала и креатива. \n\nГлобально хочу...", "isAdvanced": false}, {"name": "Anton Voskobovich", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Arina Annun", "location": "Лондон", "city": "Лондон", "focus": "Хочу оптимизировать повседневные повторяющие задачи на сколько это возможно, чтоб освободить время...", "isAdvanced": false}, {"name": "Aron", "location": "Moscow", "city": "Moscow", "focus": "Моя компания в области ветеринарии", "isAdvanced": false}, {"name": "arseny", "location": "Во время спринта буду по неделе в НЙ, Канны, Лондон", "city": "Во время спринта буду по неделе в НЙ", "focus": "Инвестиции, венчурные проекты, блокчейн", "isAdvanced": false}, {"name": "Artem Duz", "location": "Лимассол", "city": "Лимассол", "focus": "Построение агентных систем", "isAdvanced": false}, {"name": "Artem Zarubenko", "location": "Дубай", "city": "Дубай", "focus": "", "isAdvanced": false}, {"name": "Artur Leshukov", "location": "Калининград", "city": "Калининград", "focus": "", "isAdvanced": false}, {"name": "Arutyun", "location": "Москва", "city": "Москва", "focus": "ИИ, автоматизация, тревел", "isAdvanced": false}, {"name": "D S", "location": "Я уже ответил выше на этот вопрос", "city": "Я уже ответил выше на этот вопрос", "focus": "Я предприниматель и системный человек: люблю превращать хаос в понятные процессы, автоматизацию и...", "isAdvanced": false}, {"name": "Daniel Mylnikov | P2P.org", "location": "испания, малага", "city": "испания", "focus": "Работа, хочу сделать так, чтобы моя команда была fully AI enabled, и мы смогли увеличить...", "isAdvanced": false}, {"name": "daniel v", "location": "Mensk", "city": "Mensk", "focus": "больше всего интереса и фокуса", "isAdvanced": false}, {"name": "Daniil Khripko", "location": "Санкт-Петербург", "city": "Санкт-Петербург", "focus": "Мой фокус на работе моего \"Бюро Медицинского Маркетинга\" и развитии личного бренда.", "isAdvanced": false}, {"name": "Danil Yakovlev", "location": "глубоко в России", "city": "глубоко в России", "focus": "автоматизация операционки с помощью агентов + внедрение ai driven подхода в команде", "isAdvanced": false}, {"name": "Denis", "location": "Москва", "city": "Москва", "focus": "Операционная эффективность бизнеса, аналитика, баинг (запуск и управление рекламными кампаниями),...", "isAdvanced": false}, {"name": "Denis Golubenko", "location": "Калининград", "city": "Калининград", "focus": "", "isAdvanced": false}, {"name": "Denis Pyankov", "location": "Кашкайш", "city": "Кашкайш", "focus": "", "isAdvanced": false}, {"name": "Denis Smirnov", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Denis Volkhonskiy", "location": "UK, cambridge", "city": "UK", "focus": "работа, делаем кодинговых агентов для ревью и тестирования", "isAdvanced": false}, {"name": "Dima Bogod", "location": "Москва", "city": "Москва", "focus": "ИИ трансформация организации", "isAdvanced": false}, {"name": "Dima Khanarin", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Dima Tverd", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Dimitry Naumov", "location": "Munich", "city": "Munich", "focus": "AI agents, Crypto, trading", "isAdvanced": false}, {"name": "Dmitriy Demin", "location": "Ростов-на-Дону", "city": "Ростов-на-Дону", "focus": "Искусственный интеллект, Аи агенты в сфере строительства и управление\nОрганизацией", "isAdvanced": false}, {"name": "Dmitriy Strygin", "location": "Москва", "city": "Москва", "focus": "EdTech проекты, с фокусом для России. От детских садов до вузов", "isAdvanced": false}, {"name": "Dmitry", "location": "Бали", "city": "Бали", "focus": "Основной фокус сейчас на работе, у нас оптовая компания, мы продаем товары для праздника оптам по...", "isAdvanced": false}, {"name": "Dmitry", "location": "США", "city": "США", "focus": "не совсем понял, можеш переформулировать вопрос", "isAdvanced": false}, {"name": "Dmitry", "location": "Амстердам", "city": "Амстердам", "focus": "Бизнес в сфере построения b2c продуктов с подписочной монетизацией", "isAdvanced": false}, {"name": "Dmitry Chichikalyuk", "location": "Эстония", "city": "Эстония", "focus": "изменение модели управления организациями под влиянием ИИ", "isAdvanced": false}, {"name": "Dmitry Khrapov", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Dmitry Kostin", "location": "москва", "city": "москва", "focus": "да разные", "isAdvanced": false}, {"name": "Dmitry Petrovskiy", "location": "Тиват", "city": "Тиват", "focus": "ai-first person, ai-first company, saas b2b b2c", "isAdvanced": false}, {"name": "Dmitry Zakharov", "location": "Кипр", "city": "Кипр", "focus": "Мой стартап", "isAdvanced": false}, {"name": "Dreamer", "location": "Украина", "city": "Украина", "focus": "IT, автоматизация, разработка пз, торговые боты, эксплуатация внутриигровых экономик", "isAdvanced": false}, {"name": "Eduard Gorbachev", "location": "Москва", "city": "Москва", "focus": "Прямо сейчас моя компания занимается развитием технологий для улучшения диагностики патоморфологии...", "isAdvanced": false}, {"name": "Egor Kulikov", "location": "Москва", "city": "Москва", "focus": "Занимаюсь бизнесом, развиваю группу компаний.", "isAdvanced": false}, {"name": "Ekaterina Kireeva", "location": "Кипр", "city": "Кипр", "focus": "На работе и внедрении AI технологий в компанию. На личной жизни и отдыхе тоже.", "isAdvanced": false}, {"name": "Ekaterina Zueva", "location": "Россия, Ростов-на-Дону", "city": "Россия", "focus": "Мой фокус сейчас в основном на работе, я относительно недавно начала возглавлять Operations Unit....", "isAdvanced": false}, {"name": "Eugene", "location": "На данный момент я нахожусь в Москве, но в определенной периодичности могу бывать в Бишкеке. Есть определенные планы на работу и вообще в целом взаимодействие по треку США, потому что там есть сильный нетворкинг и так далее, нахожусь в процессе получения визы. Но на данный момент в базовой перспективе нескольких месяцев это все уже Россия и Москва.", "city": "На данный момент я нахожусь в Москве", "focus": "Интересный текущий момент в области создания и использования инструментов в части юридической...", "isAdvanced": false}, {"name": "Eugene", "location": "Москва", "city": "Москва", "focus": "Здоровье, учеба, спорт. \nРазвитие компании, повышение благосостояния", "isAdvanced": false}, {"name": "Eugene Levitin", "location": "Калифорния, рядом с Сан-Франциско", "city": "Калифорния", "focus": "", "isAdvanced": false}, {"name": "Evgenii Bondarev", "location": "В Сербии, Нови сад", "city": "В Сербии", "focus": "Фокусируюсь как на маркетинге в сфере стартапов (высокая динамика, рост на десятки процентов,...", "isAdvanced": false}, {"name": "Evgenii Konovalov", "location": "Москва", "city": "Москва", "focus": "AI трансформация компании, личный wellbeing (спорт, правильное питание, сон, медитации)", "isAdvanced": false}, {"name": "Evgeny Kuzmichev", "location": "Москва", "city": "Москва", "focus": "Фокус на интернет рекламе, я управляющий партнёр в одном и самых крупных рекламных агентств,...", "isAdvanced": false}, {"name": "Gard", "location": "Англия", "city": "Англия", "focus": "", "isAdvanced": false}, {"name": "Gene ∞", "location": "в Дубае", "city": "в Дубае", "focus": "Кратко:\n• медиабаинг, аффилейт-маркетинг\n• мобильная разработка - webview, подписки, web2app\n•...", "isAdvanced": false}, {"name": "George", "location": "Барселона Испания", "city": "Барселона Испания", "focus": "Работа, спорт вызывают больше интереса\nФокус на работе. Строю дата команды в геймдеве", "isAdvanced": false}, {"name": "Gerkon Workeron.ai", "location": "Бангкок", "city": "Бангкок", "focus": "Ai agents", "isAdvanced": false}, {"name": "Gleb Sidora", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Glebs Vrevsky", "location": "До мая я нахожусь в Сан-Франциско, в США. После мая, в принципе, я базируюсь в Риге и в Латвии. Это, блин, Headhunterz.", "city": "До мая я нахожусь в Сан-Франциско", "focus": "В принципе, мой сейчас фокус, главное, да, понять, как мы можем преобразовать нашу бизнес-модель...", "isAdvanced": false}, {"name": "Grigory K", "location": "Лиссабон", "city": "Лиссабон", "focus": "Эффективность работы с трафиком, анализ, монетизация.", "isAdvanced": false}, {"name": "IB 🌒", "location": "Мексика", "city": "Мексика", "focus": "В настоящий момент я работаю менеджером проектов в компании, которая занимается платежными...", "isAdvanced": false}, {"name": "Ilia Astafev", "location": "Берлин", "city": "Берлин", "focus": "Я CTO / Тех лид и разработчик, поэтому любые проекты. Ответил?", "isAdvanced": false}, {"name": "Ill Liu", "location": "Лимассол", "city": "Лимассол", "focus": "Финансы", "isAdvanced": false}, {"name": "Ilya", "location": "Москва", "city": "Москва", "focus": "Внедрение ai в крупном энтерпрайзе", "isAdvanced": false}, {"name": "Ilya Gindin", "location": "Будапешт", "city": "Будапешт", "focus": "", "isAdvanced": false}, {"name": "Ilya Golubev", "location": "Россия, Нижний Новгород", "city": "Россия", "focus": "", "isAdvanced": false}, {"name": "Ilya S", "location": "Москва", "city": "Москва", "focus": "Оптимизация рабочего процесса\nХочу уменьшить количество времени и сил, которые уходят на работу,...", "isAdvanced": false}, {"name": "Irina N.", "location": "Армения", "city": "Армения", "focus": "тест", "isAdvanced": false}, {"name": "Iskander", "location": "-", "city": "-", "focus": "", "isAdvanced": false}, {"name": "Ivan", "location": "Абу-Даби, ОАЭ", "city": "Абу-Даби", "focus": "Commodity trading, поднятие раунда для моей компании, торговля карбон кредитами, отношения с женой,...", "isAdvanced": false}, {"name": "Ivan", "location": "UK", "city": "UK", "focus": "Рост как фаундер", "isAdvanced": false}, {"name": "Ivan Borisov", "location": "Lisbon", "city": "Lisbon", "focus": "Финтех, эдтех", "isAdvanced": false}, {"name": "Ivan Mikheev", "location": "Москва", "city": "Москва", "focus": "Формирование AI команд\nПерсональная эффективность через AI\nПерекладывание рутинных задач в IT на...", "isAdvanced": false}, {"name": "Ivan Samokhin", "location": "пока примерно такой список", "city": "пока примерно такой список", "focus": "работа, профессиональное развитие", "isAdvanced": false}, {"name": "Ivan Volynkin", "location": "Санкт-Петербург", "city": "Санкт-Петербург", "focus": "Работа, семья, спорт, обучение\nГлавным образом интерес в автоматизации процессов и задач при помощи...", "isAdvanced": false}, {"name": "Jin Kolesnikov 🎏", "location": "Россия, Санкт-Петербург", "city": "Россия", "focus": "", "isAdvanced": false}, {"name": "Karina Vantlsav", "location": "Краков, Польша", "city": "Краков", "focus": "1. Работа и проекты, в которых я потенциально могу поучаствовать. Мне интересно не просто делать...", "isAdvanced": false}, {"name": "Katia Parshukova", "location": "Париж", "city": "Париж", "focus": "", "isAdvanced": false}, {"name": "Katty", "location": "минск", "city": "минск", "focus": "…", "isAdvanced": false}, {"name": "Kolya Pye", "location": "Санкт-Петербург", "city": "Санкт-Петербург", "focus": "фокус на организации работы в моей компании, у нас фреймворк ролевой модели, но кажется не все...", "isAdvanced": false}, {"name": "Konstantin Kuznetsov", "location": "Сейчас Маврикий, через пару недель Дубай, потом Россия.", "city": "Сейчас Маврикий", "focus": "бизнес, здоровье, образование ребенка, инвестиции", "isAdvanced": false}, {"name": "Konstantin Urvantcev", "location": "Москва", "city": "Москва", "focus": "Я закончил школу физико-математического профиля, физмат-школу при Новосибирском государственном...", "isAdvanced": false}, {"name": "Kostas Zhukov", "location": "Vilnius, Lithuania", "city": "Vilnius", "focus": "Business, my startup - ai video generation platform for ecommerce fashion brands on Shopify", "isAdvanced": false}, {"name": "Kostya Gorsky", "location": "Ирландия", "city": "Ирландия", "focus": "Построение AI native компаний + agentic AI продукт мы сами строим и продаём", "isAdvanced": false}, {"name": "Lesha", "location": "Территориально нахожусь в Польше.", "city": "Территориально нахожусь в Польше", "focus": "", "isAdvanced": false}, {"name": "Levin", "location": "Не интересно", "city": "Не интересно", "focus": "Применение ai в различных отраслях, больше интересует трансформация организаций", "isAdvanced": false}, {"name": "Lika Goglidze", "location": "Белград", "city": "Белград", "focus": "HR", "isAdvanced": false}, {"name": "Maks Frolov", "location": "Москва", "city": "Москва", "focus": "Работа, личная эффективность, здоровье", "isAdvanced": false}, {"name": "Maria Borodina", "location": "Кипр", "city": "Кипр", "focus": "Смотри, я являюсь руководителем департамента Family Care. Мы заботимся о семье фаундера компании....", "isAdvanced": false}, {"name": "Max Kalyuzhnyi", "location": "Лиссабон", "city": "Лиссабон", "focus": "Фокус в основном на работе. Я руковожу финансами и операционкой криптокомпании, и мне интересно и...", "isAdvanced": false}, {"name": "Maximus Kochurin", "location": "Португалия, Лиссабон", "city": "Португалия", "focus": "you", "isAdvanced": false}, {"name": "Meka", "location": "Ну, я территориально нахожусь в России, в городе Казани.", "city": "Ну", "focus": "Основной фокус, конечно же, на работе. Очень вдохновляет развитие искусственного интеллекта, и...", "isAdvanced": false}, {"name": "Mikhail Gurevich", "location": "Испания", "city": "Испания", "focus": "1) Моя работа — всё, что связано с менеджментом, аналитикой, рисерчем и проектированием новых...", "isAdvanced": false}, {"name": "Mikhail Shraibman", "location": "москва", "city": "москва", "focus": "Привет! Я владелец интегратора по внедрению ИИ решений. Мы работаем с интерпрайз-компаниями, такими...", "isAdvanced": false}, {"name": "Mikhail Sklyarenko", "location": "А я сейчас живу в Геленджике. Вернее, в Девноморской, рядом с Геленджиком.", "city": "А я сейчас живу в Геленджике", "focus": "Управление эффективностью команды(людей), усилить и ускорить команды с помощью ии", "isAdvanced": false}, {"name": "Muslim", "location": "Я нахожусь в России", "city": "Я нахожусь в России", "focus": "Я занимаюсь образовательными проектами, и сейчас мой фокус — на создании образовательной компании,...", "isAdvanced": false}, {"name": "Nadia Kolb", "location": "кипр", "city": "кипр", "focus": "Я работаю COO криптобиржи tothemoon.com мне интересно как мы можем поменять нашу компанию внедрив AI", "isAdvanced": false}, {"name": "Nick", "location": "Buenos Aires", "city": "Buenos Aires", "focus": "Сейчас мой фокус находится на нескольких взаимосвязанных направлениях.\n\nВо-первых, это создание...", "isAdvanced": false}, {"name": "Nicolas Bobroff", "location": "Кашкаиш, Португалия", "city": "Кашкаиш", "focus": "Приоритеты 1) Здоровье 2) Семья 3)Бизнес", "isAdvanced": false}, {"name": "Nikita Panin", "location": "-", "city": "-", "focus": "организация операционных процессов наиболее эффективным образом", "isAdvanced": false}, {"name": "Nikolay Karlov", "location": "Лондон", "city": "Лондон", "focus": "финтех, управление командами, пресейл, продажи, разработка ПО, стартапы, СТО", "isAdvanced": false}, {"name": "Oksana", "location": "Домодедово МО РФ", "city": "Домодедово МО РФ", "focus": "проекты личного и экспертного развития в части систематизации и повышения эффективности", "isAdvanced": false}, {"name": "Oleg", "location": "Москва", "city": "Москва", "focus": "Предпринимательство, инвестиции", "isAdvanced": false}, {"name": "Oleg", "location": "Москва", "city": "Москва", "focus": "Работа", "isAdvanced": false}, {"name": "Oleg Ivanov | SecondLane", "location": "Brazil", "city": "Brazil", "focus": "Развиваю проект\n\n Fluenta.space - Bloomberg Terminal for startup ideas + DraftKings for...", "isAdvanced": false}, {"name": "Oleg Potemkin", "location": "Магнитогорск, Челябинская область", "city": "Магнитогорск", "focus": "нейронки, создание проектов, спорт", "isAdvanced": false}, {"name": "Oleksii Pavlenko", "location": "Ukraine", "city": "Ukraine", "focus": "Mostly AI projects with different prospective, integration AI into product itself, building AI and...", "isAdvanced": false}, {"name": "Olga", "location": "Испания", "city": "Испания", "focus": "", "isAdvanced": false}, {"name": "Olga Bortnikova", "location": "Мексика", "city": "Мексика", "focus": "Упрощение процесса принятия решений и управления ресурсами в компании", "isAdvanced": false}, {"name": "Olga Plekhova", "location": "Москва", "city": "Москва", "focus": "Я хочу все строить на своих рабочих процессах. Маркетплейс по предоставлению голосовых консультаций...", "isAdvanced": false}, {"name": "Olga Zueva", "location": "Москва", "city": "Москва", "focus": "Оптимизация расходов в компании", "isAdvanced": false}, {"name": "Olya", "location": "Минск", "city": "Минск", "focus": "", "isAdvanced": false}, {"name": "Pavel Rasputin", "location": "Пхукет", "city": "Пхукет", "focus": "работа и бизнес, хочу научиться системно строить ai-native организации с минимально необходимым...", "isAdvanced": false}, {"name": "Philipp", "location": "Москва", "city": "Москва", "focus": "Работа , здоровье хочу наладить и систематизировать", "isAdvanced": false}, {"name": "Polina", "location": "нижний новгород, россия", "city": "нижний новгород", "focus": "автоматизация сервисных отделов внутри компании, хочу, чтобы было меньше людей без потери...", "isAdvanced": false}, {"name": "R K", "location": "Бали", "city": "Бали", "focus": "AI\nЗдоровье\nМаксимизация прибыли", "isAdvanced": false}, {"name": "Rina", "location": "Кипр", "city": "Кипр", "focus": "работа и автоматизация текущих процессов", "isAdvanced": false}, {"name": "Roman", "location": "Кипр", "city": "Кипр", "focus": "работа", "isAdvanced": false}, {"name": "Roman", "location": "Ижевск", "city": "Ижевск", "focus": "", "isAdvanced": false}, {"name": "Roman Bunin", "location": "Амстердам", "city": "Амстердам", "focus": "AI Adoption", "isAdvanced": false}, {"name": "Roman Gin", "location": "рф", "city": "рф", "focus": "", "isAdvanced": false}, {"name": "Roman Kalinkin", "location": "Мне не нужны единомышленники", "city": "Мне не нужны единомышленники", "focus": "Внедрение Ии в бизнес", "isAdvanced": false}, {"name": "Ruslan T.", "location": "лондон", "city": "лондон", "focus": "", "isAdvanced": false}, {"name": "Sasha Radoslavov", "location": "Бали", "city": "Бали", "focus": "", "isAdvanced": false}, {"name": "Serg Ignatov", "location": "Новосибирск", "city": "Новосибирск", "focus": "it, разработка, управление командой, антифрод", "isAdvanced": false}, {"name": "Sergei", "location": "Сербия", "city": "Сербия", "focus": "it, marketing, finance", "isAdvanced": false}, {"name": "Sergei Kozhemiakin", "location": "Москва", "city": "Москва", "focus": "Управление компанией Агима. Личная эффективность. Воспитание дочки. Спорт.", "isAdvanced": false}, {"name": "Sergei Nevstruev", "location": "Москва", "city": "Москва", "focus": "Сфера государственного управления! Я гос служащий, проекты связаны с взаимодействием государства и...", "isAdvanced": false}, {"name": "Sergey", "location": "Новосибирск", "city": "Новосибирск", "focus": "", "isAdvanced": false}, {"name": "Sergey", "location": "Лондон", "city": "Лондон", "focus": "Управление капиталом\nУправление проектами \nУправление командами, бизнесом \nАвтоматизация процессов...", "isAdvanced": false}, {"name": "Sergey", "location": "Лиссабон", "city": "Лиссабон", "focus": "На работе, делаю бизнес в сфере предикшн маркетов", "isAdvanced": false}, {"name": "Sergey Alexeev", "location": "Китай", "city": "Китай", "focus": "", "isAdvanced": false}, {"name": "Sergey Avdyakov", "location": "Тбилиси", "city": "Тбилиси", "focus": "Основной фокус сейчас это мой продукт, который я развиваю как технический кофаундер, и это то, что...", "isAdvanced": false}, {"name": "Sergey Kazlouski", "location": "Франкфурт", "city": "Франкфурт", "focus": "", "isAdvanced": false}, {"name": "Sergey Kolesnikov", "location": "Тбилиси", "city": "Тбилиси", "focus": "Практическое применение AI для автоматизации процессов, безопасность AI агентов, архитектуры памяти...", "isAdvanced": false}, {"name": "Sergey Lebedev", "location": "Москва", "city": "Москва", "focus": "Руководство 25 командами по 5-7 человек с суммарной численностью 140 человек. Команды делают...", "isAdvanced": false}, {"name": "Sergey Ryumkin", "location": "Казахстан", "city": "Казахстан", "focus": "", "isAdvanced": false}, {"name": "Stan", "location": "амстердам", "city": "амстердам", "focus": "Закупка рекламы, разрабокта мобильных приложений и монетизация, автоматизация рутинных процессов", "isAdvanced": false}, {"name": "Stan Prihkodko", "location": "тбилиси", "city": "тбилиси", "focus": "", "isAdvanced": false}, {"name": "Stanislav Glazov", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Stanislav Krukhmalev", "location": "Сейчас в Алматы, Казахстан. В ближайшем будущем (летом или раньше) полечу в Калифорнию", "city": "Сейчас в Алматы", "focus": "", "isAdvanced": false}, {"name": "Stanislav Satsuk", "location": "Москва", "city": "Москва", "focus": "Управление компание", "isAdvanced": false}, {"name": "stepan", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "StreetArt_Common", "location": "Екатеринбург, Россия", "city": "Екатеринбург", "focus": "", "isAdvanced": false}, {"name": "Svetlana", "location": "москва", "city": "москва", "focus": "", "isAdvanced": false}, {"name": "Taras Chumachenko", "location": "Аргентина", "city": "Аргентина", "focus": "Ключевой фокус на развитии компании Axial Capital, больше всего интереса как сейчас внедрять AI в...", "isAdvanced": false}, {"name": "Tom", "location": "Временно Панама", "city": "Временно Панама", "focus": "Сейчас мой главный фокус — развитие направления центра управления благосостоянием FRAM GROUP и...", "isAdvanced": false}, {"name": "Vadik Pye", "location": "Санкт-Петербург", "city": "Санкт-Петербург", "focus": "если в контексте программы, то изучаю все актуальные инструменты в сфере ии, тестирую, пробую...", "isAdvanced": false}, {"name": "Vadim", "location": "Питер", "city": "Питер", "focus": "Мой фокус сейчас на таких сферах жизни как карьера и здоровье.\nЕсли говорить про проекты, то тут...", "isAdvanced": false}, {"name": "Valentin", "location": "Аргентина. А сейчас лечу в Испанию, буду переезжать туда позже.", "city": "Аргентина", "focus": "", "isAdvanced": false}, {"name": "Varvara Maeots", "location": "Я в Москве.", "city": "Я в Москве", "focus": "", "isAdvanced": false}, {"name": "vasili", "location": "Мальта", "city": "Мальта", "focus": "", "isAdvanced": false}, {"name": "Vasiliy", "location": "предпочту не говорит", "city": "предпочту не говорит", "focus": "крипто, ии агенты", "isAdvanced": false}, {"name": "Vasiliy Kirienkov", "location": "Москва", "city": "Москва", "focus": "Работа (компания - дистрибутор FMCG, офис/склад, автоматизация процессов) и воспитание детей. Ну и...", "isAdvanced": false}, {"name": "Vasily Bykov", "location": "Москва.", "city": "Москва", "focus": "- Бизнес. Работа в небольшом стартапе\n- Повышение эффективности как собственной, так и всей команды", "isAdvanced": false}, {"name": "Vasyl Ivanov", "location": "St. Petersburg, Florida", "city": "St", "focus": "IT-компания, создает собственные продукты. Интересует ИИ в применении к сферам: разработка,...", "isAdvanced": false}, {"name": "Vitaly", "location": "Москва/ Лиссабон", "city": "Москва/ Лиссабон", "focus": "Интересно создание автономных бизнесов БЕЗ людей, которые масштабируются и дают качественно новый...", "isAdvanced": false}, {"name": "Vitaly Doshchenko", "location": "Барселона", "city": "Барселона", "focus": "Я люблю вайбкодить, я люблю строить процессы, я люблю Kanban метод, я люблю дизайн agile...", "isAdvanced": false}, {"name": "Vitaly Kleban", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Vlad", "location": "Минск", "city": "Минск", "focus": "Работа. Повышение личной эффективности через освоение новых для себя технологий, методов и...", "isAdvanced": false}, {"name": "Vlad Solovev", "location": "Белград", "city": "Белград", "focus": "Инвестиции, частные компании, ai llm", "isAdvanced": false}, {"name": "Vladimir Okulov", "location": "Питер", "city": "Питер", "focus": "", "isAdvanced": false}, {"name": "Vladimir Shatskii", "location": "Санкт-Петербург", "city": "Санкт-Петербург", "focus": "автоматизации рутинных задач\n\nВоспитание детей, детское образование, авматизация бизнес процессов в...", "isAdvanced": false}, {"name": "Vladislav Volkhonskii", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Y | G", "location": "Португалия.", "city": "Португалия", "focus": "ЛОКАЛЬНО. прямо сейчас выстраиваю ai-native сеть ресторанов (так получилось. делаю это тк у меня...", "isAdvanced": false}, {"name": "yasha", "location": "Будва, Черногория", "city": "Будва", "focus": "", "isAdvanced": false}, {"name": "Yuliya Lutsenko (BB HQ)", "location": "не важно", "city": "не важно", "focus": "Автоматизация HR процессов и фин. аналитики", "isAdvanced": false}, {"name": "Yury Korneo", "location": "В Мадриде в Испании", "city": "В Мадриде в Испании", "focus": "Сейчас фокус на работе, мы занимаемся 3д визуализацией объектов недвижимости", "isAdvanced": false}, {"name": "Zagir Gatin", "location": "Москва", "city": "Москва", "focus": "я в роли PO занимаюсь трансформацией продукта MarTech на базе AI", "isAdvanced": false}, {"name": "Александр Корепанов", "location": "Москва, Ижевск, Крым", "city": "Москва", "focus": "пересборка ИТ продуктовой компании с учетом новых технологии и ИИ разработки", "isAdvanced": false}, {"name": "Антон Граборов", "location": "Москва", "city": "Москва", "focus": "В целом меня интересует, я уже более двух лет плотно занимаюсь внедрением AI-сервисов различных в...", "isAdvanced": false}, {"name": "Ваня Тихомиров", "location": "Москва", "city": "Москва", "focus": "я баинг директор в рекламном агентстве мобильного маркетинга. я руковожу отделом закупки рекламы -...", "isAdvanced": false}, {"name": "Виктор", "location": "Прага", "city": "Прага", "focus": "фокус на бизнесе в сфере мобильных приложений", "isAdvanced": false}, {"name": "Виктор Медведев", "location": "Тюмень", "city": "Тюмень", "focus": "Работа над собственным дашбордом (командный центр), выступления, корпоративное обучение", "isAdvanced": false}, {"name": "даник A", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Дарья", "location": "В процессе обучения я сменю 3 города: Дананг, Алматы, Мармарис", "city": "В процессе обучения я сменю 3 города: Дананг", "focus": "• Основной фокус на работе и на личных операционных задачах. Мне интересно автоматизировать и...", "isAdvanced": false}, {"name": "Дмитрий Комратов", "location": "Москва", "city": "Москва", "focus": "Личная эффективность, масштабирование бизнеса, запуск нового проекта.", "isAdvanced": false}, {"name": "Дмитрий Хрупов", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Евгений", "location": "Россия, Калининград", "city": "Россия", "focus": "Сейчас мой фокус — сделать так, чтобы AI реально помогал каждый день, а не был набором разрозненных...", "isAdvanced": false}, {"name": "Евгений Власов", "location": "Старая Русса, новгородская область.", "city": "Старая Русса", "focus": "", "isAdvanced": false}, {"name": "Екатерина", "location": "Санкт-Петербург", "city": "Санкт-Петербург", "focus": "Организация работы команд. Ускорение команд. Минимизация человеческого ресурса в...", "isAdvanced": false}, {"name": "Екатерина Тараман", "location": "Батуми", "city": "Батуми", "focus": "Сейчас мой главный фокус на том, чтобы двигать компанию в сторону AI First. Больше всего меня...", "isAdvanced": false}, {"name": "Елена Борисенко", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Зайтун", "location": "Паттайя, Таиланд", "city": "Паттайя", "focus": "1) Работа и развитие продукта+команды. Я руководитель отдела разработки ботов, работающих на...", "isAdvanced": false}, {"name": "Илья Филимоненков", "location": "Краснодар", "city": "Краснодар", "focus": "Разработка B2B продуктов, создание AI-агентов для цифровизации операционных задач, оптимизации...", "isAdvanced": false}, {"name": "Ирина Попова", "location": "Москва", "city": "Москва", "focus": "1. Повышение эффективности процессов моей компании \n\n2. Методы повышения эффективности процессов...", "isAdvanced": false}, {"name": "Ксения Худякова", "location": "Белград (но оч часто перемещаюсь, в основном, по европе)", "city": "Белград (но оч часто перемещаюсь", "focus": "работа. я развиваю 2 европейских бренда (консалтинг и ретритный дом) и коммерческий директор в 4...", "isAdvanced": false}, {"name": "Лена Никитина", "location": "Москва", "city": "Москва", "focus": "ИИ-трансформации рекламного агентства. Pivot рекламной платформы DSP", "isAdvanced": false}, {"name": "Людмила", "location": "казань", "city": "казань", "focus": "фин анализ, бухгалтерия, продажи, управление персоналом", "isAdvanced": false}, {"name": "Максим Драница", "location": "Я в Москве, бываю в Европе, хочу в Америку)", "city": "Я в Москве", "focus": "строю компанию по обучению и внедрению ИИ в бизнес процессы уже 3 года. Это основной фокус", "isAdvanced": false}, {"name": "Мария", "location": "Москва", "city": "Москва", "focus": "Добрый день! Спасибо большое за возможность присоединиться к лабе. Кажется, что вы делаете, ну, на...", "isAdvanced": false}, {"name": "Михаил Иванов", "location": "россия", "city": "россия", "focus": "ИИ в корп сегменте", "isAdvanced": false}, {"name": "Никита Астапов", "location": "Московская область. Дубна", "city": "Московская область", "focus": "Управление и развитие загородного отеля", "isAdvanced": false}, {"name": "Олег Тараканов", "location": "Самара", "city": "Самара", "focus": "Автоматизация разработки и поддержки систем", "isAdvanced": false}, {"name": "Полина Колыхалова", "location": "Россия, Москва", "city": "Россия", "focus": "Профессиональные интересы: разработка мультимедиа и учебного контента, курсов для взрослых людей....", "isAdvanced": false}, {"name": "Руслан Романченко", "location": "Ростов, Ростовская область, очень нужны единомышленники.", "city": "Ростов", "focus": "Да, в первую очередь на своем бизнесе у меня строительная компания в сфере капитального ремонта,...", "isAdvanced": false}, {"name": "Сергей", "location": "Ростов-на-Дону", "city": "Ростов-на-Дону", "focus": "Строительство и эксплуатация жилых и промышленных объектов", "isAdvanced": false}, {"name": "Сергей Рыбаков", "location": "Москва", "city": "Москва", "focus": "", "isAdvanced": false}, {"name": "Сергей Сухов", "location": "В России", "city": "В России", "focus": "", "isAdvanced": false}, {"name": "Сережа Рис", "location": "", "city": "", "focus": "", "isAdvanced": false}, {"name": "Станислав Федосеев", "location": "", "city": "", "focus": "", "isAdvanced": false}];
+
+// ---- PRIVACY ----
+function privacyName(p){
+  if(SHOW_HANDLES) return p.name;
+  const parts = (p.name||'').trim().split(/\s+/);
+  if(parts.length===1) return parts[0];
+  const first = parts[0];
+  const last = parts[parts.length-1];
+  return first + ' ' + (last[0]||'').toUpperCase() + '.';
+}
+function initials(p){
+  const parts = (p.name||'?').trim().split(/\s+/);
+  if(parts.length===1) return (parts[0][0]||'?').toUpperCase();
+  return ((parts[0][0]||'')+(parts[parts.length-1][0]||'')).toUpperCase();
+}
+function truncate(s, n){
+  if(!s) return '';
+  const clean = s.replace(/\s+/g,' ').trim();
+  if(clean.length <= n) return clean;
+  return clean.slice(0, n).trim() + '…';
+}
+function esc(s){
+  return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ---- STATE ----
+let state = { q:'', track:'all', loc:'', view:'grid' };
+
+// ---- LOCATIONS ----
+function allCities(){
+  const set = new Set();
+  DATA.forEach(p => { if(p.city) set.add(p.city); });
+  return [...set].sort((a,b)=>a.localeCompare(b));
+}
+function populateLoc(){
+  const sel = document.getElementById('loc');
+  allCities().forEach(c => {
+    const o = document.createElement('option');
+    o.value = c; o.textContent = c;
+    sel.appendChild(o);
+  });
+}
+
+// ---- RENDER ----
+function matchesFilters(p){
+  if(state.track === 'adv' && !p.isAdvanced) return false;
+  if(state.track === 'str' && p.isAdvanced) return false;
+  if(state.loc && p.city !== state.loc) return false;
+  if(state.q){
+    const q = state.q.toLowerCase();
+    const hay = (p.name+' '+(p.focus||'')+' '+(p.city||'')).toLowerCase();
+    if(!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function renderGrid(){
+  const el = document.getElementById('grid');
+  const filtered = DATA.filter(matchesFilters);
+  document.getElementById('count').textContent = filtered.length;
+  if(!filtered.length){
+    el.innerHTML = '<div class="empty">// no matches. adjust filters.</div>';
+    return;
+  }
+  el.innerHTML = filtered.map((p,i) => {
+    const nm = esc(privacyName(p));
+    const ini = esc(initials(p));
+    const city = esc(p.city || '—');
+    const focus = p.focus || '';
+    const preview = esc(truncate(focus, 120));
+    const full = esc(focus);
+    const badge = p.isAdvanced
+      ? '<span class="badge badge-adv">advanced</span>'
+      : '<span class="badge badge-str">starter</span>';
+    return `<div class="pcard ${p.isAdvanced?'adv':''}" data-i="${i}">
+      <div class="pcard-head">
+        <div class="avatar">${ini}</div>
+        <div class="pcard-main">
+          <div class="pname">${nm}</div>
+          <div class="ploc">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${city}
+          </div>
+        </div>
+        ${badge}
+      </div>
+      ${focus ? `<div class="pfocus"><div class="pfocus-preview">${preview}</div><div class="pfocus-full">${full}</div></div>` : ''}
+    </div>`;
+  }).join('');
+  // click to expand
+  el.querySelectorAll('.pcard').forEach(c => {
+    c.addEventListener('click', () => c.classList.toggle('open'));
+  });
+}
+
+function renderMap(){
+  const el = document.getElementById('map');
+  const filtered = DATA.filter(matchesFilters);
+  document.getElementById('count').textContent = filtered.length;
+  // group by city
+  const groups = {};
+  filtered.forEach(p => {
+    const k = p.city || '— unknown —';
+    if(!groups[k]) groups[k] = [];
+    groups[k].push(p);
+  });
+  const sorted = Object.entries(groups).sort((a,b) => b[1].length - a[1].length);
+  if(!sorted.length){
+    el.innerHTML = '<div class="empty">// no matches. adjust filters.</div>';
+    return;
+  }
+  el.innerHTML = sorted.map(([city, arr]) => {
+    const chips = arr.map(p => `<div class="loc-chip"><span class="dot"></span>${esc(privacyName(p))}</div>`).join('');
+    return `<div class="loc-group">
+      <h3>${esc(city)} <span class="cnt">${arr.length} participant${arr.length>1?'s':''}</span></h3>
+      <div class="loc-list">${chips}</div>
+    </div>`;
+  }).join('');
+}
+
+function render(){
+  const grid = document.getElementById('grid');
+  const map = document.getElementById('map');
+  if(state.view === 'grid'){
+    grid.classList.remove('off');
+    map.classList.remove('on');
+    renderGrid();
+  } else {
+    grid.classList.add('off');
+    map.classList.add('on');
+    renderMap();
+  }
+}
+
+// ---- WIRING ----
+document.getElementById('q').addEventListener('input', e => { state.q = e.target.value; render(); });
+document.getElementById('loc').addEventListener('change', e => { state.loc = e.target.value; render(); });
+document.querySelectorAll('#track button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('#track button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    state.track = b.dataset.v;
+    render();
+  });
+});
+document.querySelectorAll('#view button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('#view button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    state.view = b.dataset.v;
+    render();
+  });
+});
+
+populateLoc();
+render();
+</script>
+</body>
+</html>

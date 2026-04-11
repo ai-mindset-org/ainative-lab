@@ -109,7 +109,7 @@
       "date": "2026-03-27",
       "speaker": "Поваляев",
       "duration": "90 мин",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w1-khanarin",
@@ -117,7 +117,7 @@
       "date": "2026-03-27",
       "speaker": "Ханарин",
       "duration": "120 мин",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w2-lecture",
@@ -125,7 +125,7 @@
       "date": "2026-03-30",
       "speaker": "Гершуни",
       "duration": "85 мин",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w2-ametov",
@@ -133,7 +133,7 @@
       "date": "2026-04-01",
       "speaker": "Амётов",
       "duration": "120 мин",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w2-kleban",
@@ -141,7 +141,7 @@
       "date": "2026-04-01",
       "speaker": "Клебан",
       "duration": "60 мин",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w2-sidora",
@@ -149,7 +149,7 @@
       "date": "2026-04-02",
       "speaker": "Сидора",
       "duration": "120 мин",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w2-kovalsky",
@@ -157,56 +157,56 @@
       "date": "2026-04-02",
       "speaker": "Ковальский",
       "duration": "120 мин",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w2-strakhov",
       "title": "W2: Agent Teams",
       "date": "2026-04-03",
       "speaker": "Страхов",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w2-kravtsov",
       "title": "W2: Data Pipelines",
       "date": "2026-04-03",
       "speaker": "Кравцов",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w3-lecture",
       "title": "Lecture 3: Strategy to Plan",
       "date": "2026-04-06",
       "speaker": "Гершуни",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w3-reid",
       "title": "W3: AI × Investments",
       "date": "2026-04-07",
       "speaker": "Рид",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w3-annaov",
       "title": "W3: Sales Automation",
       "date": "2026-04-08",
       "speaker": "Аннаов",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w3-buzko",
       "title": "W3: AI Legal",
       "date": "2026-04-09",
       "speaker": "Бузко",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-w3-ustinov",
       "title": "W3: Product-Agent",
       "date": "2026-04-10",
       "speaker": "Устинов",
-      "status": "upcoming"
+      "status": "completed"
     },
     {
       "id": "s2-demo",

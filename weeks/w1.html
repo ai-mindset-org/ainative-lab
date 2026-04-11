@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W1 — Why AI Transformation · AI-Native Lab</title>
+<meta property="og:title" content="Week 1 — Why AI Transformation · AI-Native Lab">
+<meta property="og:description" content="Personal OS setup, team processes, AI-transformation framework. Week 1 of Sprint s2.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif;--accent:var(--teal)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;height:48px;position:sticky;top:0;z-index:100}
+.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}
+.topbar-r{margin-left:auto;display:flex;gap:12px;align-items:center}
+.topbar-back{font-size:11px;color:var(--teal);text-decoration:none;padding:4px 10px;border:1px solid var(--border2);border-radius:4px}
+.topbar-back:hover{background:var(--teal-dim);text-decoration:none}
+.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--teal-dim);color:var(--accent);letter-spacing:0.1em;text-transform:uppercase}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 32px 80px}
+.hero{position:relative;overflow:hidden;background:var(--bg3);border-radius:10px;border:1px solid var(--border);margin-bottom:36px;padding:44px 48px}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 40%,rgba(77,201,212,0.15) 0%,transparent 55%),radial-gradient(ellipse at 85% 80%,rgba(245,158,11,0.06) 0%,transparent 55%);pointer-events:none}
+.hero-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),rgba(77,201,212,0.2) 60%,transparent)}
+.hero-in{position:relative;z-index:2;display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.hero-l{flex:1;min-width:320px}
+.hero-n{font-family:var(--display);font-size:110px;font-weight:700;line-height:0.85;color:var(--accent);opacity:0.22;letter-spacing:-0.04em;margin-bottom:8px}
+.hero-b{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);opacity:0.8;margin-bottom:8px}
+.hero-t{font-family:var(--display);font-weight:700;font-size:38px;line-height:1;text-transform:uppercase;margin-bottom:14px}
+.hero-t .tl{color:var(--accent)}
+.hero-sub{font-size:13px;color:var(--text2);max-width:540px;line-height:1.65}
+.hero-r{display:flex;flex-direction:column;gap:10px;min-width:260px}
+.hstat{display:flex;gap:14px;padding:12px 18px;background:rgba(77,201,212,0.04);border:1px solid var(--border);border-radius:6px}
+.hstat .sn{font-family:var(--display);font-weight:700;font-size:22px;color:var(--accent);opacity:0.5;min-width:46px}
+.hstat .sl{font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+.hstat .sv{font-size:12px;color:var(--text);margin-top:2px}
+h2{font-family:var(--display);font-size:14px;font-weight:600;color:var(--accent);margin:40px 0 16px;letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+h2::before{content:'';width:4px;height:14px;background:var(--accent);opacity:0.7;border-radius:1px}
+.concepts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.cc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px 20px;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0.6}
+.cc .ct{font-family:var(--display);font-weight:700;font-size:14px;color:var(--text);margin-bottom:6px}
+.cc .cd{font-size:12px;color:var(--text3);line-height:1.6}
+.sessions{display:flex;flex-direction:column;gap:18px}
+.sess{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.2s}
+.sess:hover{border-color:var(--border2)}
+.sess-h{padding:20px 24px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.sess-n{font-family:var(--display);font-weight:700;font-size:36px;color:var(--accent);opacity:0.3;line-height:0.9;min-width:52px}
+.sess-info{flex:1;min-width:260px}
+.sess-t{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:4px;line-height:1.2}
+.sess-m{font-size:11px;color:var(--text3);display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.sess-m span{display:inline-flex;align-items:center;gap:4px}
+.sess-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;letter-spacing:0.5px}
+.tag-t{color:var(--teal);border:1px solid rgba(77,201,212,0.25);background:rgba(77,201,212,0.08)}
+.tag-g{color:var(--green);border:1px solid rgba(34,197,94,0.25);background:rgba(34,197,94,0.08)}
+.tag-b{color:var(--blue);border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08)}
+.tag-a{color:var(--amber);border:1px solid rgba(245,158,11,0.25);background:rgba(245,158,11,0.08)}
+.tag-p{color:var(--pink);border:1px solid rgba(217,70,239,0.25);background:rgba(217,70,239,0.08)}
+.sess-body{padding:20px 24px;display:grid;gap:20px;grid-template-columns:minmax(300px,2fr) minmax(200px,1fr)}
+.sess-video{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;border:1px solid var(--border);background:#000}
+.sess-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sess-side{display:flex;flex-direction:column;gap:14px}
+.sess-side h4{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;font-weight:600;font-family:var(--display)}
+.mat-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.mat-list li{font-size:11px;color:var(--text2);padding:5px 10px;background:rgba(77,201,212,0.04);border:1px solid var(--border);border-radius:4px}
+.lrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.lpill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:5px;background:var(--bg2);border:1px solid var(--border);color:var(--teal);font-size:11px;text-decoration:none;transition:all 0.2s}
+.lpill:hover{border-color:var(--teal);background:rgba(77,201,212,0.06);text-decoration:none}
+.speakers{display:flex;flex-wrap:wrap;gap:18px}
+.sp{display:flex;flex-direction:column;align-items:center;gap:8px;width:96px}
+.sp img{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);filter:grayscale(0.2)}
+.sp .n{font-size:11px;color:var(--text2);text-align:center;line-height:1.3}
+.sp .r{font-size:9px;color:var(--text3);letter-spacing:0.05em;text-transform:uppercase}
+.quote{border-left:3px solid var(--amber);padding:14px 20px;margin:10px 0;background:rgba(245,158,11,0.04);border-radius:0 8px 8px 0}
+.quote p{font-style:italic;color:var(--text);font-size:13px;line-height:1.6}
+.quote .at{font-style:normal;font-size:11px;color:var(--text3);margin-top:6px}
+.res-row{display:flex;gap:8px;flex-wrap:wrap}
+.nav-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.navpill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:12px;text-decoration:none;transition:all 0.2s}
+.navpill:hover{border-color:var(--teal);color:var(--teal);text-decoration:none}
+@media(max-width:768px){.wrap{padding:24px 16px 48px}.hero{padding:24px 22px}.hero-n{font-size:72px}.hero-t{font-size:26px}.hero-r{min-width:auto;width:100%}.sess-body{grid-template-columns:1fr}.sess-n{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+<div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<div class="topbar-t">ainative-lab / weeks / w1</div>
+<div class="topbar-r">
+<a class="topbar-back" href="index.html">&larr; weeks</a>
+<a class="topbar-back" href="../index.html">&larr; hub</a>
+<div class="topbar-badge">week 1</div>
+</div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+<div class="hero-accent"></div>
+<div class="hero-in">
+<div class="hero-l">
+<div class="hero-n">W1</div>
+<div class="hero-b">23 Mar – 28 Mar 2026 · Personal OS + Team Processes</div>
+<div class="hero-t">WHY AI<br><span class="tl">TRANSFORMATION</span></div>
+<div class="hero-sub">Open the trajectory. Why AI-native is the most important shift, how to build a Personal OS in Claude Code, and how to take the first step from personal to team. Six sessions, 4 speakers.</div>
+</div>
+<div class="hero-r">
+<div class="hstat"><div class="sn">6</div><div><div class="sl">sessions</div><div class="sv">1 lecture · 5 workshops</div></div></div>
+<div class="hstat"><div class="sn">4</div><div><div class="sl">speakers</div><div class="sv">Гершуни · Поваляев · Лисовский · Ханарин</div></div></div>
+<div class="hstat"><div class="sn">~13h</div><div><div class="sl">material</div><div class="sv">all sessions recorded</div></div></div>
+</div>
+</div>
+</div>
+
+<h2>Key Concepts</h2>
+<div class="concepts">
+<div class="cc"><div class="ct">Harness &gt; Model</div><div class="cd">80% returns come from the harness — the system around the model. Model choice is the last 20%.</div></div>
+<div class="cc"><div class="ct">Company as Token Flow</div><div class="cd">Inbound tokens (contracts, meetings, messages) → outbound tokens (PRs, decisions, customer responses). The firm is a graph updating in real time.</div></div>
+<div class="cc"><div class="ct">Personal OS</div><div class="cd">CLAUDE.md + naming convention + context directory + 3 working skills. The minimum viable system for a single operator.</div></div>
+<div class="cc"><div class="ct">Top-10 Processes</div><div class="cd">Process audit: frequency × time × errors × scalability. Pick 10 candidates before touching automation.</div></div>
+<div class="cc"><div class="ct">Influence Model</div><div class="cd">McKinsey 4 levers adapted for AI: role modeling × understanding × formal mechanisms × skills. Behavior change, not awareness theater.</div></div>
+<div class="cc"><div class="ct">AI Champion</div><div class="cd">Explorer → Translator → Strategist. Trusted peer who drives adoption without top-down pressure. Citi has 4,000 of them.</div></div>
+</div>
+
+<h2>Sessions</h2>
+<div class="sessions">
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">L01</div>
+<div class="sess-info">
+<div class="sess-t">Lecture 1 — Why AI Transformation</div>
+<div class="sess-m"><span>Степан Гершуни</span><span>·</span><span>23 Mar 2026</span><span>·</span><span>172 min</span></div>
+<div class="sess-tags"><span class="tag tag-a">lecture</span><span class="tag tag-t">211 участников</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-video"><iframe src="https://www.youtube.com/embed/uW91SdM87JM" title="Lecture 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="sess-side">
+<div><h4>Materials</h4><ul class="mat-list">
+<li>AI-Native Playbook Slides</li>
+<li>AI-Native Plugin (Claude Code / Codex)</li>
+<li>Quiz L0→L3 AI-Nativeness</li>
+<li>Harness Engineering research</li>
+<li>BVP State of AI 2025</li>
+<li>TBench.ai</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-lecture" target="_blank">&#9654; LMS</a>
+<a class="lpill" href="https://github.com/cyberFund/ai-native-organizations" target="_blank">Playbook</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W1a</div>
+<div class="sess-info">
+<div class="sess-t">Personal OS Setup</div>
+<div class="sess-m"><span>Александр Поваляев</span><span>·</span><span>24 Mar 2026</span><span>·</span><span>161 min</span></div>
+<div class="sess-tags"><span class="tag tag-t">workshop</span><span class="tag tag-g">live demo</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-video"><iframe src="https://www.youtube.com/embed/C73xOOdawPY" title="Personal OS Setup" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="sess-side">
+<div><h4>Materials</h4><ul class="mat-list">
+<li>POS Setup Slides</li>
+<li>Stack Explorer</li>
+<li>Dashboard Workshop</li>
+<li>Naming Convention</li>
+<li>Keyboard Efficiency</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-setup" target="_blank">&#9654; LMS</a>
+<a class="lpill" href="../naming.html">Naming Builder</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W1b</div>
+<div class="sess-info">
+<div class="sess-t">Personal → Team</div>
+<div class="sess-m"><span>Александр Поваляев</span><span>·</span><span>25 Mar 2026</span><span>·</span><span>150 min</span></div>
+<div class="sess-tags"><span class="tag tag-t">workshop</span><span class="tag tag-b">team audit</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-video"><iframe src="https://www.youtube.com/embed/3acO_wSd8HQ" title="Personal to Team" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="sess-side">
+<div><h4>Materials</h4><ul class="mat-list">
+<li>Team Workshop Slides</li>
+<li>Team Stack Explorer</li>
+<li>AI Corp (Рис)</li>
+<li>AI-Native Lesson (Васильев)</li>
+<li>AgentPlane (Смирнов)</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-workshop" target="_blank">&#9654; LMS</a>
+<a class="lpill" href="../dashboard-workshop.html">Dashboard WS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W1c</div>
+<div class="sess-info">
+<div class="sess-t">Фабрика бизнесов</div>
+<div class="sess-m"><span>Евгений Лисовский</span><span>·</span><span>26 Mar 2026</span><span>·</span><span>120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-t">portfolio</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-video"><iframe src="https://www.youtube.com/embed/e4_w_vI1ODY" title="Factory of Businesses" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Portfolio operator mindset</li>
+<li>Launching multiple products in parallel</li>
+<li>Solo + AI team as a studio</li>
+<li>Decision hygiene under 10× leverage</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-lisovskiy" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W1d</div>
+<div class="sess-info">
+<div class="sess-t">База AI-тулов (для новичков)</div>
+<div class="sess-m"><span>Александр Поваляев</span><span>·</span><span>27 Mar 2026</span><span>·</span><span>90 min</span></div>
+<div class="sess-tags"><span class="tag tag-t">newcomer</span><span class="tag tag-g">primer</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-video" style="display:flex;align-items:center;justify-content:center;padding-bottom:0;height:220px;background:var(--bg3);color:var(--text3);font-size:12px">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Базовый стек: Claude Code · Cursor · ChatGPT</li>
+<li>Куда смотреть новичку</li>
+<li>Первые 5 шагов в Claude Code</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-bonus" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W1e</div>
+<div class="sess-info">
+<div class="sess-t">AI-трансформация для организаций</div>
+<div class="sess-m"><span>Дима Ханарин</span><span>·</span><span>27 Mar 2026</span><span>·</span><span>120 min</span></div>
+<div class="sess-tags"><span class="tag tag-a">guest</span><span class="tag tag-p">framework</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-video" style="display:flex;align-items:center;justify-content:center;padding-bottom:0;height:220px;background:var(--bg3);color:var(--text3);font-size:12px">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>McKinsey Influence Model → AI</li>
+<li>Таймлайн и цикл трансформации</li>
+<li>Common pitfalls: awareness theater</li>
+<li>Hands-on: Codos на своей компании</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w1-khanarin" target="_blank">&#9654; LMS</a>
+<a class="lpill" href="https://www.codos.ai/quiz" target="_blank">Codos Quiz</a>
+</div></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<h2>Speakers</h2>
+<div class="speakers">
+<div class="sp"><img src="../graph/speakers/stepan-gershuni.jpg" alt="Степан Гершуни"><div class="n">Степан Гершуни</div><div class="r">L01</div></div>
+<div class="sp"><img src="../graph/speakers/alexander-povaliaev.jpg" alt="Александр Поваляев"><div class="n">Александр Поваляев</div><div class="r">W1a · W1b · W1d</div></div>
+<div class="sp"><img src="../graph/speakers/eugene-lisovskiy.jpg" alt="Евгений Лисовский"><div class="n">Евгений Лисовский</div><div class="r">W1c</div></div>
+<div class="sp"><img src="../graph/speakers/dima-khanarin.jpg" alt="Дима Ханарин"><div class="n">Дима Ханарин</div><div class="r">W1e</div></div>
+</div>
+
+<h2>Resources</h2>
+<div class="res-row">
+<a class="lpill" href="https://github.com/Gerstep/ai-native-plugin" target="_blank">AI-Native Plugin</a>
+<a class="lpill" href="https://github.com/cyberFund/ai-native-organizations" target="_blank">AI-Native Orgs Playbook</a>
+<a class="lpill" href="https://www.codos.ai/quiz" target="_blank">AI-Nativeness Quiz</a>
+<a class="lpill" href="https://openai.com/index/harness-engineering/" target="_blank">Harness Engineering (OpenAI)</a>
+<a class="lpill" href="https://www.bvp.com/atlas/the-state-of-ai-2025" target="_blank">BVP State of AI</a>
+<a class="lpill" href="https://www.tbench.ai/" target="_blank">TBench.ai</a>
+</div>
+
+<h2>Quote</h2>
+<div class="quote"><p>&laquo;Moat — это не модель. Moat — это человек-оркестратор.&raquo;</p><div class="at">— Степан Гершуни, Lecture 1</div></div>
+
+<div class="nav-links">
+<a class="navpill" href="index.html">&larr; All weeks</a>
+<a class="navpill" href="w2.html">Week 2 &rarr;</a>
+<a class="navpill" href="w3.html">Week 3 &rarr;</a>
+<a class="navpill" href="../index.html">Sprint Hub</a>
+<a class="navpill" href="../knowledge-graph.html">Knowledge Graph</a>
+</div>
+
+</div>
+</body>
+</html>

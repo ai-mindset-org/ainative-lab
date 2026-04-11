@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W3 — Strategy to Plan · AI-Native Lab</title>
+<meta property="og:title" content="Week 3 — Strategy to Plan · AI-Native Lab">
+<meta property="og:description" content="From stack to strategy — business models, 90-day plan, specialist agent pipelines. Week 3 of Sprint s2.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--teal:#4dc9d4;--teal-dim:rgba(77,201,212,0.12);--blue:#3b82f6;--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--pink:#d946ef;--text:#e6edf3;--text2:rgba(230,237,243,0.7);--text3:rgba(230,237,243,0.4);--border:rgba(77,201,212,0.1);--border2:rgba(77,201,212,0.2);--mono:'IBM Plex Mono',monospace;--display:'Space Grotesk',sans-serif;--accent:var(--pink)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;background-size:256px}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(77,201,212,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(77,201,212,0.03) 1px,transparent 1px);background-size:60px 60px}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;height:48px;position:sticky;top:0;z-index:100}
+.traffic{display:flex;gap:6px}.traffic span{width:10px;height:10px;border-radius:50%}.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+.topbar-t{font-size:12px;color:var(--text3);margin-left:8px}
+.topbar-r{margin-left:auto;display:flex;gap:12px;align-items:center}
+.topbar-back{font-size:11px;color:var(--teal);text-decoration:none;padding:4px 10px;border:1px solid var(--border2);border-radius:4px}
+.topbar-back:hover{background:var(--teal-dim);text-decoration:none}
+.topbar-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(217,70,239,0.12);color:var(--accent);letter-spacing:0.1em;text-transform:uppercase}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 32px 80px}
+.hero{position:relative;overflow:hidden;background:var(--bg3);border-radius:10px;border:1px solid var(--border);margin-bottom:36px;padding:44px 48px}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(217,70,239,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(217,70,239,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 40%,rgba(217,70,239,0.13) 0%,transparent 55%),radial-gradient(ellipse at 85% 80%,rgba(77,201,212,0.08) 0%,transparent 55%);pointer-events:none}
+.hero-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),rgba(217,70,239,0.2) 60%,transparent)}
+.hero-in{position:relative;z-index:2;display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.hero-l{flex:1;min-width:320px}
+.hero-n{font-family:var(--display);font-size:110px;font-weight:700;line-height:0.85;color:var(--accent);opacity:0.22;letter-spacing:-0.04em;margin-bottom:8px}
+.hero-b{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);opacity:0.8;margin-bottom:8px}
+.hero-t{font-family:var(--display);font-weight:700;font-size:38px;line-height:1;text-transform:uppercase;margin-bottom:14px}
+.hero-t .tl{color:var(--accent)}
+.hero-sub{font-size:13px;color:var(--text2);max-width:560px;line-height:1.65}
+.hero-r{display:flex;flex-direction:column;gap:10px;min-width:260px}
+.hstat{display:flex;gap:14px;padding:12px 18px;background:rgba(217,70,239,0.05);border:1px solid var(--border);border-radius:6px}
+.hstat .sn{font-family:var(--display);font-weight:700;font-size:22px;color:var(--accent);opacity:0.55;min-width:46px}
+.hstat .sl{font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+.hstat .sv{font-size:12px;color:var(--text);margin-top:2px}
+h2{font-family:var(--display);font-size:14px;font-weight:600;color:var(--accent);margin:40px 0 16px;letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+h2::before{content:'';width:4px;height:14px;background:var(--accent);opacity:0.7;border-radius:1px}
+.concepts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.cc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px 20px;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0.6}
+.cc .ct{font-family:var(--display);font-weight:700;font-size:14px;color:var(--text);margin-bottom:6px}
+.cc .cd{font-size:12px;color:var(--text3);line-height:1.6}
+.sessions{display:flex;flex-direction:column;gap:18px}
+.sess{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.2s}
+.sess:hover{border-color:var(--border2)}
+.sess-h{padding:20px 24px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.sess-n{font-family:var(--display);font-weight:700;font-size:36px;color:var(--accent);opacity:0.32;line-height:0.9;min-width:52px}
+.sess-info{flex:1;min-width:260px}
+.sess-t{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:4px;line-height:1.2}
+.sess-m{font-size:11px;color:var(--text3);display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.sess-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;letter-spacing:0.5px}
+.tag-t{color:var(--teal);border:1px solid rgba(77,201,212,0.25);background:rgba(77,201,212,0.08)}
+.tag-g{color:var(--green);border:1px solid rgba(34,197,94,0.25);background:rgba(34,197,94,0.08)}
+.tag-b{color:var(--blue);border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08)}
+.tag-a{color:var(--amber);border:1px solid rgba(245,158,11,0.25);background:rgba(245,158,11,0.08)}
+.tag-p{color:var(--pink);border:1px solid rgba(217,70,239,0.25);background:rgba(217,70,239,0.08)}
+.sess-body{padding:20px 24px;display:grid;gap:20px;grid-template-columns:minmax(300px,2fr) minmax(200px,1fr)}
+.sess-placeholder{display:flex;align-items:center;justify-content:center;height:220px;background:var(--bg3);color:var(--text3);font-size:12px;border:1px solid var(--border);border-radius:6px}
+.sess-video{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;border:1px solid var(--border);background:#000}
+.sess-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sess-side{display:flex;flex-direction:column;gap:14px}
+.sess-side h4{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;font-weight:600;font-family:var(--display)}
+.mat-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.mat-list li{font-size:11px;color:var(--text2);padding:5px 10px;background:rgba(217,70,239,0.04);border:1px solid var(--border);border-radius:4px}
+.lrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.lpill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:5px;background:var(--bg2);border:1px solid var(--border);color:var(--teal);font-size:11px;text-decoration:none;transition:all 0.2s}
+.lpill:hover{border-color:var(--teal);background:rgba(77,201,212,0.06);text-decoration:none}
+.speakers{display:flex;flex-wrap:wrap;gap:18px}
+.sp{display:flex;flex-direction:column;align-items:center;gap:8px;width:96px}
+.sp img{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);filter:grayscale(0.2)}
+.sp .n{font-size:11px;color:var(--text2);text-align:center;line-height:1.3}
+.sp .r{font-size:9px;color:var(--text3);letter-spacing:0.05em;text-transform:uppercase}
+.quote{border-left:3px solid var(--pink);padding:14px 20px;margin:10px 0;background:rgba(217,70,239,0.05);border-radius:0 8px 8px 0}
+.quote p{font-style:italic;color:var(--text);font-size:13px;line-height:1.6}
+.quote .at{font-style:normal;font-size:11px;color:var(--text3);margin-top:6px}
+.res-row{display:flex;gap:8px;flex-wrap:wrap}
+.nav-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.navpill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:12px;text-decoration:none;transition:all 0.2s}
+.navpill:hover{border-color:var(--teal);color:var(--teal);text-decoration:none}
+@media(max-width:768px){.wrap{padding:24px 16px 48px}.hero{padding:24px 22px}.hero-n{font-size:72px}.hero-t{font-size:26px}.hero-r{min-width:auto;width:100%}.sess-body{grid-template-columns:1fr}.sess-n{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+<div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<div class="topbar-t">ainative-lab / weeks / w3</div>
+<div class="topbar-r">
+<a class="topbar-back" href="index.html">&larr; weeks</a>
+<a class="topbar-back" href="../index.html">&larr; hub</a>
+<div class="topbar-badge">week 3</div>
+</div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+<div class="hero-accent"></div>
+<div class="hero-in">
+<div class="hero-l">
+<div class="hero-n">W3</div>
+<div class="hero-b">06 Apr – 13 Apr 2026 · Company Functions + Demo Day</div>
+<div class="hero-t">STRATEGY<br><span class="tl">TO PLAN</span></div>
+<div class="hero-sub">From architecture to action. Business models, moats, process audit, 90-day plan, FinOps budget. Specialist sessions: investments, sales agents, legal tech, product-agent. Ending with Demo Day.</div>
+</div>
+<div class="hero-r">
+<div class="hstat"><div class="sn">5</div><div><div class="sl">sessions</div><div class="sv">1 lecture · 4 specialist workshops</div></div></div>
+<div class="hstat"><div class="sn">5</div><div><div class="sl">speakers</div><div class="sv">Гершуни · Рид · Аннаков · Бузко · Устинов</div></div></div>
+<div class="hstat"><div class="sn">~10h</div><div><div class="sl">material</div><div class="sv">all sessions recorded · Demo Day 13 Apr</div></div></div>
+</div>
+</div>
+</div>
+
+<h2>Key Concepts</h2>
+<div class="concepts">
+<div class="cc"><div class="ct">Moats in AI-Native World</div><div class="cd">Data · trust · distribution · decision traces. Services → software as vibe-coding lowers the barrier. Strangler Fig pattern for migration.</div></div>
+<div class="cc"><div class="ct">Intent Economy</div><div class="cd">From attention to intent. Agent-to-agent: buyer → MCP → seller. GEO (llms.txt, JSON-LD). Verification gap is the new ad inventory.</div></div>
+<div class="cc"><div class="ct">Process Audit</div><div class="cd">67% see pilot results, 10% scale. Method: 15-20 interviews, prioritization formula, cost/revenue/enabler map. 80+ initiatives from a 200-person fintech.</div></div>
+<div class="cc"><div class="ct">90-Day Plan</div><div class="cd">AI Champion (KPI'd role) + AI Operating Officer. Budget $120-290/mo. Month-1-2-3 plan. Day-90 checklist.</div></div>
+<div class="cc"><div class="ct">Flattened Org</div><div class="cd">From functions to 3 blocks (R&amp;D, GTM, G&amp;A). Human: Chief Accountability Officer, System Architects, Relationship Experts, Validators. AI: reasoning + action agents.</div></div>
+<div class="cc"><div class="ct">Sales L1–L5</div><div class="cd">Levels of sales autonomy (like self-driving cars). Inbound qualification + outbound prospecting as the first automated pipelines.</div></div>
+<div class="cc"><div class="ct">Shared Workspace</div><div class="cd">Single tree for humans and agents. CursorRules/Agents.md as hub. Tool-agnostic principles — migrate Cursor → Claude Code without rewriting.</div></div>
+<div class="cc"><div class="ct">Process as Product</div><div class="cd">Every process has a product owner, backlog, OKRs, unit economics. Data flywheel: executions → labeled data → better evals → better process.</div></div>
+</div>
+
+<h2>Sessions</h2>
+<div class="sessions">
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">L03</div>
+<div class="sess-info">
+<div class="sess-t">Lecture 3 — Strategy to Plan</div>
+<div class="sess-m"><span>Степан Гершуни</span><span>·</span><span>06 Apr 2026</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">lecture</span><span class="tag tag-a">strategy</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Business models &amp; moats · Strangler Fig</li>
+<li>Intent economy · GEO · verification gap</li>
+<li>Process audit methodology</li>
+<li>Agent-to-agent inside the firm</li>
+<li>90-day plan · AI Champion · FinOps budget</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w3-lecture" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W3a</div>
+<div class="sess-info">
+<div class="sess-t">AI × Investments &amp; Strategy</div>
+<div class="sess-m"><span>Евгений Рид</span><span>·</span><span>07 Apr 2026 · 18:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-b">VC</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>AI through the investor lens</li>
+<li>Strategy and capital allocation</li>
+<li>Portfolio signals from AI-native companies</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w3-reid" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W3b</div>
+<div class="sess-info">
+<div class="sess-t">Sales Automation on AI Agents</div>
+<div class="sess-m"><span>Байрам Аннаков</span><span>·</span><span>08 Apr 2026 · 18:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-g">hands-on</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Framework: L1-L5 sales autonomy</li>
+<li>Case 1: inbound lead qualification</li>
+<li>Case 2: outbound prospecting (ICP + Exa + personalized)</li>
+<li>MCP: Firecrawl + Exa Websites + web search</li>
+<li>onsa.ai in production</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w3-annaov" target="_blank">&#9654; LMS</a>
+<a class="lpill" href="https://onsa.ai" target="_blank">onsa.ai</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W3c</div>
+<div class="sess-info">
+<div class="sess-t">AI Legal / Legal Tech</div>
+<div class="sess-m"><span>Рома Бузько</span><span>·</span><span>09 Apr 2026 · 18:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-a">compliance</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Buzko &amp; Krasnov: 10+ years in IT/IP/AI law</li>
+<li>Skala.io — AI-powered legal platform, 500+ startups</li>
+<li>Compliance: agents for regulatory requirements</li>
+<li>Contract review automation</li>
+<li>AI regulation for founders</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w3-buzko" target="_blank">&#9654; LMS</a>
+<a class="lpill" href="https://skala.io" target="_blank">Skala.io</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="sess">
+<div class="sess-h">
+<div class="sess-n">W3d</div>
+<div class="sess-info">
+<div class="sess-t">Shared Workspace → Product-Agent</div>
+<div class="sess-m"><span>Сева Устинов + Степан Гершуни</span><span>·</span><span>10 Apr 2026 · 18:00</span><span>·</span><span>~120 min</span></div>
+<div class="sess-tags"><span class="tag tag-p">guest</span><span class="tag tag-t">dialog</span></div>
+</div>
+</div>
+<div class="sess-body">
+<div class="sess-placeholder">запись добавляется</div>
+<div class="sess-side">
+<div><h4>Topics</h4><ul class="mat-list">
+<li>Second Brain for 30-person company</li>
+<li>Single entry point for humans and agents</li>
+<li>Tool-agnostic: Cursor → Claude Code no rewrite</li>
+<li>GitHub + Dropbox sync, read access for all</li>
+<li>Product-agent evolution</li>
+</ul></div>
+<div><h4>Links</h4><div class="res-row">
+<a class="lpill" href="https://learn.aimindset.org/s2/workshops/s2-w3-ustinov" target="_blank">&#9654; LMS</a>
+</div></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<h2>Speakers</h2>
+<div class="speakers">
+<div class="sp"><img src="../graph/speakers/stepan-gershuni.jpg" alt="Степан Гершуни"><div class="n">Степан Гершуни</div><div class="r">L03 · W3d</div></div>
+<div class="sp"><img src="../graph/speakers/eugene-rid.jpg" alt="Евгений Рид"><div class="n">Евгений Рид</div><div class="r">W3a</div></div>
+<div class="sp"><img src="../graph/speakers/bayram-annakov.jpg" alt="Байрам Аннаков"><div class="n">Байрам Аннаков</div><div class="r">W3b</div></div>
+<div class="sp"><img src="../graph/speakers/roma-buzko.jpg" alt="Рома Бузько"><div class="n">Рома Бузько</div><div class="r">W3c</div></div>
+<div class="sp"><img src="../graph/speakers/seva-ustinov.jpg" alt="Сева Устинов"><div class="n">Сева Устинов</div><div class="r">W3d</div></div>
+</div>
+
+<h2>Resources</h2>
+<div class="res-row">
+<a class="lpill" href="https://onsa.ai" target="_blank">onsa.ai</a>
+<a class="lpill" href="https://skala.io" target="_blank">Skala.io</a>
+<a class="lpill" href="https://www.firecrawl.dev/" target="_blank">Firecrawl</a>
+<a class="lpill" href="https://exa.ai/websets" target="_blank">Exa Websites</a>
+<a class="lpill" href="https://llmstxt.org/" target="_blank">llms.txt</a>
+<a class="lpill" href="https://artificialintelligenceact.eu/" target="_blank">EU AI Act</a>
+</div>
+
+<h2>Quote</h2>
+<div class="quote"><p>&laquo;67% видят результат пилота, 10% масштабируют. Процесс = внутренний продукт.&raquo;</p><div class="at">— Степан Гершуни, Lecture 3</div></div>
+
+<div class="nav-links">
+<a class="navpill" href="index.html">&larr; All weeks</a>
+<a class="navpill" href="w1.html">&larr; Week 1</a>
+<a class="navpill" href="w2.html">&larr; Week 2</a>
+<a class="navpill" href="../index.html">Sprint Hub</a>
+<a class="navpill" href="../knowledge-graph.html">Knowledge Graph</a>
+</div>
+
+</div>
+</body>
+</html>

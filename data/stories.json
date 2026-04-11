@@ -1,0 +1,102 @@
+{
+  "generated": "2026-04-11",
+  "sprint": "AI-Native Organizations Sprint s2",
+  "chains": [
+    {
+      "id": "gershuni-trilogy",
+      "title": "Gershuni Trilogy",
+      "subtitle": "Why → System → Strategy",
+      "speaker": "Степан Гершуни",
+      "theme": "Strategic framework for AI transformation — from civilizational argument to executable 90-day plan",
+      "color": "amber",
+      "sessions": ["s2-w1-lecture", "s2-w2-lecture", "s2-w3-lecture"],
+      "narrative": "A three-part lecture arc that holds the sprint together. W1 answers WHY AI transformation is civilizational and not optional. W2 shifts the lens from model to system — harness, evals, context as the real lever. W3 turns strategy into an executable 90-day plan each participant can run on Monday."
+    },
+    {
+      "id": "pos-progression",
+      "title": "Personal OS Progression",
+      "subtitle": "Prework → Setup → Team",
+      "speaker": "Поваляев, Хабаров, Рис",
+      "theme": "Personal → corporate operating system journey",
+      "color": "teal",
+      "sessions": [
+        "s2-prework01",
+        "s2-prework02",
+        "s2-prework03",
+        "s2-prework04",
+        "s2-w1-setup",
+        "s2-w1-workshop"
+      ],
+      "narrative": "The core POS thread. Four preworks build the mental model — what a Personal OS even is, how a human becomes a personal corporation, why cyclical pipelines beat one-shot prompts, and how OpenClaw turns a terminal into an ambient layer. W1 Setup installs the live system on each participant's machine. W1 Workshop scales it from Personal to Team."
+    },
+    {
+      "id": "founder-stories",
+      "title": "Founder Stories",
+      "subtitle": "Real AI-native operators across domains",
+      "speaker": "6 guest founders",
+      "theme": "Proof that AI-native is already working in production across industries",
+      "color": "pink",
+      "sessions": [
+        "s2-w1-lisovskiy",
+        "s2-w1-khanarin",
+        "s2-w3-reid",
+        "s2-w3-annaov",
+        "s2-w3-buzko",
+        "s2-w3-ustinov"
+      ],
+      "narrative": "Six operators show what AI-native looks like when it ships. Лисовский runs a factory of businesses. Ханарин transforms an existing company. Рид rebuilds investment workflows. Аннаов automates sales. Бузко applies it to legal. Устинов makes the product itself an agent. Different domains, same pattern: harness + taste."
+    },
+    {
+      "id": "technical-stack",
+      "title": "Technical Stack",
+      "subtitle": "From base tools to agent teams",
+      "speaker": "Поваляев, Клебан, Сидора, Ковальский, Страхов, Кравцов",
+      "theme": "Technical depth — how the machine is actually wired",
+      "color": "blue",
+      "sessions": [
+        "s2-w1-bonus",
+        "s2-w2-kleban",
+        "s2-w2-sidora",
+        "s2-w2-kovalsky",
+        "s2-w2-strakhov",
+        "s2-w2-kravtsov"
+      ],
+      "narrative": "The engineer's track. Starts with a base of AI tools for newcomers, then self-improving agents, a technical coworking session, AI-driven development practices, multi-agent teams, and data pipelines. Each session adds one layer to the stack — from single tool to orchestrated fleet."
+    },
+    {
+      "id": "content-growth",
+      "title": "Content & Growth",
+      "subtitle": "AI-native marketing and communication",
+      "speaker": "Амётов",
+      "theme": "How AI changes the content and growth function",
+      "color": "green",
+      "sessions": ["s2-w2-ametov"],
+      "narrative": "The lone content-and-growth beat of the sprint. Амётов on AI-content for business — what breaks in the old content factory, what the new one looks like, and where the quality bar moves when generation is cheap."
+    },
+    {
+      "id": "onboarding-arc",
+      "title": "Onboarding Arc",
+      "subtitle": "From intro call to Demo Day",
+      "speaker": "Поваляев, Гершуни, All",
+      "theme": "The ceremonial spine — how the cohort enters and exits the sprint together",
+      "color": "teal",
+      "sessions": ["s2-intro", "s2-w1-lecture", "s2-demo"],
+      "narrative": "The container. Intro Call sets the tone and introduces the operator-pair. W1 Lecture opens the content. Demo Day closes the loop — participants show what they built in three weeks. Everything else hangs between these three points."
+    },
+    {
+      "id": "personal-to-team",
+      "title": "Personal → Team Arc",
+      "subtitle": "Scaling the operating system",
+      "speaker": "Поваляев, Рис, Хабаров",
+      "theme": "How a Personal OS becomes a team or corporate OS without losing coherence",
+      "color": "teal",
+      "sessions": [
+        "s2-prework02",
+        "s2-w1-setup",
+        "s2-w1-workshop",
+        "s2-w2-strakhov"
+      ],
+      "narrative": "The scaling story. Prework 2 introduces the personal corporation metaphor. W1 Setup builds the single-player version. W1 Workshop shifts to team stack and shared skills. W2 Agent Teams pushes further — multiple agents as the new org chart."
+    }
+  ]
+}
