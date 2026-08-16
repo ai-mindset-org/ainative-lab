@@ -16,7 +16,6 @@ PAGES=(
   "weeks/w3.html"
   "sessions/index.html"
   "speakers-page/index.html"
-  "participants/index.html"
   "stories/index.html"
   "results/index.html"
 )
@@ -26,7 +25,6 @@ DATA=(
   "data/sessions.json"
   "data/speakers.json"
   "data/stories.json"
-  "data/participants.json"
 )
 
 SHARED=(

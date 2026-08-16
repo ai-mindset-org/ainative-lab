@@ -1,2 +1,21 @@
 node_modules/
 .DS_Store
+# Private source exports and agent/session artifacts.
+data/graph.json
+data/participants.json
+data/parse-participants.mjs
+participants/
+.claude/
+.codex/
+.cursor/
+_sessions/
+file-history/
+*.jsonl
+*.sqlite
+*.sqlite3
+*.db
+*.pem
+*.key
+HANDOFF.md
+CONTEXT-HANDOFF.md
+SESSION-*-HANDOFF.md

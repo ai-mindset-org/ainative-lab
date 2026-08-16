@@ -1,6 +1,6 @@
 # AI-Native Lab — Sprint S2 Hub
 
-Static results hub for the **AI-Native Organizations Sprint s2** — the 3-week AI Mindset lab. Collects the programme graph, weekly breakdowns, session archive, speakers, participants, stories, and final results behind one teal-grid GitHub Pages site.
+Static results hub for the **AI-Native Organizations Sprint s2** — the 3-week AI Mindset lab. Collects the public programme graph, weekly breakdowns, session archive, speakers, stories, and final results behind one teal-grid GitHub Pages site.
 
 **Live:** https://ai-mindset-org.github.io/ainative-lab/
 **Repo:** https://github.com/ai-mindset-org/ainative-lab
@@ -19,7 +19,6 @@ Static results hub for the **AI-Native Organizations Sprint s2** — the 3-week 
 | `/weeks/w3.html` | | Week 3 recap |
 | `/sessions/` | `sessions/index.html` | Full session archive with filters, recordings, materials |
 | `/speakers-page/` | `speakers-page/index.html` | Speaker directory with bios and session links |
-| `/participants/` | `participants/index.html` | Participant directory (opt-in), projects |
 | `/stories/` | `stories/index.html` | Case studies and participant stories |
 | `/results/` | `results/index.html` | Final outcomes, metrics, learnings, next cohort |
 
@@ -73,8 +72,7 @@ All pages read from static JSON — no build step, no backend.
 | `data/sessions.json` | `sessions/`, `weeks/` | Normalized session list |
 | `data/speakers.json` | `speakers-page/`, `graph/` | Speaker bios + links |
 | `data/stories.json` | `stories/` | Participant stories and case studies |
-| `data/participants.json` | `participants/` | Opt-in participant directory |
-| `data/graph.json` | `graph/` | Pre-computed graph adjacency |
+Participant profiles, usernames, buddy assignments, private vault exports, and source paths are deliberately excluded from this public repository.
 
 ---
 
