@@ -22,6 +22,7 @@ fi
 content_pattern='(/Users/[A-Za-z0-9._-]+/|/home/[A-Za-z0-9._-]+/|\.claude/(projects|file-history)|\.codex/sessions|session\.jsonl|"(sessionId|parentUuid|isSidechain|toolUseResult|transcript_path)"[[:space:]]*:|MTProto session|TELEGRAM_API_(ID|HASH)|sk-or-v1-|sk-[A-Za-z0-9_-]{20,})'
 if git grep -IEn "$content_pattern" -- . \
   ':(exclude)scripts/privacy-check.sh' \
+  ':(exclude).gitleaks.toml' \
   ':(exclude).github/workflows/privacy.yml'; then
   printf 'privacy check failed: private identity, runtime, or credential marker found\n' >&2
   fail=1
