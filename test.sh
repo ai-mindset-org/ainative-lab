@@ -14,7 +14,6 @@ PAGES=(
   "weeks/w1.html"
   "weeks/w2.html"
   "weeks/w3.html"
-  "sessions/index.html"
   "speakers-page/index.html"
   "stories/index.html"
   "results/index.html"
