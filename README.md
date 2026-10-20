@@ -1,8 +1,12 @@
 # AI-Native Lab — Sprint S2 Hub
 
+<!-- aim-public-links:start -->
+[AI Mindset labs](https://aimindset.org/?utm_source=website&utm_medium=article&utm_campaign=start&utm_content=github-ainative-lab#learning) · [Knowledge base](https://base.aimindset.org/?utm_source=website&utm_medium=article&utm_campaign=start&utm_content=github-ainative-lab)
+<!-- aim-public-links:end -->
+
 Static results hub for the **AI-Native Organizations Sprint s2** — the 3-week AI Mindset lab. Collects the approved public programme graph, weekly breakdowns, speakers, stories, and final results behind one teal-grid GitHub Pages site.
 
-**Live:** https://ai-mindset-org.github.io/ainative-lab/
+**Live:** [ai-mindset-org.github.io/ainative-lab](https://ai-mindset-org.github.io/ainative-lab/?utm_source=website&utm_medium=article&utm_campaign=start&utm_content=github-ainative-lab)
 **Repo:** https://github.com/ai-mindset-org/ainative-lab
 
 ---
